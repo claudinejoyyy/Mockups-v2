@@ -103,17 +103,28 @@ var fhSQL       = "SELECT name FROM family_history;";
               });
         } else if (data.sub == 'addTodo') {
               var splitDateNTime = data.dateNtime.split('T');
-              var parseDate      = splitDateNTime[0];
-              var parseTime      = splitDateNTime[1] + ':00';
-              var parseDateNTime = parseDate+' '+parseTime;
-
-              var addTodo  = 'INSERT into todo_list (description, date, account_id) VALUES("'+data.description+'","'+parseDateNTime+'",'+req.session.Aid+');';
-              db.query(addTodo + 'INSERT into activity_logs(account_id, time, type, remarks) VALUES ('+req.session.Aid+',"'+currentTime+'", "todo", "Added to To Do List the following: '+data.description+'");', function(err){
+              var parseDateNTime = splitDateNTime[0]+' '+splitDateNTime[1];
+              var todoLog = '';
+              if (data.todoStatus == 'urgent') {
+                todoLog = 'INSERT into activity_logs(account_id, time, type, remarks) VALUES ('+req.session.Aid+',"'+currentTime+'", "urgentTodo", "Added to do urgent: '+data.description+'");';
+              } else if(data.todoStatus == 'general') {
+                todoLog = 'INSERT into activity_logs(account_id, time, type, remarks) VALUES ('+req.session.Aid+',"'+currentTime+'", "generalTodo", "Added to do general: '+data.description+'");';
+              }
+              var addTodo  = 'INSERT into todo_list (description, status,date, account_id) VALUES("'+data.description+'","'+data.todoStatus+'","'+parseDateNTime+'",'+req.session.Aid+');';
+              db.query(addTodo + todoLog, function(err){
                 if (err) {
                   console.log(err);
                 }
               });
               res.redirect(req.get('referer'));
+        } else if (data.sub == 'delToDo') {
+          var delTodo = 'DELETE FROM todo_list where todo_id = '+req.query.tId+';';
+          db.query(delTodo + 'INSERT into activity_logs(account_id, time, type, remarks) VALUES ('+req.session.Aid+',"'+moment(new Date()).format('YYYY-MM-DD HH:mm:ss')+'", "delTodo", "Deleted data from todo List");', function(err){
+            if (err) {
+              console.log(err);
+            }
+          });
+          res.redirect(req.get('referer'))
         }
       } else {
         res.redirect(req.session.sino+'/dashboard');
@@ -251,7 +262,7 @@ var fhSQL       = "SELECT name FROM family_history;";
     if(req.session.email && req.session.sino == 'nurse'){
       if (req.session.sino == 'nurse') {
         var profileInfoSQL  = 'SELECT * from user_accounts where account_id = '+req.session.Aid+';';
-        var activityLogsSQL = 'SELECT * from activity_logs where account_id = '+req.session.Aid+' ORDER by logs_id desc;';
+        var activityLogsSQL = 'SELECT * from activity_logs where account_id = '+req.session.Aid+' ORDER by logs_id desc LIMIT 5;';
         db.query(profileInfoSQL + activityLogsSQL, function(err, rows){
           if (err) {
             console.log(err);

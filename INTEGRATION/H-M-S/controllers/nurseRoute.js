@@ -37,7 +37,7 @@ var fhSQL       = "SELECT name FROM family_history;";
             if (err) {
               console.log(err);
             }
-            io.emit('type', {what:'assess',message:'Received Assessment for '+nameForEmit[1]+'.'});
+            io.emit('type', {what:'assess',message:'Received Assessment for '+nameForEmit[1]+', sent by Dr. <strong>'+req.session.name+'</strong>'});
           });
           res.redirect(req.get('referer'));
         } else if(data.sub == "add") {
@@ -228,9 +228,8 @@ var fhSQL       = "SELECT name FROM family_history;";
     if (req.session.email && req.session.sino == 'nurse') {
       if (req.session.sino == 'nurse') {
         var bedSQL = "SELECT b.bed_id, p.patient_type, p.name, b.status, b.allotment_timestamp from bed b LEFT JOIN patient p USING(patient_id); ";
-        var availPatient = 'SELECT * from patient where patient_id NOT IN (select patient_id from bed where status="occupied");';
-        db.query(bedSQL + availableBeds + availPatient, function(err, rows, fields){
-          res.render('nurse/bedManagement', {bedDetails:rows[0], availableBeds:rows[1], availPatient:rows[2], username:user});
+        db.query(bedSQL, function(err, rows, fields){
+          res.render('nurse/bedManagement', {bedDetails:rows, username:user});
         });
       } else {
         res.redirect(req.session.sino+'/dashboard');
@@ -243,25 +242,14 @@ var fhSQL       = "SELECT name FROM family_history;";
   app.post('/nurse/bedManagement', function(req, res){
     if(req.session.email && req.session.sino == 'nurse'){
       if(req.session.sino == 'nurse') {
-        if (data.sub == 'admit') {
-          var bedSQL = 'UPDATE bed set allotment_timestamp = "'+currentTime+'", patient_id = '+data.bedPatient+',status = "occupied" where bed_id = '+data.bedNumber+';';
-          db.query(bedSQL + 'INSERT into activity_logs(account_id, time, type, remarks, patient_id) VALUES ('+Aid+',"'+currentTime+'", "bed", "Alloted bed number: '+data.bedNumber+' to patient:'+req.query.name+'",'+data.bedPatient+');', function(err){
-            if (err) {
-              console.log(err);
-            } else {
-              res.redirect(req.get('referer'));
-            }
-          });
-        } else {
-          var dischargeSQL = "UPDATE bed SET status = 'Unoccupied', allotment_timestamp = NULL, patient_id = NULL where bed_id = "+req.query.bed+";";
-          var sql = db.query(dischargeSQL, function(err, rows, fields){
-            if(err){
-              console.log(err);
-            } else {
-              res.redirect(req.get('referer'));
-            }
-          });
-        }
+        var dischargeSQL = "UPDATE bed SET status = 'Unoccupied', allotment_timestamp = NULL, patient_id = NULL where bed_id = "+req.query.bed+";";
+        var sql = db.query(dischargeSQL, function(err, rows, fields){
+          if(err){
+            console.log(err);
+          } else {
+            res.redirect(req.get('referer'));
+          }
+        });
       } else {
         res.redirect(req.session.sino+'/dashboard');
       }

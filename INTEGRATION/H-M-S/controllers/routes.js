@@ -42,6 +42,7 @@ module.exports = function(app, db, currentTime, bcrypt){
                 req.session.sino = rows[0].account_type;
                 req.session.Aid = rows[0].account_id;
                 req.session.email = req.body.username;
+                req.session.name = rows[0].name;
                 req.session.password = rows[0].password;
                 db.query('INSERT into activity_logs(account_id, time, type, remarks) VALUES ('+req.session.Aid+',"'+currentTime+'", "log", "Logged in");', function(err){
                   if (err) {

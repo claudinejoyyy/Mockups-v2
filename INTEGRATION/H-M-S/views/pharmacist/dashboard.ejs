@@ -185,7 +185,7 @@
                   <%} else{%>
                   <small class="label label-danger"><i class="fa fa-clock-o"></i><%= moment(new Date(todoList[i].date)).format('YYYY-MM-DD HH:mm:ss')%></small>
                   <%}%>
-                  <form action="/nurse/dashboard?tId=<%= todoList[i].todo_id%>" method="POST">
+                  <form action="/pharmacist/dashboard?tId=<%= todoList[i].todo_id%>" method="POST">
                     <button type="submit" name="sub" value="delToDo">Delete</button>
                   </form>
                 </li>

@@ -1,4 +1,4 @@
-module.exports = function(app,db,currentTime,name,counts,chart,whoCurrentlyAdmitted,whoOPD,whoWARD,monthlyPatientCount,patientList,availableBeds,patientManagementSQL,bcrypt){
+module.exports = function(app,db,currentTime,name,counts,chart,whoCurrentlyAdmitted,whoOPD,whoWARD,monthlyPatientCount,patientList,availableBeds,patientManagementSQL,bcrypt,io,moment){
 var user, Aid;
 
 app.get('/admin/dashboard', function(req, res){
@@ -27,55 +27,55 @@ app.post('/admin/dashboard', function(req, res){
   var data = req.body;
   if(req.session.email && req.session.sino == 'admin'){
       if (req.session.sino == 'admin') {
-              if(data.sub == 'addTodo') {
+        if(data.sub == 'addTodo') {
+            var splitDateNTime = data.dateNtime.split('T');
+            var parseDate      = splitDateNTime[0];
+            var parseTime      = splitDateNTime[1] + ':00';
+            var parseDateNTime = parseDate+' '+parseTime;
+            var todoLog = '';
+            if (data.todoStatus == 'urgent') {
+              console.log('Added to urgent!!!!');
+              todoLog = 'INSERT into activity_logs(account_id, time, type, remarks) VALUES ('+req.session.Aid+',"'+currentTime+'", "urgentTodo", "Added to do urgent: '+data.description+'");';
+            } else if(data.todoStatus == 'general') {
+              console.log('Added to general!!!!');
+              todoLog = 'INSERT into activity_logs(account_id, time, type, remarks) VALUES ('+req.session.Aid+',"'+currentTime+'", "generalTodo", "Added to do general: '+data.description+'");';
+            }
+            var addTodo  = 'INSERT into todo_list (description, status,date, account_id) VALUES("'+data.description+'","'+data.todoStatus+'","'+parseDateNTime+'",'+req.session.Aid+');';
+            db.query(addTodo + todoLog, function(err){
+              if (err) {
+                console.log(err);
+              }
+            });
+            res.redirect(req.get('referer'));
+          } else if (data.sub == 'delToDo') {
+            var delTodo = 'DELETE FROM todo_list where todo_id = '+req.query.tId+';';
+            db.query(delTodo + 'INSERT into activity_logs(account_id, time, type, remarks) VALUES ('+req.session.Aid+',"'+moment(new Date()).format('YYYY-MM-DD HH:mm:ss')+'", "delTodo", "Deleted data from todo List");', function(err){
+              if (err) {
+                console.log(err);
+              }
+            });
+            res.redirect(req.get('referer'));
+
+          } else if(data.sub == 'appointment') {
                 var splitDateNTime = data.dateNtime.split('T');
                 var parseDate      = splitDateNTime[0];
                 var parseTime      = splitDateNTime[1] + ':00';
                 var parseDateNTime = parseDate+' '+parseTime;
-                var todoLog = '';
-                if (data.todoStatus == 'urgent') {
-                  console.log('Added to urgent!!!!');
-                  todoLog = 'INSERT into activity_logs(account_id, time, type, remarks) VALUES ('+req.session.Aid+',"'+currentTime+'", "urgentTodo", "Added to do urgent: '+data.description+'");';
-                } else if(data.todoStatus == 'general') {
-                  console.log('Added to general!!!!');
-                  todoLog = 'INSERT into activity_logs(account_id, time, type, remarks) VALUES ('+req.session.Aid+',"'+currentTime+'", "generalTodo", "Added to do general: '+data.description+'");';
-                }
-                var addTodo  = 'INSERT into todo_list (description, status,date, account_id) VALUES("'+data.description+'","'+data.todoStatus+'","'+parseDateNTime+'",'+req.session.Aid+');';
-                db.query(addTodo + todoLog, function(err){
+                var addAppointment = 'INSERT into appointment (doctor_id, patient_id, appointment_timestamp, remarks) VALUES ('+Aid+', '+data.appointmentPatientID+', "'+parseDateNTime+'", "'+data.appointmentRemarks+'");';
+                db.query(addAppointment + 'INSERT into activity_logs(account_id, time, type, remarks) VALUES ('+Aid+',"'+currentTime+'", "appointment", "Set Appointment with '+req.query.appointmentPatientName+' on '+parseDateNTime+'");', function(err){
                   if (err) {
                     console.log(err);
                   }
                 });
                 res.redirect(req.get('referer'));
-              } else if (data.sub == 'delToDo') {
-                var delTodo = 'DELETE FROM todo_list where todo_id = '+req.query.tId+';';
-                db.query(delTodo + 'INSERT into activity_logs(account_id, time, type, remarks) VALUES ('+req.session.Aid+',"'+moment(new Date()).format('YYYY-MM-DD HH:mm:ss')+'", "delTodo", "Deleted data from todo List");', function(err){
-                  if (err) {
-                    console.log(err);
-                  }
-                });
-                res.redirect(req.get('referer'))
+          }
 
-              } else if(data.sub == 'appointment') {
-                    var splitDateNTime = data.dateNtime.split('T');
-                    var parseDate      = splitDateNTime[0];
-                    var parseTime      = splitDateNTime[1] + ':00';
-                    var parseDateNTime = parseDate+' '+parseTime;
-                    var addAppointment = 'INSERT into appointment (doctor_id, patient_id, appointment_timestamp, remarks) VALUES ('+Aid+', '+data.appointmentPatientID+', "'+parseDateNTime+'", "'+data.appointmentRemarks+'");';
-                    db.query(addAppointment + 'INSERT into activity_logs(account_id, time, type, remarks) VALUES ('+Aid+',"'+currentTime+'", "appointment", "Set Appointment with '+req.query.appointmentPatientName+' on '+parseDateNTime+'");', function(err){
-                      if (err) {
-                        console.log(err);
-                      }
-                    });
-                    res.redirect(req.get('referer'));
-              }
-
-        } else {
-          res.redirect(req.session.sino + '/dashboard');
-        }
     } else {
-      res.redirect('../login');
-  }
+      res.redirect(req.session.sino + '/dashboard');
+    }
+} else {
+  res.redirect('../login');
+}
 });
 //PATIENT MANAGEMENT
 app.get('/admin/patientManagement', function(req, res){
@@ -124,6 +124,7 @@ app.get('/admin/patientManagement', function(req, res){
             console.log(err);
           } else {
             res.redirect(req.get('referer'));
+            res.render('admin/dashboard');
           }
         });
       } else {

@@ -1,4 +1,4 @@
-module.exports = function(app,db,currentTime,name,counts,chart,whoCurrentlyAdmitted,whoOPD,whoWARD,monthlyPatientCount,patientList,moment){
+module.exports = function(app,db,currentTime,name,counts,chart,whoCurrentlyAdmitted,whoOPD,whoWARD,monthlyPatientCount,patientList,io,moment){
 var user, Aid;
 
   app.get('/laboratorist/dashboard', function(req, res){
@@ -62,7 +62,7 @@ var user, Aid;
               console.log(err);
             }
           });
-          res.redirect(req.get('referer'))
+          res.redirect(req.get('referer'));
 
         } else if(data.sub == 'appointment') {
               var splitDateNTime = data.dateNtime.split('T');
@@ -108,16 +108,30 @@ res.redirect('../login');
     }
   });
   app.post('/laboratorist/labRequestManagement', function(req, res){
+    var data = req.body;
     if(req.session.email && req.session.sino == 'laboratorist'){
       if(req.session.sino == 'laboratorist') {
-        var confirmLabRequestSQL = 'UPDATE lab_request SET lab_status="confirmed" where request_id = '+req.query.requestId+' ORDER BY timestamp desc;';
-        db.query(confirmLabRequestSQL + 'INSERT into activity_logs(account_id, time, type, remarks) VALUES ('+Aid+',"'+currentTime+'", "confirmedLabRequest", "Confirmed lab request for: '+req.query.labrequestPatientName+'");', function(err){
-          if(err){
-            console.log(err);
-          } else {
-            res.redirect(req.get('referer'));
-          }
-        });
+        if (data == 'confirm') {
+          var confirmLabRequestSQL = 'UPDATE lab_request SET lab_status="confirmed" where request_id = '+req.query.requestId+' ORDER BY timestamp desc;';
+          db.query(confirmLabRequestSQL + 'INSERT into activity_logs(account_id, time, type, remarks) VALUES ('+Aid+',"'+currentTime+'", "confirmedLabRequest", "Confirmed lab request for: '+req.query.labrequestPatientName+'");', function(err){
+            if(err){
+              console.log(err);
+            } else {
+              io.emit('type', {what:'confirmedLabRequest',message:'Confirmed Lab Request for <strong>'+req.query.labrequestPatientName+'</strong>'});
+              res.redirect(req.get('referer'));
+            }
+          });
+        } else {
+          var cancelLabRequestSQL = 'DELETE FROM lab_request where request_id = '+req.query.requestId+';';
+          db.query(cancelLabRequestSQL + 'INSERT into activity_logs(account_id, time, type, remarks) VALUES ('+Aid+',"'+currentTime+'", "cancelLabRequest", "Cancelled lab request for: '+req.query.labrequestPatientName+'");', function(err){
+            if(err){
+              console.log(err);
+            } else {
+              io.emit('type', {what:'cancelLabRequest',message:'Cancelled Lab Request for <strong>'+req.query.labrequestPatientName+'</strong>'});
+              res.redirect(req.get('referer'));
+            }
+          });
+        }
       } else {
         res.redirect(req.session.sino+'/dashboard');
       }

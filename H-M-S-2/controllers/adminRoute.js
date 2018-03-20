@@ -27,26 +27,55 @@ app.post('/admin/dashboard', function(req, res){
   var data = req.body;
   if(req.session.email && req.session.sino == 'admin'){
       if (req.session.sino == 'admin') {
-            if(data.sub == 'addTodo') {
-                  var splitDateNTime = data.dateNtime.split('T');
-                  var parseDate      = splitDateNTime[0];
-                  var parseTime      = splitDateNTime[1] + ':00';
-                  var parseDateNTime = parseDate+' '+parseTime;
-
-                  var addTodo  = 'INSERT into todo_list (description, date, account_id) VALUES("'+data.description+'","'+parseDateNTime+'",'+Aid+');';
-                  db.query(addTodo + 'INSERT into activity_logs(account_id, time, type, remarks) VALUES ('+Aid+',"'+currentTime+'", "todo", "Added to To Do List the following: '+data.description+'");', function(err){
-                    if (err) {
-                      console.log(err);
-                    }
-                  });
-                  res.redirect(req.get('referer'));
+        if(data.sub == 'addTodo') {
+            var splitDateNTime = data.dateNtime.split('T');
+            var parseDate      = splitDateNTime[0];
+            var parseTime      = splitDateNTime[1] + ':00';
+            var parseDateNTime = parseDate+' '+parseTime;
+            var todoLog = '';
+            if (data.todoStatus == 'urgent') {
+              console.log('Added to urgent!!!!');
+              todoLog = 'INSERT into activity_logs(account_id, time, type, remarks) VALUES ('+req.session.Aid+',"'+currentTime+'", "urgentTodo", "Added to do urgent: '+data.description+'");';
+            } else if(data.todoStatus == 'general') {
+              console.log('Added to general!!!!');
+              todoLog = 'INSERT into activity_logs(account_id, time, type, remarks) VALUES ('+req.session.Aid+',"'+currentTime+'", "generalTodo", "Added to do general: '+data.description+'");';
             }
-      } else {
-        res.redirect(req.session.sino + '/dashboard');
-      }
-  } else {
-    res.redirect('../login');
-  }
+            var addTodo  = 'INSERT into todo_list (description, status,date, account_id) VALUES("'+data.description+'","'+data.todoStatus+'","'+parseDateNTime+'",'+req.session.Aid+');';
+            db.query(addTodo + todoLog, function(err){
+              if (err) {
+                console.log(err);
+              }
+            });
+            res.redirect(req.get('referer'));
+          } else if (data.sub == 'delToDo') {
+            var delTodo = 'DELETE FROM todo_list where todo_id = '+req.query.tId+';';
+            db.query(delTodo + 'INSERT into activity_logs(account_id, time, type, remarks) VALUES ('+req.session.Aid+',"'+moment(new Date()).format('YYYY-MM-DD HH:mm:ss')+'", "delTodo", "Deleted data from todo List");', function(err){
+              if (err) {
+                console.log(err);
+              }
+            });
+            res.redirect(req.get('referer'));
+
+          } else if(data.sub == 'appointment') {
+                var splitDateNTime = data.dateNtime.split('T');
+                var parseDate      = splitDateNTime[0];
+                var parseTime      = splitDateNTime[1] + ':00';
+                var parseDateNTime = parseDate+' '+parseTime;
+                var addAppointment = 'INSERT into appointment (doctor_id, patient_id, appointment_timestamp, remarks) VALUES ('+Aid+', '+data.appointmentPatientID+', "'+parseDateNTime+'", "'+data.appointmentRemarks+'");';
+                db.query(addAppointment + 'INSERT into activity_logs(account_id, time, type, remarks) VALUES ('+Aid+',"'+currentTime+'", "appointment", "Set Appointment with '+req.query.appointmentPatientName+' on '+parseDateNTime+'");', function(err){
+                  if (err) {
+                    console.log(err);
+                  }
+                });
+                res.redirect(req.get('referer'));
+          }
+
+    } else {
+      res.redirect(req.session.sino + '/dashboard');
+    }
+} else {
+  res.redirect('../login');
+}
 });
 //PATIENT MANAGEMENT
 app.get('/admin/patientManagement', function(req, res){
@@ -69,7 +98,7 @@ app.get('/admin/patientManagement', function(req, res){
     if(req.session.email && req.session.sino == 'admin'){
       if (req.session.sino == 'admin') {
         var profileInfoSQL  = 'SELECT * from user_accounts where account_id = '+req.session.Aid+';';
-        var activityLogsSQL = 'SELECT * from activity_logs where account_id = '+req.session.Aid+' ORDER by logs_id desc;';
+        var activityLogsSQL = 'SELECT * from activity_logs where account_id = '+req.session.Aid+' ORDER by logs_id desc LIMIT 5;';
         db.query(profileInfoSQL + activityLogsSQL, function(err, rows){
           if (err) {
             console.log(err);
