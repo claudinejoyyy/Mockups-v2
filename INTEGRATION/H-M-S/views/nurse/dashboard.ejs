@@ -118,7 +118,7 @@
             <div class="icon">
               <i class="ion ion-pie-graph"></i>
             </div>
-            <a onclick="OPD()" class="small-box-footer" data-toggle="modal" data-target="#myModal2">More info <i class="fa fa-arrow-circle-right" data-target="#myModal2"></i></a>
+            <a onclick="OPD()" class="small-box-footer" data-toggle="modal" data-target="#opdmodal">More info <i class="fa fa-arrow-circle-right" data-target="#opdmodal"></i></a>
           </div>
         </div>
 
@@ -432,12 +432,11 @@
                   </div>
                   <br>
                   <div class="modal-footer">
+                    <button type="submit" class="btn btn-primary" name="sub" onclick="validateRegistration()" value="add" value="validate">Save</button>
                     <button type="button" class="btn btn-default" onclick="resetForm()">Reset</button>
-                    <button type="submit" class="btn btn-primary" name="sub" onclick="validateRegistration()" value="add" value="validate">Confirm</button>
                   </div>
                 </form>
               </div>
-
           </div>
         </div>
       </div>
@@ -531,7 +530,7 @@
         <!------------------------------------------------------------------------------------------ /Modal-->
 
         <!---------------------------------------------------------------------------------------------- Modal of OPD ----------->
-        <div class="modal fade" id="myModal2" tabindex="-1" role="dialog" aria-labelledby="myModalLabel1" style="overflow:hidden;">
+        <div class="modal fade" id="opdmodal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel1" style="overflow:hidden;">
           <div class="modal-dialog" role="document" style="overflow-y: initial !important;">
             <div class="modal-content">
                   <div class="modal-header">
@@ -578,7 +577,7 @@
                     <tr>
                       <th>Date and Time of Confinement</th>
                       <th>Patient Name</th>
-                    </tr>   
+                    </tr>
                   </thead>
                     <%for (var i = 0; i < whoWARD.length; i++) { %>
                       <tr>
