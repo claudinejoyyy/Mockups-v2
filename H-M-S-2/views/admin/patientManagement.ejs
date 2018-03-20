@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Patient Management</title>
+    <style>
+        table {
+            font-family: arial, sans-serif;
+            border-collapse: collapse;
+            width: 100%;
+        }
+        td, th {
+            border: 1px solid #dddddd;
+            text-align: left;
+            padding: 8px;
+        }
+      </style>
+  </head>
+  <body>
+    <nav>
+      <a href="../admin/dashboard">dashboard</a><br>
+      <a href="../admin/patientManagement">patientManagement</a><br>
+      <a href="../admin/bedManagement">bedManagement</a><br>
+      <a href="../admin/userAccountsManagement">userAccountsManagement</a><br>
+      <a href="../admin/profileManagement">profile</a>
+    </nav>
+    <h1>Welcome to Patient Management Dr. <%= username[0].name %> !! <button><a href='../logout'>logout</a></button></h1>
+    <table>
+      <tr>
+          <th>Patient Type</th>
+          <th>Name</th>
+          <th>Age</th>
+          <th>Gender</th>
+          <th>Blood Type</th>
+      </tr>
+      <%
+      for(var i=0; i <p.length; i++){
+          var b = new Date(p[i].birth_date);
+      %>
+      <tr>
+        <td><%= p[i].patient_type %></td>
+        <td><%= p[i].name %></td>
+        <td><%= p[i].age %></td>
+        <td><%= p[i].sex %></td>
+        <td><%= p[i].blood_type %></td>
+      </tr>
+      <%}%>
+    </table>
+  </body>
+</html>

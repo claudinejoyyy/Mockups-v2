@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <%include ../partials/header.ejs%>
+    <script src="/notif-doctor.js"></script>
+
+    <title>Prescription Management</title>
+    <style media="screen">
+      table {
+        font-family: arial, sans-serif;
+        border-collapse: collapse;
+        width: 100%;
+      }
+
+      td, th {
+        border: 1px solid #dddddd;
+        text-align: left;
+        padding: 8px;
+      }
+
+      tr:nth-child(even) {
+        background-color: #dddddd;
+      }
+    </style>
+  </head>
+  <body>
+    <nav>
+      <a href="../doctor/dashboard">dashboard</a><br>
+      <a href="../doctor/bedManagement">bedManagement</a><br>
+      <a href="../doctor/patientManagement">patientManagement</a><br>
+      <a href="../doctor/outpatientManagement">outpatientManagement</a><br>
+      <a href="../doctor/appointmentManagement">appointmentManagement</a><br>
+      <a href="../doctor/prescriptionManagement">prescriptionManagement</a><br>
+      <a href="../doctor/labRequestManagement">labRequestManagement</a><br>
+      <a href="../doctor/profileManagement">profile</a>
+    </nav>
+    <table>
+      <tr>
+        <th>counter</th>
+        <th>Patient Type</th>
+        <th>Name</th>
+        <th>Date and Time</th>
+        <th>Age</th>
+        <th>Tests</th>
+        <th>Remarks</th>
+        <th>status</th>
+        <th>action</th>
+      </tr>
+      <%for (var i = 0; i < labrequestDetails.length; i++) {%>
+        <tr>
+          <td><%=i+1%></td>
+          <td><%=labrequestDetails[i].patient_type%></td>
+          <td><%=labrequestDetails[i].name%></td>
+          <td><%=labrequestDetails[i].timestamp%></td>
+          <td><%=labrequestDetails[i].age%></td>
+          <td><%=labrequestDetails[i].type%></td>
+          <td><%=labrequestDetails[i].remarks%></td>
+          <td><%=labrequestDetails[i].lab_status%></td>
+          <form action="/doctor/labRequestManagement?requestId=<%=labrequestDetails[i].request_id%>&labrequestPatientName=<%=labrequestDetails[i].name%>" method="post">
+            <td><button type="submit">cancel</button></td>
+          </form>
+        </tr>
+      <%}%>
+    </table>
+    <br>
+    <br>
+    <!-- CONFIRMED -->
+    <table>
+      <tr>
+        <th>counter</th>
+        <th>Patient Type</th>
+        <th>Name</th>
+        <th>Date and Time</th>
+        <th>Age</th>
+        <th>Tests</th>
+        <th>Remarks</th>
+        <th>status</th>
+      </tr>
+      <%for (var i = 0; i < confirmedLabRequestSQL.length; i++) {%>
+        <tr>
+          <td><%=i+1%></td>
+          <td><%=confirmedLabRequestSQL[i].patient_type%></td>
+          <td><%=confirmedLabRequestSQL[i].name%></td>
+          <td><%=confirmedLabRequestSQL[i].timestamp%></td>
+          <td><%=confirmedLabRequestSQL[i].age%></td>
+          <td><%=confirmedLabRequestSQL[i].type%></td>
+          <td><%=confirmedLabRequestSQL[i].remarks%></td>
+          <td><%=confirmedLabRequestSQL[i].lab_status%></td>
+        </tr>
+      <%}%>
+    </table>
+
+  </body>
+</html>

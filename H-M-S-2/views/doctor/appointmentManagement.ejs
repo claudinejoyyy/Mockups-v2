@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <%include ../partials/header.ejs%>
+    <script src="/notif-doctor.js"></script>
+
+    <title>Appointment Management</title>
+    <style media="screen">
+      table {
+        font-family: arial, sans-serif;
+        border-collapse: collapse;
+        width: 100%;
+      }
+
+      td, th {
+        border: 1px solid #dddddd;
+        text-align: left;
+        padding: 8px;
+      }
+
+      tr:nth-child(even) {
+        background-color: #dddddd;
+      }
+    </style>
+  </head>
+  <body>
+    <nav>
+      <a href="../doctor/dashboard">dashboard</a><br>
+      <a href="../doctor/bedManagement">bedManagement</a><br>
+      <a href="../doctor/patientManagement">patientManagement</a><br>
+      <a href="../doctor/outpatientManagement">outpatientManagement</a><br>
+      <a href="../doctor/appointmentManagement">appointmentManagement</a><br>
+      <a href="../doctor/prescriptionManagement">prescriptionManagement</a><br>
+      <a href="../doctor/labRequestManagement">labRequestManagement</a><br>
+      <a href="../doctor/profileManagement">profile</a>
+    </nav>
+    <table>
+      <tr>
+        <th>counter</th>
+        <th>Patient Type</th>
+        <th>Name</th>
+        <th>Date and Time</th>
+        <th>remarks</th>
+        <th>Action</th>
+      </tr>
+      <%for (var i = 0; i < appointmentDetails.length; i++) {%>
+        <tr>
+          <td><%=i+1%></td>
+          <td><%=appointmentDetails[i].patient_type%></td>
+          <td><%=appointmentDetails[i].name%></td>
+          <td><%=appointmentDetails[i].appointment_timestamp%></td>
+          <td><%=appointmentDetails[i].remarks%></td>
+          <form action="/doctor/appointmentManagement?appointmentId=<%=appointmentDetails[i].appointment_id%>&appointmentPatientName=<%=appointmentDetails[i].name%>" method="post">
+            <td><button type="submit">cancel</button></td>
+          </form>
+        </tr>
+      <%}%>
+    </table>
+
+  </body>
+</html>

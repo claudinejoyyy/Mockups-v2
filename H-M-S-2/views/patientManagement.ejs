@@ -1,0 +1,21 @@
+<table>
+  <tr>
+      <th>Patient Type</th>
+      <th>Name</th>
+      <th>Age</th>
+      <th>Gender</th>
+      <th>Blood Type</th>
+  </tr>
+  <%
+  for(var i=0; i <p.length; i++){
+      var b = new Date(p[i].birth_date);
+  %>
+  <tr>
+    <td><%= p[i].patient_type %></td>
+    <td><%= p[i].name %></td>
+    <td><%= p[i].age %></td>
+    <td><%= p[i].sex %></td>
+    <td><%= p[i].blood_type %></td>
+  </tr>
+  <%}%>
+</table>

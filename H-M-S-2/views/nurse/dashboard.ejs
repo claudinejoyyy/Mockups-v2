@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.0.4/socket.io.js"></script>
+    </script>
+    <title>Nurse</title>
+    <style>
+    table {
+        font-family: arial, sans-serif;
+        border-collapse: collapse;
+        width: 100%;
+    }
+    td, th {
+        border: 1px solid #dddddd;
+        text-align: left;
+        padding: 8px;
+        font-size: 15px;
+    }
+    </style>
+  </head>
+  <body>
+    <nav>
+      <a href="../nurse/dashboard">dashboard</a><br>
+      <a href="../nurse/bedManagement">bedManagement</a><br>
+      <a href="../nurse/patientManagement">patientManagement</a><br>
+      <a href="../nurse/profileManagement">profile</a>
+    </nav>
+    <h2 name='patient' value='<%= username[0].name %>' >Hello I'm the <%= username[0].name %> !! <button><a href='../logout'>logout</a></button></h2>
+    <h2>Total Registered Patients = <%= counts[0].totalRegisteredPatients%></h2>
+    <a href="/nurse/patientManagement"><button>more info</button></a><h2 style="display:inline-block;">Total Registered Patient = <%= counts[0].totalRegisteredPatients%></h2>
+    <br>
+    <a href="/nurse/bedManagement"><button>more Info</button></a><h2 style="display:inline;">Currently Admitted = <%= counts[0].currentlyAdmitted%></h2>
+    <h2><button onclick="OPD()">more Info</button>OPD COUNT = <%= counts[0].OPD%>
+      <div id="ShowOpd" style="display:none;">
+          <table>
+            <tr>
+              <th>name</th>
+              <th>date and time</th>
+            </tr>
+            <%for (var i = 0; i < whoOPD.length; i++) { %>
+              <tr>
+                <td><%= whoOPD[i].name%></td>
+                <td><%= whoOPD[i].time%></td>
+              </tr>
+            <%}%>
+          </table>
+      </div>
+    </h2>
+    <h2><button onclick="WARD()">more Info</button>WARD COUNT = <%= counts[0].WARD%>
+      <div id="ShowWard" style="display:none;">
+          <table>
+            <tr>
+              <th>name</th>
+              <th>date and time</th>
+            </tr>
+            <%for (var i = 0; i < whoWARD.length; i++) { %>
+              <tr>
+                <td><%= whoWARD[i].name%></td>
+                <td><%= whoWARD[i].time%></td>
+              </tr>
+            <%}%>
+          </table>
+      </div>
+    </h2>
+    <!-- COUNT PIE CHART -->
+    <h1>Patient Chart</h1>
+    <h2>patients = <%= counts[0].totalRegisteredPatients%></h2>
+    <h2>cadet = <%= chart[0].cadet%></h2>
+    <h2>military officer = <%= chart[0].military_officer%></h2>
+    <h2>military dependent = <%= chart[0].military_dependent%></h2>
+    <h2>civilian = <%= chart[0].civilian%></h2>
+    <h2>authorized civilian <%= chart[0].authorized_civilian%></h2>
+    <br>
+    <!-- COUNT MONTHLY -->
+    <h1>Patient Count</h1>
+    <%if(monthlyPatientCount[0].JAN) {%><h2>january <%= monthlyPatientCount[0].JAN%></h2><%}%>
+    <%if(monthlyPatientCount[0].FEB) {%><h2>february <%= monthlyPatientCount[0].FEB%></h2><%}%>
+    <%if(monthlyPatientCount[0].MARCH) {%><h2>MARCH <%= monthlyPatientCount[0].MARCH%></h2><%}%>
+    <%if(monthlyPatientCount[0].APRIL) {%><h2>APRIL <%= monthlyPatientCount[0].APRIL%></h2><%}%>
+    <%if(monthlyPatientCount[0].MAY) {%><h2>MAY <%= monthlyPatientCount[0].MAY%></h2><%}%>
+    <%if(monthlyPatientCount[0].JUNE) {%><h2>JUNE <%= monthlyPatientCount[0].JUNE%></h2><%}%>
+    <%if(monthlyPatientCount[0].JULY) {%><h2>JULY <%= monthlyPatientCount[0].JULY%></h2><%}%>
+    <%if(monthlyPatientCount[0].AUGUST) {%><h2>AUGUST <%= monthlyPatientCount[0].AUGUST%></h2><%}%>
+    <%if(monthlyPatientCount[0].SEPTEMBER) {%><h2>SEPTEMBER <%= monthlyPatientCount[0].SEPTEMBER%></h2><%}%>
+    <%if(monthlyPatientCount[0].OCTOBER) {%><h2>OCTOBER <%= monthlyPatientCount[0].OCTOBER%></h2><%}%>
+    <%if(monthlyPatientCount[0].NOVEMBER) {%><h2>NOVEMBER <%= monthlyPatientCount[0].NOVEMBER%></h2><%}%>
+    <%if(monthlyPatientCount[0].DECEMBER) {%><h2>DECEMBER <%= monthlyPatientCount[0].DECEMBER%></h2><%}%>
+    <br>
+    <!-- TO DO LIST -->
+    <h1>TO DO LIST</h1>
+
+    <button type="button" name="button" onclick="showTodo()">add item</button>
+    <br>
+    <%for(var i=0; i < todoList.length; i++){%>
+        <h3 style="display:inline-block;"><%= todoList[i].description%>:</h3> <h5 style="display:inline-block; font-style:italic;"><%= todoList[i].date%></h5>
+        <br>
+    <%}%>
+    <form method="POST" onsubmit="parseDateNTime()">
+      <div id="showTodo" style="display:none;">
+        <textarea name="description" rows="8" cols="80"></textarea>
+        <br>
+        <input type="datetime-local" name="dateNtime">
+        <button type="submit" name="sub" value="addTodo">save</button>
+      </div>
+    </form>
+    <!-- END OF DASHBOARD -->
+    <!-- FOR ADDING -->
+    <br>
+    <button onclick="showAdd()">add patient</button>
+    <form method='POST' id='modal2'  style="display:none;" onsubmit="showSuccess()">
+
+      <input type="text" name="name" placeholder="eg:Juan M. Dela Cruz"  >enter name<br>
+      <input type="text" name="rankSN">rank/serial number<br>
+      <input type="text" name="unit" >unit<br>
+      <input type="text" name="address"  >address<br>
+      <input type="text" name="religion">religion<br>
+      <input type="text" name="father">name of father
+      <input type="text" name="fatherO">occupation <br>
+      <input type="text" name="mother">name of mother
+      <input type="text" name="motherO">occupation <br>
+      <textarea name="allergies" rows="4" cols="40" placeholder="Allergies"></textarea> <br>
+      <textarea name="bh" rows="4" cols="40" placeholder="Birth History"></textarea> <br>
+      <select name="gender"  >
+        <option disabled selected value>Gender</option>
+        <option value="M">Male</option>
+        <option value="F">Female</option>
+      </select><br>
+      <select name="type"  >
+        <option disabled selected value>Patient Type</option>
+        <option value="cadet">Cadet</option>
+        <option value="military officer">Miltary Officer</option>
+        <option value="military dependent">Miltary Dependent</option>
+        <option value="civilian">Civilian</option>
+        <option value="authorized civilian">Authorized Civilian</option>
+      </select><br>
+      <select name="status"  >
+        <option selected value>Status</option>
+        <option value="Maried">Maried</option>
+        <option value="Single">Single</option>
+      </select><br>
+      <select name="blood">
+        <option selected value="">blood type</option>
+        <option value="A">A</option>
+        <option value="B">B</option>
+        <option value="AB">AB</option>
+        <option value="O">O</option>
+      </select><br>
+      <input type="date" name="birth"  >birth date<br>
+      <h3>Family History</h3>
+      <select id="fhName">
+        <option value="" selected></option>
+        <%for(var i=1; i <fh.length; i++){%>
+          <option value="<%= fh[i].name%>"><%= fh[i].name%></option>
+        <%}%>
+      </select>
+      <button type="button"  onclick="fhResult()">add</button>
+      <h5 style="opacity:0.7;" id="fhRes" name="family_history"></h5>
+      <!-- To fetch the data from the list of Family Histo -->
+      <input type="text" id="family_history" name="family_history" style="display:none;">
+      <br>
+      <h3>Immunization</h3>
+      <select id="immuName" onchange="showDate()">
+        <option value="" selected></option>
+        <%for(var i=1; i <immu.length; i++){%>
+          <option value="<%= immu[i].name%>"><%= immu[i].name%></option>
+        <%}%>
+      </select>
+      <input type="month" id="immuDate" style="display:none;">
+      <button type="button" id="addMore" style="display:none;" onclick="immuResult()">add</button>
+      <h5 style="opacity:0.7;" id="immuRes"></h5>
+      <!-- To fetch the data from the list of Immunization -->
+      <input type="text" id="immunization" name="immunization" style="display:none;">
+      <br>
+      <button type="submit" name="sub" value="add">save</button>
+      <button type="button" onclick="resetForm()">reset</button>
+    </form>
+    <br>
+    <!-- FOR NURSE INITIAL ACCESSMENT -->
+    <button onclick="showAccessment()">Accessment</button>
+    <form id="assessment" method="post" style="display:none;">
+      <!-- PATIENT !! -->
+      <h4 style="display:inline-block;">select a patient</h4>
+      <select name="assessmentPatient" style="display:inline-block;"  >
+        <%for(var i = 0; i < availablePatientOPD.length; i++){%>
+          <option  value="<%= availablePatientOPD[i].patient_id%>,<%= availablePatientOPD[i].name%>"><%= availablePatientOPD[i].name%></option>
+        <%}%>
+      </select>
+      <br>
+      <input type="text" name="BP"  >BP <br>
+      <input type="text" name="CR"  >CR <br>
+      <input type="text" name="PR"  >PR <br>
+      <input type="text" name="RR"  >RR <br>
+      <input type="text" name="temperature"  >Temperature <br>
+      <input type="text" name="Wt"  >Wt <br>
+      <!-- OTHERS!!! -->
+      <h4>Chief Complaints</h4>
+      <textarea name="assessment" rows="8" cols="80"  ></textarea>
+      <select name="assessmentDoctor"  >
+        <%for(var i = 0; i < doctorList.length; i++){%>
+          <option value="<%= doctorList[i].account_id%>"><%= doctorList[i].name%></option>
+        <%}%>
+      </select>
+      <button type="submit" name="sub" value="assessment" onclick="linkAssessment(<%= availablePatientOPD[i].name%>)">send</button>
+    </form>
+    <h1><%= err%></h1>
+
+  </body>
+</html>
+<script>
+  function showAdd() {
+    document.getElementById("modal2").style.display = "block";
+  }
+  function showDate() {
+    document.getElementById("immuDate").style.display = "inline-block";
+    document.getElementById("addMore").style.display = "inline-block";
+  }
+ function showSuccess() {
+    alert('success');
+  }
+  function immuResult() {
+    var e = document.getElementById("immuName");
+    var immu = e.options[e.selectedIndex].value;
+    var immuDate = document.getElementById("immuDate").value;
+    document.getElementById("immuRes").innerHTML += immu + immuDate + "<br>";
+    document.getElementById("immunization").value += immu +":"+ immuDate + ",";
+  }
+  function fhResult() {
+    var e = document.getElementById("fhName");
+    var fh = e.options[e.selectedIndex].value;
+    document.getElementById("fhRes").innerHTML += fh + "<br>";
+    document.getElementById("family_history").value += fh + ",";
+  }
+  function resetForm() {
+    document.getElementById("modal2").reset();
+    document.getElementById("assessment").reset();
+    document.getElementById("immuRes").innerHTML = "";
+  }
+  function showAccessment() {
+    document.getElementById("assessment").style.display = "block";
+  }
+  function showTodo() {
+    document.getElementById("showTodo").style.display = "block";
+  }
+  function linkAssessment(name) {
+    document.getElementById('assessment').action = '/nurse/dashboard?assessmentPatient='+name+'';
+  }
+  function OPD() {
+    document.getElementById('ShowOpd').style.display = 'block';
+  }
+  function WARD() {
+    document.getElementById('ShowWard').style.display = 'block';
+  }
+</script>

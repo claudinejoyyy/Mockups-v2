@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <%include ../partials/header.ejs%>
+    <script src="/notif-doctor.js"></script>
+    <title>Doctor Dashboard</title>
+    <style>
+    table {
+        font-family: arial, sans-serif;
+        border-collapse: collapse;
+        width: 100%;
+    }
+    td, th {
+        border: 1px solid #dddddd;
+        text-align: left;
+        padding: 8px;
+        font-size: 15px;~
+    }
+    </style>
+  </head>
+  <body>
+    <nav>
+      <a href="../doctor/dashboard">dashboard</a><br>
+      <a href="../doctor/bedManagement">bedManagement</a><br>
+      <a href="../doctor/patientManagement">patientManagement</a><br>
+      <a id="OPD" href="../doctor/outpatientManagement">outpatientManagement</a><br>
+      <a href="../doctor/appointmentManagement">appointmentManagement</a><br>
+      <a href="../doctor/prescriptionManagement">prescriptionManagement</a><br>
+      <a href="../doctor/labRequestManagement">labRequestManagement</a><br>
+      <a href="../doctor/profileManagement">profile</a>
+    </nav>
+    <h2>Hello I'm the <%= username[0].name %> !! <button><a href='../logout'>logout</a></button></h2>
+    <a href="/doctor/patientManagement"><button>more Info</button></a><h2 style="display:inline-block;">Total Registered Patients = <%= counts[0].totalRegisteredPatients%></h2>
+    <br>
+    <a href="/doctor/bedManagement" ><button>more Info</button></a><h2 style="display:inline;">Currently Admitted = <%= counts[0].currentlyAdmitted%></h2>
+    <h2><button onclick="OPD()">more Info</button>OPD COUNT = <%= counts[0].OPD%>
+      <div id="ShowOpd" style="display:none;">
+          <table>
+            <tr>
+              <th>name</th>
+              <th>date and time</th>
+            </tr>
+            <%for (var i = 0; i < whoOPD.length; i++) { %>
+              <tr>
+                <td><%= whoOPD[i].name%></td>
+                <td><%= whoOPD[i].time%></td>
+              </tr>
+            <%}%>
+          </table>
+      </div>
+    </h2>
+    <h2><button onclick="WARD()">more Info</button>WARD COUNT = <%= counts[0].WARD%>
+      <div id="ShowWard" style="display:none;">
+          <table>
+            <tr>
+              <th>name</th>
+              <th>date and time</th>
+            </tr>
+            <%for (var i = 0; i < whoWARD.length; i++) { %>
+              <tr>
+                <td><%= whoWARD[i].name%></td>
+                <td><%= whoWARD[i].time%></td>
+              </tr>
+            <%}%>
+          </table>
+      </div>
+    </h2>
+    <!-- COUNT PIE CHART -->
+    <h1>Patient Chart</h1>
+    <h2>patients = <%= counts[0].totalRegisteredPatients%></h2>
+    <h2>cadet = <%= chart[0].cadet%></h2>
+    <h2>military officer = <%= chart[0].military_officer%></h2>
+    <h2>military dependent = <%= chart[0].military_dependent%></h2>
+    <h2>civilian = <%= chart[0].civilian%></h2>
+    <h2>authorized civilian <%= chart[0].authorized_civilian%></h2>
+    <br>
+    <!-- COUNT MONTHLY -->
+    <h1>Patient Count</h1>
+    <%if(monthlyPatientCount[0].JAN) {%><h2>january <%= monthlyPatientCount[0].JAN%></h2><%}%>
+    <%if(monthlyPatientCount[0].FEB) {%><h2>february <%= monthlyPatientCount[0].FEB%></h2><%}%>
+    <%if(monthlyPatientCount[0].MARCH) {%><h2>february <%= monthlyPatientCount[0].MARCH%></h2><%}%>
+    <%if(monthlyPatientCount[0].APRIL) {%><h2>february <%= monthlyPatientCount[0].APRIL%></h2><%}%>
+    <%if(monthlyPatientCount[0].MAY) {%><h2>february <%= monthlyPatientCount[0].MAY%></h2><%}%>
+    <%if(monthlyPatientCount[0].JUNE) {%><h2>february <%= monthlyPatientCount[0].JUNE%></h2><%}%>
+    <%if(monthlyPatientCount[0].JULY) {%><h2>february <%= monthlyPatientCount[0].JULY%></h2><%}%>
+    <%if(monthlyPatientCount[0].AUGUST) {%><h2>february <%= monthlyPatientCount[0].AUGUST%></h2><%}%>
+    <%if(monthlyPatientCount[0].SEPTEMBER) {%><h2>february <%= monthlyPatientCount[0].SEPTEMBER%></h2><%}%>
+    <%if(monthlyPatientCount[0].OCTOBER) {%><h2>february <%= monthlyPatientCount[0].OCTOBER%></h2><%}%>
+    <%if(monthlyPatientCount[0].NOVEMBER) {%><h2>february <%= monthlyPatientCount[0].NOVEMBER%></h2><%}%>
+    <%if(monthlyPatientCount[0].DECEMBER) {%><h2>february <%= monthlyPatientCount[0].DECEMBER%></h2><%}%>
+    <br>
+    <!-- TO DO LIST -->
+    <h1>TO DO LIST</h1>
+
+    <button type="button" name="button" onclick="showTodo()">add item</button>
+    <br>
+    <%for(var i=0; i < todoList.length; i++){%>
+        <h3 style="display:inline-block;"><%= todoList[i].description%>:</h3> <h5 style="display:inline-block; font-style:italic;"><%= todoList[i].date%></h5>
+        <br>
+    <%}%>
+    <form method="POST" name="parseDateNTime()">
+      <div id="showTodo" style="display:none;">
+        <textarea name="description" rows="8" cols="80"></textarea>
+        <br>
+        <input type="datetime-local" name="dateNtime">
+        <button type="submit" name="sub" value="addTodo">save</button>
+      </div>
+    </form>
+    <form action="/doctor/dashboard?appointmentPatientName=<%= patientList[i].name%>" method="post">
+      <button type="button" onclick="showAppointmentForm()">set appointment</button>
+      <div id="showAppointmentForm" style='display:none;'>
+        <select name="appointmentPatientID"class="" name="">
+          <%for(var i = 0; i < patientList.length; i++){%>
+            <option value="<%= patientList[i].patient_id%>"><%= patientList[i].name%></option>
+          <%}%>
+        </select>
+        <input type="datetime-local" name="dateNtime">
+        <br>
+        <textarea name="appointmentRemarks" rows="8" cols="80"></textarea>
+        <button type="submit" name="sub" value="appointment">add</button>
+      </div>
+    </form>
+    <!-- END OF DASHBOARD -->
+
+  </body>
+</html>
+<script>
+
+  // if (document.getElementById('assess').value) {
+  //   console.log('may laman');
+  // } else {
+  //   console.log('walang laman');
+  // }
+// $(document).bind('DOMSubtreeModified', function () {
+//   if ($("#assess").val()) {
+//     console.log('may laman');
+//   } else if ($("#iba").val()) {
+//     console.log('may laman pero iba');
+//   } else {
+//     console.log($("#assess").val());
+//     console.log($("#iba").val());
+//     console.log('maymali');
+//   }
+// });
+
+
+ function showSuccess() {
+    alert("Success !!");
+  }
+  function resetForm() {
+    document.getElementById("modal2").reset();
+    document.getElementById("immuRes").innerHTML = "";
+  }
+  function showAssessment() {
+    document.getElementById("assessment").style.display = "block";
+  }
+  function showTodo() {
+    document.getElementById("showTodo").style.display = "block";
+  }
+  function showAppointmentForm() {
+    document.getElementById("showAppointmentForm").style.display = "block";
+  }
+  function OPD() {
+    document.getElementById('ShowOpd').style.display = 'block';
+  }
+  function WARD() {
+    document.getElementById('ShowWard').style.display = 'block';
+  }
+</script>

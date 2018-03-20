@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Bed Management</title>
+  </head>
+  <body>
+    <a href="../nurse/dashboard">dashboard</a><br>
+    <a href="../nurse/bedManagement">bedManagement</a><br>
+    <a href="../nurse/patientManagement">patientManagement</a><br>
+    <a href="../nurse/profileManagement">profile</a>
+    <table>
+      <tr>
+        <th>Bed Number</th>
+        <th>patient Type</th>
+        <th>Patient Name</th>
+        <th>Status</th>
+        <th>Confinement Date</th>
+        <th>Actions</th>
+      </tr>
+
+      <%for(var i=0; i < bedDetails.length; i++){%>
+      <tralign="center">
+        <td><%= bedDetails[i].bed_id%></td>
+        <td><%= bedDetails[i].patient_type%></td>
+        <td><%= bedDetails[i].name%></td>
+        <td><%= bedDetails[i].status%></td>
+        <%
+        var DT = moment(bedDetails[i].allotment_timestamp).format('YYYY-MM-DD HH:mm:ss');
+        if(DT == 'Invalid date'){%>
+          <td></td>
+        <%} else {%>
+          <td><%= DT%></td>
+        <%}%>
+        <%if(bedDetails[i].name){%>
+          <form action="/nurse/bedManagement?bed=<%= bedDetails[i].bed_id%>" method="POST">
+            <td><button>discharge</button></td>
+          </form>
+        <%}%>
+      </tr>
+      <%}%>
+    </table>
+  </body>
+</html>
+<script>
+  function discharge(bedID){
+    console.log(bedID);
+     document.getElementById('dis').value = bedID;
+     console.log(document.getElementById('dis').value);
+  }
+</script>

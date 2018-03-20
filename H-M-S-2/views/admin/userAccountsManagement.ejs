@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <meta charset="utf-8">
+    <title>Patient Management</title>
+    <style>
+        table {
+            font-family: arial, sans-serif;
+            border-collapse: collapse;
+            width: 100%;
+        }
+        td, th {
+            border: 1px solid #dddddd;
+            text-align: left;
+            padding: 8px;
+        }
+      </style>
+  </head>
+  <body>
+    <nav>
+      <a href="../admin/dashboard">dashboard</a><br>
+      <a href="../admin/patientManagement">patientManagement</a><br>
+      <a href="../admin/bedManagement">bedManagement</a><br>
+      <a href="../admin/userAccountsManagement">userAccountsManagement</a><br>
+      <a href="../admin/profileManagement">profile</a>
+    </nav>
+    <h1>Welcome to Patient Management Dr. <%= username[0].name %> !! <button><a href='../logout'>logout</a></button></h1>
+    <%- messages('message', locals) %>
+    <button type="button" onclick="showCreateUser()">create user</button>
+
+    <form method="post" id="showCreateUser" style="display:none;">
+      <select name="type">
+        <option value="doctor">doctor</option>
+        <option value="nurse">nurse</option>
+      </select> <br>
+      <select name="gender">
+        <option value="M">Male</option>
+        <option value="F">Female</option>
+      </select> <br>
+      <input type="username" name="user">username <br>
+      <input type="password" name="pass">password <br>
+      <input type="text" name="name">name <br>
+      <input type="date" name="birth">birth date <br>
+      <input type="text" name="phone" maxlength="10">phone number <br>
+      <input type="text" name="address">address <br>
+      <button type="submit" name="sub" value="add">add user</button>
+    </form>
+    <table>
+      <tr>
+        <th>#</th>
+        <th>Position</th>
+        <th>Name</th>
+        <th>Age</th>
+        <th>Gender</th>
+        <th>Last Login</th>
+        <th>action</th>
+      </tr>
+      <%
+      for(var i=0; i <p.length; i++){
+          var b = new Date(p[i].birth_date);
+      %>
+      <tr>
+        <td><%=i+1%></td>
+        <td><%= p[i].account_type %></td>
+        <td><%= p[i].name %></td>
+        <td><%= p[i].age %></td>
+        <td><%= p[i].sex %></td>
+        <%if(p[i].last_Login){%>
+          <td><%= p[i].last_Login %></td>
+        <%} else {%>
+          <td style="color:green; font-weight: bold;">new user</td>
+        <%}%>
+        <td>
+          <form action="/admin/userAccountsManagement?name=<%=p[i].name%>&account=<%=p[i].account_id%>" method="post">
+            <button type="submit" name="sub" value="remove">remove</button>
+          </form>
+        </td>
+      </tr>
+      <%}%>
+    </table>
+  </body>
+</html>
+<script type="text/javascript">
+  function  showCreateUser() {
+    document.getElementById('showCreateUser').style.display = 'block';
+  }
+</script>

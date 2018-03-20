@@ -1,0 +1,762 @@
+<!DOCTYPE html>
+<!--
+This is a starter template page. Use this page to start your new project from
+scratch. This page gets rid of all links and provides the needed markup only.
+-->
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>Information Desk | Patient Management</title>
+  <!-- Tell the browser to be responsive to screen width -->
+  <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+  <!-- Bootstrap 3.3.6 -->
+  <link rel="stylesheet" href="../bootstrap/css/bootstrap.min.css">
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.5.0/css/font-awesome.min.css">
+  <!-- Ionicons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/ionicons/2.0.1/css/ionicons.min.css">
+  <!-- Theme style -->
+  <link rel="stylesheet" href="../dist/css/AdminLTE.min.css">
+  <!-- AdminLTE Skins. We have chosen the skin-blue for this starter
+        page. However, you can choose any other skin. Make sure you
+        apply the skin class to the body tag so the changes take effect.
+  -->
+  <link rel="stylesheet" href="../dist/css/skins/skin-blue.min.css">
+      <!-- DataTables -->
+  <link rel="stylesheet" href="../plugins/datatables/dataTables.bootstrap.css">
+
+  <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+  <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+  <!--[if lt IE 9]>
+  <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
+  <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+  <![endif]-->
+</head>
+<!--
+BODY TAG OPTIONS:
+=================
+Apply one or more of the following classes to get the
+desired effect
+|---------------------------------------------------------|
+| SKINS         | skin-blue                               |
+|               | skin-black                              |
+|               | skin-purple                             |
+|               | skin-yellow                             |
+|               | skin-red                                |
+|               | skin-green                              |
+|---------------------------------------------------------|
+|LAYOUT OPTIONS | fixed                                   |
+|               | layout-boxed                            |
+|               | layout-top-nav                          |
+|               | sidebar-collapse                        |
+|               | sidebar-mini                            |
+|---------------------------------------------------------|
+-->
+<body class="hold-transition skin-blue sidebar-mini fixed">
+<div class="wrapper">
+
+  <!-- Main Header -->
+  <header class="main-header">
+
+    <!-- Logo -->
+    <a href="index2.html" class="logo">
+      <!-- mini logo for sidebar mini 50x50 pixels -->
+      <span class="logo-mini"><b>ID</b></span>
+      <!-- logo for regular state and mobile devices -->
+      <span class="logo-lg"><b>Information Desk</b></span>
+    </a>
+
+    <!-- Header Navbar -->
+    <nav class="navbar navbar-static-top" role="navigation">
+      <!-- Sidebar toggle button-->
+      <a href="#" class="sidebar-toggle" data-toggle="offcanvas" role="button">
+        <span class="sr-only">Toggle navigation</span>
+      </a>
+      <!-- Navbar Right Menu -->
+      <div class="navbar-custom-menu">
+        <ul class="nav navbar-nav">
+          <!-- Messages: style can be found in dropdown.less-->
+          <!-- User Account Menu -->
+          <li class="dropdown user user-menu">
+            <!-- Menu Toggle Button -->
+            <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+              <!-- The user image in the navbar-->
+              <img src="../dist/img/avatar.png" class="user-image" alt="User Image">
+              <!-- hidden-xs hides the username on small devices so only the image appears. -->
+              <span class="hidden-xs">Pringles Sy</span>
+            </a>
+            <ul class="dropdown-menu">
+              <!-- The user image in the menu -->
+              <li class="user-header">
+                <img src="../dist/img/avatar.png" class="img-circle" alt="User Image">
+
+                <p>
+                  Pringles Sy - Nurse
+                  <small>Member since April 2014</small>
+                </p>
+              </li>
+
+              <!-- Menu Footer-->
+              <li class="user-footer">
+                <div class="pull-left">
+                  <a href="idprofile.html" class="btn btn-default btn-flat">Profile</a>
+                </div>
+                <div class="pull-right">
+                  <a href="#" class="btn btn-default btn-flat">Sign out</a>
+                </div>
+              </li>
+            </ul>
+          </li>
+          <!-- Control Sidebar Toggle Button -->
+        </ul>
+      </div>
+    </nav>
+  </header>
+  <!-- Left side column. contains the logo and sidebar -->
+  <aside class="main-sidebar">
+
+    <!-- sidebar: style can be found in sidebar.less -->
+    <section class="sidebar">
+
+      <!-- Sidebar user panel (optional) -->
+      <div class="user-panel">
+        <div class="pull-left image">
+          <img src="../dist/img/avatar.png" class="img-circle" alt="User Image">
+        </div>
+        <div class="pull-left info">
+          <p>Pringles Sy</p>
+          <a href="#"><i class="fa fa-circle text-success"></i> Online</a>
+        </div>
+      </div>
+
+      <!-- search form (Optional) -->
+      <form action="#" method="get" class="sidebar-form">
+        <div class="input-group">
+          <input type="text" name="q" class="form-control" placeholder="Search...">
+              <span class="input-group-btn">
+                <button type="submit" name="search" id="search-btn" class="btn btn-flat"><i class="fa fa-search"></i>
+                </button>
+              </span>
+        </div>
+      </form>
+      <!-- /.search form -->
+
+      <!-- Sidebar Menu -->
+      <ul class="sidebar-menu">
+        <li><a href="iddashboard.html"><i class="fa fa-link"></i> <span>Dashboard</span></a></li>
+        <li class="active"><a href="patientmanagement.html" target="_self"><i class="fa fa-link"></i> <span>Patient Management</span></a></li>
+      </ul>
+      <!-- /.sidebar-menu -->
+    </section>
+    <!-- /.sidebar -->
+  </aside>
+
+  <!-- Content Wrapper. Contains page content -->
+  <div class="content-wrapper">
+    <!-- Content Header (Page header) -->
+    <section class="content-header">
+      <h1>
+        Patient Management
+        <small>List of Registered Patients</small>
+      </h1>
+<!--
+      <ol class="breadcrumb">
+        <li><a href="#"><i class="fa fa-dashboard"></i> Level</a></li>
+        <li class="active">Here</li>
+      </ol>
+-->
+    </section>
+
+    <!-- Main content -->
+    <section class="content">
+
+       <div class="row">
+        <div class="col-xs-12">
+          <!-- /.box -->
+
+          <div class="box">
+            <div class="box-header">
+            </div>
+            <!-- /.box-header -->
+            <div class="box-body">
+              <table id="example1" class="table table-bordered table-striped">
+                <thead>
+                <tr>
+                  <th>#</th>
+                  <th>Patient Type</th>
+                  <th>Name</th>
+                  <th>Age</th>
+                  <th>Gender</th>
+                  <th>Blood Type</th>
+                  <th>Action</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr>
+                  <td>1</td>
+                  <td>Military Officer</td>
+                  <td>Greg Chicoine</td>
+                  <td>28</td>
+                  <td>Male</td>
+                  <td>AB</td>
+                  <td align="center"><a href="idprofile.html" class="fa fa-fw fa-folder-open" title="View Profile"></a>&nbsp&nbsp<a href="" class="fa fa-fw fa-archive" title="Archive Patient Profile"></a></td>
+                </tr>
+                <tr>
+                  <td>2</td>
+                  <td>Military Cadet</td>
+                  <td>Shad Gaulding</td>
+                  <td>29</td>
+                  <td>Male</td>
+                  <td>A</td>
+                  <td align="center"><a href="idprofile.html" class="fa fa-fw fa-folder-open" title="View Profile"></a>&nbsp&nbsp<a href="" class="fa fa-fw fa-archive" title="Archive Patient Profile"></a></td>
+                </tr>
+                <tr>
+                  <td>3</td>
+                  <td>Military Dependent</td>
+                  <td>Booker Ludlum</td>
+                  <td>27</td>
+                  <td>Male</td>
+                  <td>O</td>
+                  <td align="center"><a href="idprofile.html" class="fa fa-fw fa-folder-open" title="View Profile"></a>&nbsp&nbsp<a href="" class="fa fa-fw fa-archive" title="Archive Patient Profile"></a></td>
+                </tr>
+                <tr>
+                  <td>4</td>
+                  <td>Civilian Employee</td>
+                  <td>Loyd Isett</td>
+                  <td>28</td>
+                  <td>Male</td>
+                  <td>B</td>
+                  <td align="center"><a href="idprofile.html" class="fa fa-fw fa-folder-open" title="View Profile"></a>&nbsp&nbsp<a href="" class="fa fa-fw fa-archive" title="Archive Patient Profile"></a></td>
+                </tr>
+                <tr>
+                  <td>5</td>
+                  <td>Authorized Civilian</td>
+                  <td>Anastacia Haithcock</td>
+                  <td>27</td>
+                  <td>Female</td>
+                  <td>AB</td>
+                  <td align="center"><a href="idprofile.html" class="fa fa-fw fa-folder-open" title="View Profile"></a>&nbsp&nbsp<a href="" class="fa fa-fw fa-archive" title="Archive Patient Profile"></a></td>
+                </tr>
+                <tr>
+                  <td>6</td>
+                  <td>Military Officer</td>
+                  <td>Pat Reedy</td>
+                  <td>28</td>
+                  <td>Male</td>
+                  <td>AB</td>
+                  <td align="center"><a href="idprofile.html" class="fa fa-fw fa-folder-open" title="View Profile"></a>&nbsp&nbsp<a href="" class="fa fa-fw fa-archive" title="Archive Patient Profile"></a></td>
+                </tr>
+                <tr>
+                  <td>7</td>
+                  <td>Military Cadet</td>
+                  <td>Janice Kouba</td>
+                  <td>29</td>
+                  <td>Female</td>
+                  <td>A</td>
+                  <td align="center"><a href="idprofile.html" class="fa fa-fw fa-folder-open" title="View Profile"></a>&nbsp&nbsp<a href="" class="fa fa-fw fa-archive" title="Archive Patient Profile"></a></td>
+                </tr>
+                <tr>
+                  <td>8</td>
+                  <td>Military Dependent</td>
+                  <td>Dalia Tallant</td>
+                  <td>27</td>
+                  <td>Female</td>
+                  <td>O</td>
+                  <td align="center"><a href="idprofile.html" class="fa fa-fw fa-folder-open" title="View Profile"></a>&nbsp&nbsp<a href="" class="fa fa-fw fa-archive" title="Archive Patient Profile"></a></td>
+                </tr>
+                <tr>
+                  <td>9</td>
+                  <td>Civilian Employee</td>
+                  <td>Henriette Bastien</td>
+                  <td>28</td>
+                  <td>Female</td>
+                  <td>B</td>
+                  <td align="center"><a href="idprofile.html" class="fa fa-fw fa-folder-open" title="View Profile"></a>&nbsp&nbsp<a href="" class="fa fa-fw fa-archive" title="Archive Patient Profile"></a></td>
+                </tr>
+                <tr>
+                  <td>10</td>
+                  <td>Authorized Civilian</td>
+                  <td>Johnna Bland</td>
+                  <td>27</td>
+                  <td>Female</td>
+                  <td>AB</td>
+                  <td align="center"><a href="idprofile.html" class="fa fa-fw fa-folder-open" title="View Profile"></a>&nbsp&nbsp<a href="" class="fa fa-fw fa-archive" title="Archive Patient Profile"></a></td>
+                </tr>
+                <tr>
+                  <td>11</td>
+                  <td>Military Officer</td>
+                  <td>Helen Zaremba</td>
+                  <td>28</td>
+                  <td>Female</td>
+                  <td>AB</td>
+                  <td align="center"><a href="idprofile.html" class="fa fa-fw fa-folder-open" title="View Profile"></a>&nbsp&nbsp<a href="" class="fa fa-fw fa-archive" title="Archive Patient Profile"></a></td>
+                </tr>
+                <tr>
+                  <td>12</td>
+                  <td>Military Cadet</td>
+                  <td>Leeanna Dunson</td>
+                  <td>29</td>
+                  <td>Female</td>
+                  <td>A</td>
+                  <td align="center"><a href="idprofile.html" class="fa fa-fw fa-folder-open" title="View Profile"></a>&nbsp&nbsp<a href="" class="fa fa-fw fa-archive" title="Archive Patient Profile"></a></td>
+                </tr>
+                <tr>
+                  <td>13</td>
+                  <td>Military Dependent</td>
+                  <td>Deloris Boes</td>
+                  <td>27</td>
+                  <td>Female</td>
+                  <td>O</td>
+                  <td align="center"><a href="idprofile.html" class="fa fa-fw fa-folder-open" title="View Profile"></a>&nbsp&nbsp<a href="" class="fa fa-fw fa-archive" title="Archive Patient Profile"></a></td>
+                </tr>
+                <tr>
+                  <td>14</td>
+                  <td>Civilian Employee</td>
+                  <td>Evelina Mcray</td>
+                  <td>28</td>
+                  <td>Female</td>
+                  <td>B</td>
+                  <td align="center"><a href="idprofile.html" class="fa fa-fw fa-folder-open" title="View Profile"></a>&nbsp&nbsp<a href="" class="fa fa-fw fa-archive" title="Archive Patient Profile"></a></td>
+                </tr>
+                <tr>
+                  <td>15</td>
+                  <td>Authorized Civilian</td>
+                  <td>Shakita Bellinger</td>
+                  <td>27</td>
+                  <td>Female</td>
+                  <td>AB</td>
+                  <td align="center"><a href="idprofile.html" class="fa fa-fw fa-folder-open" title="View Profile"></a>&nbsp&nbsp<a href="" class="fa fa-fw fa-archive" title="Archive Patient Profile"></a></td>
+                </tr>
+                <tr>
+                  <td>16</td>
+                  <td>Military Officer</td>
+                  <td>Minnie Deramus</td>
+                  <td>28</td>
+                  <td>Female</td>
+                  <td>AB</td>
+                  <td align="center"><a href="idprofile.html" class="fa fa-fw fa-folder-open" title="View Profile"></a>&nbsp&nbsp<a href="" class="fa fa-fw fa-archive" title="Archive Patient Profile"></a></td>
+                </tr>
+                <tr>
+                  <td>17</td>
+                  <td>Military Cadet</td>
+                  <td>Teena Gordillo</td>
+                  <td>29</td>
+                  <td>Female</td>
+                  <td>A</td>
+                  <td align="center"><a href="idprofile.html" class="fa fa-fw fa-folder-open" title="View Profile"></a>&nbsp&nbsp<a href="" class="fa fa-fw fa-archive" title="Archive Patient Profile"></a></td>
+                </tr>
+                <tr>
+                  <td>18</td>
+                  <td>Military Dependent</td>
+                  <td>Leola Gutierres</td>
+                  <td>27</td>
+                  <td>Female</td>
+                  <td>O</td>
+                  <td align="center"><a href="idprofile.html" class="fa fa-fw fa-folder-open" title="View Profile"></a>&nbsp&nbsp<a href="" class="fa fa-fw fa-archive" title="Archive Patient Profile"></a></td>
+                </tr>
+                <tr>
+                  <td>19</td>
+                  <td>Civilian Employee</td>
+                  <td>Rupert Saban</td>
+                  <td>28</td>
+                  <td>Male</td>
+                  <td>B</td>
+                  <td align="center"><a href="idprofile.html" class="fa fa-fw fa-folder-open" title="View Profile"></a>&nbsp&nbsp<a href="" class="fa fa-fw fa-archive" title="Archive Patient Profile"></a></td>
+                </tr>
+                <tr>
+                  <td>20</td>
+                  <td>Authorized Civilian</td>
+                  <td>Eileen Quimby</td>
+                  <td>27</td>
+                  <td>Female</td>
+                  <td>AB</td>
+                  <td align="center"><a href="idprofile.html" class="fa fa-fw fa-folder-open" title="View Profile"></a>&nbsp&nbsp<a href="" class="fa fa-fw fa-archive" title="Archive Patient Profile"></a></td>
+                </tr>
+                <tr>
+                  <td>21</td>
+                  <td>Military Officer</td>
+                  <td>Jose Beecroft</td>
+                  <td>28</td>
+                  <td>Male</td>
+                  <td>AB</td>
+                  <td align="center"><a href="idprofile.html" class="fa fa-fw fa-folder-open" title="View Profile"></a>&nbsp&nbsp<a href="" class="fa fa-fw fa-archive" title="Archive Patient Profile"></a></td>
+                </tr>
+                <tr>
+                  <td>22</td>
+                  <td>Military Cadet</td>
+                  <td>Rene Chess</td>
+                  <td>29</td>
+                  <td>Male</td>
+                  <td>A</td>
+                  <td align="center"><a href="idprofile.html" class="fa fa-fw fa-folder-open" title="View Profile"></a>&nbsp&nbsp<a href="" class="fa fa-fw fa-archive" title="Archive Patient Profile"></a></td>
+                </tr>
+                <tr>
+                  <td>23</td>
+                  <td>Military Dependent</td>
+                  <td>Rufina Spiker</td>
+                  <td>27</td>
+                  <td>Female</td>
+                  <td>O</td>
+                  <td align="center"><a href="idprofile.html" class="fa fa-fw fa-folder-open" title="View Profile"></a>&nbsp&nbsp<a href="" class="fa fa-fw fa-archive" title="Archive Patient Profile"></a></td>
+                </tr>
+                <tr>
+                  <td>24</td>
+                  <td>Civilian Employee</td>
+                  <td>Halina Seago</td>
+                  <td>28</td>
+                  <td>Female</td>
+                  <td>B</td>
+                  <td align="center"><a href="idprofile.html" class="fa fa-fw fa-folder-open" title="View Profile"></a>&nbsp&nbsp<a href="" class="fa fa-fw fa-archive" title="Archive Patient Profile"></a></td>
+                </tr>
+                <tr>
+                  <td>25</td>
+                  <td>Authorized Civilian</td>
+                  <td>Lily Bonn</td>
+                  <td>27</td>
+                  <td>Female</td>
+                  <td>AB</td>
+                  <td align="center"><a href="idprofile.html" class="fa fa-fw fa-folder-open" title="View Profile"></a>&nbsp&nbsp<a href="" class="fa fa-fw fa-archive" title="Archive Patient Profile"></a></td>
+                </tr>
+                <tr>
+                  <td>26</td>
+                  <td>Military Officer</td>
+                  <td>Shantell Tyndall</td>
+                  <td>28</td>
+                  <td>Female</td>
+                  <td>AB</td>
+                  <td align="center"><a href="idprofile.html" class="fa fa-fw fa-folder-open" title="View Profile"></a>&nbsp&nbsp<a href="" class="fa fa-fw fa-archive" title="Archive Patient Profile"></a></td>
+                </tr>
+                <tr>
+                  <td>27</td>
+                  <td>Military Cadet</td>
+                  <td>Eliza Clingman</td>
+                  <td>29</td>
+                  <td>Female</td>
+                  <td>A</td>
+                  <td align="center"><a href="idprofile.html" class="fa fa-fw fa-folder-open" title="View Profile"></a>&nbsp&nbsp<a href="" class="fa fa-fw fa-archive" title="Archive Patient Profile"></a></td>
+                </tr>
+                <tr>
+                  <td>28</td>
+                  <td>Military Dependent</td>
+                  <td>Aide Stow</td>
+                  <td>27</td>
+                  <td>Female</td>
+                  <td>O</td>
+                  <td align="center"><a href="idprofile.html" class="fa fa-fw fa-folder-open" title="View Profile"></a>&nbsp&nbsp<a href="" class="fa fa-fw fa-archive" title="Archive Patient Profile"></a></td>
+                </tr>
+                <tr>
+                  <td>29</td>
+                  <td>Civilian Employee</td>
+                  <td>Huey Tomko</td>
+                  <td>28</td>
+                  <td>Male</td>
+                  <td>B</td>
+                  <td align="center"><a href="idprofile.html" class="fa fa-fw fa-folder-open" title="View Profile"></a>&nbsp&nbsp<a href="" class="fa fa-fw fa-archive" title="Archive Patient Profile"></a></td>
+                </tr>
+                <tr>
+                  <td>30</td>
+                  <td>Authorized Civilian</td>
+                  <td>Bettina Sherwood</td>
+                  <td>27</td>
+                  <td>Female</td>
+                  <td>AB</td>
+                  <td align="center"><a href="idprofile.html" class="fa fa-fw fa-folder-open" title="View Profile"></a>&nbsp&nbsp<a href="" class="fa fa-fw fa-archive" title="Archive Patient Profile"></a></td>
+                </tr>
+                <tr>
+                  <td>31</td>
+                  <td>Military Officer</td>
+                  <td>Truman Lipe</td>
+                  <td>28</td>
+                  <td>Male</td>
+                  <td>AB</td>
+                  <td align="center"><a href="idprofile.html" class="fa fa-fw fa-folder-open" title="View Profile"></a>&nbsp&nbsp<a href="" class="fa fa-fw fa-archive" title="Archive Patient Profile"></a></td>
+                </tr>
+                <tr>
+                  <td>32</td>
+                  <td>Military Cadet</td>
+                  <td>Gordon Lager</td>
+                  <td>29</td>
+                  <td>Male</td>
+                  <td>A</td>
+                  <td align="center"><a href="idprofile.html" class="fa fa-fw fa-folder-open" title="View Profile"></a>&nbsp&nbsp<a href="" class="fa fa-fw fa-archive" title="Archive Patient Profile"></a></td>
+                </tr>
+                <tr>
+                  <td>33</td>
+                  <td>Military Dependent</td>
+                  <td>Carolina Lamarre</td>
+                  <td>27</td>
+                  <td>Female</td>
+                  <td>O</td>
+                  <td align="center"><a href="idprofile.html" class="fa fa-fw fa-folder-open" title="View Profile"></a>&nbsp&nbsp<a href="" class="fa fa-fw fa-archive" title="Archive Patient Profile"></a></td>
+                </tr>
+                <tr>
+                  <td>34</td>
+                  <td>Civilian Employee</td>
+                  <td>Ramiro Moncayo</td>
+                  <td>28</td>
+                  <td>Male</td>
+                  <td>B</td>
+                  <td align="center"><a href="idprofile.html" class="fa fa-fw fa-folder-open" title="View Profile"></a>&nbsp&nbsp<a href="" class="fa fa-fw fa-archive" title="Archive Patient Profile"></a></td>
+                </tr>
+                <tr>
+                  <td>35</td>
+                  <td>Authorized Civilian</td>
+                  <td>Terrilyn Sheilds</td>
+                  <td>27</td>
+                  <td>Female</td>
+                  <td>AB</td>
+                  <td align="center"><a href="idprofile.html" class="fa fa-fw fa-folder-open" title="View Profile"></a>&nbsp&nbsp<a href="" class="fa fa-fw fa-archive" title="Archive Patient Profile"></a></td>
+                </tr>
+                <tr>
+                  <td>36</td>
+                  <td>Military Dependent</td>
+                  <td>Loise Abramson</td>
+                  <td>27</td>
+                  <td>Female</td>
+                  <td>O</td>
+                  <td align="center"><a href="idprofile.html" class="fa fa-fw fa-folder-open" title="View Profile"></a>&nbsp&nbsp<a href="" class="fa fa-fw fa-archive" title="Archive Patient Profile"></a></td>
+                </tr>
+                <tr>
+                  <td>37</td>
+                  <td>Authorized Civilian</td>
+                  <td>Maudie Nathan</td>
+                  <td>27</td>
+                  <td>Female</td>
+                  <td>AB</td>
+                  <td align="center"><a href="idprofile.html" class="fa fa-fw fa-folder-open" title="View Profile"></a>&nbsp&nbsp<a href="" class="fa fa-fw fa-archive" title="Archive Patient Profile"></a></td>
+                </tr>
+                <tr>
+                  <td>38</td>
+                  <td>Military Dependent</td>
+                  <td>Madeleine Riggio</td>
+                  <td>27</td>
+                  <td>Female</td>
+                  <td>O</td>
+                  <td align="center"><a href="idprofile.html" class="fa fa-fw fa-folder-open" title="View Profile"></a>&nbsp&nbsp<a href="" class="fa fa-fw fa-archive" title="Archive Patient Profile"></a></td>
+                </tr>
+                <tr>
+                  <td>39</td>
+                  <td>Authorized Civilian</td>
+                  <td>Keila Alden</td>
+                  <td>27</td>
+                  <td>Female</td>
+                  <td>AB</td>
+                  <td align="center"><a href="idprofile.html" class="fa fa-fw fa-folder-open" title="View Profile"></a>&nbsp&nbsp<a href="" class="fa fa-fw fa-archive" title="Archive Patient Profile"></a></td>
+                </tr>
+                <tr>
+                  <td>40</td>
+                  <td>Authorized Civilian</td>
+                  <td>Keith Tanner</td>
+                  <td>27</td>
+                  <td>Male</td>
+                  <td>AB</td>
+                  <td align="center"><a href="idprofile.html" class="fa fa-fw fa-folder-open" title="View Profile"></a>&nbsp&nbsp<a href="" class="fa fa-fw fa-archive" title="Archive Patient Profile"></a></td>
+                </tr>
+                <!-- <tfoot>
+                <tr>
+                  <th>#</th>
+                  <th>Patient Type</th>
+                  <th>Name</th>
+                  <th>Age</th>
+                  <th>Gender</th>
+                  <th>Blood Type</th>
+                </tr>
+                </tfoot> -->
+              </table>
+            </div>
+            <!-- /.box-body -->
+          </div>
+          <!-- /.box -->
+        </div>
+        <!-- /.col -->
+      </div>
+
+        <!---------------------------------------------------------------------------------------------- Modal of Adding new patient ----------->
+        <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+          <div class="modal-dialog" role="document">
+            <div class="modal-content">
+              <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="myModalLabel">Add New Patient</h4>
+              </div>
+              <div class="modal-body">
+                <form class="form-horizontal">
+
+                  <div class="form-group">
+                    <label for="inputPatientType" class="col-sm-2 control-label">Patient Type</label>
+                      <div class="col-sm-10">
+                        <select class="form-control">
+                            <option>Cadet</option>
+                            <option>Military Officer</option>
+                            <option>Civilian Employee</option>
+                            <option>Authorized Civilian</option>
+                          </select>
+                        </div>
+                  </div>
+
+                  <div class="form-group">
+                    <label for="inputName" class="col-sm-2 control-label">Name</label>
+                    <div class="col-sm-10">
+                      <input type="text" class="form-control" id="inputName" value="">
+                    </div>
+                  </div>
+
+                  <div class="form-group">
+                    <label for="inputRankOrAfpsn" class="col-sm-2 control-label">Rank/Serial Number</label>
+                    <div class="col-sm-4">
+                      <input type="text" class="form-control" id="inputRankOrAfpsn" value="">
+                    </div>
+                    <label for="inputUnit" class="col-sm-2 control-label">Unit</label>
+                    <div class="col-sm-4">
+                      <input type="text" class="form-control" id="inputUnit" value="">
+                    </div>
+                  </div>
+
+                  <div class="form-group">
+                    <label for="inputBirthdate" class="col-sm-2 control-label">Birthdate</label>
+                    <div class="col-sm-4">
+                      <input type="date" class="form-control datepicker" id="datepicker">
+                    </div>
+                    <label for="inputGender" class="col-sm-2 control-label">Sex</label>
+                    <div class="col-sm-4">
+                      <select class="form-control">
+                          <option>Male</option>
+                          <option>Female</option>
+                      </select>
+                    </div>
+                  </div>
+
+                  <div class="form-group">
+                    <label for="inputStatus" class="col-sm-2 control-label">Status</label>
+                    <div class="col-sm-4">
+                      <select class="form-control">
+                          <option>Single</option>
+                          <option>Married</option>
+                          <option>Widowed</option>
+                      </select>
+                    </div>
+                    <label for="inputRelihion" class="col-sm-2 control-label">Religion</label>
+                    <div class="col-sm-4">
+                      <input type="text" class="form-control" id="inputReligion" value="">
+                    </div>
+                  </div>
+
+                  <div class="form-group">
+                    <label for="inputAddress" class="col-sm-2 control-label">Address</label>
+                    <div class="col-sm-10">
+                      <input type="text" class="form-control" id="inputAddress" value="">
+                    </div>
+                  </div>
+
+                  <div class="form-group">
+                    <label for="inputFather" class="col-sm-2 control-label">Name of Father</label>
+                    <div class="col-sm-4">
+                      <input type="text" class="form-control" id="inputFather" value="">
+                    </div>
+                    <label for="inputFOccupation" class="col-sm-2 control-label">Occupation</label>
+                    <div class="col-sm-4">
+                      <input type="text" class="form-control" id="inputFOccupation" value="">
+                    </div>
+                  </div>
+
+                  <div class="form-group">
+                    <label for="inputMother" class="col-sm-2 control-label">Name of Mother</label>
+                    <div class="col-sm-4">
+                      <input type="text" class="form-control" id="inputMother" value="">
+                    </div>
+                    <label for="inputMOccupation" class="col-sm-2 control-label">Occupation</label>
+                    <div class="col-sm-4">
+                      <input type="text" class="form-control" id="inputMOccupation" value="">
+                    </div>
+                  </div>
+
+                  <div class="form-group">
+                    <label for="inputBloodType" class="col-sm-2 control-label">Blood Type</label>
+                    <div class="col-sm-4">
+                      <select class="form-control">
+                        <option>A</option>
+                        <option>B</option>
+                        <option>AB</option>
+                        <option>O</option>
+                      </select>
+                    </div>
+                    <label for="inputBirthHist" class="col-sm-2 control-label">Birth History</label>
+                    <div class="col-sm-4">
+                      <input type="email" class="form-control" id="inputBirthHist" value="">
+                    </div>
+                  </div>
+
+                  <div class="form-group">
+                    <label for="inputAllergies" class="col-sm-2 control-label">Allergies</label>
+                    <div class="col-sm-10">
+                      <input type="text" class="form-control" id="inputAllergies" value="">
+                    </div>
+                  </div>
+
+              <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+                <button type="button" class="btn btn-primary">Add</button>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!------------------------------------------------------------------------------------------ /Modal-->
+
+    </section>
+    <!-- /.content -->
+  </div>
+  <!-- /.content-wrapper -->
+
+  <!-- Main Footer -->
+  <footer class="main-footer">
+    <!-- To the right -->
+    <div class="pull-right hidden-xs">
+      <b>Version</b> 1
+    </div>
+    <strong>Copyright &copy; 2018.</strong> Philippine Military Academy | Fort Del Pilar Station Hospital | All rights reserved.
+  </footer>
+
+
+  <!-- /.control-sidebar -->
+  <!-- Add the sidebar's background. This div must be placed
+       immediately after the control sidebar -->
+  <div class="control-sidebar-bg"></div>
+</div>
+<!-- ./wrapper -->
+
+<!-- REQUIRED JS SCRIPTS -->
+
+<!-- jQuery 2.2.3 -->
+<script src="../plugins/jQuery/jquery-2.2.3.min.js"></script>
+<!-- Bootstrap 3.3.6 -->
+<script src="../bootstrap/js/bootstrap.min.js"></script>
+<!-- AdminLTE App -->
+<script src="../dist/js/app.min.js"></script>
+<!-- DataTables -->
+<script src="../plugins/datatables/jquery.dataTables.min.js"></script>
+<script src="../plugins/datatables/dataTables.bootstrap.min.js"></script>
+<!-- SlimScroll -->
+<script src="../plugins/slimScroll/jquery.slimscroll.min.js"></script>
+<!-- FastClick -->
+<script src="../plugins/fastclick/fastclick.js"></script>
+
+<script>
+  $(function () {
+    $("#example1").DataTable();
+    $('#example2').DataTable({
+      "paging": true,
+      "lengthChange": false,
+      "searching": false,
+      "ordering": true,
+      "info": true,
+      "autoWidth": true
+    });
+  });
+</script>
+<!-- Optionally, you can add Slimscroll and FastClick plugins.
+     Both of these plugins are recommended to enhance the
+     user experience. Slimscroll is required when using the
+     fixed layout. -->
+</body>
+</html>

@@ -1,0 +1,562 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>Patient Management</title>
+  <% include ../partials/header.ejs %>
+  <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+
+  <script src="../plugins/jQuery/jquery-2.2.3.min.js"></script>
+<!-- jQuery UI 1.11.4 -->
+<script src="https://code.jquery.com/ui/1.11.4/jquery-ui.min.js"></script>
+<!-- Resolve conflict in jQuery UI tooltip with Bootstrap tooltip -->
+<script>
+  $.widget.bridge('uibutton', $.ui.button);
+</script>
+<!-- Select2 -->
+<script src="../plugins/select2/select2.full.min.js"></script>
+<!-- Bootstrap 3.3.6 -->
+<script src="../bootstrap/js/bootstrap.min.js"></script>
+<!-- Morris.js charts -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/raphael/2.1.0/raphael-min.js"></script>
+<script src="../plugins/morris/morris.min.js"></script>
+<!-- Sparkline -->
+<script src="../plugins/sparkline/jquery.sparkline.min.js"></script>
+<!-- jvectormap -->
+<script src="../plugins/jvectormap/jquery-jvectormap-1.2.2.min.js"></script>
+<script src="../plugins/jvectormap/jquery-jvectormap-world-mill-en.js"></script>
+<!-- jQuery Knob Chart -->
+<script src="../plugins/knob/jquery.knob.js"></script>
+<!-- daterangepicker -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.11.2/moment.min.js"></script>
+<script src="../plugins/daterangepicker/daterangepicker.js"></script>
+<!-- datepicker -->
+<script src="../plugins/datepicker/bootstrap-datepicker.js"></script>
+<!-- Bootstrap WYSIHTML5 -->
+<script src="../plugins/bootstrap-wysihtml5/bootstrap3-wysihtml5.all.min.js"></script>
+<!-- Slimscroll -->
+<script src="../plugins/slimScroll/jquery.slimscroll.min.js"></script>
+<!-- FastClick -->
+<script src="../plugins/fastclick/fastclick.js"></script>
+<!-- AdminLTE App -->
+<script src="../dist/js/app.min.js"></script>
+<!-- AdminLTE for demo purposes -->
+<script src="../dist/js/demo.js"></script>
+<!-- FLOT CHARTS -->
+<script src="../plugins/flot/jquery.flot.min.js"></script>
+<!-- FLOT RESIZE PLUGIN - allows the chart to redraw when the window is resized -->
+<script src="../plugins/flot/jquery.flot.resize.min.js"></script>
+<!-- FLOT PIE PLUGIN - also used to draw donut charts -->
+<script src="../plugins/flot/jquery.flot.pie.min.js"></script>
+<!-- FLOT CATEGORIES PLUGIN - Used to draw bar charts -->
+<script src="../plugins/flot/jquery.flot.categories.min.js"></script>
+<script src="../plugins/chartjs/Chart.min.js"></script>
+
+</head>
+<body class="hold-transition skin-blue fixed sidebar-mini">
+<div class="wrapper">
+  <header class="main-header">
+    <a href="../nurse/dashboard" class="logo">
+      <span class="logo-mini"><b><%= username[0].account_type.charAt(0).toUpperCase()%></b></span>
+      <span class="logo-lg"><b><%= username[0].account_type.charAt(0).toUpperCase() + username[0].account_type.slice(1);%></b></span>
+    </a>
+    <nav class="navbar navbar-static-top" role="navigation">
+      <a href="#" class="sidebar-toggle" data-toggle="offcanvas" role="button">
+        <span class="sr-only">Toggle navigation</span>
+      </a>
+      <div class="navbar-custom-menu">
+        <ul class="nav navbar-nav">
+          <li class="dropdown user user-menu">
+            <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+              <img src="../dist/img/avatar2.png" class="user-image" alt="User Image">
+              <span class="hidden-xs"><%= username[0].name %></span>
+            </a>
+            <ul class="dropdown-menu">
+              <li class="user-header">
+                <img src="../dist/img/avatar2.png" class="img-circle" alt="User Image">
+                <p>
+                  <%= username[0].name %> - <%= username[0].account_type.charAt(0).toUpperCase() + username[0].account_type.slice(1);%>
+                  <small>Member since April 2014</small>
+                </p>
+              </li>
+              <li class="user-footer">
+                <div class="pull-left">
+                  <a href='"nurseprofile.html"' class="btn btn-default btn-flat">Profile</a>
+                </div>
+                <div class="pull-right">
+                  <a href='../logout' class="btn btn-default btn-flat">Sign out</a>
+                </div>
+              </li>
+            </ul>
+          </li>
+        </ul>
+      </div>
+    </nav>
+  </header>
+
+  <aside class="main-sidebar">
+    <section class="sidebar">
+      <div class="user-panel">
+        <div class="pull-left image">
+          <img src="../dist/img/avatar2.png" class="img-circle" alt="User Image">
+        </div>
+        <div class="pull-left info">
+          <p><%= username[0].name %></p>
+          <a href="#"><i class="fa fa-circle text-success"></i> Online</a>
+        </div>
+      </div>
+      <form action="#" method="get" class="sidebar-form">
+        <div class="input-group">
+          <input type="text" name="q" class="form-control" placeholder="Search...">
+              <span class="input-group-btn">
+                <button type="submit" name="search" id="search-btn" class="btn btn-flat"><i class="fa fa-search"></i>
+                </button>
+              </span>
+        </div>
+      </form>
+    <ul class="sidebar-menu">
+        <li><a href="../nurse/dashboard"><i class="fa fa-dashboard"></i> <span>Dashboard</span></a></li>
+        <li class="active"><a href="../nurse/patientmanagement" target="_self"><i class="fa fa-users"></i> <span>Patient Management</span></a></li>
+        <li><a href="../nurse/bedmanagement"><i class="fa fa-bed"></i> <span>Bed Management</span></a></li>
+        <li><a href="../nurse/profilemanagement"><i class="fa fa-info"></i> <span>Profile Management</span></a></li>
+    </ul>
+    </section>
+  </aside>
+
+  <div class="content-wrapper">
+    <section class="content-header">
+      <h1>
+        Patient Management
+        <small>List of Registered Patients</small>
+      </h1>
+    </section>
+
+    <section class="content">
+       <div class="row">
+        <div class="col-xs-12">
+          <div class="box">
+            <div class="box-header">
+              <a onclick="showAdd()" class ="btn btn-default btn-sm" data-toggle="modal" data-target="#myModal"><i class="fa fa-plus" data-target="#myModal"></i> Register Patient</a>
+          </div>
+          <div class="box-body">
+            <table id="example1" class="table table-bordered table-striped">
+              <thead>
+                <tr>
+                  <th>Patient Type</th>
+                  <th>Name</th>
+                  <th>Age</th>
+                  <th>Gender</th>
+                  <th>Blood Type</th>
+                  <th>Latest Medicine Taken</th>
+                  <th>Action</th>
+                </tr>
+              </thead>
+                <%
+                for(var i=0; i <p.length; i++){
+                    var b = new Date(p[i].birth_date);
+                %>
+                <tr>
+                  <td><%= p[i].patient_type %></td>
+                  <td><%= p[i].name %></td>
+                  <td><%= p[i].age %></td>
+                  <!-- <td><%= p[i].unit %></td> -->
+                  <td><%= p[i].sex %></td>
+                  <!-- <td><%= p[i].status %></td> -->
+                  <!-- <td><%= b.toLocaleDateString() %></td> -->
+                  <!-- <td><%= p[i].address %></td> -->
+                  <!-- <td><%= p[i].religion %></td> -->
+                  <td><%= p[i].blood_type %></td>
+                  <!-- <td><%= p[i].allergies %></td> -->
+                  <!-- <td><%= p[i].father %></td> -->
+                  <!-- <td><%= p[i].mother %></td> -->
+                  <!-- <td><%= p[i].birth_history %></td> -->
+                  <!-- <td><%= p[i].rankORsn %></td> -->
+                  <!-- <td><%= p[i].immunization %></td> -->
+                  <!-- <td><%= p[i].family_history %></td> -->
+                  <td><%= p[i].medicines%></td>
+                  <td><button type="button" name="button" onclick="PasswordInput(<%= p[i].patient_id %>)">view</button></td>
+                </tr>
+                <%}%>
+              </table>
+
+              <%if(p2){%>
+                <br>
+                <h2>Ito dapat modal lang din, lagyan nyu nalang ng exit na button</h2>
+                <a href="/nurse/patientManagement"><button type="button" name="button">exit</button></a>
+                <br>
+                <table>
+                  <tr>
+                      <th>Patient Type</th>
+                      <th>Name</th>
+                      <th>Age</th>
+                      <th>Unit </th>
+                      <th>Gender</th>
+                      <th>Status</th>
+                      <th>Birth Date</th>
+                      <th>Address</th>
+                      <th>Religion</th>
+                      <th>Blood Type</th>
+                      <th>Allergies</th>
+                      <th>Father</th>
+                      <th>Mother</th>
+                      <th>Birth History</th>
+                      <th>Rank</th>
+                      <th>Immunization</th>
+                      <th>Family History</th>
+                  </tr>
+                  <%
+                  for(var i=0; i <p2.length; i++){
+                      var b = new Date(p2[i].birth_date);
+                  %>
+                  <tr>
+                    <td><%= p2[i].patient_type %></td>
+                    <td><%= p2[i].name %></td>
+                    <td><%= p2[i].age %></td>
+                    <td><%= p2[i].unit %></td>
+                    <td><%= p2[i].sex %></td>
+                    <td><%= p2[i].status %></td>
+                    <td><%= b.toLocaleDateString() %></td>
+                    <td><%= p2[i].address %></td>
+                    <td><%= p2[i].religion %></td>
+                    <td><%= p2[i].blood_type %></td>
+                    <td><%= p2[i].allergies %></td>
+                    <td><%= p2[i].father %></td>
+                    <td><%= p2[i].mother %></td>
+                    <td><%= p2[i].birth_history %></td>
+                    <td><%= p2[i].rankORsn %></td>
+                    <td><%= p2[i].immunization %></td>
+                    <td><%= p2[i].family_history %></td>
+                  </tr>
+                  <%}%>
+                </table>
+              <%}%>
+
+              <div id="PasswordInput" style="display:none">
+                <form id="dynamicActionPassword" method="post">
+                  Password: <input type="password" name="patientPassword">
+                  <button type="submit" name="sub" value="pass">enter</button>
+                </form>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!---------------------------------------------------------------------------------------------- Modal of Adding new patient ----------->
+      <style>
+        .parsley-error{
+          border-color: red;
+        }
+
+      </style>
+
+      <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+        <div class="modal-dialog" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+              <h4 class="modal-title" id="myModalLabel">Add New Patient</h4>
+            </div>
+            <div class="modal-body">
+              <form method='POST' id='modal2'  style="display:none;" onsubmit="showSuccess()" class="form-group" data-parsley-validate=""  data-parsley-trigger="keyup">
+
+                <div class="form group">
+                  <label for="type" class="col-sm-2 control-label" disabled>Patient Type</label>
+                    <div class="col-sm-10">
+                      <select class="form-control" name="type" required>
+                        <option value="cadet">Cadet</option>
+                        <option value="military officer">Miltary Officer</option>
+                        <option value="military dependent">Miltary Dependent</option>
+                        <option value="civilian">Civilian Employee</option>
+                        <option value="authorized civilian">Authorized Civilian</option>
+                      </select>
+                    </div>
+                  </div>
+                  <br>
+                  <br>
+                  <br>
+
+                  <div class="form-group">
+                    <label for="name" class="col-sm-2 control-label">Name</label>
+                    <div class="col-sm-10">
+                      <input type="text" class="form-control" id="name" name="name" data-parsley-required data-parsley-pattern="/^[A-Za-z\s .]+$/">
+                    </div>
+                  </div>
+                  <br>
+                  <br>
+
+                  <div class="form-group">
+                    <label for="rankSN" class="col-sm-2 control-label">Rank/Serial Number</label>
+                    <div class="col-sm-4">
+                      <input type="text" class="form-control" id="rankSN" name="rankSN" data-parsley-pattern="/^[O0-9\s -]+$/">
+                    </div>
+                    <label for="unit" class="col-sm-2 control-label">Unit</label>
+                    <div class="col-sm-4">
+                      <input type="text" class="form-control" id="unit" name="unit" data-parsley-pattern="/^[0-9A-Za-z\s -]+$/">
+                    </div>
+                  </div>
+                  <br>
+                  <br>
+
+                  <div class="form-group">
+                    <label for="inputBirthdate" class="col-sm-2 control-label">Birthdate</label>
+                    <div class="col-sm-4">
+                      <input type="date" class="form-control datepicker" name="birth" id="birth" data-parsley-required>
+                    </div>
+                    <label for="gender" class="col-sm-2 control-label" disabled>Gender</label>
+                    <div class="col-sm-4">
+                      <select class="form-control" name="gender">
+                          <option value="M">Male</option>
+                          <option value="F">Female</option>
+                      </select>
+                    </div>
+                  </div>
+                  <br>
+                  <br>
+
+                  <div class="form-group">
+                    <label for="status" class="col-sm-2 control-label">Civil Status</label>
+                    <div class="col-sm-4">
+                      <select class="form-control" name="status">
+                          <option value="Single" selected value>Single</option>
+                          <option value="Married">Married</option>
+                      </select>
+                    </div>
+                    <label for="religion" class="col-sm-2 control-label">Religion</label>
+                    <div class="col-sm-4">
+                      <input type="text" class="form-control" id="religion" name="religion" data-parsley-pattern="/^[A-Za-z ]+$/">
+                    </div>
+                  </div>
+                  <br>
+                  <br>
+
+                  <div class="form-group">
+                    <label for="address" class="col-sm-2 control-label">Address</label>
+                    <div class="col-sm-10">
+                      <input type="text" class="form-control" id="address" name="address" data-parsley-required data-parsley-pattern="/^[0-9A-Za-z\s -/.]+$/">
+                    </div>
+                  </div>
+                  <br>
+                  <br>
+
+                  <div class="form-group">
+                    <label for="father" class="col-sm-2 control-label">Name of Father</label>
+                    <div class="col-sm-4">
+                      <input type="text" class="form-control" id="father" name="father" data-parsley-required data-parsley-pattern="/^[A-Za-z .]+$/">
+                    </div>
+                    <label for="fatherO" class="col-sm-2 control-label">Occupation</label>
+                    <div class="col-sm-4">
+                      <input type="text" class="form-control" id="fatherO" name="fatherO" data-parsley-required data-parsley-pattern="/^[0-9A-Za-z -/,]+$/">
+                    </div>
+                  </div>
+                  <br>
+                  <br>
+
+                  <div class="form-group">
+                    <label for="mother" class="col-sm-2 control-label">Name of Mother</label>
+                    <div class="col-sm-4">
+                      <input type="text" class="form-control" id="mother" name="mother" data-parsley-required data-parsley-pattern="/^[A-Za-z .]+$/">
+                    </div>
+                    <label for="motherO" class="col-sm-2 control-label">Occupation</label>
+                    <div class="col-sm-4">
+                      <input type="text" class="form-control" id="motherO" name="motherO" data-parsley-required data-parsley-pattern="/^[0-9A-Za-z -/,]+$/">
+                    </div>
+                  </div>
+                  <br>
+                  <br>
+
+                  <div class="form-group">
+                    <label for="blood" class="col-sm-2 control-label">Blood Type</label>
+                    <div class="col-sm-4">
+                      <select class="form-control" name="blood">
+                        <option value="A">A</option>
+                        <option value="B">B</option>
+                        <option value="AB">AB</option>
+                        <option value="O">O</option>
+                      </select>
+                    </div>
+                    <label for="bh" class="col-sm-2 control-label">Birth History</label>
+                    <div class="col-sm-4">
+                      <input type="text" class="form-control" id="bh" name="bh" data-parsley-pattern="/^[A-Za-z ]+$/">
+                    </div>
+                  </div>
+                  <br>
+                  <br>
+
+                  <div class="form-group">
+                    <label for="allergies" class="col-sm-2 control-label">Allergies</label>
+                    <div class="col-sm-10">
+                      <input type="text" class="form-control" id="allergies" name="allergies"data-parsley-pattern="/^[A-Za-z &/,]+$/">
+                    </div>
+                  </div>
+                  <br>
+                  <br>
+
+                  <div class="form-group">
+                    <label for="fhName" class="col-sm-2 control-label">Family History</label>
+                    <div class="col-sm-8">
+                      <select id="fhName" class="form-control">
+                        <option value="" selected></option>
+                        <%for(var i=1; i <fh.length; i++){%>
+                          <option value="<%= fh[i].name%>"><%= fh[i].name%></option>
+                        <%}%>
+                      </select>
+                      <button type="button"  onclick="fhResult()">Add</button>
+                      <h5 style="opacity:0.7;" id="fhRes" name="family_history"></h5>
+                      <input type="text" id="family_history" name="family_history" style="display:none;">
+                    </div>
+                  </div>
+                  <br>
+                  <br>
+                  <br>
+                  <br>
+
+                  <div class="form-group">
+                    <label for="immuName" class="col-sm-2 control-label">Immunization</label>
+                    <div class="col-sm-8">
+                      <select id="immuName" onchange="showDate()">
+                        <option value="" selected></option>
+                        <%for(var i=1; i <immu.length; i++){%>
+                          <option value="<%= immu[i].name%>"><%= immu[i].name%></option>
+                        <%}%>
+                      </select>
+                      <input type="month" id="immuDate">
+                      <button type="button" id="addMore" onclick="immuResult()">Add</button>
+                      <h5 style="opacity:0.7;" id="immuRes"></h5>
+                      <input type="text" id="immunization" name="immunization" style="display:none;">
+                    </div>
+                  </div>
+                  <br>
+                  <div class="modal-footer">
+                    <button type="submit" class="btn btn-primary" name="sub" onclick="validateRegistration()" value="add" value="validate">Save</button>
+                    <button type="button" class="btn btn-default" onclick="resetForm()">Reset</button>
+                  </div>
+                </form>
+              </div>
+          </div>
+        </div>
+      </div>
+      <!------------------------------------------------------------------------------------------ /Modal-->
+
+      <!---------------------------------------------------------------------------------------------- Modal for Password Input ----------->
+      <div class="modal fade" id="myModal1" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+        <div class="modal-dialog" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+              <h4 class="modal-title" id="myModalLabel">Input Password</h4>
+            </div>
+            <div class="modal-body">
+              <form class="form-horizontal">
+                <div class="form-group">
+                  <label for="inputPassword" class="col-sm-2 control-label">Password</label>
+                  <div class="col-sm-10">
+                    <input type="password" class="form-control" id="inputPassword" value="">
+                  </div>
+                </div>
+              </form>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+              <button type="button" class="btn btn-primary">Submit</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!------------------------------------------------------------------------------------------ /Modal-->
+      </section>
+      </div>
+      <% include ../partials/footer.ejs %>
+      <div class="control-sidebar-bg"></div>
+      </div>
+    </body>
+ </html>
+      <!-- jQuery 2.2.3 -->
+      <script src="../plugins/jQuery/jquery-2.2.3.min.js"></script>
+      <!-- Bootstrap 3.3.6 -->
+      <script src="../bootstrap/js/bootstrap.min.js"></script>
+      <!-- AdminLTE App -->
+      <script src="../dist/js/app.min.js"></script>
+      <!-- DataTables -->
+      <script src="../plugins/datatables/jquery.dataTables.min.js"></script>
+      <script src="../plugins/datatables/dataTables.bootstrap.min.js"></script>
+      <!-- SlimScroll -->
+      <script src="../plugins/slimScroll/jquery.slimscroll.min.js"></script>
+      <!-- FastClick -->
+      <script src="../plugins/fastclick/fastclick.js"></script>
+      <!-- <script src="../dist/js/jquery.min.js"></script> -->
+      <script src="/dist/js/parsley.min.js"></script>
+
+      <script type="text/javascript">
+        function validateRegistration() {
+          $('#modal2').parsley().on('field:validated', function() {
+            var ok = $('.parsley-error').length === 0;
+            $('.bs-callout-info').toggleClass('hidden', !ok);
+            $('.bs-callout-warning').toggleClass('hidden', ok);
+          })
+        };
+
+        <%if(invalid){%>
+          alert('invalid password');
+          $(document).ready(function(){
+            $("#PasswordInput").show();
+          });
+        <%}%>
+
+        $(function () {
+        $("#example1").DataTable();
+        $('#example2').DataTable({
+        "paging": true,
+        "lengthChange": false,
+        "searching": false,
+        "ordering": true,
+        "info": true,
+        "autoWidth": true
+        });
+        });
+
+        function showAdd() {
+          document.getElementById("modal2").style.display = "block";
+        }
+        function showDate() {
+          document.getElementById("immuDate").style.display = "inline-block";
+          document.getElementById("addMore").style.display = "inline-block";
+        }
+       function showSuccess() {
+          alert("Success !!");
+        }
+        function immuResult() {
+          var e = document.getElementById("immuName");
+          var immu = e.options[e.selectedIndex].value;
+          var immuDate = document.getElementById("immuDate").value;
+          document.getElementById("immuRes").innerHTML += immu + immuDate + "<br>";
+          document.getElementById("immunization").value += immu +":"+ immuDate + ",";
+        }
+        function fhResult() {
+          var e = document.getElementById("fhName");
+          var fh = e.options[e.selectedIndex].value;
+          document.getElementById("fhRes").innerHTML += fh + "<br>";
+          document.getElementById("family_history").value += fh + ",";
+        }
+        function resetForm() {
+          document.getElementById("modal2").reset();
+          document.getElementById("assessment").reset();
+          document.getElementById("immuRes").innerHTML = "";
+        }
+        function currentAdmitted() {
+          document.getElementById("showAdmitted").style.display = "block";
+        }
+        function showAccessment() {
+          document.getElementById("assessment").style.display = "block";
+        }
+        function showTodo() {
+          document.getElementById("showTodo").style.display = "block";
+        }
+
+        function PasswordInput(id){
+          document.getElementById('PasswordInput').style.display = 'block';
+          document.getElementById('dynamicActionPassword').action = '/nurse/patientManagement?passPatient='+id+'';
+        }
+      </script>

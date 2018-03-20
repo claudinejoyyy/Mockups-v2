@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>Log in</title>
+  <% include ./partials/header.ejs %>
+</head>
+<body class="hold-transition login-page skin-blue layout-top-nav">
+  <header class="main-header">
+    <nav class="navbar navbar-static-top">
+      <div class="container">
+        <div class="navbar-header">
+          <a href="#" class="navbar-brand"><b>Philippine Military Academy </b>Fort Del Pilar Station Hospital</a>
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar-collapse">
+            <i class="fa fa-bars"></i>
+          </button>
+        </div>
+      </div>
+    </nav>
+  </header>
+<div class="login-box">
+  <div class="login-logo">
+      <img src="img/pma.png" alt="pma-logo" width="120px" /><br>
+  </div>
+  <!-- /.login-logo -->
+  <div class="login-box-body">
+    <p class="login-box-msg">Welcome! Sign in to start your session</p>
+
+    <form action="#" method="POST" autocomplete="off">
+         <%- messages('message', locals) %>
+<div id="messages">
+<% Object.keys(messages).forEach(function (type) { %>
+  <div class="alert alert-<%= type %>a">
+  </div>
+<% }) %>
+</div>
+      <div class="form-group has-feedback">
+        <input type="text" class="form-control" placeholder="Username" name="username" required>
+        <span class="glyphicon glyphicon-envelope form-control-feedback"></span>
+      </div>
+      <div class="form-group has-feedback">
+        <input type="password" class="form-control" placeholder="Password" name="pass" required>
+        <span class="glyphicon glyphicon-lock form-control-feedback"></span>
+      </div>
+      <div class="row">
+        <div class="col-xs-8">
+
+        </div>
+        <!-- /.col -->
+        <div class="col-xs-4">
+          <button type="submit" class="btn btn-primary btn-block btn-flat" value="submit">Log-in</button>
+        </div>
+      </div>
+    </form>
+  </div>
+  <!-- /.login-box-body -->
+</div>
+<!-- /.login-box -->
+
+<!-- jQuery 2.2.3 -->
+<script src="plugins/jQuery/jquery-2.2.3.min.js"></script>
+<!-- Bootstrap 3.3.6 -->
+<script src="bootstrap/js/bootstrap.min.js"></script>
+<!-- iCheck -->
+<script src="plugins/iCheck/icheck.min.js"></script>
+<script src="plugins/jQuery/jquery.backstretch.js"></script>
+<script>
+  $(function () {
+    $('input').iCheck({
+      checkboxClass: 'icheckbox_square-blue',
+      radioClass: 'iradio_square-blue',
+      increaseArea: '20%' // optional
+    });
+  });
+
+        $.backstretch(
+[
+    "img/pmamg.jpg",
+    "img/pmamg2.jpg",
+    "img/pmacadet.jpg",
+    "img/pmahq.jpg"
+],
+
+{
+    duration: 2500,
+    fade: 1500
+}
+);
+</script>
+    <div id="messages">
+<% Object.keys(messages).forEach(function (type) { %>
+  <div class="alert alert-<%= type %>">
+  <% messages[type].forEach(function (message) { %>
+    <p><%= message %></p>
+  <% }) %>
+  </div>
+<% }) %>
+</div>
+
+</body>
+</html>

@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Patient Management</title>
+  </head>
+  <body>
+    <a href="../nurse/dashboard">dashboard</a><br>
+    <a href="../nurse/bedManagement">bedManagement</a><br>
+    <a href="../nurse/patientManagement">patientManagement</a><br>
+    <a href="../nurse/profileManagement">profile</a>
+    <h1><%=pInfo[0].name%></h1>
+    <h2>nurse</h2>
+    <h3>User Account: <%= pInfo[0].account_id%></h3>
+    <h3>Age: <%= pInfo[0].age%></h3>
+    <h3>Sex: <%= pInfo[0].sex%></h3>
+    <button type="button" id="button" onclick="show()" value="logs">Activity Logs</button>
+    <div id='logs' style="display:none;">
+      <h1>Activity Timeline</h1>
+      <%for(var i=0; i < activityInfo.length; i ++){%>
+        <h3><%= activityInfo[i].remarks%></h3>
+        <h3><%= moment(activityInfo[i].time).format('YYYY-MM-DD HH:mm:ss')%></h3>
+        <h1>-----</h1>
+      <%}%>
+    </div>
+    <button type="button" id="button" value="setting" onclick="show2()"> Setting</button>
+    <form method="POST" id="setting" style="display:none;">
+      name:   <input type="text" id="name" name="name" placeholder="<%= pInfo[0].name%>"><br>
+      age:    <input type="int" id="age" name="age" placeholder="<%= pInfo[0].age%>"><br>
+      address:<input type="text" id="address" name="address" placeholder="<%= pInfo[0].address%>"><br>
+      phone:  <input type="text" id="phone" name="phone" placeholder="<%= pInfo[0].phone%>"><br>
+      <button type="submit" onclick="check()">save</button>
+    </form>
+  </body>
+</html>
+<script>
+  function show(){
+    document.getElementById('logs').style = 'display:block;';
+  }
+  function show2() {
+    document.getElementById('setting').style = 'display:block;';
+  }
+  //USEFUL SCRIPT do not DELETE(important) !!
+  function check() {
+    if (!document.getElementById('name').value) {
+      document.getElementById('name').value = "<%= pInfo[0].name%>";
+    }
+    if (!document.getElementById('age').value) {
+      document.getElementById('age').value = "<%= pInfo[0].age%>";
+    }
+    if (!document.getElementById('address').value) {
+      document.getElementById('address').value = "<%= pInfo[0].address%>";
+    }
+    if (!document.getElementById('phone').value) {
+      document.getElementById('phone').value = "<%= pInfo[0].phone%>";
+    }
+  }
+</script>

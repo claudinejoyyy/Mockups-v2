@@ -1,0 +1,660 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+
+  <title>Admin Report</title>
+
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>Admin | Dashboard</title>
+  <!-- Tell the browser to be responsive to screen width -->
+  <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+  <!-- Bootstrap 3.3.6 -->
+  <link rel="stylesheet" href="../bootstrap/css/bootstrap.min.css">
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.5.0/css/font-awesome.min.css">
+  <!-- Ionicons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/ionicons/2.0.1/css/ionicons.min.css">
+  <!-- Theme style -->
+  <link rel="stylesheet" href="../dist/css/AdminLTE.min.css">
+  <!-- AdminLTE Skins. Choose a skin from the css/skins
+         folder instead of downloading all of them to reduce the load. -->
+  <link rel="stylesheet" href="../dist/css/skins/_all-skins.min.css">
+  <!-- iCheck -->
+  <link rel="stylesheet" href="../plugins/iCheck/flat/blue.css">
+  <!-- Morris chart -->
+  <link rel="stylesheet" href="../plugins/morris/morris.css">
+  <!-- jvectormap -->
+  <link rel="stylesheet" href="../plugins/jvectormap/jquery-jvectormap-1.2.2.css">
+  <!-- Date Picker -->
+  <link rel="stylesheet" href="../plugins/datepicker/datepicker3.css">
+  <!-- Daterange picker -->
+  <link rel="stylesheet" href="../plugins/daterangepicker/daterangepicker.css">
+  <!-- bootstrap wysihtml5 - text editor -->
+  <link rel="stylesheet" href="../plugins/bootstrap-wysihtml5/bootstrap3-wysihtml5.min.css">
+
+</head>
+
+<style>
+
+ table, th,td{
+   border: 2px solid blue;
+ }
+
+ .tableHead{
+   text-align: center;
+ }
+
+</style>
+
+<body>
+  <div class="container">
+    <div class="row" align="center">
+      <h3>DAILY CONSUMPTION REPORT</h3>
+    </div>
+    <div class="row">
+      <div class="col-xs-6">
+      <table style="width:100%">
+      <tr>
+        <th class="tableHead" colspan="3">OPS-ER</th>
+      </tr>
+      <tr>
+        <th>CADETS:</th>
+        <th></th>
+        <th> </th>
+      </tr>
+      <tr>
+        <th class="tableHead">PATIENTS</th>
+        <th class="tableHead">MEDICINE</th>
+        <th class="tableHead">QTY</th>
+      </tr>
+      <tr>
+        <td>3Cl Leonen</td>
+        <td>M. acid tab</td>
+        <td>10Mercury</td>
+      </tr>
+      <tr>
+        <td>2CL Kitong</td>
+        <td>M. acid tab</td>
+        <td>3doh</td>
+      </tr>
+      <tr>
+        <td>4Cl Gragoza</td>
+        <td>Paracetamol 500mg tab</td>
+        <td>12 epo</td>
+      </tr>
+      <tr>
+        <td></td>
+        <td>Doxycycline 100mg cap</td>
+        <td>14bhd</td>
+      </tr>
+      <tr>
+        <td>4Cl Pinero</td>
+        <td>Vit C syr</td>
+        <td>1doh</td>
+      </tr>
+      <tr>
+        <td></td>
+        <td>Doxycycline 100mg cap</td>
+        <td>10 Mercury</td>
+      </tr>
+      <tr>
+        <td>4Cl Bisquera</td>
+        <td>Diclofenac K 50mg tab</td>
+        <td>15 Vluna</td>
+      </tr>
+      <tr>
+        <td></td>
+        <td>Celecoxib 400mg cap</td>
+        <td>5Mercury</td>
+      </tr>
+      <tr>
+        <td>4Cl Robi</td>
+        <td>Doxycycline 100mg cap</td>
+        <td>14ER</td>
+      </tr>
+      <tr>
+        <td></td>
+        <td>Paracetamol 500mg tab</td>
+        <td>10ER</td>
+      </tr>
+      <tr>
+        <td>Cdt Fontanar</td>
+        <td>Vit C syr</td>
+        <td>1ER</td>
+      </tr>
+      <tr>
+        <td></td>
+        <td>Paracetamol 500mg tab</td>
+        <td>5ER</td>
+      </tr>
+      <tr>
+        <td>4Cl Escote</td>
+        <td>Tramadol 50mg cap</td>
+        <td>5ER</td>
+      </tr>
+      <tr>
+        <td>2Cl Quiling</td>
+        <td>Paracetamol 500mg tab</td>
+        <td>10ER</td>
+      </tr>
+      <tr>
+        <td>3Cl Alquino</td>
+        <td>Paracetamol 500mg tab</td>
+        <td>10ER</td>
+      </tr>
+      <tr>
+        <td></td>
+        <td>Salbutamol nebule</td>
+        <td>1ER</td>
+      </tr>
+      <tr>
+        <td>4Cl Azanza </td>
+        <td>Lorantadine 10mg tab</td>
+        <td>7ER</td>
+      </tr>
+      <tr>
+        <td>4Cl Lozano</td>
+        <td>Diclofenac K 50mg tab</td>
+        <td>9ER</td>
+      </tr>
+      <tr>
+        <td>3CL Leonen</td>
+        <td>ML acid tab</td>
+        <td>10 Mercury</td>
+      </tr>
+      <tr>
+        <th>OFFICERS:</th>
+        <th></th>
+        <th> </th>
+      </tr>
+      <tr>
+        <th class="tableHead">PATIENTS</th>
+        <th class="tableHead">MEDICINE</th>
+        <th class="tableHead">QTY</th>
+      </tr>
+      <tr>
+        <td>3CL Leonen</td>
+        <td>ML acid tab</td>
+        <td>10 Mercury</td>
+      </tr>
+      <tr>
+        <td>3CL Leonen</td>
+        <td>ML acid tab</td>
+        <td>10 Mercury</td>
+      </tr>
+      <tr>
+        <td>3CL Leonen</td>
+        <td>ML acid tab</td>
+        <td>10 Mercury</td>
+      </tr>
+      <tr>
+        <td>3CL Leonen</td>
+        <td>ML acid tab</td>
+        <td>10 Mercury</td>
+      </tr>
+      <tr>
+        <td>3CL Leonen</td>
+        <td>ML acid tab</td>
+        <td>10 Mercury</td>
+      </tr>
+      <tr>
+        <td>3CL Leonen</td>
+        <td>ML acid tab</td>
+        <td>10 Mercury</td>
+      </tr>
+      <tr>
+        <td>3CL Leonen</td>
+        <td>ML acid tab</td>
+        <td>10 Mercury</td>
+      </tr>
+      <tr>
+        <th>EP's:</th>
+        <th></th>
+        <th> </th>
+      </tr>
+      <tr>
+        <th class="tableHead">PATIENTS</th>
+        <th class="tableHead">MEDICINE</th>
+        <th class="tableHead">QTY</th>
+      </tr>
+      <tr>
+        <td>3CL Leonen</td>
+        <td>ML acid tab</td>
+        <td>10 Mercury</td>
+      </tr>
+      <tr>
+        <td>3CL Leonen</td>
+        <td>ML acid tab</td>
+        <td>10 Mercury</td>
+      </tr>
+      <tr>
+        <td>3CL Leonen</td>
+        <td>ML acid tab</td>
+        <td>10 Mercury</td>
+      </tr>
+      <tr>
+        <td>3CL Leonen</td>
+        <td>ML acid tab</td>
+        <td>10 Mercury</td>
+      </tr>
+      <tr>
+        <td>3CL Leonen</td>
+        <td>ML acid tab</td>
+        <td>10 Mercury</td>
+      </tr>
+      <tr>
+        <td>3CL Leonen</td>
+        <td>ML acid tab</td>
+        <td>10 Mercury</td>
+      </tr>
+      <tr>
+        <td>3CL Leonen</td>
+        <td>ML acid tab</td>
+        <td>10 Mercury</td>
+      </tr>
+      <tr>
+        <td>3CL Leonen</td>
+        <td>ML acid tab</td>
+        <td>10 Mercury</td>
+      </tr>
+      <tr>
+        <td>3CL Leonen</td>
+        <td>ML acid tab</td>
+        <td>10 Mercury</td>
+      </tr>
+      <tr>
+        <td>3CL Leonen</td>
+        <td>ML acid tab</td>
+        <td>10 Mercury</td>
+      </tr>
+      <tr>
+        <td>3CL Leonen</td>
+        <td>ML acid tab</td>
+        <td>10 Mercury</td>
+      </tr>
+      <tr>
+        <td>3CL Leonen</td>
+        <td>ML acid tab</td>
+        <td>10 Mercury</td>
+      </tr>
+      <tr>
+        <td>3CL Leonen</td>
+        <td>ML acid tab</td>
+        <td>10 Mercury</td>
+      </tr>
+      <tr>
+        <td>3CL Leonen</td>
+        <td>ML acid tab</td>
+        <td>10 Mercury</td>
+      </tr>
+      <tr>
+        <th>DEP's:</th>
+        <th></th>
+        <th> </th>
+      </tr>
+      <tr>
+        <th class="tableHead">PATIENTS</th>
+        <th class="tableHead">MEDICINE</th>
+        <th class="tableHead">QTY</th>
+      </tr>
+      <tr>
+        <td>3CL Leonen</td>
+        <td>ML acid tab</td>
+        <td>10 Mercury</td>
+      </tr>
+      <tr>
+        <td>3CL Leonen</td>
+        <td>ML acid tab</td>
+        <td>10 Mercury</td>
+      </tr>
+      <tr>
+        <td>3CL Leonen</td>
+        <td>ML acid tab</td>
+        <td>10 Mercury</td>
+      </tr>
+      <tr>
+        <td>3CL Leonen</td>
+        <td>ML acid tab</td>
+        <td>10 Mercury</td>
+      </tr>
+      <tr>
+        <td>3CL Leonen</td>
+        <td>ML acid tab</td>
+        <td>10 Mercury</td>
+      </tr>
+      <tr>
+        <td>3CL Leonen</td>
+        <td>ML acid tab</td>
+        <td>10 Mercury</td>
+      </tr>
+      <tr>
+        <td>3CL Leonen</td>
+        <td>ML acid tab</td>
+        <td>10 Mercury</td>
+      </tr>
+      <tr>
+        <td>3CL Leonen</td>
+        <td>ML acid tab</td>
+        <td>10 Mercury</td>
+      </tr>
+      <tr>
+        <td>3CL Leonen</td>
+        <td>ML acid tab</td>
+        <td>10 Mercury</td>
+      </tr>
+
+    </table>
+      </div>
+      <div class="col-xs-6">
+      <table style="width:100%">
+      <tr>
+        <td>3CL Leonen</td>
+        <td>ML acid tab</td>
+        <td>10 Mercury</td>
+      </tr>
+      <th>CE's:</th>
+      <th></th>
+      <th> </th>
+    </tr>
+    <tr>
+      <th class="tableHead">PATIENTS</th>
+      <th class="tableHead">MEDICINE</th>
+      <th class="tableHead">QTY</th>
+    </tr>
+      <tr>
+        <td>3CL Leonen</td>
+        <td>ML acid tab</td>
+        <td>10 Mercury</td>
+      </tr>
+      <tr>
+        <td>3CL Leonen</td>
+        <td>ML acid tab</td>
+        <td>10 Mercury</td>
+      </tr>
+      <tr>
+        <td>3CL Leonen</td>
+        <td>ML acid tab</td>
+        <td>10 Mercury</td>
+      </tr>
+      <tr>
+        <td>3CL Leonen</td>
+        <td>ML acid tab</td>
+        <td>10 Mercury</td>
+      </tr>
+      <tr>
+        <td>3CL Leonen</td>
+        <td>ML acid tab</td>
+        <td>10 Mercury</td>
+      </tr>
+      <tr>
+        <td>3CL Leonen</td>
+        <td>ML acid tab</td>
+        <td>10 Mercury</td>
+      </tr>
+      <tr>
+        <td>3CL Leonen</td>
+        <td>ML acid tab</td>
+        <td>10 Mercury</td>
+      </tr>
+      <tr>
+        <td>3CL Leonen</td>
+        <td>ML acid tab</td>
+        <td>10 Mercury</td>
+      </tr>
+      <tr>
+        <td>3CL Leonen</td>
+        <td>ML acid tab</td>
+        <td>10 Mercury</td>
+      </tr>
+      <tr>
+        <td>3CL Leonen</td>
+        <td>ML acid tab</td>
+        <td>10 Mercury</td>
+      </tr>
+      <tr>
+        <td>3CL Leonen</td>
+        <td>ML acid tab</td>
+        <td>10 Mercury</td>
+      </tr>
+      <tr>
+        <th>IP's:</th>
+        <th></th>
+        <th> </th>
+      </tr>
+      <tr>
+        <th class="tableHead">PATIENTS</th>
+        <th class="tableHead">MEDICINE</th>
+        <th class="tableHead">QTY</th>
+      </tr>
+      <tr>
+        <td>3CL Leonen</td>
+        <td>ML acid tab</td>
+        <td>10 Mercury</td>
+      </tr>
+      <tr>
+        <td>3CL Leonen</td>
+        <td>ML acid tab</td>
+        <td>10 Mercury</td>
+      </tr>
+      <tr>
+        <td>3CL Leonen</td>
+        <td>ML acid tab</td>
+        <td>10 Mercury</td>
+      </tr>
+      <tr>
+        <td>3CL Leonen</td>
+        <td>ML acid tab</td>
+        <td>10 Mercury</td>
+      </tr>
+      </tr>
+
+      <tr>
+        <td>3CL Leonen</td>
+        <td>ML acid tab</td>
+        <td>10 Mercury</td>
+      </tr>
+      <tr>
+        <td>3CL Leonen</td>
+        <td>ML acid tab</td>
+        <td>10 Mercury</td>
+      </tr>
+      <tr>
+        <td>3CL Leonen</td>
+        <td>ML acid tab</td>
+        <td>10 Mercury</td>
+      </tr>
+      <th>ER:</th>
+      <th></th>
+      <th> </th>
+    </tr>
+    <tr>
+      <th class="tableHead">PATIENTS</th>
+      <th class="tableHead">MEDICINE</th>
+      <th class="tableHead">QTY</th>
+    </tr>
+      <tr>
+        <td>3CL Leonen</td>
+        <td>ML acid tab</td>
+        <td>10 Mercury</td>
+      </tr>
+      <tr>
+        <td>3CL Leonen</td>
+        <td>ML acid tab</td>
+        <td>10 Mercury</td>
+      </tr>
+      <tr>
+        <td>3CL Leonen</td>
+        <td>ML acid tab</td>
+        <td>10 Mercury</td>
+      </tr>
+      <tr>
+        <td>3CL Leonen</td>
+        <td>ML acid tab</td>
+        <td>10 Mercury</td>
+      </tr>
+      <tr>
+        <td>3CL Leonen</td>
+        <td>ML acid tab</td>
+        <td>10 Mercury</td>
+      </tr>
+      <tr>
+        <td>3CL Leonen</td>
+        <td>ML acid tab</td>
+        <td>10 Mercury</td>
+      </tr>
+      <tr>
+        <td>3CL Leonen</td>
+        <td>ML acid tab</td>
+        <td>10 Mercury</td>
+      </tr>
+      <tr>
+        <td>3CL Leonen</td>
+        <td>ML acid tab</td>
+        <td>10 Mercury</td>
+      </tr>
+      <tr>
+        <td>3CL Leonen</td>
+        <td>ML acid tab</td>
+        <td>10 Mercury</td>
+      </tr>
+      <tr>
+        <th class="tableHead" colspan="3">WARD</th>
+      </tr>
+      <tr>
+        <th>CADETS:</th>
+        <th></th>
+        <th> </th>
+      </tr>
+      <tr>
+        <th class="tableHead">PATIENTS</th>
+        <th class="tableHead">MEDICINE</th>
+        <th class="tableHead">QTY</th>
+      </tr>
+      <tr>
+        <td>3CL Leonen</td>
+        <td>ML acid tab</td>
+        <td>10 Mercury</td>
+      </tr>
+      <tr>
+        <td>3CL Leonen</td>
+        <td>ML acid tab</td>
+        <td>10 Mercury</td>
+      </tr>
+      <tr>
+        <td>3CL Leonen</td>
+        <td>ML acid tab</td>
+        <td>10 Mercury</td>
+      </tr>
+      <tr>
+        <td>3CL Leonen</td>
+        <td>ML acid tab</td>
+        <td>10 Mercury</td>
+      </tr>
+      <tr>
+        <th></th>
+        <th class="tableHead">Oct. 08-09,2017</th>
+        <th class="tableHead">Page Number</th>
+      </tr>
+      <tr>
+        <td>IP Valenzuela</td>
+        <td>Amoxicillin 500mg cap</td>
+        <td>10doh</td>
+      </tr>
+      <tr>
+        <td></td>
+        <td>Cataflam 25mg tab</td>
+        <td>10 Vluna</td>
+      </tr>
+      <tr>
+        <td></td>
+        <td></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td>ER Use</td>
+        <td>Paracetamol 500 tab</td>
+        <td>10+30epo</td>
+      </tr>
+      <tr>
+        <td></td>
+        <td>Paracetamol amp</td>
+        <td>3epo</td>
+      </tr>
+      <tr>
+        <td></td>
+        <td>Tramadol cap</td>
+        <td>30Vluna</td>
+      </tr>
+      <tr>
+        <td></td>
+        <td>Paracetamol 250 syr</td>
+        <td>5</td>
+      </tr>
+        <tr>
+          <td></td>
+          <td></td>
+          <td></td>
+        </tr>
+        <tr>
+          <th></th>
+          <th class="tableHead">OPS/ER</th>
+          <th class="tableHead">WARD</th>
+        </tr>
+        <tr>
+          <td>CADETS</td>
+          <td>34</td>
+          <td>5 </td>
+        </tr>
+        <tr>
+          <td>OFFICERS</td>
+          <td>3</td>
+          <td></td>
+        </tr>
+        <tr>
+          <td>EP's</td>
+          <td>1</td>
+          <td></td>
+        </tr>
+        <tr>
+          <td>DEP's</td>
+          <td>6</td>
+          <td></td>
+        </tr>
+        <tr>
+          <td>CE's</td>
+          <td>1</td>
+          <td></td>
+        </tr>
+          <tr>
+            <td>IP's</td>
+            <td></td>
+            <td>1</td>
+          </tr>
+          <tr>
+            <td>ER</td>
+            <td>----</td>
+            <td></td>
+          </tr>
+          <tr>
+            <td>Total</td>
+            <td>46</td>
+            <td>5</td>
+          </tr>
+          <tr>
+            <td></td>
+            <td></td>
+            <td>mbm</td>
+          </tr>
+    </table>
+      </div>
+
+    </div>
+  </div>
+
+
+</body>
+
+
+</html>

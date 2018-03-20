@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <%include ../partials/header.ejs%>
+    <script src="/notif-pharm.js"></script>
+
+    <title>Patient Management</title>
+    <style>
+        table {
+            font-family: arial, sans-serif;
+            border-collapse: collapse;
+            width: 100%;
+        }
+        td, th {
+            border: 1px solid #dddddd;
+            text-align: left;
+            padding: 8px;
+        }
+      </style>
+  </head>
+  <body>
+    <nav>
+      <a href="../pharmacist/dashboard">dashboard</a><br>
+      <a href="../pharmacist/prescriptionManagement">prescriptionManagement</a><br>
+      <a href="../pharmacist/patientManagement">patientManagement</a><br>
+      <a href="../pharmacist/profileManagement">profile</a> <br>
+      <a href="../pharmacist/reports">reports</a>
+    </nav>
+    <h1>Welcome to Patient Management Dr. <%= username[0].name %> !! <button><a href='../logout'>logout</a></button></h1>
+    <table>
+      <tr>
+          <th>Patient Type</th>
+          <th>Name</th>
+          <th>Age</th>
+          <th>Unit </th>
+          <th>Gender</th>
+          <th>Status</th>
+          <th>Birth Date</th>
+          <th>Address</th>
+          <th>Religion</th>
+          <th>Blood Type</th>
+          <th>Allergies</th>
+          <th>Father</th>
+          <th>Mother</th>
+          <th>Birth History</th>
+          <th>Rank</th>
+          <th>Immunization</th>
+          <th>Family History</th>
+      </tr>
+      <%
+      for(var i=0; i <p.length; i++){
+          var b = new Date(p[i].birth_date);
+      %>
+      <tr>
+        <td><%= p[i].patient_type %></td>
+        <td><%= p[i].name %></td>
+        <td><%= p[i].age %></td>
+        <td><%= p[i].unit %></td>
+        <td><%= p[i].sex %></td>
+        <td><%= p[i].status %></td>
+        <td><%= b.toLocaleDateString() %></td>
+        <td><%= p[i].address %></td>
+        <td><%= p[i].religion %></td>
+        <td><%= p[i].blood_type %></td>
+        <td><%= p[i].allergies %></td>
+        <td><%= p[i].father %></td>
+        <td><%= p[i].mother %></td>
+        <td><%= p[i].birth_history %></td>
+        <td><%= p[i].rankORsn %></td>
+        <td><%= p[i].immunization %></td>
+        <td><%= p[i].family_history %></td>
+      </tr>
+      <%}%>
+    </table>
+
+  </body>
+</html>
