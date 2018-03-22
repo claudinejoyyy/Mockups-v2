@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html>
-
 <head>
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -26,29 +25,16 @@
   <link rel="stylesheet" href="../plugins/bootstrap-wysihtml5/bootstrap3-wysihtml5.min.css">
   <!-- Select2 -->
   <link rel="stylesheet" href="../plugins/select2/select2.min.css">
-
-  <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
-  <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
-  <!--[if lt IE 9]>
-  <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
-  <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
-  <![endif]-->
 </head>
 
 <body class="hold-transition skin-blue fixed sidebar-mini">
   <div class="wrapper">
-
     <header class="main-header">
-      <!-- Logo -->
       <a href="../doctor/dashboard" class="logo">
-        <!-- mini logo for sidebar mini 50x50 pixels -->
         <span class="logo-mini"><b><%= username[0].account_type.charAt(0).toUpperCase()%></b></span>
-        <!-- logo for regular state and mobile devices -->
         <span class="logo-lg"><b><%= username[0].account_type.charAt(0).toUpperCase() + username[0].account_type.slice(1);%></b></span>
       </a>
-      <!-- Header Navbar: style can be found in header.less -->
       <nav class="navbar navbar-static-top">
-        <!-- Sidebar toggle button-->
         <a href="#" class="sidebar-toggle" data-toggle="offcanvas" role="button">
         <span class="sr-only">Toggle navigation</span>
       </a>
@@ -56,15 +42,11 @@
         <div class="navbar-custom-menu">
           <ul class="nav navbar-nav">
             <li class="dropdown user user-menu">
-              <!-- Menu Toggle Button -->
               <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                <!-- The user image in the navbar-->
                 <img src="../dist/img/avatar04.png" class="user-image" alt="User Image">
-                <!-- hidden-xs hides the username on small devices so only the image appears. -->
                 <span class="hidden-xs"><%= username[0].name %></span>
               </a>
               <ul class="dropdown-menu">
-                <!-- The user image in the menu -->
                 <li class="user-header">
                   <img src="../dist/img/avatar04.png" class="img-circle" alt="User Image">
                   <p>
@@ -72,8 +54,6 @@
                     <small>Member since April 2014</small>
                   </p>
                 </li>
-                <!-- Menu Body -->
-                <!-- Menu Footer-->
                 <li class="user-footer">
                   <div class="pull-left">
                     <a href="#" class="btn btn-default btn-flat">Profile</a>
@@ -88,23 +68,17 @@
         </div>
       </nav>
     </header>
-    <!-- Left side column. contains the logo and sidebar -->
     <aside class="main-sidebar">
-      <!-- sidebar: style can be found in sidebar.less -->
       <section class="sidebar">
-        <!-- Sidebar user panel -->
         <div class="user-panel">
           <div class="pull-left image">
             <img src="../dist/img/avatar04.png" class="img-circle" alt="User Image">
           </div>
           <div class="pull-left info">
-            <p>
-              <%= username[0].name %>
-            </p>
+            <p><%= username[0].name %></p>
             <a href="#"><i class="fa fa-circle text-success"></i> Online</a>
           </div>
         </div>
-        <!-- search form -->
         <form action="#" method="get" class="sidebar-form">
           <div class="input-group">
             <input type="text" name="q" class="form-control" placeholder="Search...">
@@ -114,10 +88,8 @@
               </span>
           </div>
         </form>
-        <!-- /.search form -->
-        <!-- sidebar menu: : style can be found in sidebar.less -->
+
         <ul class="sidebar-menu">
-          <!-- Optionally, you can add icons to the links -->
           <li class="active"><a href="../doctor/dashboard" target="_self"><i class="fa fa-dashboard"></i> <span>Dashboard</span></a></li>
           <li><a href="../doctor/bedManagement"><i class="fa fa-bed"></i> <span>Bed Management</span></a></li>
           <li><a href="../doctor/patientManagement"><i class="fa fa-users"></i> <span>Patient Management</span></a></li>
@@ -126,15 +98,11 @@
           <li><a href="../doctor/prescriptionManagement"><i class="fa fa-sticky-note"></i> <span>Prescription Management</span></a></li>
           <li><a href="../doctor/labRequestManagement"><i class="fa fa-stethoscope"></i> <span>Lab Request Management</span></a></li>
           <li><a href="../doctor/profileManagement"><i class="fa fa-info"></i> <span>Profile Management</span></a></li>
-
         </ul>
       </section>
-      <!-- /.sidebar -->
     </aside>
 
-    <!-- Content Wrapper. Contains page content -->
     <div class="content-wrapper">
-      <!-- Content Header (Page header) -->
       <section class="content-header">
         <h1>
         Dashboard
@@ -142,16 +110,13 @@
       </h1>
       </section>
 
-      <!-- Main content -->
       <section class="content">
-        <!-- Small boxes (Stat box) -->
         <div class="row">
+
           <div class="col-lg-3 col-xs-6">
-            <!-- small box -->
             <div class="small-box bg-aqua">
               <div class="inner">
                 <h3><%= counts[0].totalRegisteredPatients%></h3>
-
                 <p>Total Registered Patients</p>
               </div>
               <div class="icon">
@@ -160,13 +125,11 @@
               <a href="../doctor/patientManagement" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
             </div>
           </div>
-          <!-- ./col -->
+
           <div class="col-lg-3 col-xs-6">
-            <!-- small box -->
             <div class="small-box bg-green">
               <div class="inner">
                 <h3><%= counts[0].currentlyAdmitted%></h3>
-
                 <p>Currently Admitted</p>
               </div>
               <div class="icon">
@@ -175,28 +138,25 @@
               <a href="../doctor/bedManagement" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
             </div>
           </div>
-          <!-- ./col -->
+
           <div class="col-lg-3 col-xs-6">
-            <!-- small box -->
             <div class="small-box bg-yellow">
               <div class="inner">
                 <h3><%= counts[0].OPD%></h3>
-                    <p>OPD</p>
+                <p>OPD</p>
               </div>
               <div class="icon">
                 <i class="ion ion-pie-graph"></i>
               </div>
               <a data-toggle="modal" data-target="#opdModal" class="btn small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
-
             </div>
           </div>
-          <!-- ./col -->
+
           <div class="col-lg-3 col-xs-6">
-            <!-- small box -->
             <div class="small-box bg-red">
               <div class="inner">
                 <h3><%= counts[0].WARD%></h3>
-                    <p>Ward</p>
+                <p>Ward</p>
               </div>
               <div class="icon">
                 <i class="ion ion-pie-graph"></i>
@@ -204,9 +164,7 @@
               <a data-toggle="modal" data-target="#wardModal" class="btn small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
             </div>
           </div>
-          <!-- ./col -->
         </div>
-        <!-- /.row -->
         <div class="row">
           <div class="box">
             <center>
@@ -217,28 +175,17 @@
                 <a class="btn btn-app" data-toggle="modal" data-target="#myModal2">
                 <i class="fa fa-calendar" data-target="#myModal2"></i> Set Appointment
                 </a>
-                <!--
-              <a class="btn btn-app" data-toggle="modal" data-target="#myModal3">
-                <i class="fa fa-plus" data-target="#myModal3"></i> Home Instruction
-              </a>
--->
-              </div>
+            </div>
             </center>
-            <!-- /.box-body -->
           </div>
         </div>
-        <!-- /.box -->
-        <!-- Main row -->
+
         <div class="row">
-          <!-- Left col -->
           <section class="col-lg-7 connectedSortable">
-            <!-- TO DO List -->
             <div class="box box-primary">
               <div class="box-header">
                 <i class="ion ion-clipboard"></i>
-
                 <h3 class="box-title">To Do List</h3>
-
                 <div class="box-tools pull-right">
                   <ul class="pagination pagination-sm inline">
                     <li><a href="#">&laquo;</a></li>
@@ -249,27 +196,21 @@
                   </ul>
                 </div>
               </div>
-              <!-- /.box-header -->
               <div class="box-body">
                 <ul class="todo-list">
                   <%for(var i=0; i < todoList.length; i++){%>
                     <%if(new Date() < new Date(todoList[i].date)) {%>
-
                   <li>
                     <span class="handle">
                       <i class="fa fa-ellipsis-v"></i>
                       <i class="fa fa-ellipsis-v"></i>
                     </span>
                     <span class="text"><%= todoList[i].description%>:</span>
-
                     <%if(todoList[i].status == 'general'){%>
                     <small class="label label-info"><i class="fa fa-clock-o"></i><%= moment(new Date(todoList[i].date)).format('YYYY-MM-DD HH:mm:ss')%></small>
                     <%} else{%>
                     <small class="label label-danger"><i class="fa fa-clock-o"></i><%= moment(new Date(todoList[i].date)).format('YYYY-MM-DD HH:mm:ss')%></small>
                     <%}%>
-                    <!-- <div class="tools">
-                      <i class="fa fa-trash-o"></i>
-                    </div> -->
                     <form action="/doctor/dashboard?tId=<%= todoList[i].todo_id%>" method="POST">
                       <button type="submit" name="sub" value="delToDo">Delete</button>
                     </form>
@@ -282,14 +223,11 @@
               <div class="box-footer clearfix no-border">
                 <button  type="button" name="button" onclick="showTodo()" class="btn btn-default pull-right" data-toggle="modal" data-target="#myModal4"><i class="fa fa-plus" data-target="#myModal4"></i> Add item</button>
               </div>
-
             </div>
-
 
             <div class="box box-primary">
               <div class="box-header with-border">
                 <h3 class="box-title">Patient Count</h3>
-
                 <div class="box-tools pull-right">
                   <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
                 </button>
@@ -301,31 +239,20 @@
                   <canvas id="areaChart" style="height:250px"></canvas>
                 </div>
               </div>
-              <!-- /.box-body -->
             </div>
-            <!-- Calendar -->
             <div class="box-header">
-              <!-- /. tools -->
             </div>
-            <!-- /.box-header -->
             <div class="box-body no-padding">
-              <!-- /.box -->
           </section>
-          <!-- /.Left col -->
-          <!-- right col (We are only adding the ID to make the widgets sortable)-->
+
           <section class="col-lg-5 connectedSortable">
             <div class="box-header">
-              <!-- tools box -->
               <div class="pull-right box-tools">
               </div>
-              <!-- /. tools -->
-
               <div class="box box-primary">
                 <div class="box-header with-border">
                   <i class="fa fa-bar-chart-o"></i>
-
                   <h3 class="box-title">Patient Chart</h3>
-
                   <div class="box-tools pull-right">
                     <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
                 </button>
@@ -342,22 +269,13 @@
                       <li><i class="fa fa-circle text-yellow"></i> Civilian Employees</li>
                       <li><i class="fa fa-circle text-aqua"></i> Military Officer</li>
                     </ul>
-
                 </div>
-                <!-- /.box-body-->
               </div>
             </div>
-            <!-- /.box-body -->
-            <!-- /.box-footer -->
             </div>
-            <!-- /.box -->
-
-
 
           </section>
-          <!-- right col -->
         </div>
-        <!-- /.row (main row) -->
 
         <!-- OPD Modal --->
         <div class="modal fade" id="opdModal" role="dialog" aria-labelledby="myModalLabel3">
@@ -382,13 +300,9 @@
                     <%}%>
                   </table>
                 </div>
-
               </div>
-
             </div>
-
           </div>
-
         </div>
 
         <!-- Ward Modal --->
@@ -414,13 +328,9 @@
                     <%}%>
                   </table>
                 </div>
-
               </div>
-
             </div>
-
           </div>
-
         </div>
 
         <!------------------------- Modal of Adding Appointment --------------------->
@@ -449,7 +359,6 @@
                   </div>
                 </form>
               </div>
-
             </div>
           </div>
         </div>
@@ -464,8 +373,6 @@
 
               <div class="modal-body">
                 <form method="POST" onsubmit="parseDateNTime()" class="form-horizontal" id="showTodo">
-                  <!-- <div id="showTodo" style="display:none;"> -->
-
                     <div class="form-group">
                       <label for="description" class="col-sm-2 control-label">Name</label>
                       <div class="col-sm-10">
@@ -493,16 +400,13 @@
                     <div class="modal-footer">
                       <button type="submit" class="btn btn-primary" name="sub" value="addTodo">Add</button>
                     </div>
-
                 </form>
               </div>
               </div>
             </div>
           </div>
       </section>
-      <!-- /.content -->
     </div>
-    <!-- /.content-wrapper -->
     <footer class="main-footer">
 
       <div class="pull-right hidden-xs">
@@ -512,7 +416,6 @@
     </footer>
     <div class="control-sidebar-bg"></div>
   </div>
-  <!-- ./wrapper -->
 
   <!-- jQuery 2.2.3 -->
   <!-- jQuery 2.2.3 -->
@@ -560,19 +463,12 @@
   <script src="../plugins/flot/jquery.flot.pie.min.js"></script>
   <!-- FLOT CATEGORIES PLUGIN - Used to draw bar charts -->
   <script src="../plugins/flot/jquery.flot.categories.min.js"></script>
-
   <!-- ChartJS 1.0.1 -->
   <script src="../plugins/chartjs/Chart.min.js"></script>
 
-
-
   <script>
-    //  $(function () {
-    //    $(".select2").select2();
-    //  });
     function successAlert(){
       alert("Adding appointment success!");
-
     }
 
     $(function () {
@@ -614,7 +510,6 @@
       var areaChartCanvas = $("#areaChart").get(0).getContext("2d");
       // This will get the first returned node in the jQuery collection.
       var areaChart = new Chart(areaChartCanvas);
-
 
       var areaChartData = {
         labels: ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "Novermber", "December"],
@@ -717,7 +612,6 @@
      function showAppointmentForm() {
        document.getElementById("showAppointmentForm").style.display = "block";
      }
-
 
   </script>
 </body>
