@@ -140,18 +140,18 @@
               <a onclick="showAdd()" class ="btn btn-default btn-sm" data-toggle="modal" data-target="#myModal"><i class="fa fa-plus" data-target="#myModal"></i> Register Patient</a>
           </div>
           <div class="box-body">
-            <table id="example1" class="table table-bordered table-striped">
-              <thead>
-                <tr>
-                  <th>Patient Type</th>
-                  <th>Name</th>
-                  <th>Age</th>
-                  <th>Gender</th>
-                  <th>Blood Type</th>
-                  <th>Latest Medicine Taken</th>
-                  <th>Action</th>
-                </tr>
-              </thead>
+              <table id="example1" class="table table-bordered table-striped">
+                <thead>
+                  <tr>
+                    <th>Patient Type</th>
+                    <th>Name</th>
+                    <th>Age</th>
+                    <th>Gender</th>
+                    <th>Blood Type</th>
+                    <th>Latest Medicine Taken</th>
+                  </tr>
+                </thead>
+
                 <%
                 for(var i=0; i <p.length; i++){
                     var b = new Date(p[i].birth_date);
@@ -160,84 +160,12 @@
                   <td><%= p[i].patient_type %></td>
                   <td><%= p[i].name %></td>
                   <td><%= p[i].age %></td>
-                  <!-- <td><%= p[i].unit %></td> -->
                   <td><%= p[i].sex %></td>
-                  <!-- <td><%= p[i].status %></td> -->
-                  <!-- <td><%= b.toLocaleDateString() %></td> -->
-                  <!-- <td><%= p[i].address %></td> -->
-                  <!-- <td><%= p[i].religion %></td> -->
                   <td><%= p[i].blood_type %></td>
-                  <!-- <td><%= p[i].allergies %></td> -->
-                  <!-- <td><%= p[i].father %></td> -->
-                  <!-- <td><%= p[i].mother %></td> -->
-                  <!-- <td><%= p[i].birth_history %></td> -->
-                  <!-- <td><%= p[i].rankORsn %></td> -->
-                  <!-- <td><%= p[i].immunization %></td> -->
-                  <!-- <td><%= p[i].family_history %></td> -->
                   <td><%= p[i].medicines%></td>
-                  <td><button type="button" name="button" onclick="PasswordInput(<%= p[i].patient_id %>)">view</button></td>
                 </tr>
                 <%}%>
               </table>
-
-              <%if(p2){%>
-                <br>
-                <h2>Ito dapat modal lang din, lagyan nyu nalang ng exit na button</h2>
-                <a href="/nurse/patientManagement"><button type="button" name="button">exit</button></a>
-                <br>
-                <table>
-                  <tr>
-                      <th>Patient Type</th>
-                      <th>Name</th>
-                      <th>Age</th>
-                      <th>Unit </th>
-                      <th>Gender</th>
-                      <th>Status</th>
-                      <th>Birth Date</th>
-                      <th>Address</th>
-                      <th>Religion</th>
-                      <th>Blood Type</th>
-                      <th>Allergies</th>
-                      <th>Father</th>
-                      <th>Mother</th>
-                      <th>Birth History</th>
-                      <th>Rank</th>
-                      <th>Immunization</th>
-                      <th>Family History</th>
-                  </tr>
-                  <%
-                  for(var i=0; i <p2.length; i++){
-                      var b = new Date(p2[i].birth_date);
-                  %>
-                  <tr>
-                    <td><%= p2[i].patient_type %></td>
-                    <td><%= p2[i].name %></td>
-                    <td><%= p2[i].age %></td>
-                    <td><%= p2[i].unit %></td>
-                    <td><%= p2[i].sex %></td>
-                    <td><%= p2[i].status %></td>
-                    <td><%= b.toLocaleDateString() %></td>
-                    <td><%= p2[i].address %></td>
-                    <td><%= p2[i].religion %></td>
-                    <td><%= p2[i].blood_type %></td>
-                    <td><%= p2[i].allergies %></td>
-                    <td><%= p2[i].father %></td>
-                    <td><%= p2[i].mother %></td>
-                    <td><%= p2[i].birth_history %></td>
-                    <td><%= p2[i].rankORsn %></td>
-                    <td><%= p2[i].immunization %></td>
-                    <td><%= p2[i].family_history %></td>
-                  </tr>
-                  <%}%>
-                </table>
-              <%}%>
-
-              <div id="PasswordInput" style="display:none">
-                <form id="dynamicActionPassword" method="post">
-                  Password: <input type="password" name="patientPassword">
-                  <button type="submit" name="sub" value="pass">enter</button>
-                </form>
-              </div>
             </div>
           </div>
         </div>

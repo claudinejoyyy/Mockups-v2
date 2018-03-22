@@ -1,8 +1,4 @@
 <!DOCTYPE html>
-<!--
-This is a starter template page. Use this page to start your new project from
-scratch. This page gets rid of all links and provides the needed markup only.
--->
 <html>
 <head>
     <meta charset="utf-8">
@@ -15,67 +11,35 @@ scratch. This page gets rid of all links and provides the needed markup only.
       }
   </style>
 </head>
-<!--
-BODY TAG OPTIONS:
-=================
-Apply one or more of the following classes to get the
-desired effect
-|---------------------------------------------------------|
-| SKINS         | skin-blue                               |
-|               | skin-black                              |
-|               | skin-purple                             |
-|               | skin-yellow                             |
-|               | skin-red                                |
-|               | skin-green                              |
-|---------------------------------------------------------|
-|LAYOUT OPTIONS | fixed                                   |
-|               | layout-boxed                            |
-|               | layout-top-nav                          |
-|               | sidebar-collapse                        |
-|               | sidebar-mini                            |
-|---------------------------------------------------------|
--->
 <body class="hold-transition skin-blue sidebar-mini fixed">
 <div class="wrapper">
 
-  <!-- Main Header -->
   <header class="main-header">
 
-    <!-- Logo -->
     <a href="../dashboard" class="logo">
-      <!-- mini logo for sidebar mini 50x50 pixels -->
       <span class="logo-mini"><b><%= username[0].account_type.charAt(0).toUpperCase()%></b></span>
-      <!-- logo for regular state and mobile devices -->
       <span class="logo-lg"><b><%= username[0].account_type.charAt(0).toUpperCase() + username[0].account_type.slice(1);%></b></span>
     </a>
 
-    <!-- Header Navbar -->
     <nav class="navbar navbar-static-top" role="navigation">
-      <!-- Sidebar toggle button-->
       <a href="#" class="sidebar-toggle" data-toggle="offcanvas" role="button">
         <span class="sr-only">Toggle navigation</span>
       </a>
-      <!-- Navbar Right Menu -->
       <div class="navbar-custom-menu">
         <ul class="nav navbar-nav">
-          <!-- /.messages-menu -->
-          <!-- User Account Menu -->
           <li class="dropdown user user-menu">
             <a href="#" class="dropdown-toggle" data-toggle="dropdown">
               <img src="../dist/img/user2-160x160.jpg" class="user-image" alt="User Image">
               <span class="hidden-xs"><%= username[0].name %></span>
             </a>
             <ul class="dropdown-menu">
-              <!-- User image -->
               <li class="user-header">
                 <img src="../dist/img/user2-160x160.jpg" class="img-circle" alt="User Image">
-
                 <p>
                   <%= username[0].name %> - <%= username[0].account_type %>
                   <small>Official since Nov. 1998</small>
                 </p>
               </li>
-              <!-- Menu Footer-->
               <li class="user-footer">
                 <div class="pull-left">
                   <a href="../profileManagement" class="btn btn-default btn-flat">Profile</a>
@@ -90,25 +54,19 @@ desired effect
       </div>
     </nav>
   </header>
-  <!-- Left side column. contains the logo and sidebar -->
   <aside class="main-sidebar">
 
-    <!-- sidebar: style can be found in sidebar.less -->
     <section class="sidebar">
-
-      <!-- Sidebar user panel (optional) -->
       <div class="user-panel">
         <div class="pull-left image">
           <img src="../dist/img/user2-160x160.jpg" class="img-circle" alt="User Image">
         </div>
         <div class="pull-left info">
           <p><%= username[0].name %></p>
-          <!-- Status -->
           <a href="#"><i class="fa fa-circle text-success"></i> Online</a>
         </div>
       </div>
 
-      <!-- search form (Optional) -->
       <form action="#" method="get" class="sidebar-form">
         <div class="input-group">
           <input type="text" name="q" class="form-control" placeholder="Search...">
@@ -118,48 +76,30 @@ desired effect
               </span>
         </div>
       </form>
-      <!-- /.search form -->
 
-      <!-- Sidebar Menu -->
       <ul class="sidebar-menu">
-        <!-- Optionally, you can add icons to the links -->
       <ul class="sidebar-menu">
-        <li><a href="dashboard" target="_self"><i class="fa fa-dashboard"></i> <span>Dashboard</span></a></li>
-        <li class="active"><a href="patientmanagement"><i class="fa fa-users"></i> <span>Patient Management</span></a></li>
-        <li><a href="bedManagement"><i class="fa fa-bed"></i> <span>Bed Management</span></a></li>   
+        <li><a href="dashboard"><i class="fa fa-dashboard"></i> <span>Dashboard</span></a></li>
+        <li class="active"><a href="patientmanagement" target="_self"><i class="fa fa-users"></i> <span>Patient Management</span></a></li>
+        <li><a href="bedManagement"><i class="fa fa-bed"></i> <span>Bed Management</span></a></li>
         <li><a href="userAccountsManagement"><i class="fa fa-user"></i> <span>User Accounts Management</span></a></li>
         <li><a href="profileManagement"><i class="fa fa-info"></i> <span>Profile Management</span></a></li>
       </ul>
-      <!-- /.sidebar-menu -->
     </section>
-    <!-- /.sidebar -->
   </aside>
 
-  <!-- Content Wrapper. Contains page content -->
   <div class="content-wrapper">
-    <!-- Content Header (Page header) -->
     <section class="content-header">
       <h1>
         Patient Management
         <small>List of Registered Patients</small>
       </h1>
-<!--
-      <ol class="breadcrumb">
-        <li><a href="#"><i class="fa fa-dashboard"></i> Level</a></li>
-        <li class="active">Here</li>
-      </ol>
--->
     </section>
 
-    <!-- Main content -->
     <section class="content">
-
        <div class="row">
         <div class="col-xs-12">
-          <!-- /.box -->
-
           <div class="box">
-            <!-- /.box-header -->
             <div class="box-body">
               <table id="example1" class="table table-bordered table-striped">
                 <thead>
@@ -170,7 +110,6 @@ desired effect
                   <th>Age</th>
                   <th>Gender</th>
                   <th>Blood Type</th>
-<!--                  <th>Action</th>-->
                 </tr>
                 </thead>
                 <tbody>
@@ -185,32 +124,15 @@ desired effect
                     <td><%= p[i].age %></td>
                     <td><%= p[i].sex %></td>
                     <td><%= p[i].blood_type %></td>
-<!--                    <td align="center"><a href="#" class="btn btn-primary btn-sm" title="View Profile"><i class="fa fa-user"></i> View Profile</a>&nbsp&nbsp<a href="#" class="btn btn-danger btn-sm" title="Archive Patient Profile"><i class="fa fa-fw fa-archive"></i> Archive Patient Profile</a></td>-->
                   </tr>
                   <%}%>
-                <!-- <tfoot>
-                <tr>
-                  <th>#</th>
-                  <th>Patient Type</th>
-                  <th>Name</th>
-                  <th>Age</th>
-                  <th>Gender</th>
-                  <th>Blood Type</th>
-                </tr>
-                </tfoot> -->
               </table>
             </div>
-            <!-- /.box-body -->
           </div>
-          <!-- /.box -->
         </div>
-        <!-- /.col -->
       </div>
-
     </section>
-    <!-- /.content -->
   </div>
-  <!-- /.content-wrapper -->
 
 <% include ../partials/footer.ejs %>
 
@@ -227,9 +149,6 @@ desired effect
     });
   });
 </script>
-<!-- Optionally, you can add Slimscroll and FastClick plugins.
-     Both of these plugins are recommended to enhance the
-     user experience. Slimscroll is required when using the
-     fixed layout. -->
+
 </body>
 </html>

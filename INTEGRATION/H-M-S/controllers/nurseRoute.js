@@ -283,7 +283,7 @@ var fhSQL       = "SELECT name FROM family_history;";
     if (req.session.email && req.session.sino == 'nurse') {
       if (req.session.sino == 'nurse') {
         var updateProfileSQL = 'UPDATE user_accounts SET name = "'+data.name+'", age = '+data.age+', address = "'+data.address+'", phone = '+data.phone+' WHERE account_id = '+req.session.Aid+';';
-        db.query(updateProfileSQL, function(err, rows){
+        db.query(updateProfileSQL + 'INSERT into activity_logs(account_id, time, type, remarks) VALUES ('+Aid+',"'+currentTime+'", "settingsProfileManagement", "Edited personal info.");', function(err, rows){
           if (err) {
             console.log(err);
           } else {
