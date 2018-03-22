@@ -85,7 +85,7 @@
                   <%} else {%>
                     <td><%= DT%></td>
                   <%}%>
-                  <form action="/nurse/bedManagement?bed=<%= bedDetails[i].bed_id%>" method="POST">
+                  <form action="/doctor/bedManagement?bed=<%= bedDetails[i].bed_id%>" method="POST">
                     <td><button class="btn btn-danger" <%if(bedDetails[i].status == 'Unoccupied'){%>
                     disabled
                   <%} else {%>
@@ -197,6 +197,12 @@
   $('#example2').DataTable({
   });
   });
+
+  function discharge(bedID){
+    console.log(bedID);
+     document.getElementById('dis').value = bedID;
+     console.log(document.getElementById('dis').value);
+  }
 </script>
 </div>
 

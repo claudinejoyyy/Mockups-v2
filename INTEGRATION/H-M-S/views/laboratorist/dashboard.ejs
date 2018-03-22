@@ -95,7 +95,7 @@
           <div class="small-box bg-aqua">
             <div class="inner">
               <h3><%= diagnosisSQL.length%></h3>
-              <p>Total Pending Diagnosis Tests</p>
+              <p>Total Diagnosis Tests</p>
             </div>
             <div class="icon">
               <i class="ion ion-person"></i>
@@ -271,30 +271,32 @@
 </div>
 
 <!---------------------------------------------------------------------------------------------- Modal for  Blood Chemistry ----------->
-  <div class="modal fade" id="bloodChem" tabindex="-1" role="dialog" aria-labelledby="myModalLabel1" style="overflow:hidden;">
-     <div class="modal-dialog" role="document">
-       <div class="modal-content">
-       <div class="box-header">
-         <h3 class="box-title">Request for Blood Chemistry Test</h3>
-       </div>
-       <div class="box-body">
-         <table id="example1" class="table table-bordered table-striped">
-           <thead>
-               <tr>
-                 <th>Name</th>
-                 <th>Date and Time</th>
-               </tr>
-           </thead>
-           <tbody>
-               <%for(var i = 0; i < bloodChemistrySQL.length; i++){%>
-                 <tr>
-                     <td><%= bloodChemistrySQL[i].name%></td>
-                     <td><%= bloodChemistrySQL[i].timestamp%></td>
-                 </tr>
-               <%}%>
-         </table>
-       </div>
-     </div>
+<div class="modal fade" id="opdmodal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel1" style="overflow:hidden;">
+  <div class="modal-dialog" role="document" style="overflow-y: initial !important;">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="myModalLabel">Request for Blood Chemistry Test</h4>
+      </div>
+      <div class="modal-body" id="ShowOpd" style="display:none;max-height: calc(100vh - 200px);overflow-y: auto;">
+    <section class="content">
+      <table id="example1" class="table table-bordered table-striped">
+        <thead>
+          <tr>
+            <th>Name</th>
+            <th>Date and Time</th>
+          </tr>
+        </thead>
+          <%for(var i = 0; i < bloodChemistrySQL.length; i++){%>
+            <tr>
+              <td><%= bloodChemistrySQL[i].name%></td>
+              <td><%= bloodChemistrySQL[i].timestamp%></td>
+            </tr>
+          <%}%>
+      </table>
+    </section>
+    </div>
+    </div>
    </div>
   </div>
 
@@ -651,4 +653,17 @@ $(function () {
   function showXray() {
     document.getElementById("showXray").style.display = "block";
   }
+  function OPD() {
+    document.getElementById('ShowOpd').style.display = 'block';
+  }
+  function WARD() {
+    document.getElementById('ShowWard').style.display = 'block';
+  }
+
+     $(document).ready(function() {
+     $(".select2").select2();
+       $("#example1").DataTable();
+       $('#example2').DataTable({
+       });
+     });
 </script>

@@ -83,24 +83,6 @@ var fhSQL       = "SELECT name FROM family_history;";
                 }
               });
             }
-        } else if (data.sub == 'discharge'){
-              var admitDischarge           = "DELETE FROM admit WHERE patient_id = "+req.query.id+";";
-              var patientNameSQL           = "SELECT name from patient WHERE patient_id = "+req.query.id+";";
-              var admitDischargeDepartment = "SELECT department FROM admit WHERE patient_id = "+req.query.id+";";
-              db.query(patientNameSQL + admitDischargeDepartment, function(err, rows){
-                if(err){
-                  console.log(err);
-                } else {
-                  var patientName = JSON.parse(JSON.stringify(rows[0]));
-                  var patientDepartment = JSON.parse(JSON.stringify(rows[1]));
-                  db.query(admitDischarge + 'INSERT into activity_logs(account_id, time, type, remarks) VALUES ('+req.session.Aid+',"'+currentTime+'", "discharge", "Discharged : '+patientName[0].name+' From '+patientDepartment[0].department+' Department");', function(err){
-                  if (err) {
-                    console.log(err);
-                  }
-                  });
-                  res.redirect(req.get('referer'));
-                }
-              });
         } else if (data.sub == 'addTodo') {
               var splitDateNTime = data.dateNtime.split('T');
               var parseDateNTime = splitDateNTime[0]+' '+splitDateNTime[1];
@@ -243,7 +225,7 @@ var fhSQL       = "SELECT name FROM family_history;";
     if(req.session.email && req.session.sino == 'nurse'){
       if(req.session.sino == 'nurse') {
         var dischargeSQL = "UPDATE bed SET status = 'Unoccupied', allotment_timestamp = NULL, patient_id = NULL where bed_id = "+req.query.bed+";";
-        var sql = db.query(dischargeSQL, function(err, rows, fields){
+        db.query(dischargeSQL + 'INSERT into activity_logs(account_id, time, type, remarks) VALUES ('+Aid+',"'+currentTime+'", "bedDischarge", "Discharged a patient from bed number : '+req.query.bed+'");', function(err, rows, fields){
           if(err){
             console.log(err);
           } else {
