@@ -30,25 +30,46 @@ const server = app.listen(3000, () => {
 });
 const io = require('socket.io')(server);
 
-//FOR AGE INCREMENT
 var CronJob = require('cron').CronJob;
+//FOR AGE INCREMENT
 new CronJob('00 00 * * 1-7', function() {
-    var checkBD = 'SELECT patient_id, birth_date from patient';
+    var checkBD = 'SELECT name, patient_id, birth_date, age from patient';
     db.query(checkBD, function(err, rows){
       var resultDB = JSON.parse(JSON.stringify(rows));
       for (var i in resultDB) {
         if (moment(new Date()).format('MM-DD') == moment(resultDB[i].birth_date).format('MM-DD')) {
-          db.query('UPDATE patient SET birth_date="'+ resultDB[i].birth_date+1 +'"where patient_id ='+resultDB[i].patient_id+';', function(err){
+          db.query('UPDATE patient SET age='+resultDB[i].age+1 +'"where patient_id ='+resultDB[i].patient_id+';', function(err){
             if (err) {
               console.log(err);
             } else {
-              console.log('gumagana');
+              console.log('patient: '+resultDB[i].name+' is now '+resultDB[i].age+1+'');
             }
           });
         }
       }
     });
 }, null, true);
+
+//RESET COUNTER EVERY 3 MONTHS
+new CronJob('00 00 1 mar,jun,sep,dec *', function() {
+    // var checkBD = 'SELECT patient_id, birth_date from patient';
+    // db.query(checkBD, function(err, rows){
+    //   var resultDB = JSON.parse(JSON.stringify(rows));
+    //   for (var i in resultDB) {
+    //     if (moment(new Date()).format('MM-DD') == moment(resultDB[i].birth_date).format('MM-DD')) {
+    //       db.query('UPDATE patient SET birth_date="'+ resultDB[i].birth_date+1 +'"where patient_id ='+resultDB[i].patient_id+';', function(err){
+    //         if (err) {
+    //           console.log(err);
+    //         } else {
+    //           console.log('gumagana');
+    //         }
+    //       });
+    //     }
+    //   }
+    // });
+    console.log("wow magic");
+}, null, true);
+
 
 // Express Validator Middleware
 app.use(expressValidator({
