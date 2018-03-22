@@ -139,10 +139,16 @@
       </div>
 
         <!---------------------------------------------------------------------------------------------- Modal of Adding new user ----------->
+        <style>
+          .parsley-error{
+            border-color: red;
+          }
+        </style>
+
         <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
           <div class="modal-dialog" role="document">
             <div class="modal-content">
-            <form class="form-horizontal" method="post" id="showCreateUser">
+            <form class="form-horizontal" method="post" id="showCreateUser" class="form-group" data-parsley-validate=""  data-parsley-trigger="keyup">
 
               <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
@@ -165,7 +171,7 @@
                   <div class="form-group">
                     <label for="inputName" class="col-sm-2 control-label">Name</label>
                     <div class="col-sm-10">
-                      <input type="text" class="form-control" id="inputName" name="name">
+                      <input type="text" class="form-control" id="inputName" name="name" data-parsley-required data-parsley-pattern="/^[A-Za-z\s .]+$/">
                     </div>
                   </div>
 
@@ -182,14 +188,14 @@
                   <div class="form-group">
                     <label for="inputDate" class="col-sm-2 control-label">Birth Date</label>
                     <div class="col-sm-10">
-                      <input type="date" class="form-control" id="inputDate" name="birth">
+                      <input type="date" class="form-control" id="inputDate" name="birth" data-parsley-required>
                     </div>
                   </div>
 
                   <div class="form-group">
                     <label for="inputName" class="col-sm-2 control-label">Username</label>
                     <div class="col-sm-10">
-                      <input class="form-control" id="inputName" type="username" name="user">
+                      <input class="form-control" id="inputName" type="username" name="user" placeholder="Use letters and numbers only..." data-parsley-pattern="/^[A-Za-z0-9\s]+$/">
                     </div>
                   </div>
 
@@ -200,24 +206,24 @@
                     </div>
                   </div>
 
-                  <div class="form-group">
+                  <!-- <div class="form-group">
                     <label for="inputName" class="col-sm-2 control-label">Age</label>
                     <div class="col-sm-10">
                       <input type="number" min="0" class="form-control" id="inputName" name="age">
                     </div>
-                  </div>
+                  </div> -->
 
                   <div class="form-group">
                     <label for="inputExperience" class="col-sm-2 control-label">Phone Number</label>
                       <div class="col-sm-10">
-                        <input type="text" class="form-control" id="inputName" name="phone">
+                        <input type="text" class="form-control" id="inputName" name="phone"data-parsley-pattern="/^[0-9]+/">
                         </div>
                   </div>
 
                   <div class="form-group">
                     <label for="inputSkills" class="col-sm-2 control-label">Address</label>
                     <div class="col-sm-10">
-                        <textarea type="text" class="form-control" id="inputSkills" name="address" rows="2" cols="80"></textarea>
+                        <textarea type="text" class="form-control" id="inputSkills" name="address" rows="2" cols="80" data-parsley-pattern="/^[0-9A-Za-z\s -/.]+$/"></textarea>
                     </div>
                   </div>
 
