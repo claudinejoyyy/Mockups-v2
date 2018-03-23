@@ -7,7 +7,8 @@
   <title>Prescription Management</title>
     <% include ../partials/header.ejs %>
 </head>
-<body class="hold-transition skin-blue sidebar-mini fixed">
+  <body class="hold-transition skin-blue fixed sidebar-mini" onload="myFunction()"> <!------------------------------------ EDIT FOR LOADER ---------------------------------->
+    <div id="loader"></div> <!------------------------------------ EDIT FOR LOADER ---------------------------------->
 <div class="wrapper">
 
   <header class="main-header">
@@ -84,12 +85,14 @@
     </section>
   </aside>
 
-    <div class="content-wrapper">
+      <!-- Content Wrapper. Contains page content -->
+  <div class="content-wrapper"  id="myDiv1"> <!------------------------------------ EDIT FOR LOADER ---------------------------------->
     <section class="content-header">
       <h1>Prescription Management</h1>
     </section>
 
-      <section class="content">
+        <!-- Main content -->
+    <section class="content animate-bottom"> <!------------------------------------ EDIT FOR LOADER ---------------------------------->
         <div class="row">
          <div class="col-xs-12">
            <div class="box">
@@ -139,31 +142,7 @@
       </section>
     </div>
 
-  <!-- Main Footer -->
-  <footer class="main-footer">
-  <div class="pull-right hidden-xs">
-   <b>Version</b> 1
-  </div>
-  <strong>Copyright &copy; 2018.</strong> Philippine Military Academy | Fort Del Pilar Station Hospital | All rights reserved.
-  </footer>
-  <div class="control-sidebar-bg"></div>
-  </div>
-
-  <!-- REQUIRED JS SCRIPTS -->
-
-  <!-- jQuery 2.2.3 -->
-  <script src="../plugins/jQuery/jquery-2.2.3.min.js"></script>
-  <!-- Bootstrap 3.3.6 -->
-  <script src="../bootstrap/js/bootstrap.min.js"></script>
-  <!-- AdminLTE App -->
-  <script src="../dist/js/app.min.js"></script>
-  <!-- DataTables -->
-  <script src="../plugins/datatables/jquery.dataTables.min.js"></script>
-  <script src="../plugins/datatables/dataTables.bootstrap.min.js"></script>
-  <!-- SlimScroll -->
-  <script src="../plugins/slimScroll/jquery.slimscroll.min.js"></script>
-  <!-- FastClick -->
-  <script src="../plugins/fastclick/fastclick.js"></script>
+<% include ../partials/footer.ejs %>
 
   <script type="text/javascript">
 $(function () {

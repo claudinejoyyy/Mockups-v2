@@ -6,7 +6,8 @@
     <title>Bed Management</title>
     <% include ../partials/header.ejs %>
   </head>
-  <body class="hold-transition skin-blue fixed sidebar-mini">
+  <body class="hold-transition skin-blue fixed sidebar-mini" onload="myFunction()"> <!------------------------------------ EDIT FOR LOADER ---------------------------------->
+    <div id="loader"></div> <!------------------------------------ EDIT FOR LOADER ---------------------------------->
   <div class="wrapper">
     <header class="main-header">
       <a href="../nurse/dashboard" class="logo">
@@ -47,7 +48,8 @@
       </nav>
     </header>
 
-    <div class="content-wrapper">
+      <!-- Content Wrapper. Contains page content -->
+  <div class="content-wrapper"  id="myDiv1"> <!------------------------------------ EDIT FOR LOADER ---------------------------------->
     <section class="content-header">
       <h1>
         Bed Management
@@ -55,7 +57,8 @@
       </h1>
     </section>
 
-    <section class="content">
+        <!-- Main content -->
+    <section class="content animate-bottom"> <!------------------------------------ EDIT FOR LOADER ---------------------------------->
        <div class="row">
         <div class="col-xs-12">
           <div class="box">
