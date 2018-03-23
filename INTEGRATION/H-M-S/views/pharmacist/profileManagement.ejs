@@ -223,35 +223,31 @@
                 <form class="form-horizontal" method="POST" id="setting" style="display:none;">
                   <div class="form-group">
                     <label for="inputName" class="col-sm-2 control-label">Name</label>
-                    <div class="col-sm-10">
-                      <input type="text" id="name" name="name" placeholder="" value="<%= pInfo[0].name%>">
+                    <div class="col-xs-5">
+                      <input class="form-control" type="text" id="name" name="name" placeholder="" value="<%= pInfo[0].name%>">
                     </div>
                   </div>
-
                   <div class="form-group">
                     <label for="inputName" class="col-sm-2 control-label">Age</label>
-                    <div class="col-sm-10">
-                      <input type="int" id="age" name="age" placeholder="" value="<%= pInfo[0].age%>"><br>
+                    <div class="col-xs-5">
+                      <input class="form-control" type="int" id="age" name="age" placeholder="" value="<%= pInfo[0].age%>"><br>
                     </div>
                   </div>
-
                   <div class="form-group">
                     <label for="inputExperience" class="col-sm-2 control-label">Address</label>
-                      <div class="col-sm-10">
-                        <input type="text" id="address" name="address" placeholder="" value="<%= pInfo[0].address%>"><br>
+                      <div class="col-xs-5">
+                        <input class="form-control" type="text" id="address" name="address" placeholder="" value="<%= pInfo[0].address%>"><br>
                       </div>
                   </div>
-
                   <div class="form-group">
                     <label for="inputExperience" class="col-sm-2 control-label">Phone</label>
-                      <div class="col-sm-10">
-                        <input type="text" id="phone" name="phone" placeholder="" value="<%= pInfo[0].phone%>"><br>
+                      <div class="col-xs-5">
+                        <input class="form-control" type="text" id="phone" name="phone" placeholder="" value="<%= pInfo[0].phone%>"><br>
                       </div>
                   </div>
-
                   <div class="form-group">
                     <div class="col-sm-offset-2 col-sm-10">
-                      <button type="submit" class="btn btn-danger" onclick="check()">Save</button>
+                      <button type="submit" class="btn btn-danger" onclick="check()"><i class="fa fa-save"></i> Save</button>
                     </div>
                   </div>
                 </form>
