@@ -11,8 +11,8 @@
       }
   </style>
 </head>
-
-<body class="hold-transition skin-blue sidebar-mini fixed">
+<body class="hold-transition skin-blue fixed sidebar-mini" onload="myFunction()"> <!------------------------------------ EDIT FOR LOADER ---------------------------------->
+<div id="loader"></div> <!------------------------------------ EDIT FOR LOADER ---------------------------------->
 <div class="wrapper">
   <header class="main-header">
     <a href="index2.html" class="logo">
@@ -74,15 +74,17 @@
       </form>
 
       <ul class="sidebar-menu">
-        <li class="active"><a href="../laboratorist/dashboard"><i class="fa fa-link"></i> <span>Dashboard</span></a></li>
-        <li><a href="../laboratorist/labRequestManagement"><i class="fa fa-link"></i> <span>Diagnosis Request Management</span></a></li>
-        <li><a href="../laboratorist/profileManagement"><i class="fa fa-link"></i> <span>Profile Management</span></a></li>
+        <li class="active"><a href="../laboratorist/dashboard"><i class="fa fa-dashboard"></i> <span>Dashboard</span></a></li>
+        <li><a href="../laboratorist/labRequestManagement"><i class="fa fa-stethoscope"></i> <span>Diagnosis Request Management</span></a></li>
+        <li><a href="../laboratorist/profileManagement"><i class="fa fa-info"></i> <span>Profile Management</span></a></li>
       </ul>
   </aside>
 
-  <div class="content-wrapper">
+      <!-- Content Wrapper. Contains page content -->
+  <div class="content-wrapper"  id="myDiv1"> <!------------------------------------ EDIT FOR LOADER ---------------------------------->
     <section class="content-header"></section>
-    <section class="content">
+        <!-- Main content -->
+    <section class="content animate-bottom"> <!------------------------------------ EDIT FOR LOADER ---------------------------------->
       <div class="row">
         <div class="col-lg-3 col-xs-6">
           <div class="small-box bg-aqua">
@@ -524,11 +526,7 @@
                   </div>
                 </div>
               </div>
-              <% include ../partials/footer.ejs %>
-              <!------------------------------------------------------------------------------------------ /Modal-->
-
-  </body>
-</html>
+<% include ../partials/footer.ejs %>
 <script>
 $(function () {
     var areaChartCanvas = $("#areaChart").get(0).getContext("2d");
