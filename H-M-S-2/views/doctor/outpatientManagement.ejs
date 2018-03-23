@@ -55,12 +55,12 @@
             <td><%=opdInfo[i].sex%></td>
             <td style="font-size:10px;">
               <%
-                var vitals = opdInfo[i].vital_signs.split('\n');
+                var vitals = opdInfo[i].vitals.split('\n');
                 for(var l=0; l < 7; l++){ %>
                   <%=vitals[l]%><br>
               <%}%>
             </td>
-            <td><%=opdInfo[i].assessment%></td>
+            <td><%=opdInfo[i].initial_assessment%></td>
             <%
             var bedArr= '';
               for (var j = 0; j < whoCurrentlyAdmittedV2.length; j++){
