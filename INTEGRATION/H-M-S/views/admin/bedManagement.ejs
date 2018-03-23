@@ -6,34 +6,46 @@
     <title>Bed Management</title>
     <% include ../partials/header.ejs %>
   </head>
-  <body class="hold-transition skin-blue fixed sidebar-mini">
+  <body class="hold-transition skin-blue fixed sidebar-mini" onload="myFunction()"> <!------------------------------------ EDIT FOR LOADER ---------------------------------->
+  <div id="loader"></div> <!------------------------------------ EDIT FOR LOADER ---------------------------------->
   <div class="wrapper">
   <header class="main-header">
 
+    <!-- Logo -->
     <a href="../dashboard" class="logo">
+      <!-- mini logo for sidebar mini 50x50 pixels -->
       <span class="logo-mini"><b><%= username[0].account_type.charAt(0).toUpperCase()%></b></span>
+      <!-- logo for regular state and mobile devices -->
       <span class="logo-lg"><b><%= username[0].account_type.charAt(0).toUpperCase() + username[0].account_type.slice(1);%></b></span>
     </a>
 
+    <!-- Header Navbar -->
     <nav class="navbar navbar-static-top" role="navigation">
+      <!-- Sidebar toggle button-->
       <a href="#" class="sidebar-toggle" data-toggle="offcanvas" role="button">
         <span class="sr-only">Toggle navigation</span>
       </a>
+      <!-- Navbar Right Menu -->
       <div class="navbar-custom-menu">
         <ul class="nav navbar-nav">
+          <!-- /.messages-menu -->
+          <!-- User Account Menu -->
           <li class="dropdown user user-menu">
             <a href="#" class="dropdown-toggle" data-toggle="dropdown">
               <img src="../dist/img/user2-160x160.jpg" class="user-image" alt="User Image">
               <span class="hidden-xs"><%= username[0].name %></span>
             </a>
             <ul class="dropdown-menu">
+              <!-- User image -->
               <li class="user-header">
                 <img src="../dist/img/user2-160x160.jpg" class="img-circle" alt="User Image">
+
                 <p>
                   <%= username[0].name %> - <%= username[0].account_type %>
                   <small>Official since Nov. 1998</small>
                 </p>
               </li>
+              <!-- Menu Footer-->
               <li class="user-footer">
                 <div class="pull-left">
                   <a href="../profileManagement" class="btn btn-default btn-flat">Profile</a>
@@ -49,7 +61,7 @@
     </nav>
   </header>
 
-    <div class="content-wrapper">
+    <div class="content-wrapper" id="myDiv1"> <!------------------------------------ EDIT FOR LOADER ---------------------------------->
     <section class="content-header">
       <h1>
         Bed Management
@@ -57,7 +69,7 @@
       </h1>
     </section>
 
-    <section class="content">
+    <section class="content animate-bottom"> <!------------------------------------ EDIT FOR LOADER ---------------------------------->
        <div class="row">
         <div class="col-xs-12">
           <div class="box">
@@ -70,12 +82,14 @@
                     <th>Patient Type</th>
                     <th>Patient Name</th>
                     <th>Confinement Date</th>
-                    <th>Action</th>
                   </tr>
                 </thead>
                 <%for(var i=0; i < bedDetails.length; i++){%>
                 <tr>
-                  <td><%= bedDetails[i].status.charAt(0).toUpperCase() + bedDetails[i].status.slice(1);%></td>
+                  <td <%if(bedDetails[i].status == 'Unoccupied'){%>
+                    style="color:green; font-weight: bold;"
+                  <%} else {%> style="color:red; font-weight: bold;"
+                  <%}%>><%= bedDetails[i].status.charAt(0).toUpperCase() + bedDetails[i].status.slice(1);%></td>
                   <td><%= bedDetails[i].bed_id%></td>
                   <td><%= bedDetails[i].patient_type%></td>
                   <td><%= bedDetails[i].name%></td>
@@ -87,12 +101,6 @@
                   <%} else {%>
                     <td><%= DT%></td>
                   <%}%>
-                  <form action="/nurse/bedManagement?bed=<%= bedDetails[i].bed_id%>" method="POST">
-                    <td><button class="btn btn-danger" <%if(bedDetails[i].status == 'Unoccupied'){%>
-                    disabled
-                  <%} else {%>
-                  <%}%>>Discharge</button></td>
-                  </form>
                 </tr>
                 <%}%>
               </table>
@@ -110,6 +118,7 @@
         </div>
         <div class="pull-left info">
           <p><%= username[0].name %></p>
+          <!-- Status -->
           <a href="#"><i class="fa fa-circle text-success"></i> Online</a>
         </div>
       </div>
@@ -125,9 +134,9 @@
         </form>
 
       <ul class="sidebar-menu">
-        <li><a href="dashboard"><i class="fa fa-dashboard"></i> <span>Dashboard</span></a></li>
+        <li><a href="dashboard" target="_self"><i class="fa fa-dashboard"></i> <span>Dashboard</span></a></li>
         <li><a href="patientmanagement"><i class="fa fa-users"></i> <span>Patient Management</span></a></li>
-        <li class="active"><a href="bedManagement" target="_self"><i class="fa fa-bed"></i> <span>Bed Management</span></a></li>   
+        <li class="active"><a href="bedManagement"><i class="fa fa-bed"></i> <span>Bed Management</span></a></li>   
         <li><a href="userAccountsManagement"><i class="fa fa-user"></i> <span>User Accounts Management</span></a></li>
         <li><a href="profileManagement"><i class="fa fa-info"></i> <span>Profile Management</span></a></li>
     </ul>

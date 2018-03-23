@@ -1,39 +1,76 @@
 <!DOCTYPE html>
+<!--
+This is a starter template page. Use this page to start your new project from
+scratch. This page gets rid of all links and provides the needed markup only.
+-->
 <html>
 <head>
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <% include ../partials/header.ejs %>
 </head>
-<body class="hold-transition skin-blue sidebar-mini fixed">
+<!--
+BODY TAG OPTIONS:
+=================
+Apply one or more of the following classes to get the
+desired effect
+|---------------------------------------------------------|
+| SKINS         | skin-blue                               |
+|               | skin-black                              |
+|               | skin-purple                             |
+|               | skin-yellow                             |
+|               | skin-red                                |
+|               | skin-green                              |
+|---------------------------------------------------------|
+|LAYOUT OPTIONS | fixed                                   |
+|               | layout-boxed                            |
+|               | layout-top-nav                          |
+|               | sidebar-collapse                        |
+|               | sidebar-mini                            |
+|---------------------------------------------------------|
+-->
+<body class="hold-transition skin-blue sidebar-mini fixed" onload="myFunction()"> <!------------------------------------ EDIT FOR LOADER ---------------------------------->
+<div id="loader"></div> <!------------------------------------ EDIT FOR LOADER ---------------------------------->
 <div class="wrapper">
 
+  <!-- Main Header -->
   <header class="main-header">
 
+    <!-- Logo -->
     <a href="../dashboard" class="logo">
+      <!-- mini logo for sidebar mini 50x50 pixels -->
       <span class="logo-mini"><b><%= username[0].account_type.charAt(0).toUpperCase()%></b></span>
+      <!-- logo for regular state and mobile devices -->
       <span class="logo-lg"><b><%= username[0].account_type.charAt(0).toUpperCase() + username[0].account_type.slice(1);%></b></span>
     </a>
 
+    <!-- Header Navbar -->
     <nav class="navbar navbar-static-top" role="navigation">
+      <!-- Sidebar toggle button-->
       <a href="#" class="sidebar-toggle" data-toggle="offcanvas" role="button">
         <span class="sr-only">Toggle navigation</span>
       </a>
+      <!-- Navbar Right Menu -->
       <div class="navbar-custom-menu">
         <ul class="nav navbar-nav">
+          <!-- /.messages-menu -->
+          <!-- User Account Menu -->
           <li class="dropdown user user-menu">
             <a href="#" class="dropdown-toggle" data-toggle="dropdown">
               <img src="../dist/img/user2-160x160.jpg" class="user-image" alt="User Image">
               <span class="hidden-xs"><%= username[0].name %></span>
             </a>
             <ul class="dropdown-menu">
+              <!-- User image -->
               <li class="user-header">
                 <img src="../dist/img/user2-160x160.jpg" class="img-circle" alt="User Image">
+
                 <p>
                   <%= username[0].name %> - <%= username[0].account_type %>
                   <small>Official since Nov. 1998</small>
                 </p>
               </li>
+              <!-- Menu Footer-->
               <li class="user-footer">
                 <div class="pull-left">
                   <a href="../profileManagement" class="btn btn-default btn-flat">Profile</a>
@@ -48,19 +85,25 @@
       </div>
     </nav>
   </header>
+  <!-- Left side column. contains the logo and sidebar -->
   <aside class="main-sidebar">
 
+    <!-- sidebar: style can be found in sidebar.less -->
     <section class="sidebar">
+
+      <!-- Sidebar user panel (optional) -->
       <div class="user-panel">
         <div class="pull-left image">
           <img src="../dist/img/user2-160x160.jpg" class="img-circle" alt="User Image">
         </div>
         <div class="pull-left info">
           <p><%= username[0].name %></p>
+          <!-- Status -->
           <a href="#"><i class="fa fa-circle text-success"></i> Online</a>
         </div>
       </div>
 
+      <!-- search form (Optional) -->
       <form action="#" method="get" class="sidebar-form">
         <div class="input-group">
           <input type="text" name="q" class="form-control" placeholder="Search...">
@@ -70,32 +113,50 @@
               </span>
         </div>
       </form>
+      <!-- /.search form -->
 
+      <!-- Sidebar Menu -->
       <ul class="sidebar-menu">
+        <!-- Optionally, you can add icons to the links -->
         <li><a href="dashboard" target="_self"><i class="fa fa-dashboard"></i> <span>Dashboard</span></a></li>
         <li><a href="patientmanagement"><i class="fa fa-users"></i> <span>Patient Management</span></a></li>
-        <li><a href="bedManagement"><i class="fa fa-bed"></i> <span>Bed Management</span></a></li>
-        <li class="active"><a href="userAccountsManagement" target="_self"><i class="fa fa-user"></i> <span>User Accounts Management</span></a></li>
+        <li><a href="bedManagement"><i class="fa fa-bed"></i> <span>Bed Management</span></a></li>   
+        <li class="active"><a href="userAccountsManagement"><i class="fa fa-user"></i> <span>User Accounts Management</span></a></li>
         <li><a href="profileManagement"><i class="fa fa-info"></i> <span>Profile Management</span></a></li>
       </ul>
+      <!-- /.sidebar-menu -->
     </section>
+    <!-- /.sidebar -->
   </aside>
 
-  <div class="content-wrapper">
+  <!-- Content Wrapper. Contains page content -->
+  <div class="content-wrapper" id="myDiv1"> <!------------------------------------ EDIT FOR LOADER ---------------------------------->
+    <!-- Content Header (Page header) -->
     <section class="content-header">
       <h1>
         User Accounts Management
         <small>List of Registered User Accounts</small>
       </h1>
+<!--
+      <ol class="breadcrumb">
+        <li><a href="#"><i class="fa fa-dashboard"></i> Level</a></li>
+        <li class="active">Here</li>
+      </ol>
+-->
     </section>
 
-    <section class="content">
+    <!-- Main content -->
+    <section class="content animate-bottom"> <!------------------------------------ EDIT FOR LOADER ---------------------------------->
+
        <div class="row">
         <div class="col-xs-12">
+          <!-- /.box -->
+
           <div class="box">
             <div class="box-header">
               <button type="button" class="btn btn-default btn-sm" data-toggle="modal" data-target="#myModal"><i class="fa fa-plus"></i> Add New User</button>
             </div>
+            <!-- /.box-header -->
             <div class="box-body">
               <table id="example1" class="table table-bordered table-striped">
                 <thead>
@@ -134,21 +195,18 @@
                   <%}%>
               </table>
             </div>
+            <!-- /.box-body -->
           </div>
+          <!-- /.box -->
         </div>
+        <!-- /.col -->
       </div>
 
         <!---------------------------------------------------------------------------------------------- Modal of Adding new user ----------->
-        <style>
-          .parsley-error{
-            border-color: red;
-          }
-        </style>
-
         <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
           <div class="modal-dialog" role="document">
             <div class="modal-content">
-            <form class="form-horizontal" method="post" id="showCreateUser" class="form-group" data-parsley-validate=""  data-parsley-trigger="keyup">
+            <form class="form-horizontal" method="post" id="showCreateUser">
 
               <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
@@ -167,14 +225,12 @@
                         </select>
                     </div>
                   </div>
-
                   <div class="form-group">
                     <label for="inputName" class="col-sm-2 control-label">Name</label>
                     <div class="col-sm-10">
-                      <input type="text" class="form-control" id="inputName" name="name" data-parsley-required data-parsley-pattern="/^[A-Za-z\s .]+$/">
+                      <input type="text" class="form-control" id="inputName" name="name">
                     </div>
                   </div>
-
                   <div class="form-group">
                     <label for="inputName" class="col-sm-2 control-label">Gender</label>
                     <div class="col-sm-10">
@@ -184,46 +240,44 @@
                         </select>
                     </div>
                   </div>
-
                   <div class="form-group">
                     <label for="inputDate" class="col-sm-2 control-label">Birth Date</label>
                     <div class="col-sm-10">
-                      <input type="date" class="form-control" id="inputDate" name="birth" data-parsley-required>
+                      <input type="date" class="form-control" id="inputDate" name="birth">
                     </div>
                   </div>
-
                   <div class="form-group">
                     <label for="inputName" class="col-sm-2 control-label">Username</label>
                     <div class="col-sm-10">
-                      <input class="form-control" id="inputName" type="username" name="user" placeholder="Use letters and numbers only..." data-parsley-pattern="/^[A-Za-z0-9\s]+$/">
+                      <input class="form-control" id="inputName" type="username" name="user">
                     </div>
                   </div>
-
                   <div class="form-group">
                     <label for="inputName" class="col-sm-2 control-label">Password</label>
                     <div class="col-sm-10">
                       <input class="form-control" id="inputName" type="password" name="pass">
                     </div>
                   </div>
-
-                  <!-- <div class="form-group">
+                  <div class="form-group">
                     <label for="inputName" class="col-sm-2 control-label">Age</label>
+
                     <div class="col-sm-10">
                       <input type="number" min="0" class="form-control" id="inputName" name="age">
                     </div>
-                  </div> -->
+                  </div>
 
                   <div class="form-group">
                     <label for="inputExperience" class="col-sm-2 control-label">Phone Number</label>
                       <div class="col-sm-10">
-                        <input type="text" class="form-control" id="inputName" name="phone"data-parsley-pattern="/^[0-9]+/">
+                        <input type="text" class="form-control" id="inputName" name="phone">
                         </div>
                   </div>
 
                   <div class="form-group">
                     <label for="inputSkills" class="col-sm-2 control-label">Address</label>
+
                     <div class="col-sm-10">
-                        <textarea type="text" class="form-control" id="inputSkills" name="address" rows="2" cols="80" data-parsley-pattern="/^[0-9A-Za-z\s -/.]+$/"></textarea>
+                        <textarea type="text" class="form-control" id="inputSkills" name="address" rows="2" cols="80"></textarea>
                     </div>
                   </div>
 
@@ -237,9 +291,11 @@
           </div>
         </div>
         <!------------------------------------------------------------------------------------------ /Modal-->
-
+        
     </section>
+    <!-- /.content -->
   </div>
+  <!-- /.content-wrapper -->
 
 <% include ../partials/footer.ejs %>
 
@@ -255,6 +311,15 @@
       "autoWidth": true
     });
   });
+    
+//$('[data-toggle=confirmation]').confirmation({
+//  rootSelector: '[data-toggle=confirmation]'
+//});
+
 </script>
+<!-- Optionally, you can add Slimscroll and FastClick plugins.
+     Both of these plugins are recommended to enhance the
+     user experience. Slimscroll is required when using the
+     fixed layout. -->
 </body>
 </html>
