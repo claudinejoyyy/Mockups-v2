@@ -191,10 +191,12 @@
                       <i class="fa fa-remove bg-orange"></i>
                       <div class="timeline-item">
                     <%} else if (activityInfo[i].type == 'generalTodo'){%>
-                      <i class="fa fa-remove bg-green"></i>
+                      <i class="fa fa-remove bg-blue"></i>
+                      <div class="timeline-item">
+                    <%} else if (activityInfo[i].type == 'prescription'){%>
+                      <i class="fa fa-medkit bg-green"></i>
                       <div class="timeline-item">
                     <%}%>
-
                       <h3 class="timeline-header"><%= activityInfo[i].remarks%></a></h3>
 
                     </div>

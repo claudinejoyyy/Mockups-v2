@@ -295,7 +295,7 @@
                     <%for (var i = 0; i < whoOPD.length; i++) { %>
                       <tr>
                         <td><%= whoOPD[i].name%></td>
-                        <td><%= whoOPD[i].time%></td>
+                        <td><%= moment(new Date(whoOPD[i].time)).format('YYYY-MM-DD HH:mm:ss')%></td>
                       </tr>
                     <%}%>
                   </table>
@@ -323,7 +323,7 @@
                     <%for (var i = 0; i < whoWARD.length; i++) { %>
                       <tr>
                         <td><%= whoWARD[i].name%></td>
-                        <td><%= whoWARD[i].time%></td>
+                        <td><%= moment(new Date(whoWARD[i].time)).format('YYYY-MM-DD HH:mm:ss')%></td>
                       </tr>
                     <%}%>
                   </table>
