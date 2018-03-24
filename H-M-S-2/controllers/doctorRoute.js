@@ -106,7 +106,7 @@ var user, Aid, availableBedss, p;
       if (req.session.sino == 'doctor') {
           if (data.sub == 'admit') {
             var bedSQL = 'UPDATE bed set allotment_timestamp = "'+moment(new Date()).format('YYYY-MM-DD HH:mm:ss')+'", patient_id = '+req.query.patient_id+',status = "occupied" where bed_id = '+data.bedNumber+';';
-            var historySQL = 'UPDATE patient_history set bed = CONCAT(bed,"'+data.bedNumber+', ");';
+            var historySQL = 'UPDATE patient_history set bed = CONCAT(bed,"'+data.bedNumber+', ") where histo_id ='+req.query.histo_id+';';
             db.query(bedSQL + historySQL + 'INSERT into activity_logs(account_id, time, type, remarks, patient_id) VALUES ('+Aid+',"'+moment(new Date()).format('YYYY-MM-DD HH:mm:ss')+'", "bed", "Alloted bed number: '+data.bedNumber+' to patient:'+req.query.patient_name+'",'+req.query.patient_id+');', function(err){
               if (err) {
                 console.log(err);

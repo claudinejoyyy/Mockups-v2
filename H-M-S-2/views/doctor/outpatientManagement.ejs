@@ -104,7 +104,7 @@
                 for (var j = 0; j < whoCurrentlyAdmittedV2.length; j++){
                   arr += whoCurrentlyAdmittedV2[j].patient_id;
                 } if(!(arr.includes(opdInfo[i].patient_id))){%>
-                  <input type="button" name="admit" value="admit" onclick="ShowAdmit(<%=opdInfo[i].patient_id%>,<%=JSON.stringify(opdInfo[i].name)%>)">
+                  <input type="button" name="admit" value="admit" onclick="ShowAdmit(<%=opdInfo[i].patient_id%>,<%=JSON.stringify(opdInfo[i].name)%>,<%=opdInfo[i].histo_id%>)">
               <%}%>
               <!-- LAB REQUEST TABLE VIEW -->
 
@@ -209,8 +209,8 @@
     document.getElementById('ShowPrescribe').style.display = 'none';
   }
 
-  function ShowAdmit(i,o){
-    document.getElementById('dynamicPatientIdForAdmit').action = '/doctor/outpatientManagement?patient_id='+i+'&patient_name='+o+'';
+  function ShowAdmit(i,o,u){
+    document.getElementById('dynamicPatientIdForAdmit').action = '/doctor/outpatientManagement?patient_id='+i+'&patient_name='+o+'&histo_id='+u+'';
     document.getElementById('ShowAdmit').style.display = 'block';
   }
 
