@@ -1,5 +1,7 @@
 module.exports = function(app,db,currentTime,name,counts,chart,whoCurrentlyAdmitted,whoOPD,whoWARD,monthlyPatientCount,patientList,io,moment){
 var user, Aid;
+var prescriptionSQL = 'SELECT CONCAT("medicine:",medicine,"\nquantity:",quantity,"\ndosage:", dosage,"\ntimeframe:", timeframe) AS medications, p.status as STATUS,creation_stamp,patient_type,name,age,prescription_id from prescription p inner join patient using(patient_id) where p.status = "pending";';
+var confirmedprescriptionSQL = 'SELECT CONCAT("medicine:",medicine,"\nquantity:",quantity,"\ndosage:", dosage,"\ntimeframe:", timeframe) AS medications, p.status as STATUS,creation_stamp,patient_type,name,age,prescription_id from prescription p inner join patient using(patient_id) where p.status = "confirmed";';
 
   app.get('/pharmacist/dashboard', function(req, res){
     if(req.session.email && req.session.sino == 'pharmacist'){
@@ -9,12 +11,12 @@ var user, Aid;
         var acceptedRequestSQL = 'SELECT * from prescription r inner join patient p using(patient_id) where r.status="confirmed";';
         var pendingRequestSQL  = 'SELECT * from prescription r inner join patient p using(patient_id) where r.status="pending";';
         var todoList           = "SELECT * from todo_list where account_id = "+Aid+";";
-        db.query(prescriptionSQL + acceptedRequestSQL + pendingRequestSQL + todoList + monthlyPatientCount + name, Aid, function(err, rows){
+        db.query(prescriptionSQL + acceptedRequestSQL + pendingRequestSQL + todoList + monthlyPatientCount + name + prescriptionSQL + confirmedprescriptionSQL, Aid, function(err, rows){
           if (err) {
             console.log(err);
           } else {
             user = rows[5];
-            res.render('pharmacist/dashboard', {prescriptionInfo:rows[0], accepted:rows[1], pending:rows[2], todoList:rows[3], monthlyPatientCount:rows[4], username:user});
+            res.render('pharmacist/dashboard', {prescriptionInfo:rows[0], accepted:rows[1], pending:rows[2], todoList:rows[3], monthlyPatientCount:rows[4] ,prescriptionDetails:rows[6] ,confirmedprescriptionSQL:rows[7] , username:user});
           }
         });
       } else {
@@ -99,8 +101,6 @@ res.redirect('../login');
     app.get('/pharmacist/prescriptionManagement', function(req, res){
       if(req.session.email && req.session.sino == 'pharmacist'){
         if(req.session.sino == 'pharmacist'){
-          var prescriptionSQL = 'SELECT CONCAT("medicine:",medicine,"\nquantity:",quantity,"\ndosage:", dosage,"\ntimeframe:", timeframe) AS medications, p.status as STATUS,creation_stamp,patient_type,name,age,prescription_id from prescription p inner join patient using(patient_id) where p.status = "pending";';
-          var confirmedprescriptionSQL = 'SELECT CONCAT("medicine:",medicine,"\nquantity:",quantity,"\ndosage:", dosage,"\ntimeframe:", timeframe) AS medications, p.status as STATUS,creation_stamp,patient_type,name,age,prescription_id from prescription p inner join patient using(patient_id) where p.status = "confirmed";';
 
           db.query(prescriptionSQL + confirmedprescriptionSQL, function(err, rows){
             if (err) {
