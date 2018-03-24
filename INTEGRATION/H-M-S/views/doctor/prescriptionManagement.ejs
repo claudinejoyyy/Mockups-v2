@@ -38,7 +38,7 @@
 
               <li class="user-footer">
                 <div class="pull-left">
-                  <a href="../profileManagement" class="btn btn-default btn-flat">Profile</a>
+                  <a href="../doctor/profileManagement" class="btn btn-default btn-flat">Profile</a>
                 </div>
                 <div class="pull-right">
                   <a href="../logout" class="btn btn-default btn-flat">Sign out</a>
@@ -116,7 +116,7 @@
                       <%for (var i = 0; i < prescriptionDetails.length; i++) {%>
                         <tr>
                           <td><%=i+1%></td>
-                          <td><%=prescriptionDetails[i].creation_stamp%></td>
+                          <td><%=moment(new Date(prescriptionDetails[i].creation_stamp)).format('YYYY-MM-DD HH:mm:ss')%></td>
                           <td><%=prescriptionDetails[i].patient_type%></td>
                           <td><%=prescriptionDetails[i].name%></td>
                           <td><%=prescriptionDetails[i].age%></td>
