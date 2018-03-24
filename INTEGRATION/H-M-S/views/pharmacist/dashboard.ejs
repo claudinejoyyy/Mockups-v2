@@ -134,43 +134,41 @@
             <div class="box-header">
               <i class="ion ion-clipboard"></i>
               <h3 class="box-title">To Do List</h3>
-              <div class="box-tools pull-right">
-                <ul class="pagination pagination-sm inline">
-                  <li><a href="#">&laquo;</a></li>
-                  <li><a href="#">1</a></li>
-                  <li><a href="#">2</a></li>
-                  <li><a href="#">3</a></li>
-                  <li><a href="#">&raquo;</a></li>
-                </ul>
-              </div>
-            </div>
-            <div class="box-body">
-              <ul class="todo-list">
+            </div>  
+
+            <div class="content">
+              <table id="example3" class="table table-bordered table-striped">
+                <thead>
+                  <tr>
+                    <th>Name</th>
+                    <th>Date</th>
+                     <th></th>
+                  </tr>
+                </thead>
                 <%for(var i=0; i < todoList.length; i++){%>
                   <%if(new Date() < new Date(todoList[i].date)) {%>
-                <li>
-                  <span class="handle">
-                    <i class="fa fa-ellipsis-v"></i>
-                    <i class="fa fa-ellipsis-v"></i>
-                  </span>
-                  <span class="text"><%= todoList[i].description%>:</span>
-                  <%if(todoList[i].status == 'general'){%>
-                  <small class="label label-info"><i class="fa fa-clock-o"></i><%= moment(new Date(todoList[i].date)).format('MMM-DD-YYYY HH:mm')%></small>
-                  <%} else{%>
-                  <small class="label label-danger"><i class="fa fa-clock-o"></i><%= moment(new Date(todoList[i].date)).format('MMM-DD-YYYY HH:mm')%></small>
+                    <tr>
+                      <td> <span class="text"><%= todoList[i].description%></span></td>
+                      <td> <%if(todoList[i].status == 'general'){%>
+                              <small class="label label-info"><i class="fa fa-clock-o"></i><%= moment(new Date(todoList[i].date)).format('MMM-DD-YYYY HH:mm')%></small>
+                            <%} else{%>
+                              <small class="label label-danger"><i class="fa fa-clock-o"></i><%= moment(new Date(todoList[i].date)).format('MMM-DD-YYYY HH:mm')%></small>
+                            <%}%>
+                      </td>
+                      <td><form action="/pharmacist/dashboard?tId=<%= todoList[i].todo_id%>" method="POST">
+                            <button type="submit" name="sub" value="delToDo" class="btn btn-danger">Delete</button>
+                          </form>
+                      </td>   
+                    </tr>
                   <%}%>
-                  <form action="/pharmacist/dashboard?tId=<%= todoList[i].todo_id%>" method="POST">
-                    <button type="submit" name="sub" value="delToDo">Delete</button>
-                  </form>
-                </li>
                 <%}%>
-                <%}%>
-              </ul>
+              </table>
             </div>
 
             <div class="box-footer clearfix no-border">
               <button type="button" name="button" onclick="showTodo()" class="btn btn-default pull-right" data-toggle="modal" data-target="#myModal4"><i class="fa fa-plus" data-target="#myModal4"></i> Add item</button>
             </div>
+
           </div>
 
           <!-- AREA CHART -->
@@ -403,13 +401,13 @@ $(function () {
   $(function () {
     $("#example1").DataTable();
     $("#example2").DataTable();
-//    $('#example2').DataTable({
-//      "paging": true,
-//      "lengthChange": true,
-//      "searching": true,
-//      "ordering": true,
-//      "info": true,
-//      "autoWidth": true
-//    });
+    $('#example3').DataTable({
+      "paging": true,
+      "lengthChange": false,
+      "searching": false,
+      "ordering": true,
+      "info": false,
+      "autoWidth": true
+    });
   });
 </script>
