@@ -129,15 +129,58 @@
                             </td>
                           <td><%=prescriptionDetails[i].STATUS%></td>
                           <form action="/doctor/prescriptionManagement?prescriptionId=<%=prescriptionDetails[i].prescription_id%>&prescriptionPatientName=<%=prescriptionDetails[i].name%>" method="post">
-                              <td align="left"><button class="btn btn-danger btn-sm" type="submit"><i class="fa fa-remove"></i> Cancel</button> <button type="button" class="btn btn-default btn-sm" data-toggle="modal" data-target="#myModal"><i class="fa fa-plus"></i> Add New Prescription</button></td>
+                              <td align="left"><button class="btn btn-danger btn-sm" type="submit"><i class="fa fa-remove"></i> Cancel</button></td>
                           </form>
                         </tr>
                       <%}%>
                    </tbody>
                 </table>
             </div>
+
    </div>
  </div>
+</div>
+
+<!-- CONFIRMED -->
+<div class="row">
+ <div class="col-xs-12">
+   <div class="box">
+     <div class="box-header">
+     </div>
+     <div class="box-body">
+       <table id="table2" class="table table-bordered table-striped">
+          <thead>
+    <th>counter</th>
+    <th>date</th>
+    <th>Patient Type</th>
+    <th>Name</th>
+    <th>Age</th>
+    <th>Medications</th>
+    <th>status</th>
+  </tr>
+  <%for (var i = 0; i < confirmedprescriptionSQL.length; i++) {%>
+    <tr>
+      <td><%=i+1%></td>
+      <td><%=moment(new Date(confirmedprescriptionSQL[i].creation_stamp)).format('YYYY-MM-DD HH:mm:ss')%></td>
+      <td><%=confirmedprescriptionSQL[i].patient_type%></td>
+      <td><%=confirmedprescriptionSQL[i].name%></td>
+      <td><%=confirmedprescriptionSQL[i].age%></td>
+      <td>
+          <%
+      var vitals = confirmedprescriptionSQL[i].medications.split('\n');
+      for(var l=0; l < 5; l++){ %>
+        <%=vitals[l]%><br>
+    <%}%>
+        </td>
+      <td>confirmed</td>
+    </tr>
+    <%}%>
+ </tbody>
+</table>
+</div>
+
+</div>
+</div>
 </div>
       </section>
     </div>
