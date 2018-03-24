@@ -161,9 +161,9 @@
                   </span>
                   <span class="text"><%= todoList[i].description%>:</span>
                   <%if(todoList[i].status == 'general'){%>
-                  <small class="label label-info"><i class="fa fa-clock-o"></i><%= moment(new Date(todoList[i].date)).format('YYYY-MM-DD HH:mm:ss')%></small>
+                  <small class="label label-info"><i class="fa fa-clock-o"></i><%= moment(new Date(todoList[i].date)).format('MMM-DD-YYYY HH:mm')%></small>
                   <%} else{%>
-                  <small class="label label-danger"><i class="fa fa-clock-o"></i><%= moment(new Date(todoList[i].date)).format('YYYY-MM-DD HH:mm:ss')%></small>
+                  <small class="label label-danger"><i class="fa fa-clock-o"></i><%= moment(new Date(todoList[i].date)).format('MMM-DD-YYYY HH:mm')%></small>
                   <%}%>
                   <form action="/pharmacist/dashboard?tId=<%= todoList[i].todo_id%>" method="POST">
                     <button type="submit" name="sub" value="delToDo">Delete</button>
