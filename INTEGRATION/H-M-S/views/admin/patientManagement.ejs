@@ -7,17 +7,16 @@
         <% include ../partials/header.ejs %>
   <style>
       .datepicker {
-        z-index: 1600 !important; 
+        z-index: 1600 !important;
       }
   </style>
 </head>
-
 <body class="hold-transition skin-blue sidebar-mini fixed" onload="myFunction()"> <!------------------------------------ EDIT FOR LOADER ---------------------------------->
 <div id="loader"></div> <!------------------------------------ EDIT FOR LOADER ---------------------------------->
 <div class="wrapper">
 
   <header class="main-header">
-    <a href="../dashboard" class="logo">
+    <a href="dashboard" class="logo">
       <span class="logo-mini"><b><%= username[0].account_type.charAt(0).toUpperCase()%></b></span>
       <span class="logo-lg"><b><%= username[0].account_type.charAt(0).toUpperCase() + username[0].account_type.slice(1);%></b></span>
     </a>
@@ -43,7 +42,7 @@
               </li>
               <li class="user-footer">
                 <div class="pull-left">
-                  <a href="../profileManagement" class="btn btn-default btn-flat">Profile</a>
+                  <a href="profileManagement" class="btn btn-default btn-flat">Profile</a>
                 </div>
                 <div class="pull-right">
                   <a href="../logout" class="btn btn-default btn-flat">Sign out</a>
@@ -64,7 +63,6 @@
         </div>
         <div class="pull-left info">
           <p><%= username[0].name %></p>
-          <!-- Status -->
           <a href="#"><i class="fa fa-circle text-success"></i> Online</a>
         </div>
       </div>
@@ -80,9 +78,8 @@
       </form>
 
       <ul class="sidebar-menu">
-      <ul class="sidebar-menu">
-        <li><a href="dashboard" target="_self"><i class="fa fa-dashboard"></i> <span>Dashboard</span></a></li>
-        <li class="active"><a href="patientmanagement"><i class="fa fa-users"></i> <span>Patient Management</span></a></li>
+        <li><a href="dashboard"><i class="fa fa-dashboard"></i> <span>Dashboard</span></a></li>
+        <li class="active"><a href="patientmanagement" target="_self"><i class="fa fa-users"></i> <span>Patient Management</span></a></li>
         <li><a href="bedManagement"><i class="fa fa-bed"></i> <span>Bed Management</span></a></li>
         <li><a href="userAccountsManagement"><i class="fa fa-user"></i> <span>User Accounts Management</span></a></li>
         <li><a href="profileManagement"><i class="fa fa-info"></i> <span>Profile Management</span></a></li>

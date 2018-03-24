@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <title>Admin | Profile Management</title>
+  <title>Profile Management</title>
   <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
     <% include ../partials/header.ejs %>
 </head>
@@ -12,7 +12,7 @@
 <div class="wrapper">
   <header class="main-header">
 
-    <a href="../dashboard" class="logo">
+    <a href="dashboard" class="logo">
       <span class="logo-mini"><b><%= username[0].account_type.charAt(0).toUpperCase()%></b></span>
       <span class="logo-lg"><b><%= username[0].account_type.charAt(0).toUpperCase() + username[0].account_type.slice(1);%></b></span>
     </a>
@@ -73,12 +73,11 @@
       </form>
 
       <ul class="sidebar-menu">
-      <ul class="sidebar-menu">
-        <li><a href="dashboard" target="_self"><i class="fa fa-dashboard"></i> <span>Dashboard</span></a></li>
+        <li><a href="dashboard"><i class="fa fa-dashboard"></i> <span>Dashboard</span></a></li>
         <li><a href="patientmanagement"><i class="fa fa-users"></i> <span>Patient Management</span></a></li>
         <li><a href="bedManagement"><i class="fa fa-bed"></i> <span>Bed Management</span></a></li>
         <li><a href="userAccountsManagement"><i class="fa fa-user"></i> <span>User Accounts Management</span></a></li>
-        <li class="active"><a href="profileManagement"><i class="fa fa-info"></i> <span>Profile Management</span></a></li>
+        <li class="active"><a href="profileManagement" target="_self"><i class="fa fa-info"></i> <span>Profile Management</span></a></li>
       </ul>
     </section>
   </aside>
