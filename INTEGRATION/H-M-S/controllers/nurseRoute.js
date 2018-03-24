@@ -32,8 +32,8 @@ var fhSQL       = "SELECT name FROM family_history;";
         if(data.sub == 'assessment') {
           var nameForEmit = data.assessmentPatient.split(',');
           var vitalSigns = 'BP: '+data.BP +'\nCR: '+ data.CR +'\nPR: '+ data.PR +'\nRR: '+ data.RR +'\n TEMP: '+ data.temperature +'\nWT: '+ data.Wt;
-          var initialAssessment = 'INSERT into initial_assessment (assessment, date, patient_id, account_id, vital_signs) VALUES("'+data.assessment+'", "'+currentTime+'",'+nameForEmit[0]+','+data.assessmentDoctor+',"'+vitalSigns+'");';
-          db.query(initialAssessment + 'INSERT into activity_logs(account_id, time, type, remarks, patient_id) VALUES ('+Aid+',"'+currentTime+'", "initialAssessment", "assessment for '+req.query.assessmentPatient+'", '+nameForEmit[0]+');', function(err){
+          var initialAssessment = 'INSERT into initial_assessment (assessment, date, patient_id, account_id, vital_signs) VALUES("'+data.assessment+'", "'+moment(new Date()).format('YYYY-MM-DD HH:mm:ss')+'",'+nameForEmit[0]+','+data.assessmentDoctor+',"'+vitalSigns+'");';
+          db.query(initialAssessment + 'INSERT into activity_logs(account_id, time, type, remarks, patient_id) VALUES ('+Aid+',"'+moment(new Date()).format('YYYY-MM-DD HH:mm:ss')+'", "initialAssessment", "assessment for '+req.query.assessmentPatient+'", '+nameForEmit[0]+');', function(err){
             if (err) {
               console.log(err);
             }
@@ -74,7 +74,7 @@ var fhSQL       = "SELECT name FROM family_history;";
                 if(err){
                   console.log(err);
                 } else {
-                  db.query('INSERT into activity_logs(account_id, time, type, remarks) VALUES ('+req.session.Aid+',"'+currentTime+'", "add", "Added: '+data.type+' - '+data.name+'");', function(err){
+                  db.query('INSERT into activity_logs(account_id, time, type, remarks) VALUES ('+req.session.Aid+',"'+moment(new Date()).format('YYYY-MM-DD HH:mm:ss')+'", "add", "Added: '+data.type+' - '+data.name+'");', function(err){
                     if (err) {
                       console.log(err);
                     }
@@ -88,9 +88,9 @@ var fhSQL       = "SELECT name FROM family_history;";
               var parseDateNTime = splitDateNTime[0]+' '+splitDateNTime[1];
               var todoLog = '';
               if (data.todoStatus == 'urgent') {
-                todoLog = 'INSERT into activity_logs(account_id, time, type, remarks) VALUES ('+req.session.Aid+',"'+currentTime+'", "urgentTodo", "Added to do urgent: '+data.description+'");';
+                todoLog = 'INSERT into activity_logs(account_id, time, type, remarks) VALUES ('+req.session.Aid+',"'+moment(new Date()).format('YYYY-MM-DD HH:mm:ss')+'", "urgentTodo", "Added to do urgent: '+data.description+'");';
               } else if(data.todoStatus == 'general') {
-                todoLog = 'INSERT into activity_logs(account_id, time, type, remarks) VALUES ('+req.session.Aid+',"'+currentTime+'", "generalTodo", "Added to do general: '+data.description+'");';
+                todoLog = 'INSERT into activity_logs(account_id, time, type, remarks) VALUES ('+req.session.Aid+',"'+moment(new Date()).format('YYYY-MM-DD HH:mm:ss')+'", "generalTodo", "Added to do general: '+data.description+'");';
               }
               var addTodo  = 'INSERT into todo_list (description, status,date, account_id) VALUES("'+data.description+'","'+data.todoStatus+'","'+parseDateNTime+'",'+req.session.Aid+');';
               db.query(addTodo + todoLog, function(err){
@@ -168,7 +168,7 @@ var fhSQL       = "SELECT name FROM family_history;";
                 if(err){
                   console.log(err);
                 } else {
-                  db.query('INSERT into activity_logs(account_id, time, type, remarks) VALUES ('+req.session.Aid+',"'+currentTime+'", "add", "Added: '+data.type+' - '+data.name+'");', function(err){
+                  db.query('INSERT into activity_logs(account_id, time, type, remarks) VALUES ('+req.session.Aid+',"'+moment(new Date()).format('YYYY-MM-DD HH:mm:ss')+'", "add", "Added: '+data.type+' - '+data.name+'");', function(err){
                     if (err) {
                       console.log(err);
                     }
@@ -225,7 +225,7 @@ var fhSQL       = "SELECT name FROM family_history;";
     if(req.session.email && req.session.sino == 'nurse'){
       if(req.session.sino == 'nurse') {
         var dischargeSQL = "UPDATE bed SET status = 'Unoccupied', allotment_timestamp = NULL, patient_id = NULL where bed_id = "+req.query.bed+";";
-        db.query(dischargeSQL + 'INSERT into activity_logs(account_id, time, type, remarks) VALUES ('+Aid+',"'+currentTime+'", "bedDischarge", "Discharged a patient from bed number : '+req.query.bed+'");', function(err, rows, fields){
+        db.query(dischargeSQL + 'INSERT into activity_logs(account_id, time, type, remarks) VALUES ('+Aid+',"'+moment(new Date()).format('YYYY-MM-DD HH:mm:ss')+'", "bedDischarge", "Discharged a patient from bed number : '+req.query.bed+'");', function(err, rows, fields){
           if(err){
             console.log(err);
           } else {
@@ -265,7 +265,7 @@ var fhSQL       = "SELECT name FROM family_history;";
     if (req.session.email && req.session.sino == 'nurse') {
       if (req.session.sino == 'nurse') {
         var updateProfileSQL = 'UPDATE user_accounts SET name = "'+data.name+'", age = '+data.age+', address = "'+data.address+'", phone = '+data.phone+' WHERE account_id = '+req.session.Aid+';';
-        db.query(updateProfileSQL + 'INSERT into activity_logs(account_id, time, type, remarks) VALUES ('+Aid+',"'+currentTime+'", "settingsProfileManagement", "Edited personal info.");', function(err, rows){
+        db.query(updateProfileSQL + 'INSERT into activity_logs(account_id, time, type, remarks) VALUES ('+Aid+',"'+moment(new Date()).format('YYYY-MM-DD HH:mm:ss')+'", "settingsProfileManagement", "Edited personal info.");', function(err, rows){
           if (err) {
             console.log(err);
           } else {
