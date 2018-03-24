@@ -7,7 +7,7 @@
   <% include ../partials/header.ejs %>
   <style>
       .datepicker {
-        z-index: 1600 !important; /* has to be larger than 1050 */
+        z-index: 1600 !important;
       }
   </style>
   </head>
@@ -16,41 +16,30 @@
     <div class="wrapper">
     <header class="main-header">
 
-    <!-- Logo -->
     <a href="../dashboard" class="logo">
-      <!-- mini logo for sidebar mini 50x50 pixels -->
       <span class="logo-mini"><b><%= username[0].account_type.charAt(0).toUpperCase()%></b></span>
-      <!-- logo for regular state and mobile devices -->
       <span class="logo-lg"><b><%= username[0].account_type.charAt(0).toUpperCase() + username[0].account_type.slice(1);%></b></span>
     </a>
 
-    <!-- Header Navbar -->
     <nav class="navbar navbar-static-top" role="navigation">
-      <!-- Sidebar toggle button-->
       <a href="#" class="sidebar-toggle" data-toggle="offcanvas" role="button">
         <span class="sr-only">Toggle navigation</span>
       </a>
-      <!-- Navbar Right Menu -->
       <div class="navbar-custom-menu">
         <ul class="nav navbar-nav">
-          <!-- /.messages-menu -->
-          <!-- User Account Menu -->
           <li class="dropdown user user-menu">
             <a href="#" class="dropdown-toggle" data-toggle="dropdown">
               <img src="../dist/img/user2-160x160.jpg" class="user-image" alt="User Image">
               <span class="hidden-xs"><%= username[0].name %></span>
             </a>
             <ul class="dropdown-menu">
-              <!-- User image -->
               <li class="user-header">
                 <img src="../dist/img/user2-160x160.jpg" class="img-circle" alt="User Image">
-
                 <p>
                   <%= username[0].name %> - <%= username[0].account_type %>
                   <small>Official since Nov. 1998</small>
                 </p>
               </li>
-              <!-- Menu Footer-->
               <li class="user-footer">
                 <div class="pull-left">
                   <a href="../profileManagement" class="btn btn-default btn-flat">Profile</a>
@@ -66,9 +55,7 @@
     </nav>
   </header>
       <aside class="main-sidebar">
-        <!-- sidebar: style can be found in sidebar.less -->
         <section class="sidebar">
-          <!-- Sidebar user panel -->
           <div class="user-panel">
             <div class="pull-left image">
               <img src="../dist/img/user2-160x160.jpg" class="img-circle" alt="User Image">
@@ -78,7 +65,6 @@
               <a href="#"><i class="fa fa-circle text-success"></i> Online</a>
             </div>
           </div>
-          <!-- search form -->
           <form action="#" method="get" class="sidebar-form">
             <div class="input-group">
               <input type="text" name="q" class="form-control" placeholder="Search...">
@@ -88,22 +74,16 @@
                   </span>
             </div>
           </form>
-          <!-- /.search form -->
-          <!-- sidebar menu: : style can be found in sidebar.less -->
-        <ul class="sidebar-menu">
-            <!-- Optionally, you can add icons to the links -->
-        <li id="dashboard" class="active"><a href="dashboard" target="_self"><i class="fa fa-dashboard"></i> <span>Dashboard</span></a></li>
-        <li><a href="patientmanagement"><i class="fa fa-users"></i> <span>Patient Management</span></a></li>
-        <li><a href="bedManagement"><i class="fa fa-bed"></i> <span>Bed Management</span></a></li>   
-        <li><a href="userAccountsManagement"><i class="fa fa-user"></i> <span>User Accounts Management</span></a></li>
-        <li><a href="profileManagement"><i class="fa fa-info"></i> <span>Profile Management</span></a></li>
+          <ul class="sidebar-menu">
+            <li id="dashboard" class="active"><a href="dashboard" target="_self"><i class="fa fa-dashboard"></i> <span>Dashboard</span></a></li>
+            <li><a href="patientmanagement"><i class="fa fa-users"></i> <span>Patient Management</span></a></li>
+            <li><a href="bedManagement"><i class="fa fa-bed"></i> <span>Bed Management</span></a></li>
+            <li><a href="userAccountsManagement"><i class="fa fa-user"></i> <span>User Accounts Management</span></a></li>
+            <li><a href="profileManagement"><i class="fa fa-info"></i> <span>Profile Management</span></a></li>
           </ul>
         </section>
-        <!-- /.sidebar -->
       </aside>
-      <!-- Content Wrapper. Contains page content -->
       <div class="content-wrapper"  id="myDiv1"> <!------------------------------------ EDIT FOR LOADER ---------------------------------->
-        <!-- Content Header (Page header) -->
         <section class="content-header">
           <h1>
             Dashboard
@@ -111,16 +91,12 @@
           </h1>
         </section>
 
-        <!-- Main content -->
         <section class="content animate-bottom"> <!------------------------------------ EDIT FOR LOADER ---------------------------------->
-          <!-- Small boxes (Stat box) -->
           <div class="row">
             <div class="col-lg-3 col-xs-6">
-              <!-- small box -->
               <div class="small-box bg-aqua">
                 <div class="inner">
                   <h3><%= counts[0].totalRegisteredPatients%></h3>
-
                   <p>Total Registered Patients</p>
                 </div>
                 <div class="icon">
@@ -129,13 +105,11 @@
                 <a href="patientManagement" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
               </div>
             </div>
-            <!-- ./col -->
+
             <div class="col-lg-3 col-xs-6">
-              <!-- small box -->
               <div class="small-box bg-green">
                 <div class="inner">
                   <h3><%= counts[0].currentlyAdmitted%></h3>
-
                   <p>Currently Admitted</p>
                 </div>
                 <div class="icon">
@@ -144,15 +118,11 @@
                 <a href="bedManagement" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
               </div>
             </div>
-            <!-- ./col -->
+
             <div class="col-lg-3 col-xs-6">
-              <!-- small box -->
               <div class="small-box bg-yellow">
                 <div class="inner">
                   <h3><%= counts[0].OPD%></h3>
-                  <!-- <%for (var i = 0; i < whoOPD.length; i++) { %>
-                    <h4 style="border-style:solid;"><%= whoOPD[i].name%></h4>
-                  <%}%> -->
                   <p>OPD</p>
                 </div>
                 <div class="icon">
@@ -161,15 +131,11 @@
                 <a onclick="OPD()" class="small-box-footer" data-toggle="modal" data-target="#myModal2">More info <i class="fa fa-arrow-circle-right"></i></a>
               </div>
             </div>
-            <!-- ./col -->
+
             <div class="col-lg-3 col-xs-6">
-              <!-- small box -->
               <div class="small-box bg-red">
                 <div class="inner">
                   <h3><%= counts[0].WARD%></h3>
-                  <!-- <%for (var i = 0; i < whoWARD.length; i++) { %>
-                    <h4 style="border-style:solid;"><%= whoWARD[i].name%></h4>
-                  <%}%> -->
                   <p>Ward</p>
                 </div>
                 <div class="icon">
@@ -178,33 +144,13 @@
                 <a onclick="WARD()" class="small-box-footer" data-toggle="modal" data-target="#myModal3">More info <i class="fa fa-arrow-circle-right"></i></a>
               </div>
             </div>
-            <!-- ./col -->
           </div>
-          <!-- /.row -->
-    <!--
+
           <div class="row">
-            <div class="box">
-              <center>
-                <div class="box-header">
-                  <h3 class="box-title">Quick Access</h3>
-                </div>
-                <div class="box-body">
-                  <a class="btn btn-app">
-                    <i class="fa fa-calendar" data-toggle="modal" data-target="#myModal2"></i> Set Appointment
-                  </a>
-                </div>
-              </center>
-              </div>
-          </div>
-    -->
-          <!-- Main row -->
-          <div class="row">
-            <!-- Left col -->
             <section class="col-lg-7 connectedSortable">
               <div class="box box-primary">
                 <div class="box-header with-border">
                   <h3 class="box-title">Patient Count</h3>
-
                   <div class="box-tools pull-right">
                     <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
                     </button>
@@ -216,15 +162,12 @@
                     <canvas id="areaChart" style="height:250px"></canvas>
                   </div>
                 </div>
-                <!-- /.box-body -->
               </div>
-              <!-- TO DO List -->
+
               <div class="box box-primary">
                 <div class="box-header">
                   <i class="ion ion-clipboard"></i>
-
                   <h3 class="box-title">To Do List</h3>
-
                   <div class="box-tools pull-right">
                     <ul class="pagination pagination-sm inline">
                       <li><a href="#">&laquo;</a></li>
@@ -235,7 +178,6 @@
                     </ul>
                   </div>
                 </div>
-                <!-- /.box-header -->
                 <div class="box-body">
                   <ul class="todo-list">
                     <%for(var i=0; i < todoList.length; i++){%>
@@ -264,54 +206,37 @@
                   <button type="button" name="button" onclick="showTodo()" class="btn btn-default pull-right" data-toggle="modal" data-target="#myModal4"><i class="fa fa-plus" data-target="#myModal4"></i> Add item</button>
                 </div>
 
-              <!-- /.box -->
             </section>
-            <!-- /.Left col -->
             <section class="col-lg-5 connectedSortable">
-                <div class="box-header">
-                  <!-- tools box -->
-                  <div class="pull-right box-tools">
+              <div class="box-header">
+                <div class="pull-right box-tools">
                   </div>
-                  <!-- /. tools -->
-
-                  <div class="box box-primary">
-                <div class="box-header with-border">
-                  <i class="fa fa-bar-chart-o"></i>
-
-                  <h3 class="box-title">Patient Chart</h3>
-
-                  <div class="box-tools pull-right">
-                    <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
-                    </button>
-                    <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
+                <div class="box box-primary">
+                  <div class="box-header with-border">
+                    <i class="fa fa-bar-chart-o"></i>
+                    <h3 class="box-title">Patient Chart</h3>
+                    <div class="box-tools pull-right">
+                      <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
+                      </button>
+                      <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
+                    </div>
+                  </div>
+                  <div class="box-body">
+                    <div id="donut-chart1" style="height: 350px;"></div>
+                      <br>
+                      <ul class="chart-legend clearfix">
+                          <li><i class="fa fa-circle text-gray"></i> Cadet</li>
+                          <li><i class="fa fa-circle text-light-blue"></i> Military Officer</li>
+                          <li><i class="fa fa-circle text-red"></i> Military Dependent</li>
+                          <li><i class="fa fa-circle text-yellow"></i> Civilian Employees</li>
+                          <li><i class="fa fa-circle text-aqua"></i> Authorized Civilian</li>
+                        </ul>
                   </div>
                 </div>
-                <div class="box-body">
-                  <div id="donut-chart1" style="height: 350px;"></div>
-                    <br>
-                    <ul class="chart-legend clearfix">
-                        <li><i class="fa fa-circle text-gray"></i> Cadet</li>
-                        <li><i class="fa fa-circle text-light-blue"></i> Military Officer</li>
-                        <li><i class="fa fa-circle text-red"></i> Military Dependent</li>
-                        <li><i class="fa fa-circle text-yellow"></i> Civilian Employees</li>
-                        <li><i class="fa fa-circle text-aqua"></i> Authorized Civilian</li>
-                      </ul>
-
                 </div>
-                <!-- /.box-body-->
               </div>
-                </div>
-                <!-- /.box-body -->
-                <!-- /.box-footer -->
-              </div>
-              <!-- /.box -->
-
-
-
             </section>
-            <!-- right col -->
           </div>
-          <!-- /.row (main row) -->
 
             <!---------------------------------------------------------------------------------------------- Modal of Adding new patient ----------->
 <!--
@@ -451,7 +376,7 @@
                     <tr>
                       <th>Date and Time of Confinement</th>
                       <th>Patient Name</th>
-                    </tr>   
+                    </tr>
                   </thead>
                     <%for (var i = 0; i < whoWARD.length; i++) { %>
                       <tr>
@@ -467,12 +392,11 @@
             </div>
           </div>
         </section>
-        <!-- /.content -->
       </div>
-      <!-- /.content-wrapper -->
-<% include ../partials/footer.ejs %>
-<script>
 
+<% include ../partials/footer.ejs %>
+
+<script>
  function showSuccess() {
     alert("Success !!");
   }
@@ -495,14 +419,6 @@
   function WARD() {
     document.getElementById('ShowWard').style.display = 'block';
   }
-
-</script>
-<script>
-//  $(function () {
-//    $(".select2").select2();
-//  });
-
-
   $(function () {
     /*
      * DONUT CHART
@@ -538,7 +454,6 @@
     /*
      * END DONUT CHART
      */
-
     var areaChartCanvas = $("#areaChart").get(0).getContext("2d");
     // This will get the first returned node in the jQuery collection.
     var areaChart = new Chart(areaChartCanvas);
@@ -568,7 +483,6 @@
         }
       ]
     };
-
     var areaChartOptions = {
       //Boolean - If we should show the scale at all
       showScale: true,
@@ -606,35 +520,28 @@
       //Boolean - whether to make the chart responsive to window resizing
       responsive: true
     };
-
     areaChart.Line(areaChartData, areaChartOptions);
-
   });
     /*
      * END DONUT CHART
      */
-
   function labelFormatter(label, series) {
     return '<div style="font-size:13px; text-align:center; padding:0.5px; color: #fff; font-weight: 600;">'
         + label
         + "<br>"
         + Math.round(series.percent) + "%</div>";
   }
-
     $(document).ready(function() {
         $(".select2").select2();
           $("#example1").DataTable();
           $('#example2').DataTable({
           });
     });
-
     //Date picker
     $('.datepicker').datepicker({
       autoclose: true
     });
-
     $(document).ready(function() {
         $(".select2").select2();
     });
 </script>
-      
