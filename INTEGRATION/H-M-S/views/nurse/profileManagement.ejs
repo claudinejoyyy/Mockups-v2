@@ -11,10 +11,8 @@
 <div class="wrapper">
 
   <header class="main-header">
-    <a href="../nurse/dashboard" class="logo">
-      <!-- mini logo for sidebar mini 50x50 pixels -->
+    <a href="dashboard" class="logo">
       <span class="logo-mini"><b><%= username[0].account_type.charAt(0).toUpperCase()%></b></span>
-      <!-- logo for regular state and mobile devices -->
       <span class="logo-lg"><b><%= username[0].account_type.charAt(0).toUpperCase() + username[0].account_type.slice(1);%></b></span>
     </a>
     <nav class="navbar navbar-static-top" role="navigation">
@@ -34,12 +32,11 @@
                 <img src="../dist/img/avatar2.png" class="img-circle" alt="User Image">
                 <p>
                   <%=pInfo[0].name%> - <%= username[0].account_type.charAt(0).toUpperCase() + username[0].account_type.slice(1);%>
-                  <small>Member since April 2014</small>
                 </p>
               </li>
               <li class="user-footer">
                 <div class="pull-left">
-                  <a href="../pharmacist/profileManagement" class="btn btn-default btn-flat">Profile</a>
+                  <a href="profileManagement" class="btn btn-default btn-flat">Profile</a>
                 </div>
                 <div class="pull-right">
                   <a href="../logout" class="btn btn-default btn-flat">Sign out</a>
@@ -74,15 +71,14 @@
       </form>
 
       <ul class="sidebar-menu">
-        <li><a href="../nurse/dashboard"><i class="fa fa-dashboard"></i> <span>Dashboard</span></a></li>
-        <li><a href="../nurse/patientmanagement" target="_self"><i class="fa fa-users"></i> <span>Patient Management</span></a></li>
-        <li><a href="../nurse/bedmanagement"><i class="fa fa-bed"></i> <span>Bed Management</span></a></li>
-        <li class="active"><a href="../nurse/profilemanagement"><i class="fa fa-info"></i> <span>Profile Management</span></a></li>
+        <li><a href="dashboard"><i class="fa fa-dashboard"></i> <span>Dashboard</span></a></li>
+        <li><a href="patientManagement"><i class="fa fa-users"></i> <span>Patient Management</span></a></li>
+        <li><a href="bedManagement"><i class="fa fa-bed"></i> <span>Bed Management</span></a></li>
+        <li class="active"><a href="profileManagement" target="_self"><i class="fa fa-info"></i> <span>Profile Management</span></a></li>
       </ul>
     </section>
   </aside>
 
-      <!-- Content Wrapper. Contains page content -->
   <div class="content-wrapper"  id="myDiv1"> <!------------------------------------ EDIT FOR LOADER ---------------------------------->
     <section class="content-header">
       <h1>
@@ -90,9 +86,8 @@
         <small>View and Update Profile</small>
       </h1>
     </section>
-        <!-- Main content -->
-    <section class="content animate-bottom"> <!------------------------------------ EDIT FOR LOADER ---------------------------------->
 
+    <section class="content animate-bottom"> <!------------------------------------ EDIT FOR LOADER ---------------------------------->
       <div class="row">
         <div class="col-md-3">
 
@@ -195,16 +190,13 @@
                       <div class="timeline-item">
                     <%}%>
 
-
                       <h3 class="timeline-header"><%= activityInfo[i].remarks%></a></h3>
 
                     </div>
                   </li>
-
                 </ul>
                 <%}%>
               </div>
-              <!-- /.tab-pane -->
 
               <div class="tab-pane" id="settings">
                 <form class="form-horizontal" method="POST" id="setting" style="display:none;">

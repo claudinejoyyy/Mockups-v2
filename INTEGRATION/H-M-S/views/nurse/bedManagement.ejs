@@ -10,7 +10,7 @@
     <div id="loader"></div> <!------------------------------------ EDIT FOR LOADER ---------------------------------->
   <div class="wrapper">
     <header class="main-header">
-      <a href="../nurse/dashboard" class="logo">
+      <a href="dashboard" class="logo">
         <span class="logo-mini"><b><%= username[0].account_type.charAt(0).toUpperCase()%></b></span>
         <span class="logo-lg"><b><%= username[0].account_type.charAt(0).toUpperCase() + username[0].account_type.slice(1);%></b></span>
       </a>
@@ -30,12 +30,11 @@
                   <img src="../dist/img/avatar2.png" class="img-circle" alt="User Image">
                   <p>
                     <%= username[0].name %> - <%= username[0].account_type.charAt(0).toUpperCase() + username[0].account_type.slice(1);%>
-                    <small>Member since April 2014</small>
                   </p>
                 </li>
                 <li class="user-footer">
                   <div class="pull-left">
-                    <a href="nurseprofile.html" class="btn btn-default btn-flat">Profile</a>
+                    <a href="profileManagement" class="btn btn-default btn-flat">Profile</a>
                   </div>
                   <div class="pull-right">
                     <a href="../logout" class="btn btn-default btn-flat">Sign out</a>
@@ -47,7 +46,7 @@
         </div>
       </nav>
     </header>
-      <!-- Content Wrapper. Contains page content -->
+
   <div class="content-wrapper"  id="myDiv1"> <!------------------------------------ EDIT FOR LOADER ---------------------------------->
     <section class="content-header">
       <h1>
@@ -56,7 +55,6 @@
       </h1>
     </section>
 
-        <!-- Main content -->
     <section class="content animate-bottom"> <!------------------------------------ EDIT FOR LOADER ---------------------------------->
        <div class="row">
         <div class="col-xs-12">
@@ -125,27 +123,13 @@
         </form>
 
       <ul class="sidebar-menu">
-        <li><a href="../nurse/dashboard"><i class="fa fa-dashboard"></i> <span>Dashboard</span></a></li>
-        <li><a href="../nurse/patientmanagement" target="_self"><i class="fa fa-users"></i> <span>Patient Management</span></a></li>
-        <li class="active"><a href="../nurse/bedmanagement"><i class="fa fa-bed"></i> <span>Bed Management</span></a></li>
-        <li><a href="../nurse/profilemanagement"><i class="fa fa-info"></i> <span>Profile Management</span></a></li>
+        <li><a href="dashboard"><i class="fa fa-dashboard"></i> <span>Dashboard</span></a></li>
+        <li><a href="patientManagement"><i class="fa fa-users"></i> <span>Patient Management</span></a></li>
+        <li class="active"><a href="bedManagement" target="_self"><i class="fa fa-bed"></i> <span>Bed Management</span></a></li>
+        <li><a href="profileManagement"><i class="fa fa-info"></i> <span>Profile Management</span></a></li>
         </ul>
       </section>
     </aside>
-
-<script>
-  $(function () {
-  $("#example1").DataTable();
-  $('#example2').DataTable({
-  });
-  });
-
-  function discharge(bedID){
-    console.log(bedID);
-     document.getElementById('dis').value = bedID;
-     console.log(document.getElementById('dis').value);
-  }
-</script>
 </div>
 
   <!---------------------------------------------------------------------------------------------- Modal of Allocating Bed ----------->
@@ -200,4 +184,19 @@
         <!------------------------------------------------------------------------------------------ /Modal-->
   </body>
       <% include ../partials/footer.ejs %>
+
+      <script>
+        $(function () {
+        $("#example1").DataTable();
+        $('#example2').DataTable({
+        });
+        });
+
+        function discharge(bedID){
+          console.log(bedID);
+           document.getElementById('dis').value = bedID;
+           console.log(document.getElementById('dis').value);
+        }
+      </script>
+
 </html>
