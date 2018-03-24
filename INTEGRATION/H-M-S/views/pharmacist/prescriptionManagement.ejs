@@ -133,7 +133,11 @@
                     <%}%>
                   </td>
                   <form action="/pharmacist/prescriptionManagement?prescriptionId=<%=prescriptionDetails[i].prescription_id%>&prescriptionPatientName=<%=prescriptionDetails[i].name%>" method="post">
-                  <td align="center"> <div class="btn-group-vertical"> <button type="submit" class="btn btn-primary">Confirm</button> </div> </td>
+                  <td align="center">
+                    <button name="sub" value="confirm" type="submit" class="btn btn-primary">Confirm</button>
+                    <button name="sub" value="cancel" type="submit" class="btn btn-danger">Cancel</button>
+                  </td>
+                  </form>   
                 </tr>
                 <%}%>
               </table>
@@ -176,7 +180,7 @@
                       <%=v[l]%><br>
                     <%}%>
                   </td>
-                  <td><span class="label label-success">Confirmed</span></td>
+                  <td align="center"><span class="label label-success">Confirmed</span></td>
                 </tr>
                 <%}%>
               </table>
