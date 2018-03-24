@@ -38,6 +38,7 @@
           <th>Gender</th>
           <th>Blood Type</th>
           <th>Previous Medicine taken</th>
+          <th>Previous Confinement Period</th>
           <th>action</th>
       </tr>
       <%
@@ -50,7 +51,29 @@
         <td><%= p[i].age %></td>
         <td><%= p[i].sex %></td>
         <td><%= p[i].blood_type %></td>
-        <td><%= p[i].medicines %></td>
+        <td style="font-size:10px;">
+          <table>
+            <tr>
+              <th>med</th>
+              <th>Quantity</th>
+              <th>Dosage</th>
+              <th>Time Frame</th>
+            </tr>
+          <%var medicine = p[i].medicine.split('\n');
+            for(var l=0; l < medicine.length; l++){ %>
+
+                <tr>
+                  <%var parseMed = medicine[l].split(',');%>
+                  <td><%= parseMed[0]%></td>
+                  <td><%= parseMed[1]%></td>
+                  <td><%= parseMed[2]%></td>
+                  <td><%= parseMed[3]%></td>
+                </tr>
+          <%}%>
+        </table>
+
+        </td>
+        <td></td>
 
         <td><button type="button" name="button" onclick="PasswordInput(<%= p[i].patient_id %>)">view</button></td>
       </tr>
@@ -105,11 +128,39 @@
           <td><%= p2[i].rankORsn %></td>
           <td><%= p2[i].immunization %></td>
           <td><%= p2[i].family_history %></td>
-          <td><%= medicine%></td>
+          <td style="font-size:10px;">
+            <%console.log(p2[i].medicine);
+              var medicine = p2[i].medicine.split('\n');
+              for(var l=0; l < medicine.length; l++){ %>
+                <%=medicine[l]%><br>
+            <%}%>
+          </td>
         </tr>
         <%}%>
       </table>
+      <%
+      for(var i=0; i <med.length; i++){
+      %>
+      <br><%= med[i].date_stamp%>
+      <table>
+        <tr>
+          <!-- <th></th> -->
+          <th>diagnosis</th>
+          <th>medicine</th>
+          <th>lab</th>
+          <th>bed</th>
+        </tr>
+        <tr>
+          <td><%= med[i].diagnosis%></td>
+          <td><%= med[i].medicine%></td>
+          <td><%= med[i].lab%></td>
+          <td><%= med[i].bed%></td>
+        </tr>
+      </table>
+      <%}%>
     <%}%>
+
+
     <!-- PASSWORD -->
     <%- messages('message', locals) %>
     <div id="PasswordInput" style="display:none">

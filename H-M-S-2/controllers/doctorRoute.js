@@ -85,7 +85,6 @@ var user, Aid, availableBedss, p;
           var labSQL                  = 'SELECT * from lab_request left join patient_history using(patient_id);';
           var prescribeSQL            = 'SELECT * from prescription inner join patient using(patient_id) group by patient_id;';
           var whoCurrentlyAdmittedV2  = 'SELECT * FROM patient p left join patient_history i ON p.patient_id = i.patient_id left join bed a ON p.patient_id = a.patient_id where i.doctor_id = '+Aid+' and p.patient_id NOT IN (SELECT patient_id from diagnosis) order by p.patient_id;';
-
           db.query(outpatientDepartmentSQL + availableBeds + whoCurrentlyAdmittedV2 + labSQL + prescribeSQL, function(err, rows){
           if (err) {
             console.log(err);
@@ -117,7 +116,7 @@ var user, Aid, availableBedss, p;
           } else if(data.sub == 'prescribe') {
             var prescribeSQL = 'INSERT into prescription (creation_stamp, medicine, quantity, dosage, timeframe, doctor_id, patient_id, status) VALUES ("'+moment(new Date()).format('YYYY-MM-DD HH:mm:ss')+'","'+data.medicine+'",'+data.quantity+',"'+data.dosage+'","'+data.timeframe+'",'+Aid+','+req.query.patient_id+',"pending");';
             var medicines    = "Medicine:" + data.medicine + ", Quantity:"+ data.quantity + ", Dosage:" + data.dosage + ", TimeFrame:" + data.timeframe;
-            var historySQL = 'UPDATE patient_history set medicine = CONCAT(IFNULL(medicine, ""),"'+medicines+'\n") where histo_id ='+req.query.histo_id+';';
+            var historySQL = 'UPDATE patient_history set medicine = CONCAT(IFNULL(medicine, ""),"'+medicines+'\n<br>") where histo_id ='+req.query.histo_id+';';
             db.query(prescribeSQL + historySQL +  'INSERT into activity_logs(account_id, time, type, remarks) VALUES ('+Aid+',"'+moment(new Date()).format('YYYY-MM-DD HH:mm:ss')+'", "prescription", "Prescribed a medicine to : '+req.query.patient_name+'");', function(err){
               if (err) {
                 console.log(err);
@@ -129,7 +128,7 @@ var user, Aid, availableBedss, p;
           } else if (data.sub == 'labRequest') {
             var requestSQL = 'INSERT into lab_request(type,timestamp,remarks,doctor_id,patient_id,lab_status) VALUES("'+data.testRequest+'","'+currentTime+'","'+data.labRequestremarks+'",'+Aid+','+req.query.patient_id+',"pending");';
             var lab = "Type:" + data.testRequest + " Remarks:" + data.labRequestremarks;
-            var historySQL = 'UPDATE patient_history set lab = CONCAT(IFNULL(lab, ""),"'+lab+'\n") where histo_id = '+req.query.histo_id+';';
+            var historySQL = 'UPDATE patient_history set lab = CONCAT(IFNULL(lab, ""),"'+lab+'\n<br>") where histo_id = '+req.query.histo_id+';';
             db.query(requestSQL + historySQL + 'INSERT into activity_logs(account_id, time, type, remarks) VALUES ('+Aid+',"'+currentTime+'", "labRequest", "Lab request for : '+req.query.patient_name+'");', function(err){
               if (err) {
                 console.log(err);
@@ -141,7 +140,7 @@ var user, Aid, availableBedss, p;
           } else if (data.sub == 'diag') {
             var diagnosisSQL = 'INSERT into diagnosis (diagnosis, date, patient_id, doctor_id) VALUES ("'+data.diagnosis+'","'+currentTime+'",'+req.query.patient_id+','+Aid+');';
             var assessmentDel = 'DELETE from assessment where patient_id = '+req.query.patient_id+';';
-            var historySQL = 'UPDATE patient_history set diagnosis = CONCAT(IFNULL(diagnosis, ""),"'+diagnosis+'\n") where histo_id = '+req.query.histo_id+';';
+            var historySQL = 'UPDATE patient_history set diagnosis = CONCAT(IFNULL(diagnosis, ""),"'+diagnosis+'\n<br>") where histo_id = '+req.query.histo_id+';';
             db.query(diagnosisSQL + assessmentDel + historySQL + 'INSERT into activity_logs(account_id, time, type, remarks) VALUES ('+Aid+',"'+currentTime+'", "diagnosis", "diagnosis for : '+req.query.patient_name+'");', function(err){
               if (err) {
                 console.log(err);
@@ -204,11 +203,11 @@ var user, Aid, availableBedss, p;
           if(req.query.patient){
             var sql  = "SELECT patient_id,patient_type,name,age,sex,blood_type FROM patient where patient_id = "+req.query.patient+";";
             db.query(sql, function(err, rows){
-              res.render('doctor/patientManagement', {p:rows, p2:null, username:user, invalid:null});
+              res.render('doctor/patientManagement', {p:rows, p2:null, med:null, username:user, invalid:null});
             });
           } else {
               db.query(patientManagementSQL, function(err, rows){
-                res.render('doctor/patientManagement', {p:rows, p2:null, username:user, invalid:null});
+                res.render('doctor/patientManagement', {p:rows, p2:null, med:null, username:user, invalid:null});
               });
           }
         } else {
@@ -229,19 +228,14 @@ var user, Aid, availableBedss, p;
             } else if(isMatch) {
               var sql  = "SELECT patient_id,patient_type,name,age,sex,blood_type FROM patient where patient_id = "+req.query.passPatient+";";
               var sql2  = "SELECT * FROM patient where patient_id = "+req.query.passPatient+";";
-              var latestMedicine =  'SELECT medicine FROM `prescription` where status="confirmed" and patient_id = '+req.query.passPatient+' and creation_stamp = (SELECT creation_stamp from prescription where patient_id = '+req.query.passPatient+' and status="confirmed" order by creation_stamp desc limit 1);'
-              db.query(sql + sql2 + latestMedicine, function(err, successRows){
-                var medicineParse = JSON.parse(JSON.stringify(successRows[2]));
-                var medicine= '';
-                for (var i = 0; i < medicineParse.length; i++) {
-                  medicine += medicineParse[i].medicine + ',\n';
-                }
-                res.render('doctor/patientManagement', {p:successRows[0], p2:successRows[1], medicine:medicine, username:user, invalid:null});
+              var med = "select date_stamp, lab, medicine,diagnosis,bed from patient_history where patient_id = "+req.query.passPatient+" order by date_stamp;";
+              db.query(sql + sql2 + med, function(err, successRows){
+                res.render('doctor/patientManagement', {p:successRows[0], p2:successRows[1], med:successRows[2], username:user, invalid:null});
               });
             } else {
               var sql  = "SELECT patient_id,patient_type,name,age,sex,blood_type FROM patient where patient_id = "+req.query.passPatient+";";
               db.query(sql, function(err, errorRows){
-                res.render('doctor/patientManagement', {p:errorRows, p2:null, username:user, invalid:'error'});
+                res.render('doctor/patientManagement', {p:errorRows, p2:null, med:null, username:user, invalid:'error'});
               });
             }
           });
