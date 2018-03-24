@@ -3,19 +3,16 @@
 <head>
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <title>Pharmacist | Dashboard</title>
+  <title>Dashboard</title>
 <% include ../partials/header.ejs %>
-
 </head>
+
 <body class="hold-transition skin-blue fixed sidebar-mini" onload="myFunction()"> <!------------------------------------ EDIT FOR LOADER ---------------------------------->
 <div id="loader"></div> <!------------------------------------ EDIT FOR LOADER ---------------------------------->
 <div class="wrapper">
-
   <header class="main-header">
-    <a href="../nurse/dashboard" class="logo">
-      <!-- mini logo for sidebar mini 50x50 pixels -->
+    <a href="dashboard" class="logo">
       <span class="logo-mini"><b><%= username[0].account_type.charAt(0).toUpperCase()%></b></span>
-      <!-- logo for regular state and mobile devices -->
       <span class="logo-lg"><b><%= username[0].account_type.charAt(0).toUpperCase() + username[0].account_type.slice(1);%></b></span>
     </a>
     <nav class="navbar navbar-static-top" role="navigation">
@@ -35,12 +32,11 @@
                 <img src="../dist/img/avatar3.png" class="img-circle" alt="User Image">
                 <p>
                   <%= username[0].name %> - <%= username[0].account_type.charAt(0).toUpperCase() + username[0].account_type.slice(1);%>
-                  <small>Member since kahapon</small>
                 </p>
               </li>
               <li class="user-footer">
                 <div class="pull-left">
-                  <a href="../pharmacist/profileManagement" class="btn btn-default btn-flat">Profile</a>
+                  <a href="profileManagement" class="btn btn-default btn-flat">Profile</a>
                 </div>
                 <div class="pull-right">
                   <a href="../logout" class="btn btn-default btn-flat">Sign out</a>
@@ -75,21 +71,19 @@
       </form>
 
       <ul class="sidebar-menu">
-        <li class="active"><a href="../pharmacist/dashboard" target="_self"><i class="fa fa-dashboard"></i> <span>Dashboard</span></a></li>
-        <li><a href=../pharmacist/prescriptionManagement><i class="fa fa-plus-square"></i> <span> Prescriptions Management </span></a></li>
-        <li><a href=../pharmacist/patientManagement><i class="fa fa-users"></i> <span> Patient Management </span></a></li>
-        <li><a href=../pharmacist/profileManagement><i class="fa fa-info"></i> <span> Profile Management</span></a></li>
-        <li><a href=../pharmacist/reports><i class="fa fa-link"></i> <span> Reports </span></a></li>
+        <li class="active"><a href="dashboard" target="_self"><i class="fa fa-dashboard"></i> <span>Dashboard</span></a></li>
+        <li><a href="prescriptionManagement"><i class="fa fa-plus-square"></i> <span> Prescriptions Management </span></a></li>
+        <li><a href="patientManagement"><i class="fa fa-users"></i> <span> Patient Management </span></a></li>
+        <li><a href="profileManagement"><i class="fa fa-info"></i> <span> Profile Management</span></a></li>
+        <li><a href="reports"><i class="fa fa-link"></i> <span> Reports </span></a></li>
       </ul>
     </section>
   </aside>
 
-      <!-- Content Wrapper. Contains page content -->
   <div class="content-wrapper"  id="myDiv1"> <!------------------------------------ EDIT FOR LOADER ---------------------------------->
     <section class="content-header">
-
     </section>
-        <!-- Main content -->
+
     <section class="content animate-bottom"> <!------------------------------------ EDIT FOR LOADER ---------------------------------->
      <div class="row">
 
@@ -102,7 +96,7 @@
             <div class="icon">
               <i class="ion ion-person"></i>
             </div>
-            <a href="../pharmacist/prescriptionManagement" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
+            <a href="prescriptionManagement" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
           </div>
         </div>
 
