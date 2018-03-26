@@ -177,29 +177,34 @@ app.get('/admin/patientManagement', function(req, res){
               req.flash('danger', 'Failed to add user account!');
               res.redirect(req.get('referer'));
             } else {
-              //FOR the calculation of age !!
-              var cur           = new Date();
-              var bd            = new Date(data.birth);
-              var dif           = cur - bd;
-              var age           = Math.floor(dif/31557600000);
-              bcrypt.genSalt(10, function(err, salt){
-                bcrypt.hash(data.pass, salt, function(err, hash){
-                  if (err) {
-                    console.log(err);
-                  }
-                  var addUserAccount = 'INSERT into user_accounts (username, password, account_type, name, age, sex, address, phone) VALUES ("'+data.user+'","'+hash+'","'+data.type+'","'+data.name+'",'+age+',"'+data.gender+'","'+data.address+'","'+data.phone+'");';
-                  db.query(addUserAccount + 'INSERT into activity_logs(account_id, time, type, remarks) VALUES ('+Aid+',"'+currentTime+'", "addUser", "Added user: '+data.name+'");', function(err, rows){
-                    if (err) {
-                      console.log(err);
-                    } else {
-                      req.flash('success', 'user account successfully added !');
-                      res.redirect(req.get('referer'));
-                    }
+              db.query('SELECT * from user_accounts where username = "'+data.user+'";', function(err, rows){
+                if (rows.length > 0) {
+                  req.flash('danger', 'Username already exist!');
+                  res.redirect(req.get('referer'));
+                } else {
+                  //FOR the calculation of age !!
+                  var cur           = new Date();
+                  var bd            = new Date(data.birth);
+                  var dif           = cur - bd;
+                  var age           = Math.floor(dif/31557600000);
+                  bcrypt.genSalt(10, function(err, salt){
+                    bcrypt.hash(data.pass, salt, function(err, hash){
+                      if (err) {
+                        console.log(err);
+                      }
+                      var addUserAccount = 'INSERT into user_accounts (username, password, account_type, name, age, sex, address, phone) VALUES ("'+data.user+'","'+hash+'","'+data.type+'","'+data.name+'",'+age+',"'+data.gender+'","'+data.address+'","'+data.phone+'");';
+                      db.query(addUserAccount + 'INSERT into activity_logs(account_id, time, type, remarks) VALUES ('+Aid+',"'+currentTime+'", "addUser", "Added user: '+data.name+'");', function(err, rows){
+                        if (err) {
+                          console.log(err);
+                        } else {
+                          req.flash('success', 'user account successfully added !');
+                          res.redirect(req.get('referer'));
+                        }
+                      });
+                    });
                   });
-                });
+                }
               });
-
-
             }
           }
         } else {
