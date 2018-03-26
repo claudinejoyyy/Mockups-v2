@@ -202,7 +202,7 @@ var user, Aid, availableBedss, p;
         if(req.session.sino == 'doctor'){
           if(req.query.patient){
             var sql  = "SELECT patient_id,patient_type,name,age,sex,blood_type FROM patient where patient_id = "+req.query.patient+";";
-            db.query(sql, function(err, rows){
+            db.query(patientManagementSQL, function(err, rows){
               res.render('doctor/patientManagement', {p:rows, p2:null, med:null, username:user, invalid:null});
             });
           } else {

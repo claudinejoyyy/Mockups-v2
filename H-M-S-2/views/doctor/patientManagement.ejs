@@ -59,18 +59,19 @@
               <th>Dosage</th>
               <th>Time Frame</th>
             </tr>
-          <%var medicine = p[i].medicine.split('\n');
-            for(var l=0; l < medicine.length-1; l++){ %>
-                <tr>
-                  <%var parseMed = medicine[l].split(',');%>
-                  <td><%= parseMed[0]%></td>
-                  <td><%= parseMed[1]%></td>
-                  <td><%= parseMed[2]%></td>
-                  <td><%= parseMed[3]%></td>
-                </tr>
-          <%}%>
-        </table>
-
+          <% if(p[i].medicine != null){
+            var medicine = p[i].medicine.split('\n');
+              for(var l=0; l < medicine.length-1; l++){ %>
+                  <tr>
+                    <%var parseMed = medicine[l].split(',');%>
+                    <td><%= parseMed[0]%></td>
+                    <td><%= parseMed[1]%></td>
+                    <td><%= parseMed[2]%></td>
+                    <td><%= parseMed[3]%></td>
+                  </tr>
+            <%}
+          }%>
+          </table>
         </td>
         <td></td>
 
