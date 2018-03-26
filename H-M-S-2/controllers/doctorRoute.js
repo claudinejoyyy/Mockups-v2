@@ -202,7 +202,7 @@ var user, Aid, availableBedss, p;
         if(req.session.sino == 'doctor'){
           if(req.query.patient){
             var sql  = "SELECT patient_id,patient_type,name,age,sex,blood_type FROM patient where patient_id = "+req.query.patient+";";
-            db.query(patientManagementSQL, function(err, rows){
+            db.query(sql, function(err, rows){
               res.render('doctor/patientManagement', {p:rows, p2:null, med:null, username:user, invalid:null});
             });
           } else {
@@ -411,14 +411,27 @@ var user, Aid, availableBedss, p;
       var data = req.body;
       if (req.session.email && req.session.sino == 'doctor') {
         if (req.session.sino == 'doctor') {
-          var updateProfileSQL = 'UPDATE user_accounts SET name = "'+data.name+'", age = '+data.age+', address = "'+data.address+'", phone = '+data.phone+' WHERE account_id = '+req.session.Aid+';';
-          db.query(updateProfileSQL + 'INSERT into activity_logs(account_id, time, type, remarks) VALUES ('+Aid+',"'+currentTime+'", "settingsProfileManagement", "Edited personal info.");', function(err, rows){
+          bcrypt.compare(data.patientPassword, req.session.password, function(err, isMatch){
             if (err) {
               console.log(err);
+            } else if(isMatch) {
+              var updateProfileSQL = 'UPDATE user_accounts SET name = IFNULL()"'+data.name+'", age = '+data.age+', address = "'+data.address+'", phone = '+data.phone+' WHERE account_id = '+req.session.Aid+';';
+              db.query(updateProfileSQL + 'INSERT into activity_logs(account_id, time, type, remarks) VALUES ('+Aid+',"'+currentTime+'", "settingsProfileManagement", "Edited personal info.");', function(err, rows){
+                if (err) {
+                  console.log(err);
+                } else {
+                  res.redirect(req.get('referer'));
+                }
+              });
             } else {
-              res.redirect(req.get('referer'));
+              req.flash('danger', 'Invalid Password!');
+              var sql  = "SELECT patient_id,patient_type,name,age,sex,blood_type FROM patient where patient_id = "+req.query.passPatient+";";
+              db.query(sql, function(err, errorRows){
+                res.render('doctor/patientManagement', {p:errorRows, p2:null, med:null, username:user, invalid:'error'});
+              });
             }
           });
+
         } else {
           res.redirect(req.session.sino+'/dashboard');
         }
