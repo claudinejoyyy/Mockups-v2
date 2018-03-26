@@ -242,7 +242,7 @@
         </section>
       </div>
 
-      <!---------------------------------------------------------------------------------------------- Modal of Adding new patient ----------->
+
       <style>
         .parsley-error{
           border-color: red;
@@ -414,20 +414,19 @@
 
                   <div class="form-group">
                     <label for="immuName" class="col-sm-2 control-label">Immunization</label>
-                    <div class="col-xs-3">
+                    <div class="col-xs-4">
                       <select class="form-control" id="immuName" onchange="showDate()">
                         <option value=""></option>
                         <%for(var i=1; i <immu.length; i++){%>
                           <option value="<%= immu[i].name%>"><%= immu[i].name%></option>
                         <%}%>
                       </select>
-                    </div>
-                    <div class="col-xs-5">
-                      <input class="form-control" type="month" id="immuDate">
                       <h5 style="opacity:0.7;" id="immuRes"></h5>
+                    </div>
+                    <div class="col-xs-4">
+                      <input class="form-control" type="month" id="immuDate">
                       <input type="text" id="immunization" name="immunization" style="display:none;">
                     </div>
-
                     <button class="btn btn-default btn-sm" type="button" id="addMore" onclick="immuResult()"><i class="fa fa-plus"></i> Add</button>
                   </div>
                   <br>
@@ -796,13 +795,13 @@
     var e = document.getElementById("immuName");
     var immu = e.options[e.selectedIndex].value;
     var immuDate = document.getElementById("immuDate").value;
-    document.getElementById("immuRes").innerHTML += immu + immuDate + "<br>";
+    document.getElementById("immuRes").innerHTML += immu + " : " + immuDate + "<br>";
     document.getElementById("immunization").value += immu +":"+ immuDate + ",";
   }
   function fhResult() {
     var e = document.getElementById("fhName");
     var fh = e.options[e.selectedIndex].value;
-    document.getElementById("fhRes").innerHTML += fh + "<br>";
+    document.getElementById("fhRes").innerHTML += fh + " | ";
     document.getElementById("family_history").value += fh + ",";
   }
   function resetForm() {
