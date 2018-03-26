@@ -124,11 +124,11 @@
             </ul>
             <div class="tab-content">
               <div class="active tab-pane" id="timeline">
-                <%for(var i=0; i < activityInfo.length; i ++){%>
+                <%for(var i=0; i < 5; i ++){%>
                 <ul class="timeline timeline-inverse">
                   <li class="time-label">
                       <span class="bg-red">
-                        <%= moment(activityInfo[i].time).format('YYYY-MM-DD HH:mm:ss')%>
+                        <%= moment(activityInfo[i].time).format('MMM-DD-YYYY HH:mm')%>
                       </span>
                   </li>
 
@@ -197,6 +197,77 @@
                   </li>
                 </ul>
                 <%}%>
+                <button onclick="seeMore()" class="btn bg-purple margin">See More/Hide</button>
+
+                <div id="seeMore" style="display: none;">
+                <br>
+                <%for(var i=5; i < 20; i ++){%>
+                <ul class="timeline timeline-inverse">
+                  <li class="time-label">
+                      <span class="bg-red">
+                        <%= moment(activityInfo[i].time).format('MMM-DD-YYYY HH:mm')%>
+                      </span>
+                  </li>
+
+                  <li>
+                    <% if (activityInfo[i].type == 'add'){ %>
+                      <i class="fa fa-user-plus bg-green"></i>
+                      <div class="timeline-item">
+                    <%} else if (activityInfo[i].type == 'appointment'){ %>
+                      <i class="fa fa-calendar bg-yellow"></i>
+                      <div class="timeline-item">
+                    <%} else if (activityInfo[i].type == 'bed'){ %>
+                      <i class="fa fa-bed bg-primary"></i>
+                      <div class="timeline-item">
+                    <%} else if (activityInfo[i].type == 'bedDischarge'){ %>
+                      <i class="fa fa-sign-out bg-navy"></i>
+                      <div class="timeline-item">
+                    <%} else if (activityInfo[i].type == 'approvedLabRequest'){ %>
+                      <i class="fa fa-share bg-orange"></i>
+                      <div class="timeline-item">
+                    <%} else if (activityInfo[i].type == 'cancelLabRequest'){ %>
+                      <i class="fa fa-reply bg-orange"></i>
+                      <div class="timeline-item">
+                    <%} else if (activityInfo[i].type == 'approvedPrescription'){ %>
+                      <i class="fa fa-share bg-orange"></i>
+                      <div class="timeline-item">
+                    <%} else if (activityInfo[i].type == 'cancelPrescription'){ %>
+                      <i class="fa fa-reply bg-orange"></i>
+                      <div class="timeline-item">
+                    <%} else if (activityInfo[i].type == 'diagnosis'){ %>
+                      <i class="fa fa-user-md bg-yellow"></i>
+                      <div class="timeline-item">
+                    <%} else if (activityInfo[i].type == 'initialAssessment'){ %>
+                      <i class="fa fa-medkit bg-maroon"></i>
+                      <div class="timeline-item">
+                    <%} else if (activityInfo[i].type == 'labRequest'){ %>
+                      <i class="fa fa-edit bg-purple"></i>
+                      <div class="timeline-item">
+                    <%} else if (activityInfo[i].type == 'log'){ %>
+                      <i class="fa fa-check-circle bg-teal"></i>
+                      <div class="timeline-item">
+                    <%} else if (activityInfo[i].type == 'settingsProfileManagement'){ %>
+                      <i class="fa fa-edit bg-blue"></i>
+                      <div class="timeline-item">
+                    <%} else if (activityInfo[i].type == 'todo'){ %>
+                      <i class="fa fa-tasks bg-green"></i>
+                      <div class="timeline-item">
+                    <%} else if (activityInfo[i].type == 'delTodo'){ %>
+                      <i class="fa fa-remove bg-red"></i>
+                      <div class="timeline-item">
+                    <%} else if (activityInfo[i].type == 'urgentTodo'){ %>
+                      <i class="fa fa-remove bg-orange"></i>
+                      <div class="timeline-item">
+                    <%} else if (activityInfo[i].type == 'generalTodo'){%>
+                      <i class="fa fa-remove bg-green"></i>
+                      <div class="timeline-item">
+                    <%}%>
+                      <h3 class="timeline-header"><%= activityInfo[i].remarks%></a></h3>
+                    </div>
+                  </li>
+                </ul>
+                <%}%>
+                </div>
               </div>
 
               <div class="tab-pane" id="settings">
@@ -253,6 +324,16 @@
       "autoWidth": true
     });
   });
+</script>
+<script>
+function seeMore() {
+  var x = document.getElementById("seeMore");
+  if (x.style.display === "none") {
+      x.style.display = "block";
+  } else {
+      x.style.display = "none";
+  }
+}
 </script>
 </body>
 </html>
