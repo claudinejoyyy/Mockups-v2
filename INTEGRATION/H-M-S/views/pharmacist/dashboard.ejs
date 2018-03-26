@@ -11,7 +11,7 @@
 <div id="loader"></div> <!------------------------------------ EDIT FOR LOADER ---------------------------------->
 <div class="wrapper">
   <header class="main-header">
-    <a href="dashboard" class="logo">
+    <a href="../pharmacist/dashboard" class="logo">
       <span class="logo-mini"><b><%= username[0].account_type.charAt(0).toUpperCase()%></b></span>
       <span class="logo-lg"><b><%= username[0].account_type.charAt(0).toUpperCase() + username[0].account_type.slice(1);%></b></span>
     </a>
@@ -168,7 +168,6 @@
             <div class="box-footer clearfix no-border">
               <button type="button" name="button" onclick="showTodo()" class="btn btn-default pull-right" data-toggle="modal" data-target="#myModal4"><i class="fa fa-plus" data-target="#myModal4"></i> Add item</button>
             </div>
-
           </div>
 
           <div class="box box-primary">
@@ -231,7 +230,7 @@
                   </div>
 
                   <div class="modal-footer">
-                    <button type="submit" class="btn btn-primary" name="sub" value="addTodo">Add</button>
+                    <button type="submit" class="btn btn-primary" name="sub" value="addTodo"><i class="fa fa-plus"></i> Add</button>
                   </div>
 
               </form>
