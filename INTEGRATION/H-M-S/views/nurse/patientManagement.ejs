@@ -143,6 +143,7 @@
                   <label for="type" class="col-sm-2 control-label" disabled>Patient Type</label>
                     <div class="col-sm-10">
                       <select class="form-control" name="type" required>
+                        <option value=""></option>
                         <option value="Cadet">Cadet</option>
                         <option value="Military Officer">Miltary Officer</option>
                         <option value="Military Dependent">Miltary Dependent</option>
@@ -156,7 +157,7 @@
                   <br>
 
                   <div class="form-group">
-                    <label for="name" class="col-sm-2 control-label">Name</label>
+                    <label for="name" class="col-sm-2 control-label">Full Name</label>
                     <div class="col-sm-10">
                       <input type="text" class="form-control" id="name" name="name" data-parsley-required data-parsley-pattern="/^[A-Za-z\s .]+$/">
                     </div>
@@ -185,8 +186,9 @@
                     <label for="gender" class="col-sm-2 control-label" disabled>Gender</label>
                     <div class="col-sm-4">
                       <select class="form-control" name="gender">
-                          <option value="M">Male</option>
-                          <option value="F">Female</option>
+                        <option value=""></option>
+                        <option value="M">Male</option>
+                        <option value="F">Female</option>
                       </select>
                     </div>
                   </div>
@@ -197,8 +199,9 @@
                     <label for="status" class="col-sm-2 control-label">Civil Status</label>
                     <div class="col-sm-4">
                       <select class="form-control" name="status">
-                          <option value="Single" selected value>Single</option>
-                          <option value="Married">Married</option>
+                        <option value=""></option>
+                        <option value="Single">Single</option>
+                        <option value="Married">Married</option>
                       </select>
                     </div>
                     <label for="religion" class="col-sm-2 control-label">Religion</label>
@@ -248,6 +251,7 @@
                     <label for="blood" class="col-sm-2 control-label">Blood Type</label>
                     <div class="col-sm-4">
                       <select class="form-control" name="blood">
+                        <option value=""></option>
                         <option value="A">A</option>
                         <option value="B">B</option>
                         <option value="AB">AB</option>
@@ -275,40 +279,40 @@
                     <label for="fhName" class="col-sm-2 control-label">Family History</label>
                     <div class="col-sm-8">
                       <select id="fhName" class="form-control">
-                        <option value="" selected></option>
+                        <option value=""></option>
                         <%for(var i=1; i <fh.length; i++){%>
                           <option value="<%= fh[i].name%>"><%= fh[i].name%></option>
                         <%}%>
                       </select>
-                      <button type="button"  onclick="fhResult()">Add</button>
                       <h5 style="opacity:0.7;" id="fhRes" name="family_history"></h5>
                       <input type="text" id="family_history" name="family_history" style="display:none;">
                     </div>
+                    <button class="btn btn-default btn-sm" type="button"  onclick="fhResult()"><i class="fa fa-plus"></i> Add</button>
                   </div>
-                  <br>
-                  <br>
                   <br>
                   <br>
 
                   <div class="form-group">
                     <label for="immuName" class="col-sm-2 control-label">Immunization</label>
-                    <div class="col-sm-8">
-                      <select id="immuName" onchange="showDate()">
-                        <option value="" selected></option>
+                    <div class="col-xs-4">
+                      <select class="form-control" id="immuName" onchange="showDate()">
+                        <option value=""></option>
                         <%for(var i=1; i <immu.length; i++){%>
                           <option value="<%= immu[i].name%>"><%= immu[i].name%></option>
                         <%}%>
                       </select>
-                      <input type="month" id="immuDate">
-                      <button type="button" id="addMore" onclick="immuResult()">Add</button>
                       <h5 style="opacity:0.7;" id="immuRes"></h5>
+                    </div>
+                    <div class="col-xs-4">
+                      <input class="form-control" type="month" id="immuDate">
                       <input type="text" id="immunization" name="immunization" style="display:none;">
                     </div>
+                    <button class="btn btn-default btn-sm" type="button" id="addMore" onclick="immuResult()"><i class="fa fa-plus"></i> Add</button>
                   </div>
                   <br>
                   <div class="modal-footer">
-                    <button type="submit" class="btn btn-primary" name="sub" onclick="validateRegistration()" value="add" value="validate">Save</button>
-                    <button type="button" class="btn btn-default" onclick="resetForm()">Reset</button>
+                    <button type="button" class="btn btn-default" onclick="resetForm()"><i class="fa fa-refresh"></i> Reset</button>
+                    <button type="submit" class="btn btn-primary" name="sub" onclick="validateRegistration()" value="add" value="validate"><i class="fa fa-save"></i> Save</button>
                   </div>
                 </form>
               </div>
@@ -393,13 +397,13 @@
           var e = document.getElementById("immuName");
           var immu = e.options[e.selectedIndex].value;
           var immuDate = document.getElementById("immuDate").value;
-          document.getElementById("immuRes").innerHTML += immu + immuDate + "<br>";
+          document.getElementById("immuRes").innerHTML += immu + " : " + immuDate + "<br>";
           document.getElementById("immunization").value += immu +":"+ immuDate + ",";
         }
         function fhResult() {
           var e = document.getElementById("fhName");
           var fh = e.options[e.selectedIndex].value;
-          document.getElementById("fhRes").innerHTML += fh + "<br>";
+          document.getElementById("fhRes").innerHTML += fh + " | ";
           document.getElementById("family_history").value += fh + ",";
         }
         function resetForm() {
