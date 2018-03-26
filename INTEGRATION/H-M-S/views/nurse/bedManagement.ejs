@@ -73,7 +73,10 @@
                 </thead>
                 <%for(var i=0; i < bedDetails.length; i++){%>
                 <tr>
-                  <td><%= bedDetails[i].status.charAt(0).toUpperCase() + bedDetails[i].status.slice(1);%></td>
+                  <td <%if(bedDetails[i].status == 'Unoccupied'){%>
+                    style="color:green; font-weight: bold;"
+                  <%} else {%> style="color:red; font-weight: bold;"
+                  <%}%>><%= bedDetails[i].status.charAt(0).toUpperCase() + bedDetails[i].status.slice(1);%></td>
                   <td><%= bedDetails[i].bed_id%></td>
                   <td><%= bedDetails[i].patient_type%></td>
                   <td><%= bedDetails[i].name%></td>
@@ -89,7 +92,7 @@
                     <td><button class="btn btn-danger" <%if(bedDetails[i].status == 'Unoccupied'){%>
                     disabled
                   <%} else {%>
-                  <%}%>>Discharge</button></td>
+                  <%}%>><i class="fa fa-sign-out"></i> Discharge</button></td>
                   </form>
                 </tr>
                 <%}%>
