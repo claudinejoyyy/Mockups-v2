@@ -85,11 +85,12 @@ var user, Aid, availableBedss, p;
           var labSQL                  = 'SELECT * from lab_request left join patient_history using(patient_id);';
           var prescribeSQL            = 'SELECT * from prescription inner join patient using(patient_id) group by patient_id;';
           var whoCurrentlyAdmittedV2  = 'SELECT * FROM patient p left join patient_history i ON p.patient_id = i.patient_id left join bed a ON p.patient_id = a.patient_id where i.doctor_id = '+Aid+' and p.patient_id NOT IN (SELECT patient_id from diagnosis) order by p.patient_id;';
-          db.query(outpatientDepartmentSQL + availableBeds + whoCurrentlyAdmittedV2 + labSQL + prescribeSQL, function(err, rows){
+          var currentlyAdmitted       = 'select * from patient as p join initial_assessment as i join bed as b where p.patient_id = i.patient_id and i.patient_id = b.patient_id'
+          db.query(outpatientDepartmentSQL + availableBeds + whoCurrentlyAdmittedV2 + labSQL + prescribeSQL + currentlyAdmitted, function(err, rows){
           if (err) {
             console.log(err);
           } else {
-              res.render('doctor/outpatientManagement', {opdInfo:rows[0], admitAvailableBeds:rows[1], whoCurrentlyAdmittedV2:rows[2], labSQL:rows[3], prescribeSQL:rows[4], username: user});
+              res.render('doctor/outpatientManagement', {opdInfo:rows[0], admitAvailableBeds:rows[1], whoCurrentlyAdmittedV2:rows[2], labSQL:rows[3], prescribeSQL:rows[4], currentlyAdmitted:rows[5], username: user});
           }
         });
       } else {
