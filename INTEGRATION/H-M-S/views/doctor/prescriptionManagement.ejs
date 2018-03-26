@@ -88,6 +88,7 @@
          <div class="col-xs-12">
            <div class="box">
              <div class="box-header">
+                 <h3 class="box-title">Pending Prescriptions</h3>
              </div>
              <div class="box-body">
                <table id="table2" class="table table-bordered table-striped">
@@ -137,18 +138,20 @@
  <div class="col-xs-12">
    <div class="box">
      <div class="box-header">
+       <h3 class="box-title">Confirmed Prescriptions</h3>
      </div>
      <div class="box-body">
-       <table id="table2" class="table table-bordered table-striped">
+       <table id="example1" class="table table-bordered table-striped">
           <thead>
-    <th>counter</th>
-    <th>date</th>
-    <th>Patient Type</th>
-    <th>Name</th>
-    <th>Age</th>
-    <th>Medications</th>
-    <th>status</th>
-  </tr>
+            <th>No.</th>
+            <th>Date</th>
+            <th>Patient Type</th>
+            <th>Name</th>
+            <th>Age</th>
+            <th>Medications</th>
+            <th>Status</th>
+           </thead>
+           <tbody>
   <%for (var i = 0; i < confirmedprescriptionSQL.length; i++) {%>
     <tr>
       <td><%=i+1%></td>
@@ -163,7 +166,7 @@
         <%=vitals[l]%><br>
     <%}%>
         </td>
-      <td>confirmed</td>
+      <td style="color:green; font-weight: bold;">Confirmed</td>
     </tr>
     <%}%>
  </tbody>

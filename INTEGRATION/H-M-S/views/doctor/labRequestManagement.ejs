@@ -83,17 +83,27 @@
             <a href="#"><i class="fa fa-circle text-success"></i> Online</a>
           </div>
         </div>
-
+        <!-- search form -->
+        <form action="#" method="get" class="sidebar-form">
+          <div class="input-group">
+            <input type="text" name="q" class="form-control" placeholder="Search...">
+            <span class="input-group-btn">
+                <button type="submit" name="search" id="search-btn" class="btn btn-flat"><i class="fa fa-search"></i>
+                </button>
+              </span>
+          </div>
+        </form>
+        <!-- /.search form -->
         <!-- sidebar menu: : style can be found in sidebar.less -->
         <ul class="sidebar-menu">
           <!-- Optionally, you can add icons to the links -->
-          <li><a href="../doctor/dashboard"><i class="fa fa-dashboard"></i> <span>Dashboard</span></a></li>
+          <li><a href="../doctor/dashboard" target="_self"><i class="fa fa-dashboard"></i> <span>Dashboard</span></a></li>
           <li><a href="../doctor/bedManagement"><i class="fa fa-bed"></i> <span>Bed Management</span></a></li>
           <li><a href="../doctor/patientManagement"><i class="fa fa-users"></i> <span>Patient Management</span></a></li>
           <li><a href="../doctor/outpatientManagement"><i class="fa fa-wheelchair"></i> <span>Outpatient Management</span></a></li>
           <li><a href="../doctor/appointmentManagement"><i class="fa fa-calendar"></i> <span>Appointment Management</span></a></li>
           <li><a href="../doctor/prescriptionManagement"><i class="fa fa-sticky-note"></i> <span>Prescription Management</span></a></li>
-          <li class="active"><a href="../doctor/labRequestManagement" target="_self"><i class="fa fa-stethoscope"></i> <span>Lab Request Management</span></a></li>
+          <li class="active"><a href="../doctor/labRequestManagement"><i class="fa fa-stethoscope"></i> <span>Lab Request Management</span></a></li>
           <li><a href="../doctor/profileManagement"><i class="fa fa-info"></i> <span>Profile Management</span></a></li>
 
         </ul>
@@ -114,12 +124,13 @@
           </section>
 
           <!-- Main content -->
-          <section class="content">
+<section class="content">
 
             <div class="row">
              <div class="col-xs-12">
                <div class="box">
                  <div class="box-header">
+                     <h3 class="box-title">Pending Requests</h3>
                  </div>
                  <div class="box-body">
                    <table id="example2" class="table table-bordered table-striped">
@@ -155,85 +166,59 @@
                        </tbody>
                     </table>
                 </div>
-
-                <!-- CONFIRMED -->
-                <table>
-
-                    <div class="row">
-                     <div class="col-xs-12">
-                       <div class="box">
-                         <div class="box-header">
-                         </div>
-                         <div class="box-body">
-                           <table id="example2" class="table table-bordered table-striped">
-                                <thead>
-                                  <tr>
-                              <th>counter</th>
-                              <th>Patient Type</th>
-                              <th>Name</th>
-                              <th>Date and Time</th>
-                              <th>Age</th>
-                              <th>Tests</th>
-                              <th>Remarks</th>
-                              <th>status</th>
-                          </thead>
-                          <tbody>
-                  <%for (var i = 0; i < confirmedLabRequestSQL.length; i++) {%>
-                    <tr>
-                      <td><%=i+1%></td>
-                      <td><%=confirmedLabRequestSQL[i].patient_type%></td>
-                      <td><%=confirmedLabRequestSQL[i].name%></td>
-                      <td><%= moment(new Date(confirmedLabRequestSQL[i].timestamp)).format('YYYY-MM-DD HH:mm:ss')%></td>
-                      <td><%=confirmedLabRequestSQL[i].age%></td>
-                      <td><%=confirmedLabRequestSQL[i].type%></td>
-                      <td><%=confirmedLabRequestSQL[i].remarks%></td>
-                      <td><%=confirmedLabRequestSQL[i].lab_status%></td>
-                    </tr>
-                    <%}%>
-                 </tbody>
-              </table>
-          </div>
   <!-- /.box-body -->
   </div>
   <!-- /.box -->
   </div>
   <!-- /.col -->
   </div>
-
+            <div class="row">
+             <div class="col-xs-12">
+               <div class="box">
+                 <div class="box-header">
+                     <h3 class="box-title">Confirmed Requests</h3>
+                 </div>
+                 <div class="box-body">
+                               <table id="example1" class="table table-bordered table-striped">
+                                    <thead>
+                                  <th>No.</th>
+                                  <th>Patient Type</th>
+                                  <th>Name</th>
+                                  <th>Date and Time</th>
+                                  <th>Age</th>
+                                  <th>Tests</th>
+                                  <th>Remarks</th>
+                                  <th>Status</th>
+                              </thead>
+                                  <tbody>
+                                  <%for (var i = 0; i < confirmedLabRequestSQL.length; i++) {%>
+                                    <tr>
+                                      <td><%=i+1%></td>
+                                      <td><%=confirmedLabRequestSQL[i].patient_type%></td>
+                                      <td><%=confirmedLabRequestSQL[i].name%></td>
+                                      <td><%= moment(new Date(confirmedLabRequestSQL[i].timestamp)).format('YYYY-MM-DD HH:mm:ss')%></td>
+                                      <td><%=confirmedLabRequestSQL[i].age%></td>
+                                      <td><%=confirmedLabRequestSQL[i].type%></td>
+                                      <td><%=confirmedLabRequestSQL[i].remarks%></td>
+                                      <td style="color:green; font-weight: bold;"><%=confirmedLabRequestSQL[i].lab_status%></td>
+                                    </tr>
+                                <%}%>
+                             </tbody>
+                            </table>
+                </div>
+  <!-- /.box-body -->
+  </div>
+  <!-- /.box -->
+  </div>
+  <!-- /.col -->
+  </div>
   </section>
   <!-- /.content -->
   </div>
   <!-- /.content-wrapper -->
 
 
-  <!-- Main Footer -->
-  <footer class="main-footer">
-    <div class="pull-right hidden-xs">
-      <b>Version</b> 1
-    </div>
-    <strong>Copyright &copy; 2018.</strong> Philippine Military Academy | Fort Del Pilar Station Hospital | All rights reserved.
-  </footer>
-  <div class="control-sidebar-bg"></div>
-</div>
-<!-- ./wrapper -->
-
-<!-- REQUIRED JS SCRIPTS -->
-
-<!-- jQuery 2.2.3 -->
-<script src="../plugins/jQuery/jquery-2.2.3.min.js"></script>
-<!-- Bootstrap 3.3.6 -->
-<script src="../bootstrap/js/bootstrap.min.js"></script>
-<!-- AdminLTE App -->
-<script src="../dist/js/app.min.js"></script>
-<!-- DataTables -->
-<script src="../plugins/datatables/jquery.dataTables.min.js"></script>
-<script src="../plugins/datatables/dataTables.bootstrap.min.js"></script>
-<!-- SlimScroll -->
-<script src="../plugins/slimScroll/jquery.slimscroll.min.js"></script>
-<!-- FastClick -->
-<script src="../plugins/fastclick/fastclick.js"></script>
-<!-- Select2 -->
-<script src="../plugins/select2/select2.full.min.js"></script>
+<% include ../partials/footer.ejs %>
 
 <script src="/notif-doctor.js"></script>
 <script>
