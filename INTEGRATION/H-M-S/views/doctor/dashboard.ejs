@@ -163,7 +163,7 @@
             <div class="box-header">
               <i class="ion ion-clipboard"></i>
               <h3 class="box-title">To Do List</h3>
-            </div>  
+            </div>
 
             <div class="content">
               <table id="example3" class="table table-bordered table-striped">
@@ -187,7 +187,7 @@
                       <td><form action="/doctor/dashboard?tId=<%= todoList[i].todo_id%>" method="POST">
                             <button type="submit" name="sub" value="delToDo" class="btn btn-danger">Delete</button>
                           </form>
-                      </td>   
+                      </td>
                     </tr>
                   <%}%>
                 <%}%>
@@ -263,7 +263,7 @@
                 <div>
                   <table id="example1" class="table table-striped table-bordered">
                     <thead>
-                      <tr>                     
+                      <tr>
                         <th>Date and Time</th>
                         <th>Name</th>
                       </tr>
@@ -293,7 +293,7 @@
                 <div>
                   <table id="example2" class="table table-striped table-bordered">
                     <thead>
-                      <tr>   
+                      <tr>
                         <th>Date and Time</th>
                         <th>Name</th>
                       </tr>
@@ -399,6 +399,7 @@
     </div>
 <% include ../partials/footer.ejs %>
 
+<script src="/notif-doctor.js"></script>
   <script>
     function successAlert(){
       alert("Adding appointment success!");

@@ -189,7 +189,7 @@
             <div class="box-header">
               <i class="ion ion-clipboard"></i>
               <h3 class="box-title">To Do List</h3>
-            </div>  
+            </div>
 
             <div class="content">
               <table id="example3" class="table table-bordered table-striped">
@@ -213,7 +213,7 @@
                       <td><form action="/laboratorist/dashboard?tId=<%= todoList[i].todo_id%>" method="POST">
                             <button type="submit" name="sub" value="delToDo" class="btn btn-danger">Delete</button>
                           </form>
-                      </td>   
+                      </td>
                     </tr>
                   <%}%>
                 <%}%>
@@ -509,6 +509,8 @@
                 </div>
               </div>
 <% include ../partials/footer.ejs %>
+
+<script src="/notif-lab.js"></script>
 <script>
 $(function () {
     var areaChartCanvas = $("#areaChart").get(0).getContext("2d");

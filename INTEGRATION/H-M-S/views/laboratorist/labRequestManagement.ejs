@@ -108,7 +108,7 @@
                       <tr>
                           <td><%=i+1%></td>
                           <td><%=pendingLabRequestSQL[i].patient_type%></td>
-                          <td><%=pendingLabRequestSQL[i].name%></td>                         
+                          <td><%=pendingLabRequestSQL[i].name%></td>
                           <td><%=moment(new Date(pendingLabRequestSQL[i].timestamp)).format('MMM-DD-YYYY HH:mm')%></td>
                           <td><%=pendingLabRequestSQL[i].age%></td>
                           <td><%=pendingLabRequestSQL[i].type%></td>
@@ -150,7 +150,7 @@
                   <tr>
                     <td><%=i+1%></td>
                     <td><%=confirmedLabRequestSQL[i].patient_type%></td>
-                    <td><%=confirmedLabRequestSQL[i].name%></td>  
+                    <td><%=confirmedLabRequestSQL[i].name%></td>
                     <td><%=moment(new Date(confirmedLabRequestSQL[i].timestamp)).format('MMM-DD-YYYY HH:mm')%></td>
                     <td><%=confirmedLabRequestSQL[i].age%></td>
                     <td><%=confirmedLabRequestSQL[i].type%></td>
@@ -164,6 +164,8 @@
       </div>
     </div>
 <% include ../partials/footer.ejs %>
+
+<script src="/notif-lab.js"></script>
 <script type="text/javascript">
 $(function () {
   $("#example1").DataTable();
