@@ -261,11 +261,13 @@
               </div>
               <div class="modal-body">
                 <div>
-                  <table class="table table-striped table-bordered">
-                    <tr>                     
-                      <th>Date and Time</th>
-                      <th>Name</th>
-                    </tr>
+                  <table id="example1" class="table table-striped table-bordered">
+                    <thead>
+                      <tr>                     
+                        <th>Date and Time</th>
+                        <th>Name</th>
+                      </tr>
+                    </thead>
                     <%for (var i = 0; i < whoOPD.length; i++) { %>
                       <tr>
                         <td><%= moment(new Date(whoOPD[i].time)).format('MMM-DD-YYYY HH:mm')%></td>
@@ -289,11 +291,13 @@
               </div>
               <div class="modal-body">
                 <div>
-                  <table class="table table-striped table-bordered">
-                    <tr>   
-                      <th>Date and Time</th>
-                      <th>Name</th>
-                    </tr>
+                  <table id="example2" class="table table-striped table-bordered">
+                    <thead>
+                      <tr>   
+                        <th>Date and Time</th>
+                        <th>Name</th>
+                      </tr>
+                    </thead>
                     <%for (var i = 0; i < whoWARD.length; i++) { %>
                       <tr>
                         <td><%= moment(new Date(whoWARD[i].time)).format('MMM-DD-YYYY HH:mm')%></td>

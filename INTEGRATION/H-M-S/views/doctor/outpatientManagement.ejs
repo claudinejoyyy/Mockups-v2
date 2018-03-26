@@ -169,12 +169,15 @@
                         <%}%>
                         <!-- DIAGNOSIS -->
                         <button class="btn btn-primary btn-sm" class="btn btn-primary btn-sm" name="button" data-toggle="modal" data-target="#diagnosis" onclick="ShowDiagnosis(<%=opdInfo[i].patient_id%>,<%=JSON.stringify(opdInfo[i].name)%>)">Diagnosis</button>
+
                         <!-- ADMIT -->
                         <% var arr= '';
                           for (var j = 0; j < whoCurrentlyAdmittedV2.length; j++){
                             arr += whoCurrentlyAdmittedV2[j].patient_id;
                           } if(!(arr.includes(opdInfo[i].patient_id))){%>
-                            <input class="btn btn-primary btn-sm" type="button" name="dmit" value="admit" data-toggle="modal" data-target="#admit" onclick="ShowAdmit(<%=opdInfo[i].patient_id%>,<%=JSON.stringify(opdInfo[i].name)%>)">
+
+                            <button class="btn btn-primary btn-sm" type="button" name="admit" value="Admit" data-toggle="modal" data-target="#admit" onclick="ShowAdmit(<%=opdInfo[i].patient_id%>,<%=JSON.stringify(opdInfo[i].name)%>)">Admit</button>
+
                         <%}%>
                         <!-- LAB REQUEST TABLE VIEW -->
                       </td>
