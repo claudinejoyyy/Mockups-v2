@@ -33,17 +33,20 @@ app.post('/admin/dashboard', function(req, res){
             var parseTime      = splitDateNTime[1] + ':00';
             var parseDateNTime = parseDate+' '+parseTime;
             var todoLog = '';
-            var compare = parseDateNTime < moment(new Date()).format('YYYY-MM-DD HH:mm:ss');
-            if(compare == 'false'){
-	            if (data.todoStatus == 'urgent') {
-	              // console.log(compare);
-	              todoLog = 'INSERT into activity_logs(account_id, time, type, remarks) VALUES ('+req.session.Aid+',"'+moment(new Date()).format('YYYY-MM-DD HH:mm:ss')+'", "urgentTodo", "Added to do urgent: '+data.description+'");';
-	            } else if(data.todoStatus == 'general') {
-	              // console.log(compare);
-	              todoLog = 'INSERT into activity_logs(account_id, time, type, remarks) VALUES ('+req.session.Aid+',"'+moment(new Date()).format('YYYY-MM-DD HH:mm:ss')+'", "generalTodo", "Added to do general: '+data.description+'");';
-	            }
+            var compareDate = parseDateNTime < moment(new Date()).format('YYYY-MM-DD HH:mm:ss');
+            var compare = compareDate.toString();
+            if(compare == 'true'){
+            	console.log('added failed');
+            	todoLog = 'INSERT into activity_logs(account_id, time, type, remarks) VALUES ('+req.session.Aid+',"'+moment(new Date()).format('YYYY-MM-DD HH:mm:ss')+'","delTodo", "Failed to add to-do list: '+data.description+'");';
+
             } else{
-            	todoLog = 'INSERT into activity_logs(account_id, time, type, remarks) VALUES ('+req.session.Aid+',"'+moment(new Date()).format('YYYY-MM-DD HH:mm:ss')+'","delTodo", "Failed to add to-do list '+data.description+'");';
+		            if (data.todoStatus == 'urgent') {
+		              console.log('added to urgent');
+		              todoLog = 'INSERT into activity_logs(account_id, time, type, remarks) VALUES ('+req.session.Aid+',"'+moment(new Date()).format('YYYY-MM-DD HH:mm:ss')+'", "urgentTodo", "Added to do urgent: '+data.description+'");';
+		            } else if(data.todoStatus == 'general') {
+		              console.log('added to general');
+		              todoLog = 'INSERT into activity_logs(account_id, time, type, remarks) VALUES ('+req.session.Aid+',"'+moment(new Date()).format('YYYY-MM-DD HH:mm:ss')+'", "generalTodo", "Added to do general: '+data.description+'");';
+		            }
             }
 
             var addTodo  = 'INSERT into todo_list (description, status,date, account_id) VALUES("'+data.description+'","'+data.todoStatus+'","'+parseDateNTime+'",'+req.session.Aid+');';
