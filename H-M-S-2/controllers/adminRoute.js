@@ -35,10 +35,10 @@ app.post('/admin/dashboard', function(req, res){
             var todoLog = '';
             if (data.todoStatus == 'urgent') {
               console.log('Added to urgent!!!!');
-              todoLog = 'INSERT into activity_logs(account_id, time, type, remarks) VALUES ('+req.session.Aid+',"'+currentTime+'", "urgentTodo", "Added to do urgent: '+data.description+'");';
+              todoLog = 'INSERT into activity_logs(account_id, time, type, remarks) VALUES ('+req.session.Aid+',"'+moment(new Date()).format('MMM/DDD/YYYY HH:mm')+'", "urgentTodo", "Added to do urgent: '+data.description+'");';
             } else if(data.todoStatus == 'general') {
               console.log('Added to general!!!!');
-              todoLog = 'INSERT into activity_logs(account_id, time, type, remarks) VALUES ('+req.session.Aid+',"'+currentTime+'", "generalTodo", "Added to do general: '+data.description+'");';
+              todoLog = 'INSERT into activity_logs(account_id, time, type, remarks) VALUES ('+req.session.Aid+',"'+moment(new Date()).format('MMM/DDD/YYYY HH:mm')+'", "generalTodo", "Added to do general: '+data.description+'");';
             }
             var addTodo  = 'INSERT into todo_list (description, status,date, account_id) VALUES("'+data.description+'","'+data.todoStatus+'","'+parseDateNTime+'",'+req.session.Aid+');';
             db.query(addTodo + todoLog, function(err){
@@ -49,7 +49,7 @@ app.post('/admin/dashboard', function(req, res){
             res.redirect(req.get('referer'));
           } else if (data.sub == 'delToDo') {
             var delTodo = 'DELETE FROM todo_list where todo_id = '+req.query.tId+';';
-            db.query(delTodo + 'INSERT into activity_logs(account_id, time, type, remarks) VALUES ('+req.session.Aid+',"'+moment(new Date()).format('YYYY-MM-DD HH:mm:ss')+'", "delTodo", "Deleted data from todo List");', function(err){
+            db.query(delTodo + 'INSERT into activity_logs(account_id, time, type, remarks) VALUES ('+req.session.Aid+',"'+moment(new Date()).format('MMM/DDD/YYYY HH:mm')+'", "delTodo", "Deleted data from todo List");', function(err){
               if (err) {
                 console.log(err);
               }
@@ -62,7 +62,7 @@ app.post('/admin/dashboard', function(req, res){
                 var parseTime      = splitDateNTime[1] + ':00';
                 var parseDateNTime = parseDate+' '+parseTime;
                 var addAppointment = 'INSERT into appointment (doctor_id, patient_id, appointment_timestamp, remarks) VALUES ('+Aid+', '+data.appointmentPatientID+', "'+parseDateNTime+'", "'+data.appointmentRemarks+'");';
-                db.query(addAppointment + 'INSERT into activity_logs(account_id, time, type, remarks) VALUES ('+Aid+',"'+currentTime+'", "appointment", "Set Appointment with '+req.query.appointmentPatientName+' on '+parseDateNTime+'");', function(err){
+                db.query(addAppointment + 'INSERT into activity_logs(account_id, time, type, remarks) VALUES ('+Aid+',"'+moment(new Date()).format('MMM/DDD/YYYY HH:mm')+'", "appointment", "Set Appointment with '+req.query.appointmentPatientName+' on '+parseDateNTime+'");', function(err){
                   if (err) {
                     console.log(err);
                   }
@@ -119,7 +119,7 @@ app.get('/admin/patientManagement', function(req, res){
     if (req.session.email && req.session.sino == 'admin') {
       if (req.session.sino == 'admin') {
         var updateProfileSQL = 'UPDATE user_accounts SET name = "'+data.name+'", age = '+data.age+', address = "'+data.address+'", phone = '+data.phone+' WHERE account_id = '+req.session.Aid+';';
-        db.query(updateProfileSQL + 'INSERT into activity_logs(account_id, time, type, remarks) VALUES ('+Aid+',"'+currentTime+'", "settingsProfileManagement", "Edited personal info.");', function(err, rows){
+        db.query(updateProfileSQL + 'INSERT into activity_logs(account_id, time, type, remarks) VALUES ('+Aid+',"'+moment(new Date()).format('MMM/DDD/YYYY HH:mm')+'", "settingsProfileManagement", "Edited personal info.");', function(err, rows){
           if (err) {
             console.log(err);
           } else {
@@ -156,7 +156,7 @@ app.get('/admin/patientManagement', function(req, res){
         if (req.session.sino == 'admin') {
           if (data.sub == 'remove') {
             var deleteUserAccount = 'DELETE FROM user_accounts where account_id = '+req.query.account+';';
-            db.query(deleteUserAccount + 'INSERT into activity_logs(account_id, time, type, remarks) VALUES ('+Aid+',"'+currentTime+'", "removedUser", "removed user: '+req.query.name+'");', function(err, rows){
+            db.query(deleteUserAccount + 'INSERT into activity_logs(account_id, time, type, remarks) VALUES ('+Aid+',"'+moment(new Date()).format('MMM/DDD/YYYY HH:mm')+'", "removedUser", "removed user: '+req.query.name+'");', function(err, rows){
               if (err) {
                 console.log(err);
               } else {
@@ -193,7 +193,7 @@ app.get('/admin/patientManagement', function(req, res){
                         console.log(err);
                       }
                       var addUserAccount = 'INSERT into user_accounts (username, password, account_type, name, age, sex, address, phone) VALUES ("'+data.user+'","'+hash+'","'+data.type+'","'+data.name+'",'+age+',"'+data.gender+'","'+data.address+'","'+data.phone+'");';
-                      db.query(addUserAccount + 'INSERT into activity_logs(account_id, time, type, remarks) VALUES ('+Aid+',"'+currentTime+'", "addUser", "Added user: '+data.name+'");', function(err, rows){
+                      db.query(addUserAccount + 'INSERT into activity_logs(account_id, time, type, remarks) VALUES ('+Aid+',"'+moment(new Date()).format('MMM/DDD/YYYY HH:mm')+'", "addUser", "Added user: '+data.name+'");', function(err, rows){
                         if (err) {
                           console.log(err);
                         } else {
