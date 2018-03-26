@@ -132,192 +132,125 @@
               </table>
               <%if(p2){%>
                 <div class="container">
-                  <div class="col-xs-12">
+                  <div class="col-md-12">
                       <form class="form group">
-                      <div class="col-xs-6">
+                        <div class="form-group">
+                          <label class="col-md-12 text-center"><i class="glyphicon glyphicon-user"></i>Patient Details</label>
+                        </div>
+                        <br>
+                        <br>
                       <div class="form-group">
-                        <label class="col-md-4 control-label"><i class="glyphicon glyphicon-user"></i> Patient Type </label>
-                          <div class="col-md-4 inputGroupContainer">
-                          <div class="input-group">
-                              <p>: <%= p2[0].patient_type %></p>
-                          </div>
+                        <label class="col-md-3 control-label">Patient Type:</label>
+                          <div class="col-md-9 inputGroupContainer">
+                              <p><%= p2[0].patient_type %></p>
                         </div>
                       </div>
                       <br>
                       <br>
                       <div class="form-group">
-                        <label class="col-md-4 control-label"><i class="glyphicon glyphicon-tag"></i> Name</label>
+                        <label class="col-md-2 control-label">Name:</label>
                           <div class="col-md-4 inputGroupContainer">
-                          <div class="input-group">
-                              <p>: <%= p2[0].name %></p>
+                              <p><%= p2[0].name %></p>
                           </div>
+                        <label class="col-md-1 control-label">Age:</label>
+                          <div class="col-md-2 inputGroupContainer">
+                              <p><%= p2[0].age %></p>
+                        </div>
+                        <label class="col-md-1 control-label"></i>Unit:</label>
+                          <div class="col-md-2 inputGroupContainer">
+                              <p><%= p2[0].unit %></p>
                         </div>
                       </div>
                       <br>
                       <br>
                       <div class="form-group">
-                        <label class="col-md-4 control-label"><i class="glyphicon glyphicon-text-background"></i> Age</label>
-                          <div class="col-md-4 inputGroupContainer">
-                          <div class="input-group">
-                              <p>: <%= p2[0].age %></p>
-                          </div>
+                        <label class="col-md-2 control-label">Gender:</label>
+                          <div class="col-md-2 inputGroupContainer">
+                              <p><%= p2[0].sex %></p>
+                        </div>
+                        <label class="col-md-2 control-label"></i>Status:</label>
+                          <div class="col-md-2 inputGroupContainer">
+                              <p><%= p2[0].status %></p>
+                        </div>
+                        <label class="col-md-1 control-label">Date:</label>
+                          <div class="col-md-3 inputGroupContainer">
+                              <p><%= b.toLocaleDateString()%></p>
                         </div>
                       </div>
                       <br>
                       <br>
                       <div class="form-group">
-                        <label class="col-md-4 control-label"><i class="glyphicon glyphicon-tower"></i> Unit</label>
-                          <div class="col-md-4 inputGroupContainer">
-                          <div class="input-group">
-                              <p>: <%= p2[0].unit %></p>
-                          </div>
+                        <label class="col-md-2 control-label">Address:</label>
+                          <div class="col-md-6 inputGroupContainer">
+                              <p><%= p2[0].address %></p>
                         </div>
-                      </div>
-                      <br>
-                      <br>
-                      <div class="form-group">
-                        <label class="col-md-4 control-label"><i class="fa fa-shield"></i> Gender</label>
-                          <div class="col-md-4 inputGroupContainer">
-                          <div class="input-group">
-                              <p>: <%= p2[0].sex %></p>
-                          </div>
-                        </div>
-                      </div>
-                      <br>
-                      <br>
-                      <div class="form-group">
-                        <label class="col-md-4 control-label"><i class="glyphicon glyphicon-exclamation-sign"></i> Status</label>
-                          <div class="col-md-4 inputGroupContainer">
-                          <div class="input-group">
-                              <p>: <%= p2[0].status %></p>
-                          </div>
-                        </div>
-                      </div>
-                      <br>
-                      <br>
-                      <div class="form-group">
-                        <label class="col-md-4 control-label"><i class="glyphicon glyphicon-calendar"></i> Date</label>
-                          <div class="col-md-4 inputGroupContainer">
-                          <div class="input-group">
-                              <p>: <%= b.toLocaleDateString()%></p>
-                          </div>
-                        </div>
-                      </div>
-                      <br>
-                      <br>
-                      <div class="form-group">
-                        <label class="col-md-4 control-label"><i class="glyphicon glyphicon-phone-alt"></i> Address</label>
-                          <div class="col-md-4 inputGroupContainer">
-                          <div class="input-group">
-                              <p>: <%= p2[0].address %></p>
-                          </div>
-                        </div>
-                      </div>
-                      <br>
-                      <br>
-                      <div class="form-group">
-                        <label class="col-md-4 control-label"><i class="glyphicon glyphicon-tree-deciduous"></i> Religion</label>
-                          <div class="col-md-4 inputGroupContainer">
-                          <div class="input-group">
+                        <label class="col-md-2 control-label">Religion:</label>
+                          <div class="col-md-2 inputGroupContainer">
                               <p>: <%= p2[0].religion %></p>
-                          </div>
-                        </div>
-                      </div>
-                      <br>
-                      <br>
-                    </div>
-                    <div class="col-xs-6">
-                      <div class="form-group">
-                        <label class="col-md-4 control-label"><i class="glyphicon glyphicon-text-size"></i> Blood Type</label>
-                          <div class="col-md-4 inputGroupContainer">
-                          <div class="input-group">
-                              <p>: <%= p2[0].blood_type %></p>
-                          </div>
                         </div>
                       </div>
                       <br>
                       <br>
                       <div class="form-group">
-                        <label class="col-md-4 control-label"><i class="glyphicon glyphicon-text-color"></i> Allegies</label>
+                        <label class="col-md-2 control-label">Blood Type:</label>
                           <div class="col-md-4 inputGroupContainer">
-                          <div class="input-group">
-                              <p>: <%= p2[0].allergies %></p>
-                          </div>
+                              <p><%= p2[0].blood_type %></p>
+                        </div>
+                        <label class="col-md-2 control-label">Allegies:</label>
+                          <div class="col-md-4 inputGroupContainer">
+                              <p><%= p2[0].allergies %></p>
                         </div>
                       </div>
                       <br>
                       <br>
                       <div class="form-group">
-                        <label class="col-md-4 control-label"><i class="fa fa-user  "></i> Father</label>
-                          <div class="col-md-4 inputGroupContainer">
-                          <div class="input-group">
-                              <p> <%= p2[0].father %></p>
-                          </div>
+                        <label class="col-md-2 control-label">Father:</label>
+                          <div class="col-md-10 inputGroupContainer">
+                              <p><%= p2[0].father %></p>
                         </div>
                       </div>
                       <br>
                       <br>
                       <div class="form-group">
-                        <label class="col-md-4 control-label"><i class="fa fa-user"></i> Mother</label>
-                          <div class="col-md-4 inputGroupContainer">
-                          <div class="input-group">
+                        <label class="col-md-2 control-label">Mother:</label>
+                          <div class="col-md-10 inputGroupContainer">
                               <p> <%= p2[0].mother %></p>
-                          </div>
                         </div>
                       </div>
                       <br>
                       <br>
                       <div class="form-group">
-                        <label class="col-md-4 control-label"><i class="glyphicon glyphicon-road"></i> Birth History</label>
+                        <label class="col-md-2 control-label">Birth History:</label>
+                          <div class="col-md-2 inputGroupContainer">
+                              <p><%= p2[0].birth_history %></p>
+                        </div>
+                        <label class="col-md-4 control-label">Rank or Serial Number:</label>
                           <div class="col-md-4 inputGroupContainer">
-                          <div class="input-group">
-                              <p>: <%= p2[0].birth_history %></p>
-                          </div>
+                              <p><%= p2[0].rankORsn %></p>
                         </div>
                       </div>
                       <br>
                       <br>
                       <div class="form-group">
-                        <label class="col-md-4 control-label"><i class="glyphicon glyphicon-star"></i> Rank or Serial Number</label>
+                        <label class="col-md-2 control-label">Immunization:</label>
                           <div class="col-md-4 inputGroupContainer">
-                          <div class="input-group">
-                              <p>: <%= p2[0].rankORsn %></p>
+                              <p><%= p2[0].immunization %></p>
                           </div>
+                        <label class="col-md-4 control-label">Family History:</label>
+                          <div class="col-md-2 inputGroupContainer">
+                              <p><%= p2[0].family_history %></p>
                         </div>
                       </div>
                       <br>
                       <br>
                       <div class="form-group">
-                        <label class="col-md-4 control-label"><i class="glyphicon glyphicon-th-list"></i> Immunization</label>
+                        <label class="col-md-2 control-label">Medicine:</label>
                           <div class="col-md-4 inputGroupContainer">
-                          <div class="input-group">
-                              <p>: <%= p2[0].immunization %></p>
-                          </div>
+                              <p><%= medicine%></p>
                         </div>
                       </div>
                       <br>
                       <br>
-                      <div class="form-group">
-                        <label class="col-md-4 control-label"><i class="glyphicon glyphicon-home"></i> Family History</label>
-                          <div class="col-md-4 inputGroupContainer">
-                          <div class="input-group">
-                              <p>: <%= p2[0].family_history %></p>
-                          </div>
-                        </div>
-                      </div>
-                      <br>
-                      <br>
-                      <div class="form-group">
-                        <label class="col-md-4 control-label"><i class="fa fa-plus-square"></i> Medicine</label>
-                          <div class="col-md-4 inputGroupContainer">
-                          <div class="input-group">
-                              <p>: <%= medicine%></p>
-                          </div>
-                        </div>
-                      </div>
-                      <br>
-                      <br>
-                    </div>
                 </form>
                 </div>
 
@@ -357,7 +290,16 @@
     </div>
       <% include ../partials/footer.ejs %>
 
+<style>
+  form-group,p{
+    font-size: 25px;
+  }
 
+  label{
+    font-size: 25px;
+  }
+
+</style>
 <script type="text/javascript">
   $(function () {
     $("#example1").DataTable();
