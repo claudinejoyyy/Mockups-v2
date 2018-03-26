@@ -161,12 +161,12 @@ var user, Aid, availableBedss, p;
     if (req.session.email && req.session.sino == 'doctor') {
       if (req.session.sino == 'doctor') {
         if (req.query.bed_id) {
-          var bedSQL = "SELECT b.bed_id, p.patient_type, p.name, b.status, b.allotment_timestamp from bed b LEFT JOIN patient p USING(patient_id) where bed_id = "+req.query.bed_id+"; ";
+          var bedSQL = "SELECT p.patient_id, b.bed_id, p.patient_type, p.name, b.status, b.allotment_timestamp from bed b LEFT JOIN patient p USING(patient_id) where bed_id = "+req.query.bed_id+"; ";
           db.query(bedSQL, function(err, rows, fields){
             res.render('doctor/bedManagement', {bedDetails:rows, username: user});
           });
         } else {
-          var bedSQL = "SELECT b.bed_id, p.patient_type, p.name, b.status, b.allotment_timestamp from bed b LEFT JOIN patient p USING(patient_id); ";
+          var bedSQL = "SELECT p.patient_id, b.bed_id, p.patient_type, p.name, b.status, b.allotment_timestamp from bed b LEFT JOIN patient p USING(patient_id); ";
           db.query(bedSQL, function(err, rows, fields){
             res.render('doctor/bedManagement', {bedDetails:rows, username: user});
           });
@@ -182,7 +182,7 @@ var user, Aid, availableBedss, p;
     if(req.session.email && req.session.sino == 'doctor'){
       if(req.session.sino == 'doctor') {
         var dischargeSQL = "UPDATE bed SET status = 'Unoccupied', allotment_timestamp = NULL, patient_id = NULL where bed_id = "+req.query.bed+";";
-        db.query(dischargeSQL + 'INSERT into activity_logs(account_id, time, type, remarks) VALUES ('+Aid+',"'+currentTime+'", "bedDischarge", "Discharged a patient from bed number : '+req.query.bed+'");', function(err, rows, fields){
+        db.query(dischargeSQL + 'INSERT into activity_logs(account_id, time, type, remarks, patient_id) VALUES ('+Aid+',"'+moment(new Date()).format('YYYY-MM-DD HH:mm:ss')+'", "bedDischarge", "Discharged a patient from bed number : '+req.query.bed+'", '+req.query.id+');', function(err, rows, fields){
           if(err){
             console.log(err);
           } else {

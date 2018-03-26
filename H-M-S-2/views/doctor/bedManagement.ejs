@@ -42,7 +42,7 @@
         <%}%>
 
         <%if(bedDetails[i].name){%>
-        <form action="/doctor/bedManagement?bed=<%= bedDetails[i].bed_id%>" method="POST">
+        <form action="/doctor/bedManagement?bed=<%= bedDetails[i].bed_id%>&id=<%= bedDetails[i].patient_id%>" method="POST">
           <td><button>discharge</button></td>
         </form>
         <%}%>
