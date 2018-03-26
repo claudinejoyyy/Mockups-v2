@@ -104,7 +104,6 @@
             <th>Rank</th>
             <th>Immunization</th>
             <th>Family History</th>
-            <th>Medicine</th>
         </tr>
         <%
         for(var i=0; i <p2.length; i++){
@@ -128,13 +127,6 @@
           <td><%= p2[i].rankORsn %></td>
           <td><%= p2[i].immunization %></td>
           <td><%= p2[i].family_history %></td>
-          <td style="font-size:10px;">
-            <%console.log(med[i].medicine);
-              var medicine = med[i].medicine.split('\n');
-              for(var l=0; l < medicine.length; l++){ %>
-                <%=medicine[l]%><br>
-            <%}%>
-          </td>
         </tr>
         <%}%>
       </table>
