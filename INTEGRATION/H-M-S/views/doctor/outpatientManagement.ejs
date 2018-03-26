@@ -115,7 +115,7 @@
                       <td><%=opdInfo[i].sex%></td>
                       <td style="font-size:10px;">
                         <%
-                          var vitals = opdInfo[i].vital_signs.split('\n');
+                          var vitals = opdInfo[i].vitals.split('\n');
                           for(var l=0; l < 7; l++){ %>
                             <%=vitals[l]%><br>
                         <%}%>
