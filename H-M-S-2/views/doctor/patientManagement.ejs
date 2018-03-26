@@ -129,8 +129,8 @@
           <td><%= p2[i].immunization %></td>
           <td><%= p2[i].family_history %></td>
           <td style="font-size:10px;">
-            <%console.log(p2[i].medicine);
-              var medicine = p2[i].medicine.split('\n');
+            <%console.log(med[i].medicine);
+              var medicine = med[i].medicine.split('\n');
               for(var l=0; l < medicine.length; l++){ %>
                 <%=medicine[l]%><br>
             <%}%>
