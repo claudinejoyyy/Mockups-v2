@@ -29,7 +29,8 @@
       <h1>Activity Timeline</h1>
       <%for(var i=0; i < activityInfo.length; i ++){%>
         <h3><%= activityInfo[i].remarks%></h3>
-        <h3><%= moment(activityInfo[i].time).format('YYYY-MM-DD HH:mm:ss')%></h3>
+        <h3><%= moment(activityInfo[i].time).format('MMM-DD-YYYY HH:mm')%></h3>
+
         <h1>-----</h1>
       <%}%>
     </div>

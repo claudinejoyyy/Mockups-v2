@@ -8,7 +8,7 @@ var fhSQL       = "SELECT name FROM family_history;";
       if(req.session.sino == 'nurse'){
         Aid = req.session.Aid;
         var todoList    = "SELECT * from todo_list where account_id = "+req.session.Aid+";";
-        var availablePatientOPD = "SELECT * from patient;";
+        var availablePatientOPD = "SELECT * from patient where patient_id NOT IN(SELECT patient_id from patient_history where status = 'pending');";
         db.query(name + counts + chart + whoCurrentlyAdmitted + whoOPD + whoWARD + immuSQL + fhSQL + doctorList + availablePatientOPD + monthlyPatientCount + todoList, Aid, function(err, rows, fields){
           if (err) {
             console.log(err);
@@ -33,7 +33,7 @@ var fhSQL       = "SELECT name FROM family_history;";
           var nameForEmit       = data.assessmentPatient.split(',');
           var vitalSigns        = 'BP: '+data.BP +'\nCR: '+ data.CR +'\nPR: '+ data.PR +'\nRR: '+ data.RR +'\n TEMP: '+ data.temperature +'\nWT: '+ data.Wt;
           var initialAssessment = 'INSERT into initial_assessment (assessment, date, patient_id, account_id, vital_signs) VALUES("'+data.assessment+'", "'+moment(new Date()).format('YYYY-MM-DD HH:mm:ss')+'",'+nameForEmit[0]+','+data.assessmentDoctor+',"'+vitalSigns+'");';
-          var historySQL        = 'INSERT into patient_history (date_stamp, initial_assessment, vitals, patient_id, doctor_id) VALUES("'+moment(new Date()).format('YYYY-MM-DD HH:mm:ss')+'", "'+data.assessment+'","'+vitalSigns+'", '+nameForEmit[0]+','+data.assessmentDoctor+');';
+          var historySQL        = 'INSERT into patient_history (date_stamp, initial_assessment, vitals, patient_id, doctor_id, status) VALUES("'+moment(new Date()).format('YYYY-MM-DD HH:mm:ss')+'", "'+data.assessment+'","'+vitalSigns+'", '+nameForEmit[0]+','+data.assessmentDoctor+',"pending");';
           db.query(initialAssessment + historySQL + 'INSERT into activity_logs(account_id, time, type, remarks, patient_id) VALUES ('+Aid+',"'+moment(new Date()).format('YYYY-MM-DD HH:mm:ss')+'", "initialAssessment", "assessment for '+req.query.assessmentPatient+'", '+nameForEmit[0]+');', function(err){
             if (err) {
               console.log(err);

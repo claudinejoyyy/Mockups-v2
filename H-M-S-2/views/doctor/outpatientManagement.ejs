@@ -46,6 +46,7 @@
         <th>initial Assessment</th>
         <th>bed</th>
         <th>action</th>
+        <th>status</th>
       </tr>
       <%for (var i = 0; i < opdInfo.length; i++) {%>
         <tr>
@@ -98,7 +99,13 @@
                 <input type="button" name="prescribe" value="Prescription" onclick="ShowPrescribe(<%=opdInfo[i].patient_id%>,<%=JSON.stringify(opdInfo[i].name)%>,<%=opdInfo[i].histo_id%>)">
               <%}%>
               <!-- DIAGNOSIS -->
-              <button name="button" onclick="ShowDiagnosis(<%=opdInfo[i].patient_id%>,<%=JSON.stringify(opdInfo[i].name)%>,<%=opdInfo[i].histo_id%>)">diagnosis</button>
+              <button name="button" onclick="ShowDiagnosis(<%=opdInfo[i].patient_id%>,<%=JSON.stringify(opdInfo[i].name)%>,<%=opdInfo[i].histo_id%>,<%=JSON.stringify(opdInfo[i].diagnosis)%>)" >
+                <%if(opdInfo[i].diagnosis){%>
+                  add diagnosis
+                <%} else {%>
+                diagnosis
+                <%}%>
+              </button>
               <!-- ADMIT -->
               <% var arr= '';
                 for (var j = 0; j < whoCurrentlyAdmittedV2.length; j++){
@@ -109,10 +116,51 @@
               <!-- LAB REQUEST TABLE VIEW -->
 
             </td>
+            <form action="/doctor/outpatientManagement?id=<%= opdInfo[i].histo_id%>" method="post">
+              <td><button type="submit" name="sub" value="confirm">confirm</button></td>
+            </form>
         </tr>
       <%}%>
     </table>
-    <!-- LAB REQUEST -->
+    <!-- CONFIRMED -->
+    <table>
+      <tr>
+        <th>patient type</th>
+        <th>name</th>
+        <th>age</th>
+        <th>gender</th>
+        <th>Vital Signs</th>
+        <th>initial Assessment</th>
+        <th>bed</th>
+        <th>status</th>
+      </tr>
+      <%for (var i = 0; i < opdInfo1.length; i++) {%>
+        <tr>
+            <td><%=opdInfo1[i].patient_type%></td>
+            <td><%=opdInfo1[i].name%></td>
+            <td><%=opdInfo1[i].age%></td>
+            <td><%=opdInfo1[i].sex%></td>
+            <td style="font-size:10px;">
+              <%
+                var vitals = opdInfo1[i].vitals.split('\n');
+                for(var l=0; l < 7; l++){ %>
+                  <%=vitals[l]%><br>
+              <%}%>
+            </td>
+            <td><%=opdInfo1[i].initial_assessment%></td>
+            <%
+            var bedArr= '';
+              for (var j = 0; j < whoCurrentlyAdmittedV2.length; j++){
+                bedArr += whoCurrentlyAdmittedV2[j].patient_id;
+              }
+            if(bedArr.includes(opdInfo1[i].patient_id)){%>
+              <td><%= whoCurrentlyAdmittedV2[i].bed_id%><a href="/doctor/bedManagement?bed_id=<%=whoCurrentlyAdmittedV2[i].bed_id%>" style="font-size:10px;">-details</a></td>
+            <%} else {%>
+              <td></td>
+            <%}%>
+            <td>confirmed</td>
+            <%}%>
+    </table>
 
 
     <div id="ShowLabRequest" style="display:none;">
@@ -165,9 +213,11 @@
     </div>
 
     <div id="ShowDiagnosis" style="display:none;">
+      <textarea id="prevDiag" readonly></textarea>
       <form id="linkDiagnosis" method="post">
         <textarea name="diagnosis" rows="8" cols="80"></textarea>
         <button type="submit" name="sub" value="diag">add</button>
+        <button type="submit" name="sub" value="clear">clear</button>
       </form>
     </div>
 
@@ -214,9 +264,10 @@
     document.getElementById('ShowAdmit').style.display = 'block';
   }
 
-  function ShowDiagnosis(i,o){
+  function ShowDiagnosis(i,o,u,a){
     document.getElementById('ShowDiagnosis').style.display = 'block';
     document.getElementById('linkDiagnosis').action = '/doctor/outpatientManagement?patient_id='+i+'&patient_name='+o+'&histo_id='+u+'';
+    document.getElementById('prevDiag').innerHTML = a;
   }
 
 </script>
