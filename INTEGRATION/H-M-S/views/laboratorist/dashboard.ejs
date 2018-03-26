@@ -189,42 +189,40 @@
             <div class="box-header">
               <i class="ion ion-clipboard"></i>
               <h3 class="box-title">To Do List</h3>
-              <div class="box-tools pull-right">
-                <ul class="pagination pagination-sm inline">
-                  <li><a href="#">&laquo;</a></li>
-                  <li><a href="#">1</a></li>
-                  <li><a href="#">2</a></li>
-                  <li><a href="#">3</a></li>
-                  <li><a href="#">&raquo;</a></li>
-                </ul>
-              </div>
-            </div>
-            <div class="box-body">
-              <ul class="todo-list">
+            </div>  
+
+            <div class="content">
+              <table id="example3" class="table table-bordered table-striped">
+                <thead>
+                  <tr>
+                    <th>Name</th>
+                    <th>Date</th>
+                     <th></th>
+                  </tr>
+                </thead>
                 <%for(var i=0; i < todoList.length; i++){%>
                   <%if(new Date() < new Date(todoList[i].date)) {%>
-                <li>
-                  <span class="handle">
-                    <i class="fa fa-ellipsis-v"></i>
-                    <i class="fa fa-ellipsis-v"></i>
-                  </span>
-                  <span class="text"><%= todoList[i].description%>:</span>
-                  <%if(todoList[i].status == 'general'){%>
-                  <small class="label label-info"><i class="fa fa-clock-o"></i><%= moment(new Date(todoList[i].date)).format('YYYY-MM-DD HH:mm:ss')%></small>
-                  <%} else{%>
-                  <small class="label label-danger"><i class="fa fa-clock-o"></i><%= moment(new Date(todoList[i].date)).format('YYYY-MM-DD HH:mm:ss')%></small>
+                    <tr>
+                      <td> <span class="text"><%= todoList[i].description%></span></td>
+                      <td> <%if(todoList[i].status == 'general'){%>
+                              <small class="label label-info"><i class="fa fa-clock-o"></i><%= moment(new Date(todoList[i].date)).format('MMM-DD-YYYY HH:mm')%></small>
+                            <%} else{%>
+                              <small class="label label-danger"><i class="fa fa-clock-o"></i><%= moment(new Date(todoList[i].date)).format('MMM-DD-YYYY HH:mm')%></small>
+                            <%}%>
+                      </td>
+                      <td><form action="/laboratorist/dashboard?tId=<%= todoList[i].todo_id%>" method="POST">
+                            <button type="submit" name="sub" value="delToDo" class="btn btn-danger">Delete</button>
+                          </form>
+                      </td>   
+                    </tr>
                   <%}%>
-                  <form action="/laboratorist/dashboard?tId=<%= todoList[i].todo_id%>" method="POST">
-                    <button type="submit" name="sub" value="delToDo">Delete</button>
-                  </form>
-                </li>
                 <%}%>
-                <%}%>
-              </ul>
+              </table>
+            </div>
+
             <div class="box-footer clearfix no-border">
               <button type="button" name="button" onclick="showTodo()" class="btn btn-default pull-right" data-toggle="modal" data-target="#myModal4"><i class="fa fa-plus" data-target="#myModal4"></i> Add item</button>
             </div>
-          </div>
           </div>
 
           <div class="box box-primary">
@@ -273,7 +271,7 @@
             </thead>
               <%for (var i = 0; i < bloodChemistrySQL.length; i++) { %>
                 <tr>
-                  <td><%= moment(new Date(bloodChemistrySQL[i].timestamp)).format('YYYY-MM-DD HH:mm:ss')%></td>
+                  <td><%= moment(new Date(bloodChemistrySQL[i].timestamp)).format('MMM-DD-YYYY HH:mm')%></td>
                   <td><%= bloodChemistrySQL[i].name%></td>
                 </tr>
               <%}%>
@@ -294,7 +292,7 @@
             </div>
             <div class="modal-body" id="showHerma" style="display:none;max-height: calc(100vh - 200px);overflow-y: auto;">
           <section class="content">
-            <table id="example1" class="table table-bordered table-striped">
+            <table id="example2" class="table table-bordered table-striped">
             <thead>
               <tr>
                 <th>Date and Time of Admission</th>
@@ -303,7 +301,7 @@
             </thead>
               <%for (var i = 0; i < hermatology.length; i++) { %>
                 <tr>
-                  <td><%= moment(new Date(hermatology[i].timestamp)).format('YYYY-MM-DD HH:mm:ss')%></td>
+                  <td><%= moment(new Date(hermatology[i].timestamp)).format('MMM-DD-YYYY HH:mm')%></td>
                   <td><%= hermatology[i].name%></td>
                 </tr>
               <%}%>
@@ -324,7 +322,7 @@
               </div>
               <div class="modal-body" id="showMicroscopy" style="display:none;max-height: calc(100vh - 200px);overflow-y: auto;">
             <section class="content">
-              <table id="example1" class="table table-bordered table-striped">
+              <table id="example4" class="table table-bordered table-striped">
               <thead>
                 <tr>
                   <th>Date and Time of Admission</th>
@@ -333,7 +331,7 @@
               </thead>
                 <%for (var i = 0; i < microscopy.length; i++) { %>
                   <tr>
-                    <td><%= moment(new Date(microscopy[i].timestamp)).format('YYYY-MM-DD HH:mm:ss')%></td>
+                    <td><%= moment(new Date(microscopy[i].timestamp)).format('MMM-DD-YYYY HH:mm')%></td>
                     <td><%= microscopy[i].name%></td>
                   </tr>
                 <%}%>
@@ -354,7 +352,7 @@
                 </div>
                 <div class="modal-body" id="showParasitology" style="display:none;max-height: calc(100vh - 200px);overflow-y: auto;">
               <section class="content">
-                <table id="example1" class="table table-bordered table-striped">
+                <table id="example5" class="table table-bordered table-striped">
                 <thead>
                   <tr>
                     <th>Date and Time of Admission</th>
@@ -363,7 +361,7 @@
                 </thead>
                   <%for (var i = 0; i < parasitology.length; i++) { %>
                     <tr>
-                      <td><%= moment(new Date(parasitology[i].timestamp)).format('YYYY-MM-DD HH:mm:ss')%></td>
+                      <td><%= moment(new Date(parasitology[i].timestamp)).format('MMM-DD-YYYY HH:mm')%></td>
                       <td><%= parasitology[i].name%></td>
                     </tr>
                   <%}%>
@@ -384,7 +382,7 @@
                   </div>
                   <div class="modal-body" id="showSerology" style="display:none;max-height: calc(100vh - 200px);overflow-y: auto;">
                 <section class="content">
-                  <table id="example1" class="table table-bordered table-striped">
+                  <table id="example6" class="table table-bordered table-striped">
                   <thead>
                     <tr>
                       <th>Date and Time of Admission</th>
@@ -393,7 +391,7 @@
                   </thead>
                     <%for (var i = 0; i < serology.length; i++) { %>
                       <tr>
-                        <td><%= moment(new Date(serology[i].timestamp)).format('YYYY-MM-DD HH:mm:ss')%></td>
+                        <td><%= moment(new Date(serology[i].timestamp)).format('MMM-DD-YYYY HH:mm')%></td>
                         <td><%= serology[i].name%></td>
                       </tr>
                     <%}%>
@@ -414,7 +412,7 @@
                     </div>
                     <div class="modal-body" id="showMicrobiology" style="display:none;max-height: calc(100vh - 200px);overflow-y: auto;">
                   <section class="content">
-                    <table id="example1" class="table table-bordered table-striped">
+                    <table id="example7" class="table table-bordered table-striped">
                     <thead>
                       <tr>
                         <th>Date and Time of Admission</th>
@@ -423,7 +421,7 @@
                     </thead>
                       <%for (var i = 0; i < microbiology.length; i++) { %>
                         <tr>
-                          <td><%= moment(new Date(microbiology[i].timestamp)).format('YYYY-MM-DD HH:mm:ss')%></td>
+                          <td><%= moment(new Date(microbiology[i].timestamp)).format('MMM-DD-YYYY HH:mm')%></td>
                           <td><%= microbiology[i].name%></td>
                         </tr>
                       <%}%>
@@ -444,7 +442,7 @@
                       </div>
                       <div class="modal-body" id="showXray" style="display:none;max-height: calc(100vh - 200px);overflow-y: auto;">
                     <section class="content">
-                      <table id="example1" class="table table-bordered table-striped">
+                      <table id="example8" class="table table-bordered table-striped">
                       <thead>
                         <tr>
                           <th>Date and Time of Admission</th>
@@ -453,7 +451,7 @@
                       </thead>
                         <%for (var i = 0; i < xRay.length; i++) { %>
                           <tr>
-                            <td><%= moment(new Date(xRay[i].timestamp)).format('YYYY-MM-DD HH:mm:ss')%></td>
+                            <td><%= moment(new Date(xRay[i].timestamp)).format('MMM-DD-YYYY HH:mm')%></td>
                             <td><%= xRay[i].name%></td>
                           </tr>
                         <%}%>
@@ -501,7 +499,7 @@
                           </div>
 
                           <div class="modal-footer">
-                            <button type="submit" class="btn btn-primary" name="sub" value="addTodo">Add</button>
+                            <button type="submit" class="btn btn-primary" name="sub" value="addTodo"><i class="fa fa-plus"></i> Add</button>
                           </div>
 
                       </form>
@@ -619,8 +617,20 @@ $(function () {
     $(document).ready(function() {
         $(".select2").select2();
           $("#example1").DataTable();
-          $('#example2').DataTable({
-          });
+          $('#example2').DataTable();
+          $("#example4").DataTable();
+          $('#example5').DataTable();
+          $("#example6").DataTable();
+          $('#example7').DataTable();
+          $("#example8").DataTable();
+          $('#example3').DataTable({
+          "paging": true,
+          "lengthChange": false,
+          "searching": false,
+          "ordering": true,
+          "info": false,
+          "autoWidth": true
+        });
     });
 
     //Date picker
@@ -628,7 +638,4 @@ $(function () {
       autoclose: true
     });
 
-    $(document).ready(function() {
-        $(".select2").select2();
-    });
 </script>
