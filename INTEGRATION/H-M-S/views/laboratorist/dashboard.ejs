@@ -473,6 +473,7 @@
                       <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                       <h4 class="modal-title" id="myModalLabel1">To Do List</h4>
                     </div>
+
                     <div class="modal-body">
                       <form method="POST" onsubmit="parseDateNTime()" class="form-horizontal" id="showTodo">
                           <div class="form-group">
@@ -509,9 +510,7 @@
                   </div>
                 </div>
               </div>
-
 <% include ../partials/footer.ejs %>
-
 <script>
 $(function () {
     var areaChartCanvas = $("#areaChart").get(0).getContext("2d");
@@ -579,9 +578,12 @@ $(function () {
       //Boolean - whether to make the chart responsive to window resizing
       responsive: true
     };
+
     //Create the line chart
     areaChart.Line(areaChartData, areaChartOptions);
+
   });
+
   function showTodo() {
     document.getElementById("showTodo").style.display = "block";
   }
@@ -606,22 +608,26 @@ $(function () {
   function showXray() {
     document.getElementById("showXray").style.display = "block";
   }
+
   function labelFormatter(label, series) {
     return '<div style="font-size:13px; text-align:center; padding:0.5px; color: #fff; font-weight: 600;">'
         + label
         + "<br>"
         + Math.round(series.percent) + "%</div>";
   }
+
     $(document).ready(function() {
         $(".select2").select2();
           $("#example1").DataTable();
           $('#example2').DataTable({
           });
     });
+
     //Date picker
     $('.datepicker').datepicker({
       autoclose: true
     });
+
     $(document).ready(function() {
         $(".select2").select2();
     });
