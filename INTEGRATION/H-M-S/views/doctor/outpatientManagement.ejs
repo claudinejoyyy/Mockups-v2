@@ -91,8 +91,8 @@
   <div class="content-wrapper"  id="myDiv1"> <!------------------------------------ EDIT FOR LOADER ---------------------------------->
     <section class="content-header">
       <h1>
-        Outpatient
-        <small>List of Outpatients</small>
+        Patients
+        <small>List of Active Patients</small>
       </h1>
     </section>
         <!-- Main content -->
@@ -100,6 +100,9 @@
        <div class="row">
         <div class="col-xs-12">
           <div class="box">
+           <div class="box-header">
+              <h3 class="box-title">Outpatient</h3><small>  List of Outpatients</small>
+            </div>
             <div class="box-body">
               <table id="example1" class="table table-bordered table-striped">
                 <thead>
@@ -180,6 +183,80 @@
 
                         <%}%>
                         <!-- LAB REQUEST TABLE VIEW -->
+                      </td>
+                  </tr>
+                <%}%>
+              </table>
+          </div>
+        </div>
+          <div class="box">
+          <div class="box-header">
+              <h3 class="box-title">Ward/Admitted Patients</h3><small>  List of In-patients</small>
+            </div>
+            <div class="box-body">
+              <table id="example2" class="table table-bordered table-striped">
+                <thead>
+                  <tr>
+                    <th>Patient Type</th>
+                    <th>Name</th>
+                    <th>Age</th>
+                    <th>Gender</th>
+                    <th>Vital Signs</th>
+                    <th>Initial Assessment</th>
+                    <th>Bed</th>
+                    <th>Action</th>
+                  </tr>
+                </thead>
+                <%for (var i = 0; i < currentlyAdmitted.length; i++) {%>
+                  <tr>
+                      <td><%=currentlyAdmitted[i].patient_type%></td>
+                      <td><%=currentlyAdmitted[i].name%></td>
+                      <td><%=currentlyAdmitted[i].age%></td>
+                      <td><%=currentlyAdmitted[i].sex%></td>
+                      <td style="font-size:10px;">
+                        <%
+                          var vitals = currentlyAdmitted[i].vital_signs.split('\n');
+                          for(var l=0; l < 7; l++){ %>
+                            <%=vitals[l]%><br>
+                        <%}%>
+                      </td>
+                      <td><%=currentlyAdmitted[i].assessment%></td>
+                        <td><%= currentlyAdmitted[i].bed_id%><a href="/doctor/bedManagement?bed_id=<%=currentlyAdmitted[i].bed_id%>" style="font-size:10px;">-details</a></td>
+                      <td>
+                        <!-- VIEW -->
+                        <a href="../doctor/patientManagement?patient=<%=currentlyAdmitted[i].patient_id%>"><button class="btn btn-primary btn-sm" name="view">View</button></a>
+                        <!-- LAB -->
+                        <%
+                        var labArr= '';
+                          for (var j = 0; j < labSQL.length; j++){
+                            labArr += labSQL[j].patient_id;
+                          }
+                        if(labArr.includes(currentlyAdmitted[i].patient_id)){%>
+                          <a data-toggle="modal">
+                            <input class="btn btn-primary btn-sm" type="button" value="Lab Request" name="lab_request" style="color:blue" data-toggle="modal" data-target="#labRequest2" onclick="ShowLabRequest2(<%=currentlyAdmitted[i].patient_id%>,<%=JSON.stringify(currentlyAdmitted[i].name)%>)">
+                          </a>
+                        <%} else {%>
+                          <a data-toggle="modal">
+                            <input class="btn btn-primary btn-sm" type="button" value="Lab Request" name="lab_request" data-toggle="modal" data-target="#labRequest" onclick="ShowLabRequest(<%=currentlyAdmitted[i].patient_id%>,<%=JSON.stringify(currentlyAdmitted[i].name)%>)">
+                          </a>
+                        <%}%>
+                        <!-- PRESCRIPTION -->
+                        <%
+                        var prescribeArr= '';
+                          for (var j = 0; j < prescribeSQL.length; j++){
+                            prescribeArr += prescribeSQL[j].patient_id;
+                          }
+                        if(prescribeArr.includes(currentlyAdmitted[i].patient_id)){%>
+                          <input class="btn btn-primary btn-sm" type="button" name="prescribe" style="color:blue" value="Prescription" data-toggle="modal" data-target="prescribe2" onclick="ShowPrescribe2(<%=currentlyAdmitted[i].patient_id%>,<%=JSON.stringify(currentlyAdmitted[i].name)%>)" >
+                        <%} else {%>
+                          <input class="btn btn-primary btn-sm" type="button" name="prescribe" value="Prescription" data-toggle="modal" data-target="#prescribe" onclick="ShowPrescribe(<%=currentlyAdmitted[i].patient_id%>,<%=JSON.stringify(currentlyAdmitted[i].name)%>)">
+                        <%}%>
+                        <!-- DIAGNOSIS -->
+                        <button class="btn btn-primary btn-sm" class="btn btn-primary btn-sm" name="button" data-toggle="modal" data-target="#diagnosis" onclick="ShowDiagnosis(<%=currentlyAdmitted[i].patient_id%>,<%=JSON.stringify(currentlyAdmitted[i].name)%>)">Diagnosis</button>
+                        <!-- DISCHARGE BUTTON -->
+                      <form action="/doctor/bedManagement?bed=<%= currentlyAdmitted[i].bed_id%>" method="POST" style="display: inline-block;">
+                        <button class="btn btn-danger btn-sm"><i class="fa fa-sign-out"></i> Discharge</button>
+                      </form>
                       </td>
                   </tr>
                 <%}%>
@@ -372,14 +449,7 @@
 <script>
   $(function () {
     $("#example1").DataTable();
-    $('#example2').DataTable({
-      "paging": true,
-      "lengthChange": false,
-      "searching": false,
-      "ordering": true,
-      "info": true,
-      "autoWidth": true
-    });
+    $('#example2').DataTable();
   });
   function ShowLabRequest(i,o){
     document.getElementById('dynamicPatientIdForLab').action = '/doctor/outpatientManagement?patient_id='+i+'&patient_name='+o+'"';
