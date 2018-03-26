@@ -390,7 +390,7 @@ var user, Aid, availableBedss, p;
     app.get('/doctor/profileManagement', function(req, res){
       if(req.session.email && req.session.sino == 'doctor'){
         if (req.session.sino == 'doctor') {
-          var profileInfoSQL  = 'SELECT * from user_accounts where account_id = '+req.session.Aid+';';
+          var profileInfoSQL  = 'SELECT name, age, address, phone from user_accounts where account_id = '+req.session.Aid+';';
           var activityLogsSQL = 'SELECT * from activity_logs where account_id = '+req.session.Aid+' ORDER by logs_id desc LIMIT 5;';
           db.query(profileInfoSQL + activityLogsSQL, function(err, rows){
             if (err) {
@@ -411,24 +411,24 @@ var user, Aid, availableBedss, p;
       var data = req.body;
       if (req.session.email && req.session.sino == 'doctor') {
         if (req.session.sino == 'doctor') {
-          bcrypt.compare(data.patientPassword, req.session.password, function(err, isMatch){
-            if (err) {
-              console.log(err);
-            } else if(isMatch) {
-              var updateProfileSQL = 'UPDATE user_accounts SET name = IFNULL()"'+data.name+'", age = '+data.age+', address = "'+data.address+'", phone = '+data.phone+' WHERE account_id = '+req.session.Aid+';';
-              db.query(updateProfileSQL + 'INSERT into activity_logs(account_id, time, type, remarks) VALUES ('+Aid+',"'+currentTime+'", "settingsProfileManagement", "Edited personal info.");', function(err, rows){
-                if (err) {
-                  console.log(err);
-                } else {
-                  res.redirect(req.get('referer'));
-                }
+          bcrypt.compare(data.oldPass, req.session.password, function(err, isMatch){
+            if(isMatch) {
+              req.flash('success', 'Successfully changed the password!');
+              bcrypt.genSalt(10, function(err, salt){
+                bcrypt.hash(data.newPass, salt, function(err, hash){
+                  var updateProfileSQL = 'UPDATE user_accounts SET name = "'+data.name+'", age = '+data.age+', address = "'+data.address+'", phone = '+data.phone+', password = IFNULL("'+hash+'",password) WHERE account_id = '+req.session.Aid+';';
+                  db.query(updateProfileSQL + 'INSERT into activity_logs(account_id, time, type, remarks) VALUES ('+Aid+',"'+currentTime+'", "settingsProfileManagement", "Edited personal info.");', function(err, rows){
+                    if (err) {
+                      console.log(err);
+                    } else {
+                      res.redirect(req.get('referer'));
+                    }
+                  });
+                });
               });
             } else {
-              req.flash('danger', 'Invalid Password!');
-              var sql  = "SELECT patient_id,patient_type,name,age,sex,blood_type FROM patient where patient_id = "+req.query.passPatient+";";
-              db.query(sql, function(err, errorRows){
-                res.render('doctor/patientManagement', {p:errorRows, p2:null, med:null, username:user, invalid:'error'});
-              });
+              req.flash('danger', 'Invalid Current Password!');
+              res.redirect(req.get('referer'));
             }
           });
 

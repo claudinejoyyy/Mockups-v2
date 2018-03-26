@@ -18,6 +18,7 @@
       <a href="../doctor/labRequestManagement">labRequestManagement</a><br>
       <a href="../doctor/profileManagement">profile</a>
     </nav>
+    <%- messages('message', locals) %>
     <h1><%=pInfo[0].name%></h1>
     <h2>Doctor</h2>
     <h3>User Account: <%= pInfo[0].account_id%></h3>
@@ -42,7 +43,7 @@
       <br>
       ---------------
       <br>
-      current password:<input type="password" name="oldPass"><br>
+      current password:<input type="password" name="oldPass" required><br>
       new password:<input type="password" name="newPass"><br>
       confirm password:<input type="password" name="confirmPass"><br>
       <button type="submit" onclick="check()">save</button>
