@@ -33,22 +33,13 @@ app.post('/admin/dashboard', function(req, res){
             var parseTime      = splitDateNTime[1] + ':00';
             var parseDateNTime = parseDate+' '+parseTime;
             var todoLog = '';
-            var compareDate = parseDateNTime < moment(new Date()).format('YYYY-MM-DD HH:mm:ss');
-            var compare = compareDate.toString();
-            if(compare == 'true'){
-            	console.log('added failed');
-            	todoLog = 'INSERT into activity_logs(account_id, time, type, remarks) VALUES ('+req.session.Aid+',"'+moment(new Date()).format('YYYY-MM-DD HH:mm:ss')+'","delTodo", "Failed to add to-do list: '+data.description+'");';
-
-            } else{
-		            if (data.todoStatus == 'urgent') {
-		              console.log('added to urgent');
-		              todoLog = 'INSERT into activity_logs(account_id, time, type, remarks) VALUES ('+req.session.Aid+',"'+moment(new Date()).format('YYYY-MM-DD HH:mm:ss')+'", "urgentTodo", "Added to do urgent: '+data.description+'");';
-		            } else if(data.todoStatus == 'general') {
-		              console.log('added to general');
-		              todoLog = 'INSERT into activity_logs(account_id, time, type, remarks) VALUES ('+req.session.Aid+',"'+moment(new Date()).format('YYYY-MM-DD HH:mm:ss')+'", "generalTodo", "Added to do general: '+data.description+'");';
-		            }
+            if (data.todoStatus == 'urgent') {
+              console.log('Added to urgent!!!!');
+              todoLog = 'INSERT into activity_logs(account_id, time, type, remarks) VALUES ('+req.session.Aid+',"'+currentTime+'", "urgentTodo", "Added to do urgent: '+data.description+'");';
+            } else if(data.todoStatus == 'general') {
+              console.log('Added to general!!!!');
+              todoLog = 'INSERT into activity_logs(account_id, time, type, remarks) VALUES ('+req.session.Aid+',"'+currentTime+'", "generalTodo", "Added to do general: '+data.description+'");';
             }
-
             var addTodo  = 'INSERT into todo_list (description, status,date, account_id) VALUES("'+data.description+'","'+data.todoStatus+'","'+parseDateNTime+'",'+req.session.Aid+');';
             db.query(addTodo + todoLog, function(err){
               if (err) {
@@ -71,7 +62,7 @@ app.post('/admin/dashboard', function(req, res){
                 var parseTime      = splitDateNTime[1] + ':00';
                 var parseDateNTime = parseDate+' '+parseTime;
                 var addAppointment = 'INSERT into appointment (doctor_id, patient_id, appointment_timestamp, remarks) VALUES ('+Aid+', '+data.appointmentPatientID+', "'+parseDateNTime+'", "'+data.appointmentRemarks+'");';
-                db.query(addAppointment + 'INSERT into activity_logs(account_id, time, type, remarks) VALUES ('+Aid+',"'+moment(new Date()).format('YYYY-MM-DD HH:mm:ss')+'", "appointment", "Set Appointment with '+req.query.appointmentPatientName+' on '+parseDateNTime+'");', function(err){
+                db.query(addAppointment + 'INSERT into activity_logs(account_id, time, type, remarks) VALUES ('+Aid+',"'+currentTime+'", "appointment", "Set Appointment with '+req.query.appointmentPatientName+' on '+parseDateNTime+'");', function(err){
                   if (err) {
                     console.log(err);
                   }
@@ -107,7 +98,7 @@ app.get('/admin/patientManagement', function(req, res){
     if(req.session.email && req.session.sino == 'admin'){
       if (req.session.sino == 'admin') {
         var profileInfoSQL  = 'SELECT * from user_accounts where account_id = '+req.session.Aid+';';
-        var activityLogsSQL = 'SELECT * from activity_logs where account_id = '+req.session.Aid+' ORDER by logs_id desc;';
+        var activityLogsSQL = 'SELECT * from activity_logs where account_id = '+req.session.Aid+' ORDER by logs_id desc LIMIT 5;';
         db.query(profileInfoSQL + activityLogsSQL, function(err, rows){
           if (err) {
             console.log(err);
@@ -128,7 +119,7 @@ app.get('/admin/patientManagement', function(req, res){
     if (req.session.email && req.session.sino == 'admin') {
       if (req.session.sino == 'admin') {
         var updateProfileSQL = 'UPDATE user_accounts SET name = "'+data.name+'", age = '+data.age+', address = "'+data.address+'", phone = '+data.phone+' WHERE account_id = '+req.session.Aid+';';
-        db.query(updateProfileSQL + 'INSERT into activity_logs(account_id, time, type, remarks) VALUES ('+Aid+',"'+moment(new Date()).format('YYYY-MM-DD HH:mm:ss')+'", "settingsProfileManagement", "Edited personal info.");', function(err, rows){
+        db.query(updateProfileSQL + 'INSERT into activity_logs(account_id, time, type, remarks) VALUES ('+Aid+',"'+currentTime+'", "settingsProfileManagement", "Edited personal info.");', function(err, rows){
           if (err) {
             console.log(err);
           } else {
@@ -165,7 +156,7 @@ app.get('/admin/patientManagement', function(req, res){
         if (req.session.sino == 'admin') {
           if (data.sub == 'remove') {
             var deleteUserAccount = 'DELETE FROM user_accounts where account_id = '+req.query.account+';';
-            db.query(deleteUserAccount + 'INSERT into activity_logs(account_id, time, type, remarks) VALUES ('+Aid+',"'+moment(new Date()).format('YYYY-MM-DD HH:mm:ss')+'", "removedUser", "removed user: '+req.query.name+'");', function(err, rows){
+            db.query(deleteUserAccount + 'INSERT into activity_logs(account_id, time, type, remarks) VALUES ('+Aid+',"'+currentTime+'", "removedUser", "removed user: '+req.query.name+'");', function(err, rows){
               if (err) {
                 console.log(err);
               } else {
@@ -186,29 +177,34 @@ app.get('/admin/patientManagement', function(req, res){
               req.flash('danger', 'Failed to add user account!');
               res.redirect(req.get('referer'));
             } else {
-              //FOR the calculation of age !!
-              var cur           = new Date();
-              var bd            = new Date(data.birth);
-              var dif           = cur - bd;
-              var age           = Math.floor(dif/31557600000);
-              bcrypt.genSalt(10, function(err, salt){
-                bcrypt.hash(data.pass, salt, function(err, hash){
-                  if (err) {
-                    console.log(err);
-                  }
-                  var addUserAccount = 'INSERT into user_accounts (username, password, account_type, name, age, sex, address, phone) VALUES ("'+data.user+'","'+hash+'","'+data.type+'","'+data.name+'",'+age+',"'+data.gender+'","'+data.address+'","'+data.phone+'");';
-                  db.query(addUserAccount + 'INSERT into activity_logs(account_id, time, type, remarks) VALUES ('+Aid+',"'+moment(new Date()).format('YYYY-MM-DD HH:mm:ss')+'", "addUser", "Added user: '+data.name+'");', function(err, rows){
-                    if (err) {
-                      console.log(err);
-                    } else {
-                      req.flash('success', 'user account successfully added !');
-                      res.redirect(req.get('referer'));
-                    }
+              db.query('SELECT * from user_accounts where username = "'+data.user+'";', function(err, rows){
+                if (rows.length > 0) {
+                  req.flash('danger', 'Username already exist!');
+                  res.redirect(req.get('referer'));
+                } else {
+                  //FOR the calculation of age !!
+                  var cur           = new Date();
+                  var bd            = new Date(data.birth);
+                  var dif           = cur - bd;
+                  var age           = Math.floor(dif/31557600000);
+                  bcrypt.genSalt(10, function(err, salt){
+                    bcrypt.hash(data.pass, salt, function(err, hash){
+                      if (err) {
+                        console.log(err);
+                      }
+                      var addUserAccount = 'INSERT into user_accounts (username, password, account_type, name, age, sex, address, phone) VALUES ("'+data.user+'","'+hash+'","'+data.type+'","'+data.name+'",'+age+',"'+data.gender+'","'+data.address+'","'+data.phone+'");';
+                      db.query(addUserAccount + 'INSERT into activity_logs(account_id, time, type, remarks) VALUES ('+Aid+',"'+currentTime+'", "addUser", "Added user: '+data.name+'");', function(err, rows){
+                        if (err) {
+                          console.log(err);
+                        } else {
+                          req.flash('success', 'user account successfully added !');
+                          res.redirect(req.get('referer'));
+                        }
+                      });
+                    });
                   });
-                });
+                }
               });
-
-
             }
           }
         } else {
