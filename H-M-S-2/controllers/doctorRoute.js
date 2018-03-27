@@ -84,8 +84,8 @@ var user, Aid, availableBedss, p;
           var outpatientDepartmentSQL = 'SELECT * from patient_history inner join patient using(patient_id) where patient_history.status = "pending" and bed is null;';
           var outpatientDepartmentSQL2 = 'SELECT * from patient_history inner join patient using(patient_id) where patient_history.status = "confirmed";';
           var outpatientDepartmentSQL3 = 'SELECT * from patient_history inner join patient using(patient_id) left join bed using(patient_id) where patient_history.status = "pending" and bed is not null group by patient_id;';
-          var labSQL                  = 'SELECT * from lab_request left join patient_history using(patient_id);';
-          var prescribeSQL            = 'SELECT * from prescription inner join patient using(patient_id) group by patient_id;';
+          var labSQL                  = 'SELECT * from lab_request left join patient_history using(patient_id)  where lab_status = "pending" group by patient_id;';
+          var prescribeSQL            = 'SELECT * from prescription p inner join patient using(patient_id) where p.status = "pending" group by patient_id;';
 
           db.query(outpatientDepartmentSQL + availableBeds + labSQL + prescribeSQL + outpatientDepartmentSQL2 + outpatientDepartmentSQL3, function(err, rows){
           if (err) {
