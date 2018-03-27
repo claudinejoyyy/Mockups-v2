@@ -1,4 +1,4 @@
-module.exports = function(app,db,currentTime,name,counts,chart,whoCurrentlyAdmitted,whoOPD,whoWARD,monthlyPatientCount,patientList,availableBeds,patientManagementSQL,bcrypt,io,moment){
+module.exports = function(app,db,name,counts,chart,whoCurrentlyAdmitted,whoOPD,whoWARD,monthlyPatientCount,patientList,availableBeds,patientManagementSQL,bcrypt,io,moment){
 var user, Aid, availableBedss, p;
 
   app.get('/doctor/dashboard', function(req, res){
@@ -62,7 +62,7 @@ var user, Aid, availableBedss, p;
                 var parseTime      = splitDateNTime[1] + ':00';
                 var parseDateNTime = parseDate+' '+parseTime;
                 var addAppointment = 'INSERT into appointment (doctor_id, patient_id, appointment_timestamp, remarks) VALUES ('+Aid+', '+data.appointmentPatientID+', "'+parseDateNTime+'", "'+data.appointmentRemarks+'");';
-                db.query(addAppointment + 'INSERT into activity_logs(account_id, time, type, remarks) VALUES ('+Aid+',"'+moment(new Date()).format('MMM/DDD/YYYY HH:mm')+'", "appointment", "Set Appointment with '+req.query.appointmentPatientName+' on '+parseDateNTime+'");', function(err){
+                db.query(addAppointment + 'INSERT into activity_logs(account_id, time, type, remarks) VALUES ('+Aid+',"'+moment(new Date()).format('YYYY-MM-DD HH:mm:ss')+'", "appointment", "Set Appointment with '+req.query.appointmentPatientName+' on '+parseDateNTime+'");', function(err){
                   if (err) {
                     console.log(err);
                   }
@@ -81,16 +81,17 @@ var user, Aid, availableBedss, p;
   app.get('/doctor/outpatientManagement', function(req, res){
     if(req.session.email && req.session.sino == 'doctor'){
       if (req.session.sino == 'doctor') {
-          var outpatientDepartmentSQL  = 'SELECT * from patient_history inner join patient using(patient_id) where patient_history.status = "pending" and bed is null;';
+          var outpatientDepartmentSQL = 'SELECT * from patient_history inner join patient using(patient_id) where patient_history.status = "pending";';
           var outpatientDepartmentSQL2 = 'SELECT * from patient_history inner join patient using(patient_id) where patient_history.status = "confirmed";';
-          var outpatientDepartmentSQL3 = 'SELECT * from patient_history inner join patient using(patient_id) join bed using(patient_id) where patient_history.status = "pending" and bed is not null group by patient_id;';
-          var labSQL                   = 'SELECT * from lab_request left join patient_history using(patient_id);';
-          var prescribeSQL             = 'SELECT * from prescription inner join patient using(patient_id) group by patient_id;';
-          db.query(outpatientDepartmentSQL + availableBeds + labSQL + prescribeSQL + outpatientDepartmentSQL2 + outpatientDepartmentSQL3, function(err, rows){
+          var labSQL                  = 'SELECT * from lab_request left join patient_history using(patient_id);';
+          var prescribeSQL            = 'SELECT * from prescription inner join patient using(patient_id) group by patient_id;';
+          var whoCurrentlyAdmittedV2  = 'SELECT * FROM patient p left join patient_history i ON p.patient_id = i.patient_id left join bed a ON p.patient_id = a.patient_id where i.doctor_id = '+Aid+' and p.patient_id NOT IN (SELECT patient_id from diagnosis) order by p.patient_id;';
+          var currentlyAdmitted       = 'select * from patient as p join initial_assessment as i join bed as b where p.patient_id = i.patient_id and i.patient_id = b.patient_id;'
+          db.query(outpatientDepartmentSQL + availableBeds + whoCurrentlyAdmittedV2 + labSQL + prescribeSQL + currentlyAdmitted + outpatientDepartmentSQL2, function(err, rows){
           if (err) {
             console.log(err);
           } else {
-              res.render('doctor/outpatientManagement', {opdInfo:rows[0], admitAvailableBeds:rows[1], labSQL:rows[2], prescribeSQL:rows[3], opdInfo1:rows[4], opdInfo2:rows[5], username: user});
+              res.render('doctor/outpatientManagement', {opdInfo:rows[0], admitAvailableBeds:rows[1], whoCurrentlyAdmittedV2:rows[2], labSQL:rows[3], prescribeSQL:rows[4], currentlyAdmitted:rows[5], opdInfo1:rows[6], username: user});
           }
         });
       } else {
@@ -127,10 +128,10 @@ var user, Aid, availableBedss, p;
               }
             });
           } else if (data.sub == 'labRequest') {
-            var requestSQL = 'INSERT into lab_request(type,timestamp,remarks,doctor_id,patient_id,lab_status) VALUES("'+data.testRequest+'","'+moment(new Date()).format('MMM/DDD/YYYY HH:mm')+'","'+data.labRequestremarks+'",'+Aid+','+req.query.patient_id+',"pending");';
+            var requestSQL = 'INSERT into lab_request(type,timestamp,remarks,doctor_id,patient_id,lab_status) VALUES("'+data.testRequest+'","'+moment(new Date()).format('YYYY-MM-DD HH:mm:ss')+'","'+data.labRequestremarks+'",'+Aid+','+req.query.patient_id+',"pending");';
             var lab = "Type:" + data.testRequest + " Remarks:" + data.labRequestremarks;
             var historySQL = 'UPDATE patient_history set lab = CONCAT(IFNULL(lab, ""),"'+lab+'\n") where histo_id = '+req.query.histo_id+';';
-            db.query(requestSQL + historySQL + 'INSERT into activity_logs(account_id, time, type, remarks) VALUES ('+Aid+',"'+moment(new Date()).format('MMM/DDD/YYYY HH:mm')+'", "labRequest", "Lab request for : '+req.query.patient_name+'");', function(err){
+            db.query(requestSQL + historySQL + 'INSERT into activity_logs(account_id, time, type, remarks) VALUES ('+Aid+',"'+moment(new Date()).format('YYYY-MM-DD HH:mm:ss')+'", "labRequest", "Lab request for : '+req.query.patient_name+'");', function(err){
               if (err) {
                 console.log(err);
               } else {
@@ -244,7 +245,7 @@ var user, Aid, availableBedss, p;
             } else if(isMatch) {
               var sql  = "SELECT patient_id,patient_type,name,age,sex,blood_type FROM patient where patient_id = "+req.query.passPatient+";";
               var sql2  = "SELECT * FROM patient where patient_id = "+req.query.passPatient+";";
-              var med = "select date_stamp, lab, medicine,diagnosis,bed from patient_history where patient_id = "+req.query.passPatient+" order by date_stamp desc;";
+              var med = "select date_stamp, lab, medicine,diagnosis,bed from patient_history where patient_id = "+req.query.passPatient+" order by date_stamp;";
               db.query(sql + sql2 + med, function(err, successRows){
                 res.render('doctor/patientManagement', {p:successRows[0], p2:successRows[1], med:successRows[2], username:user, invalid:null});
               });
@@ -286,7 +287,7 @@ var user, Aid, availableBedss, p;
       if(req.session.email && req.session.sino == 'doctor'){
         if(req.session.sino == 'doctor') {
           var cancelAppointmentSQL = 'DELETE from appointment where appointment_id = '+req.query.appointmentId+';';
-          db.query(cancelAppointmentSQL + 'INSERT into activity_logs(account_id, time, type, remarks) VALUES ('+Aid+',"'+moment(new Date()).format('MMM/DDD/YYYY HH:mm')+'", "cancelAppointment", "Canceled appointment with: '+req.query.appointmentPatientName+'");', function(err){
+          db.query(cancelAppointmentSQL + 'INSERT into activity_logs(account_id, time, type, remarks) VALUES ('+Aid+',"'+moment(new Date()).format('YYYY-MM-DD HH:mm:ss')+'", "cancelAppointment", "Canceled appointment with: '+req.query.appointmentPatientName+'");', function(err){
             if(err){
               console.log(err);
             } else {
@@ -338,7 +339,7 @@ var user, Aid, availableBedss, p;
       if(req.session.email && req.session.sino == 'doctor'){
         if(req.session.sino == 'doctor') {
           var cancelPrescriptionSQL = 'DELETE from prescription where prescription_id = '+req.query.prescriptionId+';';
-          db.query(cancelPrescriptionSQL + 'INSERT into activity_logs(account_id, time, type, remarks) VALUES ('+Aid+',"'+moment(new Date()).format('MMM/DDD/YYYY HH:mm')+'", "cancelPrescription", "Canceled prescription for: '+req.query.prescriptionPatientName+'");', function(err){
+          db.query(cancelPrescriptionSQL + 'INSERT into activity_logs(account_id, time, type, remarks) VALUES ('+Aid+',"'+moment(new Date()).format('YYYY-MM-DD HH:mm:ss')+'", "cancelPrescription", "Canceled prescription for: '+req.query.prescriptionPatientName+'");', function(err){
             if(err){
               console.log(err);
             } else {
@@ -388,7 +389,7 @@ var user, Aid, availableBedss, p;
       if(req.session.email && req.session.sino == 'doctor'){
         if(req.session.sino == 'doctor') {
           var cancelLabRequestSQL = 'DELETE from lab_request where request_id = '+req.query.requestId+';';
-          db.query(cancelLabRequestSQL + 'INSERT into activity_logs(account_id, time, type, remarks) VALUES ('+Aid+',"'+moment(new Date()).format('MMM/DDD/YYYY HH:mm')+'", "cancelLabRequest", "Canceled lab request for: '+req.query.labrequestPatientName+'");', function(err){
+          db.query(cancelLabRequestSQL + 'INSERT into activity_logs(account_id, time, type, remarks) VALUES ('+Aid+',"'+moment(new Date()).format('YYYY-MM-DD HH:mm:ss')+'", "cancelLabRequest", "Canceled lab request for: '+req.query.labrequestPatientName+'");', function(err){
             if(err){
               console.log(err);
             } else {
@@ -433,7 +434,7 @@ var user, Aid, availableBedss, p;
               bcrypt.genSalt(10, function(err, salt){
                 bcrypt.hash(data.newPass, salt, function(err, hash){
                   var updateProfileSQL = 'UPDATE user_accounts SET name = "'+data.name+'", age = '+data.age+', address = "'+data.address+'", phone = '+data.phone+', password = IFNULL("'+hash+'",password) WHERE account_id = '+req.session.Aid+';';
-                  db.query(updateProfileSQL + 'INSERT into activity_logs(account_id, time, type, remarks) VALUES ('+Aid+',"'+moment(new Date()).format('MMM/DDD/YYYY HH:mm')+'", "settingsProfileManagement", "Edited personal info.");', function(err, rows){
+                  db.query(updateProfileSQL + 'INSERT into activity_logs(account_id, time, type, remarks) VALUES ('+Aid+',"'+moment(new Date()).format('YYYY-MM-DD HH:mm:ss')+'", "settingsProfileManagement", "Edited personal info.");', function(err, rows){
                     if (err) {
                       console.log(err);
                     } else {

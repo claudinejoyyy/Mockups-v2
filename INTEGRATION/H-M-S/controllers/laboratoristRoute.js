@@ -1,4 +1,4 @@
-module.exports = function(app,db,currentTime,name,counts,chart,whoCurrentlyAdmitted,whoOPD,whoWARD,monthlyPatientCount,patientList,io,moment){
+module.exports = function(app,db,name,counts,chart,whoCurrentlyAdmitted,whoOPD,whoWARD,monthlyPatientCount,patientList,io,moment){
 var user, Aid;
 
   app.get('/laboratorist/dashboard', function(req, res){
@@ -43,10 +43,10 @@ var user, Aid;
           var todoLog = '';
           if (data.todoStatus == 'urgent') {
             console.log('Added to urgent!!!!');
-            todoLog = 'INSERT into activity_logs(account_id, time, type, remarks) VALUES ('+req.session.Aid+',"'+moment(new Date()).format('MMM/DDD/YYYY HH:mm')+'", "urgentTodo", "Added to do urgent: '+data.description+'");';
+            todoLog = 'INSERT into activity_logs(account_id, time, type, remarks) VALUES ('+req.session.Aid+',"'+moment(new Date()).format('YYYY-MM-DD HH:mm:ss')+'", "urgentTodo", "Added to do urgent: '+data.description+'");';
           } else if(data.todoStatus == 'general') {
             console.log('Added to general!!!!');
-            todoLog = 'INSERT into activity_logs(account_id, time, type, remarks) VALUES ('+req.session.Aid+',"'+moment(new Date()).format('MMM/DDD/YYYY HH:mm')+'", "generalTodo", "Added to do general: '+data.description+'");';
+            todoLog = 'INSERT into activity_logs(account_id, time, type, remarks) VALUES ('+req.session.Aid+',"'+moment(new Date()).format('YYYY-MM-DD HH:mm:ss')+'", "generalTodo", "Added to do general: '+data.description+'");';
           }
           var addTodo  = 'INSERT into todo_list (description, status,date, account_id) VALUES("'+data.description+'","'+data.todoStatus+'","'+parseDateNTime+'",'+req.session.Aid+');';
           db.query(addTodo + todoLog, function(err){
@@ -70,7 +70,7 @@ var user, Aid;
               var parseTime      = splitDateNTime[1] + ':00';
               var parseDateNTime = parseDate+' '+parseTime;
               var addAppointment = 'INSERT into appointment (doctor_id, patient_id, appointment_timestamp, remarks) VALUES ('+Aid+', '+data.appointmentPatientID+', "'+parseDateNTime+'", "'+data.appointmentRemarks+'");';
-              db.query(addAppointment + 'INSERT into activity_logs(account_id, time, type, remarks) VALUES ('+Aid+',"'+moment(new Date()).format('MMM/DDD/YYYY HH:mm')+'", "appointment", "Set Appointment with '+req.query.appointmentPatientName+' on '+parseDateNTime+'");', function(err){
+              db.query(addAppointment + 'INSERT into activity_logs(account_id, time, type, remarks) VALUES ('+Aid+',"'+moment(new Date()).format('YYYY-MM-DD HH:mm:ss')+'", "appointment", "Set Appointment with '+req.query.appointmentPatientName+' on '+parseDateNTime+'");', function(err){
                 if (err) {
                   console.log(err);
                 }
@@ -113,7 +113,7 @@ res.redirect('../login');
       if(req.session.sino == 'laboratorist') {
         if (data == 'confirm') {
           var confirmLabRequestSQL = 'UPDATE lab_request SET lab_status="confirmed" where request_id = '+req.query.requestId+' ORDER BY timestamp desc;';
-          db.query(confirmLabRequestSQL + 'INSERT into activity_logs(account_id, time, type, remarks) VALUES ('+Aid+',"'+moment(new Date()).format('MMM/DDD/YYYY HH:mm')+'", "confirmedLabRequest", "Confirmed lab request for: '+req.query.labrequestPatientName+'");', function(err){
+          db.query(confirmLabRequestSQL + 'INSERT into activity_logs(account_id, time, type, remarks) VALUES ('+Aid+',"'+moment(new Date()).format('YYYY-MM-DD HH:mm:ss')+'", "confirmedLabRequest", "Confirmed lab request for: '+req.query.labrequestPatientName+'");', function(err){
             if(err){
               console.log(err);
             } else {
@@ -123,7 +123,7 @@ res.redirect('../login');
           });
         } else {
           var cancelLabRequestSQL = 'DELETE FROM lab_request where request_id = '+req.query.requestId+';';
-          db.query(cancelLabRequestSQL + 'INSERT into activity_logs(account_id, time, type, remarks) VALUES ('+Aid+',"'+moment(new Date()).format('MMM/DDD/YYYY HH:mm')+'", "cancelLabRequest", "Cancelled lab request for: '+req.query.labrequestPatientName+'");', function(err){
+          db.query(cancelLabRequestSQL + 'INSERT into activity_logs(account_id, time, type, remarks) VALUES ('+Aid+',"'+moment(new Date()).format('YYYY-MM-DD HH:mm:ss')+'", "cancelLabRequest", "Cancelled lab request for: '+req.query.labrequestPatientName+'");', function(err){
             if(err){
               console.log(err);
             } else {
@@ -165,7 +165,7 @@ res.redirect('../login');
     if (req.session.email && req.session.sino == 'laboratorist') {
       if (req.session.sino == 'laboratorist') {
         var updateProfileSQL = 'UPDATE user_accounts SET name = "'+data.name+'", age = '+data.age+', address = "'+data.address+'", phone = '+data.phone+' WHERE account_id = '+req.session.Aid+';';
-        db.query(updateProfileSQL + 'INSERT into activity_logs(account_id, time, type, remarks) VALUES ('+Aid+',"'+moment(new Date()).format('MMM/DDD/YYYY HH:mm')+'", "settingsProfileManagement", "Edited personal info.");', function(err, rows){
+        db.query(updateProfileSQL + 'INSERT into activity_logs(account_id, time, type, remarks) VALUES ('+Aid+',"'+moment(new Date()).format('YYYY-MM-DD HH:mm:ss')+'", "settingsProfileManagement", "Edited personal info.");', function(err, rows){
           if (err) {
             console.log(err);
           } else {

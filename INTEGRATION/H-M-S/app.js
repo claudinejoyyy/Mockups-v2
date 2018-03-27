@@ -117,10 +117,9 @@ var patientManagementSQL = 'SELECT patient_id, patient_type, sex, name, age,bloo
                             +'UNION '
                             +'SELECT patient_id, patient_type, sex, name, age, blood_type,GROUP_CONCAT(medicine) medicines FROM patient left join prescription p using(patient_id) where p.status="confirmed" and creation_stamp = (SELECT creation_stamp from prescription p where p.status="confirmed" order by creation_stamp desc limit 1) order by patient_id desc;';
 
-var currentTime = moment(new Date()).format('YYYY-MM-DD HH:mm:ss');
-login (app,db,currentTime,bcrypt);
-nurse (app,db,currentTime,name,counts,chart,whoCurrentlyAdmitted,whoOPD,whoWARD,monthlyPatientCount,patientList,availableBeds,doctorList,patientManagementSQL,io,moment);
-doctor(app,db,currentTime,name,counts,chart,whoCurrentlyAdmitted,whoOPD,whoWARD,monthlyPatientCount,patientList,availableBeds,patientManagementSQL,bcrypt,io,moment);
-admin (app,db,currentTime,name,counts,chart,whoCurrentlyAdmitted,whoOPD,whoWARD,monthlyPatientCount,patientList,availableBeds,patientManagementSQL,bcrypt,io,moment);
-pharmacist(app,db,currentTime,name,counts,chart,whoCurrentlyAdmitted,whoOPD,whoWARD,monthlyPatientCount,patientList,io,moment);
-laboratorist(app,db,currentTime,name,counts,chart,whoCurrentlyAdmitted,whoOPD,whoWARD,monthlyPatientCount,patientList,io,moment);
+login (app,db,bcrypt,moment);
+nurse (app,db,name,counts,chart,whoCurrentlyAdmitted,whoOPD,whoWARD,monthlyPatientCount,patientList,availableBeds,doctorList,patientManagementSQL,io,moment);
+doctor(app,db,name,counts,chart,whoCurrentlyAdmitted,whoOPD,whoWARD,monthlyPatientCount,patientList,availableBeds,patientManagementSQL,bcrypt,io,moment);
+admin (app,db,name,counts,chart,whoCurrentlyAdmitted,whoOPD,whoWARD,monthlyPatientCount,patientList,availableBeds,patientManagementSQL,bcrypt,io,moment);
+pharmacist(app,db,name,counts,chart,whoCurrentlyAdmitted,whoOPD,whoWARD,monthlyPatientCount,patientList,io,moment);
+laboratorist(app,db,name,counts,chart,whoCurrentlyAdmitted,whoOPD,whoWARD,monthlyPatientCount,patientList,io,moment);

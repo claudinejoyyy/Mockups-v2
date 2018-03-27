@@ -1,4 +1,4 @@
-module.exports = function(app, db, currentTime, bcrypt){
+module.exports = function(app, db, bcrypt, moment){
   app.get('/', function(req, res){
     if(req.session.email){
         res.redirect(req.session.sino+'/dashboard');
@@ -44,7 +44,7 @@ module.exports = function(app, db, currentTime, bcrypt){
                 req.session.email = req.body.username;
                 req.session.name = rows[0].name;
                 req.session.password = rows[0].password;
-                db.query('INSERT into activity_logs(account_id, time, type, remarks) VALUES ('+req.session.Aid+',"'+currentTime+'", "log", "Logged in");', function(err){
+                db.query('INSERT into activity_logs(account_id, time, type, remarks) VALUES ('+req.session.Aid+',"'+moment(new Date()).format('YYYY-MM-DD HH:mm:ss')+'", "log", "Logged in");', function(err){
                   if (err) {
                     console.log(err);
                   }
@@ -62,7 +62,7 @@ module.exports = function(app, db, currentTime, bcrypt){
 
   app.get('/logout', function(req, res){
     if(req.session.email){
-      db.query('INSERT into activity_logs(account_id, time, type, remarks) VALUES ('+req.session.Aid+',"'+currentTime+'", "log","Logged out");', function(err){
+      db.query('INSERT into activity_logs(account_id, time, type, remarks) VALUES ('+req.session.Aid+',"'+moment(new Date()).format('YYYY-MM-DD HH:mm:ss')+'", "log","Logged out");', function(err){
         if (err) {
           console.log(err);
         } else {
