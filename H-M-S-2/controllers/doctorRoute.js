@@ -81,17 +81,17 @@ var user, Aid, availableBedss, p;
   app.get('/doctor/outpatientManagement', function(req, res){
     if(req.session.email && req.session.sino == 'doctor'){
       if (req.session.sino == 'doctor') {
-          var outpatientDepartmentSQL = 'SELECT * from patient_history inner join patient using(patient_id) where patient_history.status = "pending";';
+          var outpatientDepartmentSQL = 'SELECT * from patient_history inner join patient using(patient_id) where patient_history.status = "pending" and bed is null;';
           var outpatientDepartmentSQL2 = 'SELECT * from patient_history inner join patient using(patient_id) where patient_history.status = "confirmed";';
+          var outpatientDepartmentSQL3 = 'SELECT * from patient_history inner join patient using(patient_id) left join bed using(patient_id) where patient_history.status = "pending" and bed is not null group by patient_id;';
           var labSQL                  = 'SELECT * from lab_request left join patient_history using(patient_id);';
           var prescribeSQL            = 'SELECT * from prescription inner join patient using(patient_id) group by patient_id;';
-          var whoCurrentlyAdmittedV2  = 'SELECT * FROM patient p left join patient_history i ON p.patient_id = i.patient_id left join bed a ON p.patient_id = a.patient_id where i.doctor_id = '+Aid+' and p.patient_id NOT IN (SELECT patient_id from diagnosis) order by p.patient_id;';
-          var currentlyAdmitted       = 'select * from patient as p join initial_assessment as i join bed as b where p.patient_id = i.patient_id and i.patient_id = b.patient_id;'
-          db.query(outpatientDepartmentSQL + availableBeds + whoCurrentlyAdmittedV2 + labSQL + prescribeSQL + currentlyAdmitted + outpatientDepartmentSQL2, function(err, rows){
+
+          db.query(outpatientDepartmentSQL + availableBeds + labSQL + prescribeSQL + outpatientDepartmentSQL2 + outpatientDepartmentSQL3, function(err, rows){
           if (err) {
             console.log(err);
           } else {
-              res.render('doctor/outpatientManagement', {opdInfo:rows[0], admitAvailableBeds:rows[1], whoCurrentlyAdmittedV2:rows[2], labSQL:rows[3], prescribeSQL:rows[4], currentlyAdmitted:rows[5], opdInfo1:rows[6], username: user});
+              res.render('doctor/outpatientManagement', {opdInfo:rows[0], admitAvailableBeds:rows[1], labSQL:rows[2], prescribeSQL:rows[3], opdInfo1:rows[4], opdInfo2:rows[5], username: user});
           }
         });
       } else {

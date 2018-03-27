@@ -134,7 +134,7 @@
               <%}%>
             </td>
             <td><%=opdInfo2[i].initial_assessment%></td>
-            <td><%= opdInfo2[i].bed_id%><a href="/doctor/bedManagement?bed_id=<%=opdInfo2[i].bed_id%>" style="font-size:10px;">-details</a></td>
+            <td><%= opdInfo2[i].bed_id%><%if(opdInfo2[i].bed_id){%><a href="/doctor/bedManagement?bed_id=<%=opdInfo2[i].bed_id%>" style="font-size:10px;">-details</a><%}%></td>
             <td>
               <!-- VIEW -->
               <a href="../doctor/patientManagement?patient=<%=opdInfo2[i].patient_id%>"><button name="view">view</button></a>
@@ -169,7 +169,9 @@
                 <%}%>
               </button>
               <!-- ADMIT -->
+              <%if(!opdInfo2[i].bed_id){%>
               <input type="button" name="admit" value="admit" onclick="ShowAdmit(<%=opdInfo2[i].patient_id%>,<%=JSON.stringify(opdInfo2[i].name)%>,<%=opdInfo2[i].histo_id%>)">
+              <%}%>
               <!-- LAB REQUEST TABLE VIEW -->
             </td>
             <form action="/doctor/outpatientManagement?id=<%= opdInfo2[i].histo_id%>" method="post">
