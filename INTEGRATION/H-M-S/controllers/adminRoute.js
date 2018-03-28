@@ -97,7 +97,7 @@ app.get('/admin/patientManagement', function(req, res){
   app.get('/admin/profileManagement', function(req, res){
     if(req.session.email && req.session.sino == 'admin'){
       if (req.session.sino == 'admin') {
-        var profileInfoSQL  = 'SELECT * from user_accounts where account_id = '+req.session.Aid+';';
+        var profileInfoSQL  = 'SELECT name, age, address, phone from user_accounts where account_id = '+req.session.Aid+';';
         var activityLogsSQL = 'SELECT * from activity_logs where account_id = '+req.session.Aid+' ORDER by logs_id desc;';
         db.query(profileInfoSQL + activityLogsSQL, function(err, rows){
           if (err) {
@@ -118,14 +118,31 @@ app.get('/admin/patientManagement', function(req, res){
     var data = req.body;
     if (req.session.email && req.session.sino == 'admin') {
       if (req.session.sino == 'admin') {
-        var updateProfileSQL = 'UPDATE user_accounts SET name = "'+data.name+'", age = '+data.age+', address = "'+data.address+'", phone = '+data.phone+' WHERE account_id = '+req.session.Aid+';';
-        db.query(updateProfileSQL + 'INSERT into activity_logs(account_id, time, type, remarks) VALUES ('+Aid+',"'+moment(new Date()).format('YYYY-MM-DD HH:mm:ss')+'", "settingsProfileManagement", "Edited personal info.");', function(err, rows){
-          if (err) {
-            console.log(err);
+        bcrypt.compare(data.oldPass, req.session.password, function(err, isMatch){
+          if(isMatch) {
+            req.flash('success', 'Successfully changed the password!');
+            bcrypt.genSalt(10, function(err, salt){
+              bcrypt.hash(data.newPass, salt, function(err, hash){
+                var updateProfileSQL = 'UPDATE user_accounts SET name = "'+data.name+'", age = '+data.age+', address = "'+data.address+'", phone = '+data.phone+', password = IFNULL("'+hash+'",password) WHERE account_id = '+req.session.Aid+';';
+                db.query(updateProfileSQL + 'INSERT into activity_logs(account_id, time, type, remarks) VALUES ('+Aid+',"'+moment(new Date()).format('YYYY-MM-DD HH:mm:ss')+'", "settingsProfileManagement", "Edited personal info.");', function(err, rows){
+                  if (err) {
+                    console.log(err);
+                  } else {
+                    if (hash) {
+                      res.redirect('../logout');
+                    } else {
+                      res.redirect(req.get('referer'));
+                    }
+                  }
+                });
+              });
+            });
           } else {
+            req.flash('danger', 'Invalid Current Password!');
             res.redirect(req.get('referer'));
           }
         });
+
       } else {
         res.redirect(req.session.sino+'/dashboard');
       }
@@ -139,11 +156,8 @@ app.get('/admin/patientManagement', function(req, res){
       if(req.session.email && req.session.sino == 'admin'){
         if(req.session.sino == 'admin'){
             var sql  = "SELECT account_id, account_type, name, age, sex, max(time) as last_Login FROM user_accounts left join activity_logs using(account_id) where account_id !="+Aid+" group by account_id;";
-            var filterPharm = "select * from user_accounts where account_type like'%pharmacist%'";
-            var filterLab = "select * from user_accounts where account_type like'%laboratorist%'";
-            var filterAdmin = "select * from user_accounts where account_type like'%admin%'";
-            db.query(sql + filterPharm + filterLab + filterAdmin, function(err, rows){
-              res.render('admin/userAccountsManagement', {p:rows[0], pharma:rows[1], lab:rows[2], adm:rows[3], username:user});
+            db.query(sql, function(err, rows){
+              res.render('admin/userAccountsManagement', {p:rows, username:user});
             });
         } else {
           res.redirect(req.session.sino+'/dashboard');

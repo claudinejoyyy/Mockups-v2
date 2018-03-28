@@ -1,4 +1,4 @@
-module.exports = function(app,db,name,counts,chart,whoCurrentlyAdmitted,whoOPD,whoWARD,monthlyPatientCount,patientList,availableBeds,doctorList,patientManagementSQL,io,moment){
+module.exports = function(app,db,name,counts,chart,whoCurrentlyAdmitted,whoOPD,whoWARD,monthlyPatientCount,patientList,availableBeds,doctorList,patientManagementSQL,bcrypt,io,moment){
 var user, Aid;
 var immuSQL     = "SELECT name FROM immunization;";
 var fhSQL       = "SELECT name FROM family_history;";
@@ -9,14 +9,14 @@ var fhSQL       = "SELECT name FROM family_history;";
         Aid = req.session.Aid;
         var todoList    = "SELECT * from todo_list where account_id = "+req.session.Aid+";";
         var availablePatientOPD = "SELECT * from patient where patient_id NOT IN(SELECT patient_id from patient_history where status = 'pending');";
-        var bedAvailable = "select bed_id from bed where status = 'Unoccupied'";
-        db.query(name + counts + chart + whoCurrentlyAdmitted + whoOPD + whoWARD + immuSQL + fhSQL + doctorList + availablePatientOPD + monthlyPatientCount + todoList + bedAvailable, Aid, function(err, rows, fields){
+        var bed = "SELECT  * from bed where status = 'unoccupied';";
+        db.query(name + counts + chart + whoCurrentlyAdmitted + whoOPD + whoWARD + immuSQL + fhSQL + doctorList + availablePatientOPD + monthlyPatientCount + todoList + bed, Aid, function(err, rows, fields){
           if (err) {
             console.log(err);
           }
           user = rows[0];
           res.render('nurse/dashboard', {counts:rows[1], chart:rows[2], whoCurrentlyAdmitted:rows[3], whoOPD:rows[4],whoWARD:rows[5], immu:rows[6],
-                                         fh:rows[7], doctorList:rows[8], availablePatientOPD:rows[9], monthlyPatientCount:rows[10], todoList:rows[11], avbed:rows[12], username: user, err:req.query.status});
+                                         fh:rows[7], doctorList:rows[8], availablePatientOPD:rows[9], monthlyPatientCount:rows[10], todoList:rows[11], bed:rows[12], username: user, err:req.query.status});
         });
       } else {
         res.redirect(req.session.sino+'/dashboard');
@@ -42,7 +42,19 @@ var fhSQL       = "SELECT name FROM family_history;";
             io.emit('type', {what:'assess',message:'Received Assessment for '+nameForEmit[1]+', sent by Dr. <strong>'+req.session.name+'</strong>'});
           });
           res.redirect(req.get('referer'));
-        } else if(data.sub == "add") {
+        } else if (data.sub == 'bed') {
+          var nameForBedEmit    = data.bedName.split(',');
+          var bedSQL            = 'UPDATE bed set status = "occupied", allotment_timestamp = "'+moment(new Date()).format('YYYY-MM-DD HH:mm:ss')+'", patient_id = '+data.bedName+' where bed_id = '+data.bed+';';
+          var historySQL        = 'INSERT into patient_history (date_stamp, patient_id, doctor_id, bed, status) VALUES("'+moment(new Date()).format('YYYY-MM-DD HH:mm:ss')+'", '+data.bedName+','+data.bedDoc+',"'+data.bed+', ","pending");';
+
+          db.query(historySQL + bedSQL + 'INSERT into activity_logs(account_id, time, type, remarks, patient_id) VALUES ('+Aid+',"'+moment(new Date()).format('YYYY-MM-DD HH:mm:ss')+'", "er", "ER for '+nameForBedEmit[1]+'", '+data.bedName+');', function(err){
+            if (err) {
+              console.log(err);
+            }
+            io.emit('type', {what:'assess',message:'Received ER patient: '+nameForBedEmit[1]+', sent by Dr. <strong>'+req.session.name+'</strong>'});
+          });
+          res.redirect(req.get('referer'));
+        }else if(data.sub == "add") {
             req.checkBody('name','name is required').notEmpty();
             req.checkBody('address','address is required').notEmpty();
             req.checkBody('gender','gender is required').notEmpty();
@@ -245,13 +257,13 @@ var fhSQL       = "SELECT name FROM family_history;";
   app.get('/nurse/profileManagement', function(req, res){
     if(req.session.email && req.session.sino == 'nurse'){
       if (req.session.sino == 'nurse') {
-        var profileInfoSQL  = 'SELECT * from user_accounts where account_id = '+req.session.Aid+';';
+        var profileInfoSQL  = 'SELECT name, age, address, phone from user_accounts where account_id = '+req.session.Aid+';';
         var activityLogsSQL = 'SELECT * from activity_logs where account_id = '+req.session.Aid+' ORDER by logs_id desc;';
         db.query(profileInfoSQL + activityLogsSQL, function(err, rows){
           if (err) {
             console.log(err);
           } else {
-            res.render('nurse/profileManagement', {pInfo:rows[0], activityInfo: rows[1], username:user});
+            res.render('nurse/profileManagement', {pInfo:rows[0], activityInfo: rows[1], username: user});
           }
         });
       } else {
@@ -266,14 +278,31 @@ var fhSQL       = "SELECT name FROM family_history;";
     var data = req.body;
     if (req.session.email && req.session.sino == 'nurse') {
       if (req.session.sino == 'nurse') {
-        var updateProfileSQL = 'UPDATE user_accounts SET name = "'+data.name+'", age = '+data.age+', address = "'+data.address+'", phone = '+data.phone+' WHERE account_id = '+req.session.Aid+';';
-        db.query(updateProfileSQL + 'INSERT into activity_logs(account_id, time, type, remarks) VALUES ('+Aid+',"'+moment(new Date()).format('YYYY-MM-DD HH:mm:ss')+'", "settingsProfileManagement", "Edited personal info.");', function(err, rows){
-          if (err) {
-            console.log(err);
+        bcrypt.compare(data.oldPass, req.session.password, function(err, isMatch){
+          if(isMatch) {
+            req.flash('success', 'Successfully changed the password!');
+            bcrypt.genSalt(10, function(err, salt){
+              bcrypt.hash(data.newPass, salt, function(err, hash){
+                var updateProfileSQL = 'UPDATE user_accounts SET name = "'+data.name+'", age = '+data.age+', address = "'+data.address+'", phone = '+data.phone+', password = IFNULL("'+hash+'",password) WHERE account_id = '+req.session.Aid+';';
+                db.query(updateProfileSQL + 'INSERT into activity_logs(account_id, time, type, remarks) VALUES ('+Aid+',"'+moment(new Date()).format('YYYY-MM-DD HH:mm:ss')+'", "settingsProfileManagement", "Edited personal info.");', function(err, rows){
+                  if (err) {
+                    console.log(err);
+                  } else {
+                    if (hash) {
+                      res.redirect('../logout');
+                    } else {
+                      res.redirect(req.get('referer'));
+                    }
+                  }
+                });
+              });
+            });
           } else {
+            req.flash('danger', 'Invalid Current Password!');
             res.redirect(req.get('referer'));
           }
         });
+
       } else {
         res.redirect(req.session.sino+'/dashboard');
       }

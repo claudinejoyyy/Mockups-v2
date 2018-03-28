@@ -438,7 +438,11 @@ var user, Aid, availableBedss, p;
                     if (err) {
                       console.log(err);
                     } else {
-                      res.redirect(req.get('referer'));
+                      if (hash) {
+                        res.redirect('../logout');
+                      } else {
+                        res.redirect(req.get('referer'));
+                      }
                     }
                   });
                 });
