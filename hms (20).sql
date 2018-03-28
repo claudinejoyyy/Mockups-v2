@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1:3306
--- Generation Time: Mar 23, 2018 at 04:51 PM
+-- Generation Time: Mar 28, 2018 at 03:52 PM
 -- Server version: 5.7.19
 -- PHP Version: 5.6.31
 
@@ -37,7 +37,7 @@ CREATE TABLE IF NOT EXISTS `activity_logs` (
   `remarks` text NOT NULL,
   `patient_id` int(11) DEFAULT NULL,
   PRIMARY KEY (`logs_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=1145 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=1395 DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `activity_logs`
@@ -48,7 +48,7 @@ INSERT INTO `activity_logs` (`logs_id`, `account_id`, `time`, `type`, `remarks`,
 (6, 4, '2018-02-23 02:25:44', 'bed', 'Alloted bed number: 2', 48),
 (7, 4, '2018-02-23 02:25:44', 'bed', 'Alloted bed number: 3', 45),
 (8, 4, '2018-02-23 02:25:44', 'bed', 'Alloted bed number: 4', 46),
-(9, 4, '2018-02-23 02:25:44', 'bedDischarge', 'Discharged a patient from bed number : 4', NULL),
+(9, 4, '2018-02-23 02:25:44', 'bedDischarge', 'Discharged a patient from bed number : 4', 42),
 (10, 4, '2018-02-23 02:25:44', 'bedDischarge', 'Discharged a patient from bed number : 3', NULL),
 (11, 4, '2018-02-23 02:25:44', 'bedDischarge', 'Discharged a patient from bed number : 2', NULL),
 (12, 4, '2018-02-23 02:25:44', 'bedDischarge', 'Discharged a patient from bed number : 1', NULL),
@@ -1184,7 +1184,257 @@ INSERT INTO `activity_logs` (`logs_id`, `account_id`, `time`, `type`, `remarks`,
 (1141, 27, '2018-03-24 00:39:23', 'log', 'Logged in', NULL),
 (1142, 27, '2018-03-24 00:49:06', 'initialAssessment', 'assessment for undefined', 43),
 (1143, 27, '2018-03-24 00:39:23', 'log', 'Logged out', NULL),
-(1144, 26, '2018-03-24 00:39:23', 'log', 'Logged in', NULL);
+(1144, 26, '2018-03-24 00:39:23', 'log', 'Logged in', NULL),
+(1145, 27, '2018-03-26 14:04:58', 'log', 'Logged in', NULL),
+(1146, 27, '2018-03-26 14:04:58', 'log', 'Logged in', NULL),
+(1147, 27, '2018-03-26 15:19:43', 'log', 'Logged in', NULL),
+(1148, 27, '2018-03-26 15:19:43', 'log', 'Logged out', NULL),
+(1149, 26, '2018-03-26 15:19:43', 'log', 'Logged in', NULL),
+(1150, 26, '2018-03-26 15:24:47', 'log', 'Logged in', NULL),
+(1151, 26, '2018-03-26 15:33:48', 'log', 'Logged in', NULL),
+(1152, 26, '2018-03-26 15:55:19', 'log', 'Logged in', NULL),
+(1153, 26, '2018-03-26 15:55:19', 'bedDischarge', 'Discharged a patient from bed number : 4', NULL),
+(1154, 26, '2018-03-26 15:55:19', 'bedDischarge', 'Discharged a patient from bed number : 5', NULL),
+(1155, 26, '2018-03-26 16:20:52', 'log', 'Logged in', NULL),
+(1156, 26, '2018-03-26 16:24:04', 'log', 'Logged in', NULL),
+(1157, 26, '2018-03-26 16:24:22', 'bedDischarge', 'Discharged a patient from bed number : 6', NULL),
+(1158, 26, '2018-03-26 16:24:25', 'bedDischarge', 'Discharged a patient from bed number : 6', NULL),
+(1159, 26, '2018-03-26 16:24:26', 'bedDischarge', 'Discharged a patient from bed number : 6', NULL),
+(1160, 26, '2018-03-26 16:24:27', 'bedDischarge', 'Discharged a patient from bed number : 6', NULL),
+(1161, 26, '2018-03-26 16:24:27', 'bedDischarge', 'Discharged a patient from bed number : 6', NULL),
+(1162, 26, '2018-03-26 16:26:35', 'log', 'Logged in', NULL),
+(1163, 26, '2018-03-26 16:26:44', 'bedDischarge', 'Discharged a patient from bed number : 6', NULL),
+(1164, 26, '2018-03-26 16:33:37', 'log', 'Logged in', NULL),
+(1165, 26, '2018-03-26 16:33:47', 'bedDischarge', 'Discharged a patient from bed number : 6', 42),
+(1166, 26, '2018-03-26 16:33:37', 'settingsProfileManagement', 'Edited personal info.', NULL),
+(1167, 26, '2018-03-26 16:33:37', 'settingsProfileManagement', 'Edited personal info.', NULL),
+(1168, 26, '2018-03-26 16:33:37', 'settingsProfileManagement', 'Edited personal info.', NULL),
+(1169, 26, '2018-03-26 16:33:37', 'settingsProfileManagement', 'Edited personal info.', NULL),
+(1170, 26, '2018-03-26 17:25:45', 'bed', 'Alloted bed number: 1 to patient:sampul sam', 43),
+(1171, 26, '2018-03-26 17:25:56', 'bedDischarge', 'Discharged a patient from bed number : 1', 43),
+(1172, 26, '2018-03-26 17:39:24', 'log', 'Logged in', NULL),
+(1173, 25, '2018-03-26 17:39:46', 'log', 'Logged in', NULL),
+(1174, 25, '2018-03-26 17:39:46', 'log', 'Logged out', NULL),
+(1175, 25, '2018-03-26 17:44:12', 'log', 'Logged in', NULL),
+(1176, 25, '2018-03-26 17:44:12', 'addUser', 'Added user: Dr. quacky', NULL),
+(1177, 25, '2018-03-26 17:44:12', 'log', 'Logged out', NULL),
+(1178, 25, '2018-03-26 17:44:12', 'log', 'Logged in', NULL),
+(1179, 25, '2018-03-26 17:44:12', 'addUser', 'Added user: qweasd', NULL),
+(1180, 25, '2018-03-26 17:44:12', 'log', 'Logged out', NULL),
+(1181, 35, '2018-03-26 17:44:12', 'log', 'Logged in', NULL),
+(1182, 35, '2018-03-26 17:44:12', 'log', 'Logged out', NULL),
+(1183, 27, '2018-03-26 17:44:12', 'log', 'Logged in', NULL),
+(1184, 27, '2018-03-26 17:44:12', 'log', 'Logged out', NULL),
+(1185, 25, '2018-03-26 17:44:12', 'log', 'Logged in', NULL),
+(1186, 25, '2018-03-26 17:44:12', 'addUser', 'Added user: Dr. Quackyy', NULL),
+(1187, 25, '2018-03-26 17:44:12', 'log', 'Logged out', NULL),
+(1188, 36, '2018-03-26 17:44:12', 'log', 'Logged in', NULL),
+(1189, 36, '2018-03-26 17:44:12', 'log', 'Logged out', NULL),
+(1190, 26, '2018-03-26 17:44:12', 'log', 'Logged in', NULL),
+(1191, 36, '2018-03-26 17:54:24', 'log', 'Logged in', NULL),
+(1192, 36, '2018-03-26 17:55:00', 'log', 'Logged in', NULL),
+(1193, 36, '2018-03-26 17:55:00', 'settingsProfileManagement', 'Edited personal info.', NULL),
+(1194, 36, '2018-03-26 17:55:00', 'log', 'Logged out', NULL),
+(1195, 36, '2018-03-26 17:55:00', 'log', 'Logged in', NULL),
+(1196, 26, '2018-03-26 18:00:50', 'log', 'Logged in', NULL),
+(1197, 26, '2018-03-26 18:01:49', 'log', 'Logged in', NULL),
+(1198, 26, '2018-03-26 18:01:49', 'settingsProfileManagement', 'Edited personal info.', NULL),
+(1199, 26, '2018-03-26 18:01:49', 'settingsProfileManagement', 'Edited personal info.', NULL),
+(1200, 26, '2018-03-26 18:04:37', 'log', 'Logged in', NULL),
+(1201, 26, '2018-03-26 18:04:37', 'settingsProfileManagement', 'Edited personal info.', NULL),
+(1202, 26, '2018-03-26 18:04:37', 'log', 'Logged out', NULL),
+(1203, 26, '2018-03-26 18:04:37', 'log', 'Logged in', NULL),
+(1204, 26, '2018-03-26 18:04:37', 'log', 'Logged out', NULL),
+(1205, 26, '2018-03-26 18:04:37', 'log', 'Logged in', NULL),
+(1206, 26, '2018-03-26 18:04:37', 'settingsProfileManagement', 'Edited personal info.', NULL),
+(1207, 26, '2018-03-26 18:06:29', 'log', 'Logged in', NULL),
+(1208, 26, '2018-03-26 18:06:29', 'log', 'Logged out', NULL),
+(1209, 26, '2018-03-26 18:06:29', 'log', 'Logged in', NULL),
+(1210, 26, '2018-03-26 18:06:29', 'settingsProfileManagement', 'Edited personal info.', NULL),
+(1211, 27, '2018-03-26 18:24:47', 'log', 'Logged in', NULL),
+(1212, 27, '2018-03-26 18:24:47', 'log', 'Logged out', NULL),
+(1213, 25, '2018-03-26 18:24:47', 'log', 'Logged in', NULL),
+(1214, 25, '2018-03-26 18:24:47', 'removedUser', 'removed user: Dr. Quackyy', NULL),
+(1215, 25, '2018-03-26 18:24:47', 'removedUser', 'removed user: qweasd', NULL),
+(1216, 25, '2018-03-26 18:24:47', 'removedUser', 'removed user: Dr. quacky', NULL),
+(1217, 25, '2018-03-26 18:24:47', 'removedUser', 'removed user: asdasd', NULL),
+(1218, 25, '2018-03-26 18:24:47', 'removedUser', 'removed user: qwe', NULL),
+(1219, 25, '2018-03-26 18:35:02', 'log', 'Logged in', NULL),
+(1220, 25, '2018-03-26 18:36:30', 'log', 'Logged in', NULL),
+(1221, 25, '2018-03-26 18:36:59', 'log', 'Logged in', NULL),
+(1222, 25, '2018-03-26 18:38:24', 'log', 'Logged in', NULL),
+(1223, 25, '2018-03-26 18:38:24', 'addUser', 'Added user: doctor1', NULL),
+(1224, 25, '2018-03-26 18:38:24', 'log', 'Logged out', NULL),
+(1225, 26, '2018-03-26 18:38:24', 'log', 'Logged in', NULL),
+(1226, 25, '2018-03-26 19:34:34', 'log', 'Logged in', NULL),
+(1227, 25, '2018-03-26 19:34:34', 'log', 'Logged out', NULL),
+(1228, 37, '2018-03-26 19:34:34', 'log', 'Logged in', NULL),
+(1229, 37, '2018-03-26 19:34:34', 'log', 'Logged out', NULL),
+(1230, 27, '2018-03-26 19:34:34', 'log', 'Logged in', NULL),
+(1231, 27, '2018-03-26 19:34:34', 'log', 'Logged out', NULL),
+(1232, 26, '2018-03-26 19:34:34', 'log', 'Logged in', NULL),
+(1233, 26, '2018-03-26 19:34:34', 'log', 'Logged out', NULL),
+(1234, 27, '2018-03-26 19:59:16', 'log', 'Logged in', NULL),
+(1235, 27, '2018-03-26 20:06:19', 'log', 'Logged in', NULL),
+(1236, 27, '2018-03-26 20:06:19', 'log', 'Logged out', NULL),
+(1237, 26, '2018-03-26 20:06:19', 'log', 'Logged in', NULL),
+(1238, 26, '2018-03-26 20:06:19', 'log', 'Logged out', NULL),
+(1239, 27, '2018-03-26 20:07:23', 'log', 'Logged in', NULL),
+(1240, 26, '2018-03-26 20:08:52', 'log', 'Logged in', NULL),
+(1241, 26, '2018-03-26 20:08:52', 'log', 'Logged out', NULL),
+(1242, 27, '2018-03-26 20:08:52', 'log', 'Logged in', NULL),
+(1243, 27, '2018-03-26 20:08:52', 'log', 'Logged out', NULL),
+(1244, 26, '2018-03-26 20:08:52', 'log', 'Logged in', NULL),
+(1245, 27, '2018-03-26 20:11:39', 'log', 'Logged in', NULL),
+(1246, 27, '2018-03-26 20:13:36', 'log', 'Logged in', NULL),
+(1247, 27, '2018-03-26 20:13:36', 'log', 'Logged out', NULL),
+(1248, 26, '2018-03-26 20:13:36', 'log', 'Logged in', NULL),
+(1249, 26, '2018-03-26 20:13:36', 'log', 'Logged out', NULL),
+(1250, 27, '2018-03-26 20:13:36', 'log', 'Logged in', NULL),
+(1251, 27, '2018-03-26 21:13:49', 'log', 'Logged in', NULL),
+(1252, 27, '2018-03-26 21:13:58', 'initialAssessment', 'assessment for undefined', 42),
+(1253, 26, '2018-03-26 21:18:16', 'log', 'Logged in', NULL),
+(1254, 26, '2018-03-26 21:18:40', 'log', 'Logged in', NULL),
+(1255, 26, '2018-03-26 21:19:18', 'log', 'Logged in', NULL),
+(1256, 26, '2018-03-26 21:25:03', 'log', 'Logged in', NULL),
+(1257, 26, '2018-03-26 21:32:56', 'log', 'Logged in', NULL),
+(1258, 26, '2018-03-26 21:36:19', 'log', 'Logged in', NULL),
+(1259, 26, '2018-03-26 21:37:04', 'log', 'Logged in', NULL),
+(1260, 26, '2018-03-26 21:37:29', 'log', 'Logged in', NULL),
+(1261, 26, '2018-03-26 21:37:41', 'log', 'Logged in', NULL),
+(1262, 26, '2018-03-26 21:37:41', 'log', 'Logged out', NULL),
+(1263, 26, '2018-03-26 21:37:41', 'log', 'Logged in', NULL),
+(1264, 26, '2018-03-26 21:37:41', 'log', 'Logged out', NULL),
+(1265, 27, '2018-03-26 21:37:41', 'log', 'Logged in', NULL),
+(1266, 27, '2018-03-26 21:38:24', 'initialAssessment', 'assessment for undefined', 42),
+(1267, 27, '2018-03-26 21:38:30', 'initialAssessment', 'assessment for undefined', 43),
+(1268, 27, '2018-03-26 21:37:41', 'log', 'Logged out', NULL),
+(1269, 26, '2018-03-26 21:37:41', 'log', 'Logged in', NULL),
+(1270, 26, '2018-03-26 21:37:41', 'log', 'Logged in', NULL),
+(1271, 26, '2018-03-26 23:16:40', 'log', 'Logged in', NULL),
+(1272, 26, '2018-03-26 23:18:57', 'log', 'Logged in', NULL),
+(1273, 26, '2018-03-26 23:19:13', 'diagnosis', 'diagnosis for : ma mon', NULL),
+(1274, 26, '2018-03-26 23:41:52', 'diagnosis', 'diagnosis for : ma mon', NULL),
+(1275, 26, '2018-03-26 23:42:33', 'diagnosis', 'diagnosis for : ma mon', NULL),
+(1276, 26, '2018-03-26 23:42:43', 'diagnosis', 'diagnosis for : ma mon', NULL),
+(1277, 26, '2018-03-26 23:47:18', 'log', 'Logged in', NULL),
+(1278, 26, '2018-03-26 23:48:35', 'log', 'Logged in', NULL),
+(1279, 26, '2018-03-26 23:48:46', 'diagnosis', 'diagnosis for : ma mon', NULL),
+(1280, 26, '2018-03-26 23:48:50', 'diagnosis', 'diagnosis for : ma mon', NULL),
+(1281, 26, '2018-03-26 23:48:54', 'diagnosis', 'diagnosis for : ma mon', NULL),
+(1282, 26, '2018-03-26 23:51:12', 'diagnosis', 'diagnosis for : ma mon', NULL),
+(1283, 26, '2018-03-26 23:51:15', 'diagnosis', 'diagnosis for : ma mon', NULL),
+(1284, 26, '2018-03-26 23:51:18', 'diagnosis', 'diagnosis for : ma mon', NULL),
+(1285, 26, '2018-03-26 23:51:37', 'diagnosis', 'diagnosis for : ma mon', NULL),
+(1286, 26, '2018-03-26 23:51:54', 'diagnosis', 'diagnosis for : ma mon', NULL),
+(1287, 26, '2018-03-26 23:51:58', 'diagnosis', 'diagnosis for : ma mon', NULL),
+(1288, 26, '2018-03-26 23:52:10', 'diagnosis', 'diagnosis for : ma mon', NULL),
+(1289, 26, '2018-03-26 23:56:00', 'diagnosis', 'diagnosis for : ma mon', NULL),
+(1290, 26, '2018-03-26 23:56:03', 'diagnosis', 'diagnosis for : ma mon', NULL),
+(1291, 26, '2018-03-26 23:56:05', 'diagnosis', 'diagnosis for : ma mon', NULL),
+(1292, 26, '2018-03-26 23:59:03', 'diagnosis', 'diagnosis for : ma mon', NULL),
+(1293, 26, '2018-03-26 23:59:06', 'diagnosis', 'diagnosis for : ma mon', NULL),
+(1294, 27, '2018-03-26 23:48:35', 'log', 'Logged in', NULL),
+(1295, 27, '2018-03-27 00:00:02', 'initialAssessment', 'assessment for undefined', 42),
+(1296, 26, '2018-03-27 00:07:32', 'bed', 'Alloted bed number: 1 to patient:ma mon', 42),
+(1297, 26, '2018-03-27 00:10:06', 'log', 'Logged in', NULL),
+(1298, 26, '2018-03-27 00:10:35', 'log', 'Logged in', NULL),
+(1299, 26, '2018-03-27 00:14:15', 'log', 'Logged in', NULL),
+(1300, 26, '2018-03-27 00:24:49', 'bed', 'Alloted bed number: 2 to patient:ma mon', 42),
+(1301, 26, '2018-03-27 00:56:10', 'bedDischarge', 'Discharged a patient from bed number : 1', 42),
+(1302, 26, '2018-03-27 00:56:11', 'bedDischarge', 'Discharged a patient from bed number : 2', 42),
+(1303, 27, '2018-03-27 00:14:15', 'log', 'Logged in', NULL),
+(1304, 27, '2018-03-27 01:04:59', 'initialAssessment', 'assessment for undefined', 43),
+(1305, 26, '2018-03-27 01:07:51', 'log', 'Logged in', NULL),
+(1306, 26, '2018-03-27 01:07:51', 'log', 'Logged out', NULL),
+(1307, 27, '2018-03-27 01:07:51', 'log', 'Logged in', NULL),
+(1308, 27, '2018-03-27 01:10:55', 'initialAssessment', 'assessment for undefined', 42),
+(1309, 27, '2018-03-27 01:07:51', 'log', 'Logged out', NULL),
+(1310, 26, '2018-03-27 01:07:51', 'log', 'Logged in', NULL),
+(1311, 26, '2018-03-27 01:11:17', 'prescription', 'Prescribed a medicine to : ma mon', NULL),
+(1312, 26, '2018-03-27 01:12:11', 'prescription', 'Prescribed a medicine to : ma mon', NULL),
+(1313, 26, '2018-03-27 01:16:33', 'log', 'Logged in', NULL),
+(1314, 26, '2018-03-27 23:03:37', 'log', 'Logged in', NULL),
+(1315, 26, '2018-03-27 23:16:08', 'log', 'Logged in', NULL),
+(1316, 27, '2018-03-27 23:16:08', 'log', 'Logged in', NULL),
+(1317, 27, '2018-03-27 23:16:39', 'initialAssessment', 'assessment for undefined', 42),
+(1318, 26, '2018-03-27 23:17:13', 'bed', 'Alloted bed number: 1 to patient:ma mon', 42),
+(1319, 26, '2018-03-27 23:17:24', 'bedDischarge', 'Discharged a patient from bed number : 1', 42),
+(1320, 26, '2018-03-27 23:23:17', 'log', 'Logged in', NULL),
+(1321, 26, '2018-03-27 23:27:48', 'bed', 'Alloted bed number: 1 to patient:ma mon', 42),
+(1322, 26, '2018-03-27 23:29:37', 'bedDischarge', 'Discharged a patient from bed number : 1', 42),
+(1323, 26, '2018-03-27 23:33:54', 'bed', 'Alloted bed number: 1 to patient:ma mon', 42),
+(1324, 26, '2018-03-27 23:33:57', 'bedDischarge', 'Discharged a patient from bed number : 1', 42),
+(1325, 26, '2018-03-27 23:34:03', 'diagnosis', 'diagnosis for : ma mon', NULL),
+(1326, 26, '2018-03-27 23:34:11', 'diagnosis', 'diagnosis for : ma mon', NULL),
+(1327, 26, '2018-03-27 23:34:15', 'diagnosis', 'diagnosis for : ma mon', NULL),
+(1328, 26, '2018-03-27 23:36:29', 'prescription', 'Prescribed a medicine to : ma mon', NULL),
+(1329, 30, '2018-03-27 23:23:17', 'log', 'Logged in', NULL),
+(1330, 26, '2018-03-28 00:01:52', 'log', 'Logged in', NULL),
+(1331, 26, '2018-03-28 00:33:41', 'log', 'Logged in', NULL),
+(1332, 26, '2018-03-28 00:33:48', 'bed', 'Alloted bed number: 1 to patient:ma mon', 42),
+(1333, 26, '2018-03-28 00:33:58', 'log', 'Logged out', NULL),
+(1334, 30, '2018-03-28 00:34:01', 'log', 'Logged in', NULL),
+(1335, 30, '2018-03-28 00:34:06', 'approvedPrescription', 'Approved prescription for: ma mon', NULL),
+(1336, 30, '2018-03-28 00:34:12', 'log', 'Logged out', NULL),
+(1337, 26, '2018-03-28 00:35:26', 'log', 'Logged in', NULL),
+(1338, 26, '2018-03-28 00:35:43', 'prescription', 'Prescribed a medicine to : ma mon', NULL),
+(1339, 26, '2018-03-28 00:39:02', 'log', 'Logged out', NULL),
+(1340, 29, '2018-03-28 00:39:04', 'log', 'Logged in', NULL),
+(1341, 29, '2018-03-28 00:44:41', 'log', 'Logged out', NULL),
+(1342, 26, '2018-03-28 00:44:44', 'log', 'Logged in', NULL),
+(1343, 26, '2018-03-28 00:44:48', 'labRequest', 'Lab request for : ma mon', NULL),
+(1344, 26, '2018-03-28 00:44:53', 'labRequest', 'Lab request for : ma mon', NULL),
+(1345, 26, '2018-03-28 00:45:20', 'cancelLabRequest', 'Canceled lab request for: ma mon', NULL),
+(1346, 26, '2018-03-28 00:45:21', 'cancelLabRequest', 'Canceled lab request for: ma mon', NULL),
+(1347, 26, '2018-03-28 00:45:44', 'log', 'Logged in', NULL),
+(1348, 26, '2018-03-28 00:45:50', 'cancelPrescription', 'Canceled prescription for: ma mon', NULL),
+(1349, 26, '2018-03-28 00:45:51', 'cancelPrescription', 'Canceled prescription for: ma mon', NULL),
+(1350, 26, '2018-03-28 00:46:03', 'prescription', 'Prescribed a medicine to : ma mon', NULL),
+(1351, 26, '2018-03-28 00:46:09', 'cancelPrescription', 'Canceled prescription for: ma mon', NULL),
+(1352, 26, '2018-03-28 00:46:59', 'bedDischarge', 'Discharged a patient from bed number : 1', 42),
+(1353, 26, '2018-03-28 00:47:31', 'bed', 'Alloted bed number: 2 to patient:ma mon', 42),
+(1354, 26, '2018-03-28 00:48:00', 'bedDischarge', 'Discharged a patient from bed number : 2', 42),
+(1355, 26, '2018-03-28 00:48:07', 'bed', 'Alloted bed number: 20 to patient:ma mon', 42),
+(1356, 27, '2018-03-28 20:50:43', 'log', 'Logged in', NULL),
+(1357, 27, '2018-03-28 20:50:53', 'log', 'Logged out', NULL),
+(1358, 26, '2018-03-28 20:50:56', 'log', 'Logged in', NULL),
+(1359, 26, '2018-03-28 20:51:03', 'bedDischarge', 'Discharged a patient from bed number : 20', 42),
+(1360, 26, '2018-03-28 20:51:08', 'bed', 'Alloted bed number: 1 to patient:ma mon', 42),
+(1361, 26, '2018-03-28 22:11:39', 'log', 'Logged in', NULL),
+(1362, 26, '2018-03-28 22:13:11', 'log', 'Logged out', NULL),
+(1363, 27, '2018-03-28 22:13:14', 'log', 'Logged in', NULL),
+(1364, 27, '2018-03-28 22:13:20', 'log', 'Logged in', NULL),
+(1365, 27, '2018-03-28 22:13:28', 'log', 'Logged out', NULL),
+(1366, 26, '2018-03-28 22:13:32', 'log', 'Logged in', NULL),
+(1367, 26, '2018-03-28 22:17:04', 'log', 'Logged in', NULL),
+(1368, 27, '2018-03-28 22:17:06', 'log', 'Logged in', NULL),
+(1369, 27, '2018-03-28 22:19:24', 'log', 'Logged in', NULL),
+(1370, 26, '2018-03-28 22:19:27', 'log', 'Logged in', NULL),
+(1371, 27, '2018-03-28 22:20:38', 'er', 'ER for ma mon', 42),
+(1372, 27, '2018-03-28 22:23:10', 'log', 'Logged in', NULL),
+(1373, 26, '2018-03-28 22:23:14', 'log', 'Logged in', NULL),
+(1374, 27, '2018-03-28 22:23:16', 'er', 'ER for sampul sam', 43),
+(1375, 27, '2018-03-28 22:31:46', 'log', 'Logged in', NULL),
+(1376, 27, '2018-03-28 22:32:17', 'log', 'Logged in', NULL),
+(1377, 27, '2018-03-28 22:33:38', 'log', 'Logged in', NULL),
+(1378, 27, '2018-03-28 22:33:45', 'initialAssessment', 'assessment for undefined', 45),
+(1379, 27, '2018-03-28 22:38:08', 'log', 'Logged in', NULL),
+(1380, 27, '2018-03-28 22:39:04', 'log', 'Logged in', NULL),
+(1381, 27, '2018-03-28 22:39:06', 'er', 'ER for rweewasqews', 47),
+(1382, 27, '2018-03-28 22:39:16', 'log', 'Logged out', NULL),
+(1383, 26, '2018-03-28 22:39:18', 'log', 'Logged in', NULL),
+(1384, 26, '2018-03-28 22:39:24', 'bed', 'Alloted bed number: 5 to patient:Pul sam', 44),
+(1385, 26, '2018-03-28 22:39:36', 'bedDischarge', 'Discharged a patient from bed number : 4', 47),
+(1386, 26, '2018-03-28 22:39:40', 'bed', 'Alloted bed number: 6 to patient:rweewasqews', 47),
+(1387, 27, '2018-03-28 22:45:21', 'log', 'Logged in', NULL),
+(1388, 27, '2018-03-01 00:04:43', 'log', 'Logged in', NULL),
+(1389, 29, '2018-03-28 23:22:26', 'log', 'Logged in', NULL),
+(1390, 29, '2018-03-28 23:22:42', 'log', 'Logged out', NULL),
+(1391, 30, '2018-03-28 23:22:52', 'log', 'Logged in', NULL),
+(1392, 30, '2018-03-28 23:23:13', 'cancelPrescription', 'Cancelled prescription for: sampul sam', NULL),
+(1393, 30, '2018-03-28 23:29:16', 'log', 'Logged out', NULL),
+(1394, 29, '2018-03-28 23:29:20', 'log', 'Logged in', NULL);
 
 -- --------------------------------------------------------
 
@@ -1268,12 +1518,12 @@ CREATE TABLE IF NOT EXISTS `bed` (
 --
 
 INSERT INTO `bed` (`bed_id`, `status`, `allotment_timestamp`, `description`, `patient_id`) VALUES
-(1, 'Unoccupied', NULL, NULL, NULL),
-(2, 'Unoccupied', NULL, NULL, NULL),
-(3, 'Unoccupied', NULL, NULL, NULL),
-(4, 'occupied', '2018-03-23 01:29:20', NULL, 70),
-(5, 'occupied', '2018-03-23 01:29:20', NULL, 69),
-(6, 'occupied', '2018-03-24 00:17:24', NULL, 42),
+(1, 'occupied', '2018-03-28 22:20:38', NULL, 42),
+(2, 'occupied', '2018-03-28 22:23:16', NULL, 43),
+(3, 'occupied', '2018-03-28 22:38:10', NULL, 46),
+(4, 'Unoccupied', NULL, NULL, NULL),
+(5, 'occupied', '2018-03-28 22:39:24', NULL, 44),
+(6, 'occupied', '2018-03-28 22:39:40', NULL, 47),
 (7, 'Unoccupied', NULL, NULL, NULL),
 (8, 'Unoccupied', NULL, NULL, NULL),
 (9, 'Unoccupied', NULL, NULL, NULL),
@@ -1402,7 +1652,35 @@ CREATE TABLE IF NOT EXISTS `diagnosis` (
   `patient_id` int(11) NOT NULL,
   `doctor_id` int(11) NOT NULL,
   PRIMARY KEY (`diag_id`)
-) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+) ENGINE=MyISAM AUTO_INCREMENT=23 DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `diagnosis`
+--
+
+INSERT INTO `diagnosis` (`diag_id`, `diagnosis`, `date`, `patient_id`, `doctor_id`) VALUES
+(1, 'my diagnosis 1', '2018-03-26 15:19:13', 42, 26),
+(2, '', '2018-03-26 15:41:52', 42, 26),
+(3, 'my diagnosis 12\r\n\r\n', '2018-03-26 15:42:33', 42, 26),
+(4, '1', '2018-03-26 15:42:43', 42, 26),
+(5, 'qwe', '2018-03-26 15:48:46', 42, 26),
+(6, 'qwe\r\nqwe', '2018-03-26 15:48:50', 42, 26),
+(7, 'qwe\r\nqwe\r\nqwe\r\nqwe', '2018-03-26 15:48:54', 42, 26),
+(8, 'qwe', '2018-03-26 15:51:12', 42, 26),
+(9, 'asd', '2018-03-26 15:51:15', 42, 26),
+(10, 'zxc', '2018-03-26 15:51:18', 42, 26),
+(11, 'e', '2018-03-26 15:51:37', 42, 26),
+(12, 'asd', '2018-03-26 15:51:54', 42, 26),
+(13, 'zxc', '2018-03-26 15:51:58', 42, 26),
+(14, 'qwe', '2018-03-26 15:52:10', 42, 26),
+(15, 'qwe', '2018-03-26 15:56:00', 42, 26),
+(16, 'asd', '2018-03-26 15:56:03', 42, 26),
+(17, 'qwe', '2018-03-26 15:56:05', 42, 26),
+(18, 'qwe', '2018-03-26 15:59:03', 42, 26),
+(19, 'asd', '2018-03-26 15:59:06', 42, 26),
+(20, 'qwe', '2018-03-27 15:34:03', 42, 26),
+(21, 'qwe', '2018-03-27 15:34:11', 42, 26),
+(22, 'asd ', '2018-03-27 15:34:15', 42, 26);
 
 -- --------------------------------------------------------
 
@@ -1492,68 +1770,6 @@ INSERT INTO `immunization` (`name`, `immu_id`) VALUES
 -- --------------------------------------------------------
 
 --
--- Table structure for table `initial_assessment`
---
-
-DROP TABLE IF EXISTS `initial_assessment`;
-CREATE TABLE IF NOT EXISTS `initial_assessment` (
-  `assessment_id` int(11) NOT NULL AUTO_INCREMENT,
-  `assessment` text NOT NULL,
-  `date` datetime NOT NULL,
-  `patient_id` int(11) NOT NULL,
-  `account_id` int(11) NOT NULL,
-  `vital_signs` text NOT NULL,
-  PRIMARY KEY (`assessment_id`),
-  KEY `patient_id` (`patient_id`),
-  KEY `account_id` (`account_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=139 DEFAULT CHARSET=latin1;
-
---
--- Dumping data for table `initial_assessment`
---
-
-INSERT INTO `initial_assessment` (`assessment_id`, `assessment`, `date`, `patient_id`, `account_id`, `vital_signs`) VALUES
-(102, 'e', '2018-03-16 23:20:14', 42, 26, 'BP: e\nCR: e\nPR: e\nRR: e\n TEMP: e\nWT: e'),
-(103, 'r ', '2018-03-16 23:20:14', 47, 26, 'BP: r\nCR: r\nPR: r\nRR: r\n TEMP: r\nWT: rr'),
-(104, 'r', '2018-03-16 23:20:14', 43, 26, 'BP: rr\nCR: r\nPR: r\nRR: r\n TEMP: r\nWT: r'),
-(105, 'hkj', '2018-03-19 15:26:31', 44, 26, 'BP: kjb\nCR: hjk\nPR: hjk\nRR: hjk\n TEMP: jhk\nWT: hjk'),
-(106, 'uio', '2018-03-19 15:26:31', 45, 26, 'BP: kj\nCR: uo\nPR: uio\nRR: uio\n TEMP: iou\nWT: uio'),
-(107, 'hjk', '2018-03-19 15:26:31', 46, 26, 'BP: hj\nCR: hj\nPR: hjk\nRR: hjk\n TEMP: hjk\nWT: hjk'),
-(108, 'kjh', '2018-03-19 15:26:31', 48, 26, 'BP: jhk\nCR: hjk\nPR: hjk\nRR: hjk\n TEMP: jhk\nWT: jhk'),
-(109, 'pio', '2018-03-19 15:26:31', 49, 26, 'BP: lk\nCR: i\nPR: iop\nRR: iop\n TEMP: iop\nWT: oip'),
-(110, 'pio', '2018-03-19 15:26:31', 50, 26, 'BP: poij\nCR: iop\nPR: oip\nRR: opi\n TEMP: oip\nWT: oip'),
-(111, 'poi', '2018-03-19 15:26:31', 51, 26, 'BP: oiup\nCR: oip\nPR: iop\nRR: iop\n TEMP: oip\nWT: oip'),
-(112, 'pio', '2018-03-19 15:26:31', 52, 26, 'BP: opi\nCR: iop\nPR: iop\nRR: iop\n TEMP: oip\nWT: iop'),
-(113, 'oiu', '2018-03-19 15:26:31', 53, 26, 'BP: iou\nCR: iuo\nPR: iuo\nRR: uio\n TEMP: uio\nWT: oiu'),
-(114, 'p', '2018-03-19 15:26:31', 54, 26, 'BP: p\nCR: p\nPR: p\nRR: p\n TEMP: p\nWT: p'),
-(115, 'e', '2018-03-19 15:26:31', 55, 26, 'BP: w\nCR: e\nPR: e\nRR: e\n TEMP: e\nWT: e'),
-(116, 'oip', '2018-03-19 15:26:31', 56, 26, 'BP: opi\nCR: iop\nPR: oip\nRR: iop\n TEMP: iop\nWT: iop'),
-(117, 'p', '2018-03-19 15:26:31', 57, 26, 'BP: p[\nCR: p\nPR: p\nRR: p\n TEMP: p\nWT: p'),
-(118, 'e', '2018-03-19 15:26:31', 58, 26, 'BP: e\nCR: e\nPR: e\nRR: e\n TEMP: e\nWT: e'),
-(119, 'p', '2018-03-19 15:26:31', 59, 26, 'BP: p\nCR: p\nPR: p\nRR: p\n TEMP: p\nWT: p'),
-(120, 'a', '2018-03-19 15:26:31', 60, 26, 'BP: p\nCR: p\nPR: p\nRR: p\n TEMP: p\nWT: p'),
-(121, 'p', '2018-03-19 15:26:31', 61, 26, 'BP: p\nCR: p\nPR: p\nRR: p\n TEMP: p\nWT: a'),
-(122, 'p', '2018-03-19 15:26:31', 62, 26, 'BP: p\nCR: p\nPR: p\nRR: p\n TEMP: p\nWT: p'),
-(123, 'e', '2018-03-19 15:26:31', 63, 26, 'BP: e\nCR: e\nPR: e\nRR: e\n TEMP: e\nWT: e'),
-(124, 'e', '2018-03-19 16:44:25', 64, 26, 'BP: e\nCR: q\nPR: e\nRR: e\n TEMP: e\nWT: e'),
-(125, 'r', '2018-03-19 16:51:22', 65, 26, 'BP: r\nCR: r\nPR: r\nRR: r\n TEMP: r\nWT: r'),
-(126, 't', '2018-03-19 16:51:22', 66, 26, 'BP: T\nCR: t\nPR: t\nRR: t\n TEMP: t\nWT: t'),
-(127, 'f', '2018-03-19 16:51:22', 67, 26, 'BP: f\nCR: f\nPR: f\nRR: f\n TEMP: f\nWT: f'),
-(128, 't', '2018-03-19 16:51:22', 68, 26, 'BP: t\nCR: t\nPR: t\nRR: t\n TEMP: tt\nWT: t'),
-(129, 'e', '2018-03-19 19:41:11', 69, 26, 'BP: e\nCR: e\nPR: e\nRR: e\n TEMP: e\nWT: e'),
-(130, 'e', '2018-03-19 19:43:13', 70, 26, 'BP: e\nCR: e\nPR: e\nRR: e\n TEMP: e\nWT: e'),
-(131, 'e', '2018-03-19 19:55:52', 71, 26, 'BP: e\nCR: e\nPR: e\nRR: e\n TEMP: e\nWT: e'),
-(132, 'e', '2018-03-20 00:08:39', 72, 26, 'BP: e\nCR: e\nPR: e\nRR: e\n TEMP: e\nWT: e'),
-(133, 'e', '2018-03-23 22:18:25', 42, 26, 'BP: e\nCR: e\nPR: e\nRR: e\n TEMP: e\nWT: e'),
-(134, 'e', '2018-03-23 23:49:25', 42, 26, 'BP: e\nCR: e\nPR: ee\nRR: e\n TEMP: e\nWT: e'),
-(135, 'e', '2018-03-23 23:57:53', 42, 26, 'BP: e\nCR: e\nPR: e\nRR: e\n TEMP: e\nWT: e'),
-(136, 'e', '2018-03-23 23:58:58', 42, 26, 'BP: e\nCR: ee\nPR: ee\nRR: e\n TEMP: e\nWT: e'),
-(137, 'e', '2018-03-24 00:00:18', 42, 26, 'BP: ee\nCR: e\nPR: e\nRR: e\n TEMP: e\nWT: e'),
-(138, 'e', '2018-03-24 00:49:06', 43, 26, 'BP: e\nCR: e\nPR: e\nRR: e\n TEMP: e\nWT: e');
-
--- --------------------------------------------------------
-
---
 -- Table structure for table `lab_request`
 --
 
@@ -1576,8 +1792,7 @@ CREATE TABLE IF NOT EXISTS `lab_request` (
 --
 
 INSERT INTO `lab_request` (`request_id`, `type`, `timestamp`, `remarks`, `doctor_id`, `patient_id`, `lab_status`) VALUES
-(1, 'serotology', '2018-03-12 02:26:37', 'sdbgsfdgs', 26, 46, 'confirmed'),
-(2, 'bloodChemistry', '2018-03-12 09:49:18', 'Need % of while blood cells and glucose', 26, 42, 'confirmed'),
+(1, 'serotology', '2018-03-12 02:26:37', 'sdbgsfdgs', 26, 46, 'pending'),
 (3, 'microbiology', '2018-03-19 09:33:54', 'sd', 26, 43, 'confirmed'),
 (4, 'bloodChemistry', '2018-03-19 09:36:45', 'asdzxc', 26, 68, 'confirmed');
 
@@ -1627,6 +1842,20 @@ CREATE TABLE IF NOT EXISTS `medicine_category` (
 INSERT INTO `medicine_category` (`medicine_category_id`, `name`, `description`) VALUES
 (1, 'Allergy liquids', 'Allergic medicines'),
 (2, 'Vitamins Tablets ', 'Vitamins tablets only');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `opd_count`
+--
+
+DROP TABLE IF EXISTS `opd_count`;
+CREATE TABLE IF NOT EXISTS `opd_count` (
+  `opd_count_id` int(11) NOT NULL AUTO_INCREMENT,
+  `date_stamp` timestamp NOT NULL,
+  `patient_id` int(11) NOT NULL,
+  PRIMARY KEY (`opd_count_id`)
+) ENGINE=MyISAM AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
 
@@ -1699,10 +1928,10 @@ INSERT INTO `patient` (`patient_id`, `patient_type`, `name`, `age`, `unit`, `sex
 (76, 'military dependent', 'nyameten', -1, '', 'F', 'Single', '2018-12-01', 'bhj', 'dsbhj', 'A', 'bhj', 'b hmb\n:hjb', 'hjb\n:hjb', 'hj', '', 'DFT:2018-12\n\n', 'DM\n\n'),
 (77, 'authorized civilian', 'queuqeuuequeuqeuqqe', 0, '', 'M', 'Single', '2018-01-01', 'ghbjnm', 'njkdsv', 'B', 'bhj', 'bhj\n:bhj', 'bhjb\n:hj', 'bhj', '', 'Measles:2018-12\n\n', 'CVD\n\n'),
 (78, 'authorized civilian', 'tope', 0, '', 'M', 'Single', '2018-02-01', 'jhbn ', 'bsdjkv', 'A', 'hjb', 'vhj\n:vbhj', 'gj\n:ghj', 'b', '', 'Polio:2018-12\n\n', 'CA\n\n'),
-(79, 'authorized civilian', 'nyets', 111111, '', 'M', 'Single', '2018-03-01', 'vhjbjh', 'nhfdjkbg', 'B', 'vbhj', 'bhjb\n:hj', 'bhjb\n:h', 'bhj', '', 'Measles:2018-12\n\n', 'CVD\n\n'),
+(79, 'authorized civilian', 'nyets', 1111111113, '', 'M', 'Single', '2018-03-01', 'vhjbjh', 'nhfdjkbg', 'B', 'vbhj', 'bhjb\n:hj', 'bhjb\n:h', 'bhj', '', 'Measles:2018-12\n\n', 'CVD\n\n'),
 (80, 'authorized civilian', 'wewewewewe', 0, '', 'M', 'Single', '2018-02-01', 'bhjbjk', 'vghj', 'B', 'bhj', 'bhj\n:bhj', 'bhj\n:bhj', 'bhj', '', 'DFT:2018-12\n\n', 'DM\n\n'),
 (81, 'authorized civilian', 'kope', 0, '', 'M', 'Single', '2018-01-01', 'bhjnbhj', 'djkvb', 'B', 'bhj', 'bhj\n:bhj', 'bhj\n:bhj', 'bhj', '', 'DFT:2018-12\n\n', 'DM\n\n'),
-(82, 'military dependent', 'Jenmar R. Pogi', 111111, '', 'M', 'Single', '2018-03-01', 'bghbghv', 'ghvbhjgvyt', 'A', 'bvghj', 'ghv\n:ghvgh', 'vgh\n:vgh', 'ghvghv', '', 'DFT:2018-12\n\n', 'DM\n\n');
+(82, 'military dependent', 'Jenmar R. Pogi', 20113, '', 'M', 'Single', '2018-03-01', 'bghbghv', 'ghvbhjgvyt', 'A', 'bvghj', 'ghv\n:ghvgh', 'vgh\n:vgh', 'ghvghv', '', 'DFT:2018-12\n\n', 'DM\n\n');
 
 -- --------------------------------------------------------
 
@@ -1714,24 +1943,38 @@ DROP TABLE IF EXISTS `patient_history`;
 CREATE TABLE IF NOT EXISTS `patient_history` (
   `histo_id` int(11) NOT NULL AUTO_INCREMENT,
   `date_stamp` timestamp NOT NULL,
-  `initial_assessment` text NOT NULL,
+  `initial_assessment` text,
   `lab` text,
   `medicine` text,
   `diagnosis` text,
   `bed` text,
   `patient_id` int(11) NOT NULL,
   `doctor_id` int(11) NOT NULL,
-  `vitals` text NOT NULL,
+  `vitals` text,
+  `status` text NOT NULL,
   PRIMARY KEY (`histo_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=36 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=49 DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `patient_history`
 --
 
-INSERT INTO `patient_history` (`histo_id`, `date_stamp`, `initial_assessment`, `lab`, `medicine`, `diagnosis`, `bed`, `patient_id`, `doctor_id`, `vitals`) VALUES
-(34, '2018-03-23 16:00:18', 'e', NULL, 'Medicine:test, Quantity:3, Dosage:qwe, TimeFrame:qwe\n Medicine:test2, Quantity:4, Dosage:qwe, TimeFrame:qwe\n ', NULL, '2, 1, 6, 4+5', 42, 26, 'BP: ee\nCR: e\nPR: e\nRR: e\n TEMP: e\nWT: e'),
-(35, '2018-03-23 16:49:06', 'e', NULL, NULL, NULL, NULL, 43, 26, 'BP: e\nCR: e\nPR: e\nRR: e\n TEMP: e\nWT: e');
+INSERT INTO `patient_history` (`histo_id`, `date_stamp`, `initial_assessment`, `lab`, `medicine`, `diagnosis`, `bed`, `patient_id`, `doctor_id`, `vitals`, `status`) VALUES
+(34, '2018-03-23 16:00:18', 'e', NULL, 'Medicine:test, Quantity:3, Dosage:qwe, TimeFrame:qwe\n Medicine:test2, Quantity:4, Dosage:qwe, TimeFrame:qwe\n ', NULL, '2, 1, 6, 4+5', 42, 26, 'BP: ee\nCR: e\nPR: e\nRR: e\n TEMP: e\nWT: e', ''),
+(35, '2018-03-23 16:49:06', 'e', NULL, NULL, NULL, '1, ', 43, 26, 'BP: e\nCR: e\nPR: e\nRR: e\n TEMP: e\nWT: e', ''),
+(36, '2018-03-26 13:13:58', 'r', NULL, NULL, NULL, NULL, 42, 26, 'BP: r\nCR: r\nPR: r\nRR: r\n TEMP: r\nWT: r', 'confirmed'),
+(37, '2018-03-26 13:38:24', 'e', NULL, NULL, 'qwe\nasd\n', NULL, 42, 26, 'BP: e\nCR: e\nPR: ee\nRR: ee\n TEMP: e\nWT: e', 'confirmed'),
+(38, '2018-03-26 13:38:30', 'r', NULL, NULL, NULL, NULL, 43, 26, 'BP: r\nCR: r\nPR: r\nRR: r\n TEMP: r\nWT: r', 'confirmed'),
+(39, '2018-03-26 16:00:02', 'e', NULL, NULL, NULL, '1, 2, ', 42, 26, 'BP: e\nCR: e\nPR: e\nRR: e\n TEMP: e\nWT: e', 'confirmed'),
+(40, '2018-03-26 17:04:59', 'e', NULL, NULL, NULL, NULL, 43, 26, 'BP: e\nCR: e\nPR: e\nRR: e\n TEMP: e\nWT: e', 'confirmed'),
+(41, '2018-03-26 17:10:55', 'e', NULL, 'Medicine:lkajsd, Quantity:4, Dosage:as;ldk, TimeFrame:asdl;k\nMedicine:po, Quantity:3, Dosage:poi, TimeFrame:iop\n', NULL, NULL, 42, 26, 'BP: e\nCR: e\nPR: e\nRR: e\n TEMP: e\nWT: e', 'confirmed'),
+(42, '2018-03-27 15:16:39', 'e', 'Type:bloodChemistry Remarks:qwe\nType:bloodChemistry Remarks:asd\n', 'Medicine:solmux, Quantity:4, Dosage:qwe, TimeFrame:qwe\nMedicine:qwe, Quantity:3, Dosage:qwe, TimeFrame:qwe\nMedicine:asd, Quantity:3, Dosage:qwe, TimeFrame:qwe\n', NULL, '1, 1, 1, 1, 2, 20, 1, ', 42, 26, 'BP: e\nCR: e\nPR: e\nRR: e\n TEMP: e\nWT: e', 'confirmed'),
+(43, '2018-03-28 14:20:38', NULL, NULL, NULL, NULL, '1, ', 42, 26, NULL, 'pending'),
+(44, '2018-03-28 14:23:16', NULL, NULL, NULL, NULL, '2, ', 43, 26, NULL, 'pending'),
+(45, '2018-03-28 14:32:24', 'e', NULL, NULL, NULL, '5, ', 44, 26, 'BP: e\nCR: e\nPR: e\nRR: e\n TEMP: e\nWT: e', 'pending'),
+(46, '2018-03-28 14:33:45', 'e', NULL, NULL, NULL, NULL, 45, 26, 'BP: e\nCR: e\nPR: e\nRR: e\n TEMP: e\nWT: e', 'pending'),
+(47, '2018-03-28 14:38:10', NULL, NULL, NULL, NULL, '3, ', 46, 26, NULL, 'pending'),
+(48, '2018-03-28 14:39:06', NULL, NULL, NULL, NULL, '4, 6, ', 47, 26, NULL, 'pending');
 
 -- --------------------------------------------------------
 
@@ -1753,7 +1996,7 @@ CREATE TABLE IF NOT EXISTS `prescription` (
   PRIMARY KEY (`prescription_id`),
   KEY `patient_id` (`patient_id`),
   KEY `doctor_id` (`doctor_id`) USING BTREE
-) ENGINE=InnoDB AUTO_INCREMENT=18 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=20 DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `prescription`
@@ -1761,18 +2004,19 @@ CREATE TABLE IF NOT EXISTS `prescription` (
 
 INSERT INTO `prescription` (`prescription_id`, `creation_stamp`, `medicine`, `quantity`, `dosage`, `timeframe`, `doctor_id`, `patient_id`, `status`) VALUES
 (1, '2018-03-19 06:10:15', 'kjhasd', 2, 'jkashd', 'askjdh', 26, 42, 'confirmed'),
-(2, '2018-03-19 06:38:47', 'kajsdhjasd', 7, 'kajhscjzhxc', 'kjahsd', 26, 43, 'confirmed'),
-(5, '2018-03-19 09:33:54', 'qeqweq', 5, 'asd', 'asd', 26, 43, 'confirmed'),
+(5, '2018-03-19 09:33:54', 'qeqweq', 5, 'asd', 'asd', 26, 43, 'pending'),
 (8, '2018-03-19 12:06:09', 'qwe', 3, 'qwe', 'zxc', 26, 71, 'confirmed'),
 (9, '2018-03-30 22:17:18', 'alaxan', 4, 'asd', 'qwe', 26, 42, 'confirmed'),
 (10, '2018-03-30 22:20:19', 'solmux', 2, 'asd', 'qwe', 26, 42, 'confirmed'),
-(11, '2018-03-23 16:26:23', 'alaxan', 4, '3 times ', '4 times', 26, 42, 'pending'),
-(12, '2018-03-23 16:31:21', 'solmux', 5, 'twice a day', '3 times a week', 26, 42, 'pending'),
-(13, '2018-03-23 16:33:24', 'alaxan', 4, '3 times ', '4 weeks', 26, 42, 'pending'),
-(14, '2018-03-23 16:34:14', 'paracetamol', 3, '3 times ', '4 weeks', 26, 42, 'pending'),
-(15, '2018-03-23 16:35:32', 'e', 2, '3 we', '4 weeks', 26, 42, 'pending'),
-(16, '2018-03-23 16:39:53', 'test', 3, 'qwe', 'qwe', 26, 42, 'pending'),
-(17, '2018-03-23 16:40:20', 'test2', 4, 'qwe', 'qwe', 26, 42, 'pending');
+(11, '2018-03-23 16:26:23', 'alaxan', 4, '3 times ', '4 times', 26, 42, 'confirmed'),
+(12, '2018-03-23 16:31:21', 'solmux', 5, 'twice a day', '3 times a week', 26, 42, 'confirmed'),
+(13, '2018-03-23 16:33:24', 'alaxan', 4, '3 times ', '4 weeks', 26, 42, 'confirmed'),
+(14, '2018-03-23 16:34:14', 'paracetamol', 3, '3 times ', '4 weeks', 26, 42, 'confirmed'),
+(15, '2018-03-23 16:35:32', 'e', 2, '3 we', '4 weeks', 26, 42, 'confirmed'),
+(16, '2018-03-23 16:39:53', 'test', 3, 'qwe', 'qwe', 26, 42, 'confirmed'),
+(17, '2018-03-23 16:40:20', 'test2', 4, 'qwe', 'qwe', 26, 42, 'confirmed'),
+(18, '2018-03-26 17:11:17', 'lkajsd', 4, 'as;ldk', 'asdl;k', 26, 42, 'confirmed'),
+(19, '2018-03-26 17:12:11', 'po', 3, 'poi', 'iop', 26, 42, 'confirmed');
 
 -- --------------------------------------------------------
 
@@ -1837,7 +2081,7 @@ CREATE TABLE IF NOT EXISTS `todo_list` (
   `account_id` int(11) NOT NULL,
   PRIMARY KEY (`todo_id`),
   KEY `account_id` (`account_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=26 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=29 DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `todo_list`
@@ -1852,7 +2096,10 @@ INSERT INTO `todo_list` (`todo_id`, `status`, `description`, `date`, `account_id
 (21, 'urgent', 'zxcasd', '2018-03-14 03:02:00', 27),
 (23, 'general', 'qwe', '2018-03-01 02:01:00', 27),
 (24, 'urgent', 'qweasdz', '2018-03-01 16:02:00', 27),
-(25, 'general', 'qwe', '2018-03-22 02:01:00', 27);
+(25, 'general', 'qwe', '2018-03-22 02:01:00', 27),
+(26, 'undefined', 'asd', '2018-03-25 14:00:00', 37),
+(27, 'undefined', 'wq', '2018-03-25 02:01:00', 27),
+(28, 'undefined', 'MONJOEL', '2018-03-25 03:01:00', 27);
 
 -- --------------------------------------------------------
 
@@ -1893,7 +2140,7 @@ CREATE TABLE IF NOT EXISTS `user_accounts` (
   `address` text NOT NULL,
   `phone` varchar(11) NOT NULL,
   PRIMARY KEY (`account_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=34 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=38 DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `user_accounts`
@@ -1901,12 +2148,25 @@ CREATE TABLE IF NOT EXISTS `user_accounts` (
 
 INSERT INTO `user_accounts` (`account_id`, `username`, `password`, `account_type`, `name`, `age`, `sex`, `address`, `phone`) VALUES
 (25, 'admin', '$2a$10$0dfj2ecTqv12hAruqj/pE.wlY/eyeIRszgub3r0K3GVjlrfEZdbAS', 'admin', 'Grubat', 28, 'M', 'PMA baguio', '9718236712'),
-(26, 'doctor', '$2a$10$UrYF/CWYC9cycpjWLbUYc.J7l9KUq4u7SPsD93o9zbcrkgTB48ZoS', 'doctor', 'Mr. Quickie', 20, 'M', 'lower liwanag loakan.', '9182763517'),
+(26, 'doctor', '$2a$10$KGKQQ73NHDfoKM19QT2UNe.Pirt/KKS5nFUo4.LzMRkxQy3.EzfSG', 'doctor', 'Dr.Quack', 20, 'M', 'lower liwanag loakan.', '9182763517'),
 (27, 'nurse', '$2a$10$lz1mxLO4SAp8zei.I5OZieyooGGOYnJTfTZL.Rv9l1lerOjxhVVB.', 'nurse', 'narshieeeee', 20, 'F', 'camp 7, Bakakeng Global City', '917825314'),
 (29, 'lab', '$2a$10$awjy102z3vACI1RdzIID0u2P6gIkRRIcNyfCwV2fzXJ0SPNtkr93a', 'laboratorist', 'Joshua N. Laban', 28, 'M', 'Leonila Hill Baguio City', '9087821365'),
 (30, 'pharm', '$2a$10$Z7yWUGCqgsruNYfjZWW95e.cQ/VvvUAWtDZ0Hh1LLZOVft6VgfoJm', 'pharmacist', 'jennieboy', 0, 'M', 'dsnjkgbsfdhbfs', '09234562311'),
-(31, 'qweasd', '$2a$10$NJ0tGO0R2sLfs1aYCqcOhOCUSEj2bZ0f8h7ZVYXkcPIMCHgOhMCRe', 'admin', 'qwe', 15, 'M', 'asldkasjdaddress', '9123781263'),
-(33, 'asd', '$2a$10$TAIm15f/LZJwJXf2J4j0A.obGU87wechxfPDis8tXHuLgsLXULaBK', 'doctor', 'asdasd', 0, 'M', 'kjahxcjh', '9172637168');
+(37, 'doctor1', '$2a$10$MbefBkKZA9PnwviJXUV89.ksESnsUHjMQoGhHi.sFDnKQMilC9m2C', 'doctor', 'doctor1', 0, 'M', 'kjasd', '9812786312');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `ward_count`
+--
+
+DROP TABLE IF EXISTS `ward_count`;
+CREATE TABLE IF NOT EXISTS `ward_count` (
+  `ward_count_id` int(11) NOT NULL AUTO_INCREMENT,
+  `date_stamp` timestamp NOT NULL,
+  `patient_id` int(11) NOT NULL,
+  PRIMARY KEY (`ward_count_id`)
+) ENGINE=MyISAM AUTO_INCREMENT=4 DEFAULT CHARSET=latin1;
 
 --
 -- Constraints for dumped tables

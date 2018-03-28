@@ -34,10 +34,8 @@ var user, Aid, availableBedss, p;
             var parseDateNTime = parseDate+' '+parseTime;
             var todoLog = '';
             if (data.todoStatus == 'urgent') {
-              console.log('Added to urgent!!!!');
               todoLog = 'INSERT into activity_logs(account_id, time, type, remarks) VALUES ('+req.session.Aid+',"'+moment(new Date()).format('YYYY-MM-DD HH:mm:ss')+'", "urgentTodo", "Added to do urgent: '+data.description+'");';
             } else if(data.todoStatus == 'general') {
-              console.log('Added to general!!!!');
               todoLog = 'INSERT into activity_logs(account_id, time, type, remarks) VALUES ('+req.session.Aid+',"'+moment(new Date()).format('YYYY-MM-DD HH:mm:ss')+'", "generalTodo", "Added to do general: '+data.description+'");';
             }
             var addTodo  = 'INSERT into todo_list (description, status,date, account_id) VALUES("'+data.description+'","'+data.todoStatus+'","'+parseDateNTime+'",'+req.session.Aid+');';
@@ -106,9 +104,10 @@ var user, Aid, availableBedss, p;
     if(req.session.email && req.session.sino == 'doctor'){
       if (req.session.sino == 'doctor') {
           if (data.sub == 'admit') {
-            var bedSQL = 'UPDATE bed set allotment_timestamp = "'+moment(new Date()).format('YYYY-MM-DD HH:mm:ss')+'", patient_id = '+req.query.patient_id+',status = "occupied" where bed_id = '+data.bedNumber+';';
+            var bedSQL     = 'UPDATE bed set allotment_timestamp = "'+moment(new Date()).format('YYYY-MM-DD HH:mm:ss')+'", patient_id = '+req.query.patient_id+',status = "occupied" where bed_id = '+data.bedNumber+';';
             var historySQL = 'UPDATE patient_history set bed = CONCAT(IFNULL(bed, ""),"'+data.bedNumber+', ") where histo_id ='+req.query.histo_id+';';
-            db.query(bedSQL + historySQL + 'INSERT into activity_logs(account_id, time, type, remarks, patient_id) VALUES ('+Aid+',"'+moment(new Date()).format('YYYY-MM-DD HH:mm:ss')+'", "bed", "Alloted bed number: '+data.bedNumber+' to patient:'+req.query.patient_name+'",'+req.query.patient_id+');', function(err){
+            var wardCount  = 'INSERT into ward_count (date_stamp, patient_id) values("'+moment(new Date()).format('YYYY-MM-DD HH:mm:ss')+'",'+req.query.patient_id+');';
+            db.query(bedSQL + historySQL + wardCount + 'INSERT into activity_logs(account_id, time, type, remarks, patient_id) VALUES ('+Aid+',"'+moment(new Date()).format('YYYY-MM-DD HH:mm:ss')+'", "bed", "Alloted bed number: '+data.bedNumber+' to patient:'+req.query.patient_name+'",'+req.query.patient_id+');', function(err){
               if (err) {
                 console.log(err);
               } else {

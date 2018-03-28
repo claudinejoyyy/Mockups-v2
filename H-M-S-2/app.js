@@ -38,38 +38,26 @@ new CronJob('00 00 * * 1-7', function() {
       var resultDB = JSON.parse(JSON.stringify(rows));
       for (var i in resultDB) {
         if (moment(new Date()).format('MM-DD') == moment(resultDB[i].birth_date).format('MM-DD')) {
-          db.query('UPDATE patient SET age='+resultDB[i].age+1+'" where patient_id ='+resultDB[i].patient_id+';', function(err){
+          db.query('UPDATE patient SET age='+JSON.parse(resultDB[i].age+1)+' where patient_id ='+resultDB[i].patient_id+';', function(err){
             if (err) {
               console.log(err);
-              console.log(resultDB[i].age+1);
             } else {
-              console.log('patient: '+resultDB[i].name+' is now '+resultDB[i].age+1+'');
+              console.log('patient: '+resultDB[i].name+' is now '+JSON.parse(resultDB[i].age+1)+'');
             }
           });
         }
       }
     });
 }, null, true);
-var opdSUB = 0;
+
 //RESET COUNTER EVERY 3 MONTHS
   new CronJob('00 00 1 mar,jun,sep,dec *', function() {
-     // var checkBD = 'SELECT patient_id, birth_date from patient';
-     // db.query(checkBD, function(err, rows){
-     //   var resultDB = JSON.parse(JSON.stringify(rows));
-     //   for (var i in resultDB) {
-     //     if (moment(new Date()).format('MM-DD') == moment(resultDB[i].birth_date).format('MM-DD')) {
-     //       db.query('UPDATE patient SET birth_date="'+ resultDB[i].birth_date+1 +'"where patient_id ='+resultDB[i].patient_id+';', function(err){
-     //         if (err) {
-     //           console.log(err);
-     //         } else {
-     //           console.log('gumagana');
-     //         }
-     //       });
-     //     }
-     //   }
-     // });
-     db.query("SELECT count(patient_id) as opdCount From patient p inner join activity_logs a USING(patient_id) where a.type = 'initialAssessment'",function(err, rows){
-      opdSUB = rows[0].opdCount;
+     db.query("DELETE from opd_count;" + "DELETE from ward_count;",function(err){
+       if (err) {
+         console.log(err);
+       } else {
+         console.log('MONTHLY RESET OF COUNTER');
+       }
      });
  }, null, true);
 
@@ -102,8 +90,8 @@ app.use(function (req, res, next) {
 
 //PARA sa DASHBOARD of all MODULES!!!
 var name   = "SELECT name,account_type FROM user_accounts where account_id = ?;";
-var counts = "SELECT ((SELECT count(patient_id) From patient p inner join activity_logs a USING(patient_id) where a.type = 'initialAssessment') - "+opdSUB+") as OPD, "
-            +"(SELECT count(patient_id) From patient p inner join activity_logs a USING(patient_id) where a.type = 'bed') as WARD,"
+var counts = "SELECT (SELECT COUNT(opd_count_id) from opd_count) as OPD, "
+            +"(SELECT COUNT(ward_count_id) from ward_count) as WARD,"
             +"(SELECT count(name) pCount FROM patient) as totalRegisteredPatients,"
             +"(SELECT count(patient_id) admitted FROM bed) as currentlyAdmitted;";
 var chart  = "SELECT  (SELECT count(patient_id) from patient where patient_type = 'cadet') as cadet,"
