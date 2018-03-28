@@ -126,9 +126,15 @@
                     <% if (activityInfo[i].type == 'add'){ %>
                       <i class="fa fa-user-plus bg-green"></i>
                       <div class="timeline-item">
+                    <%} else if (activityInfo[i].type == 'addUser'){ %>
+                      <i class="fa fa-user-plus bg-green"></i>
+                      <div class="timeline-item">
                     <%} else if (activityInfo[i].type == 'appointment'){ %>
                       <i class="fa fa-calendar bg-yellow"></i>
                       <div class="timeline-item">
+                    <%} else if (activityInfo[i].type == 'approvedPrescription'){ %>
+                      <i class="fa fa-share bg-green"></i>
+                      <div class="timeline-item">    
                     <%} else if (activityInfo[i].type == 'bed'){ %>
                       <i class="fa fa-bed bg-primary"></i>
                       <div class="timeline-item">
@@ -136,17 +142,17 @@
                       <i class="fa fa-sign-out bg-navy"></i>
                       <div class="timeline-item">
                     <%} else if (activityInfo[i].type == 'approvedLabRequest'){ %>
-                      <i class="fa fa-share bg-orange"></i>
+                      <i class="fa fa-share bg-green"></i>
                       <div class="timeline-item">
                     <%} else if (activityInfo[i].type == 'cancelLabRequest'){ %>
                       <i class="fa fa-reply bg-orange"></i>
-                      <div class="timeline-item">
-                    <%} else if (activityInfo[i].type == 'approvedPrescription'){ %>
-                      <i class="fa fa-share bg-orange"></i>
-                      <div class="timeline-item">
+                      <div class="timeline-item">   
                     <%} else if (activityInfo[i].type == 'cancelPrescription'){ %>
                       <i class="fa fa-reply bg-orange"></i>
                       <div class="timeline-item">
+                    <%} else if (activityInfo[i].type == 'confirmedLabRequest'){ %>
+                      <i class="fa fa-share bg-green"></i>
+                      <div class="timeline-item">    
                     <%} else if (activityInfo[i].type == 'diagnosis'){ %>
                       <i class="fa fa-user-md bg-yellow"></i>
                       <div class="timeline-item">
@@ -159,6 +165,12 @@
                     <%} else if (activityInfo[i].type == 'log'){ %>
                       <i class="fa fa-check-circle bg-teal"></i>
                       <div class="timeline-item">
+                    <%} else if (activityInfo[i].type == 'prescription'){ %>
+                      <i class="fa fa-share bg-orange"></i>
+                      <div class="timeline-item">
+                    <%} else if (activityInfo[i].type == 'removedUser'){ %>
+                      <i class="fa fa-share bg-red"></i>
+                      <div class="timeline-item">      
                     <%} else if (activityInfo[i].type == 'settingsProfileManagement'){ %>
                       <i class="fa fa-edit bg-blue"></i>
                       <div class="timeline-item">
@@ -196,9 +208,15 @@
                     <% if (activityInfo[i].type == 'add'){ %>
                       <i class="fa fa-user-plus bg-green"></i>
                       <div class="timeline-item">
+                    <%} else if (activityInfo[i].type == 'addUser'){ %>
+                      <i class="fa fa-user-plus bg-green"></i>
+                      <div class="timeline-item">
                     <%} else if (activityInfo[i].type == 'appointment'){ %>
                       <i class="fa fa-calendar bg-yellow"></i>
                       <div class="timeline-item">
+                    <%} else if (activityInfo[i].type == 'approvedPrescription'){ %>
+                      <i class="fa fa-share bg-green"></i>
+                      <div class="timeline-item">    
                     <%} else if (activityInfo[i].type == 'bed'){ %>
                       <i class="fa fa-bed bg-primary"></i>
                       <div class="timeline-item">
@@ -206,17 +224,17 @@
                       <i class="fa fa-sign-out bg-navy"></i>
                       <div class="timeline-item">
                     <%} else if (activityInfo[i].type == 'approvedLabRequest'){ %>
-                      <i class="fa fa-share bg-orange"></i>
+                      <i class="fa fa-share bg-green"></i>
                       <div class="timeline-item">
                     <%} else if (activityInfo[i].type == 'cancelLabRequest'){ %>
                       <i class="fa fa-reply bg-orange"></i>
-                      <div class="timeline-item">
-                    <%} else if (activityInfo[i].type == 'approvedPrescription'){ %>
-                      <i class="fa fa-share bg-orange"></i>
-                      <div class="timeline-item">
+                      <div class="timeline-item">   
                     <%} else if (activityInfo[i].type == 'cancelPrescription'){ %>
                       <i class="fa fa-reply bg-orange"></i>
                       <div class="timeline-item">
+                    <%} else if (activityInfo[i].type == 'confirmedLabRequest'){ %>
+                      <i class="fa fa-share bg-green"></i>
+                      <div class="timeline-item">    
                     <%} else if (activityInfo[i].type == 'diagnosis'){ %>
                       <i class="fa fa-user-md bg-yellow"></i>
                       <div class="timeline-item">
@@ -229,6 +247,12 @@
                     <%} else if (activityInfo[i].type == 'log'){ %>
                       <i class="fa fa-check-circle bg-teal"></i>
                       <div class="timeline-item">
+                    <%} else if (activityInfo[i].type == 'prescription'){ %>
+                      <i class="fa fa-share bg-orange"></i>
+                      <div class="timeline-item">
+                    <%} else if (activityInfo[i].type == 'removedUser'){ %>
+                      <i class="fa fa-share bg-red"></i>
+                      <div class="timeline-item">      
                     <%} else if (activityInfo[i].type == 'settingsProfileManagement'){ %>
                       <i class="fa fa-edit bg-blue"></i>
                       <div class="timeline-item">
