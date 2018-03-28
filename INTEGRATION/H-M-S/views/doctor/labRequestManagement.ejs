@@ -146,7 +146,7 @@
                               <td><%=labrequestDetails[i].age%></td>
                               <td><%=labrequestDetails[i].type%></td>
                               <td><%=labrequestDetails[i].remarks%></td>
-                              <td><%=labrequestDetails[i].lab_status%></td>
+                              <td><%=labrequestDetails[i].lab_status.charAt(0).toUpperCase() + labrequestDetails[i].lab_status.slice(1);%></td>
                               <form action="/doctor/labRequestManagement?requestId=<%=labrequestDetails[i].request_id%>&labrequestPatientName=<%=labrequestDetails[i].name%>" method="post">
                               <td><button type="submit" class="btn btn-danger btn-sm"><i class="fa fa-remove"></i> Cancel</button></td>
                               </form>
@@ -189,7 +189,8 @@
                                       <td><%=confirmedLabRequestSQL[i].age%></td>
                                       <td><%=confirmedLabRequestSQL[i].type%></td>
                                       <td><%=confirmedLabRequestSQL[i].remarks%></td>
-                                      <td style="color:green; font-weight: bold;"><%=confirmedLabRequestSQL[i].lab_status%></td>
+                                      <!-- <%= username[0].account_type.charAt(0).toUpperCase() + username[0].account_type.slice(1);%> -->
+                                      <td style="color:green; font-weight: bold;"><%=confirmedLabRequestSQL[i].lab_status.charAt(0).toUpperCase() + confirmedLabRequestSQL[i].lab_status.slice(1);%></td>
                                     </tr>
                                 <%}%>
                              </tbody>
