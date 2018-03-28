@@ -123,11 +123,11 @@
                       <td><%=opdInfo[i].assessment%></td>
                       <%
                       var bedArr= '';
-                        for (var j = 0; j < whoCurrentlyAdmittedV2.length; j++){
-                          bedArr += whoCurrentlyAdmittedV2[j].patient_id;
+                        for (var j = 0; j < whoopdInfo2V2.length; j++){
+                          bedArr += whoopdInfo2V2[j].patient_id;
                         }
                       if(bedArr.includes(opdInfo[i].patient_id)){%>
-                        <td><%= whoCurrentlyAdmittedV2[i].bed_id%><a href="/doctor/bedManagement?bed_id=<%=whoCurrentlyAdmittedV2[i].bed_id%>" style="font-size:10px;">-details</a></td>
+                        <td><%= whoopdInfo2V2[i].bed_id%><a href="/doctor/bedManagement?bed_id=<%=whoopdInfo2V2[i].bed_id%>" style="font-size:10px;">-details</a></td>
                       <%} else {%>
                         <td></td>
                       <%}%>
@@ -165,8 +165,8 @@
 
                         <!-- ADMIT -->
                         <% var arr= '';
-                          for (var j = 0; j < whoCurrentlyAdmittedV2.length; j++){
-                            arr += whoCurrentlyAdmittedV2[j].patient_id;
+                          for (var j = 0; j < whoopdInfo2V2.length; j++){
+                            arr += whoopdInfo2V2[j].patient_id;
                           } if(!(arr.includes(opdInfo[i].patient_id))){%>
 
                             <button class="btn btn-primary btn-sm" type="button" name="admit" value="Admit" data-toggle="modal" data-target="#admit" onclick="ShowAdmit(<%=opdInfo[i].patient_id%>,<%=JSON.stringify(opdInfo[i].name)%>)">Admit</button>
@@ -195,39 +195,40 @@
                     <th>Initial Assessment</th>
                     <th>Bed</th>
                     <th>Action</th>
+                    <th>Status</th>
                   </tr>
                 </thead>
-                <%for (var i = 0; i < currentlyAdmitted.length; i++) {%>
+                <%for (var i = 0; i < opdInfo2.length; i++) {%>
                   <tr>
-                      <td><%=currentlyAdmitted[i].patient_type%></td>
-                      <td><%=currentlyAdmitted[i].name%></td>
-                      <td><%=currentlyAdmitted[i].age%></td>
-                      <td><%=currentlyAdmitted[i].sex%></td>
+                      <td><%=opdInfo2[i].patient_type%></td>
+                      <td><%=opdInfo2[i].name%></td>
+                      <td><%=opdInfo2[i].age%></td>
+                      <td><%=opdInfo2[i].sex%></td>
                       <td style="font-size:10px;">
-                        <%
-                          var vitals = currentlyAdmitted[i].vital_signs.split('\n');
-                          for(var l=0; l < 7; l++){ %>
-                            <%=vitals[l]%><br>
-                        <%}%>
+                      <%
+                        var vitals = opdInfo1[i].vitals.split('\n');
+                        for(var l=0; l < 7; l++){ %>
+                          <%=vitals[l]%><br>
+                      <%}%>
                       </td>
-                      <td><%=currentlyAdmitted[i].assessment%></td>
-                        <td><%= currentlyAdmitted[i].bed_id%><a href="/doctor/bedManagement?bed_id=<%=currentlyAdmitted[i].bed_id%>" style="font-size:10px;">-details</a></td>
+                      <td><%=opdInfo2[i].assessment%></td>
+                        <td><%= opdInfo2[i].bed_id%><a href="/doctor/bedManagement?bed_id=<%=opdInfo2[i].bed_id%>" style="font-size:10px;">-details</a></td>
                       <td>
                         <!-- VIEW -->
-                        <a href="../doctor/patientManagement?patient=<%=currentlyAdmitted[i].patient_id%>"><button class="btn btn-primary btn-sm" name="view">View</button></a>
+                        <a href="../doctor/patientManagement?patient=<%=opdInfo2[i].patient_id%>"><button class="btn btn-primary btn-sm" name="view">View</button></a>
                         <!-- LAB -->
                         <%
                         var labArr= '';
                           for (var j = 0; j < labSQL.length; j++){
                             labArr += labSQL[j].patient_id;
                           }
-                        if(labArr.includes(currentlyAdmitted[i].patient_id)){%>
+                        if(labArr.includes(opdInfo2[i].patient_id)){%>
                           <a data-toggle="modal">
-                            <input class="btn btn-primary btn-sm" type="button" value="Lab Request" name="lab_request" style="color:blue" data-toggle="modal" data-target="#labRequest2" onclick="ShowLabRequest2(<%=currentlyAdmitted[i].patient_id%>,<%=JSON.stringify(currentlyAdmitted[i].name)%>)">
+                            <input class="btn btn-primary btn-sm" type="button" value="Lab Request" name="lab_request" disabled data-toggle="modal" data-target="#labRequest2" onclick="ShowLabRequest2(<%=opdInfo2[i].patient_id%>,<%=JSON.stringify(opdInfo2[i].name)%>),<%=opdInfo2[i].histo_id%>">
                           </a>
                         <%} else {%>
                           <a data-toggle="modal">
-                            <input class="btn btn-primary btn-sm" type="button" value="Lab Request" name="lab_request" data-toggle="modal" data-target="#labRequest" onclick="ShowLabRequest(<%=currentlyAdmitted[i].patient_id%>,<%=JSON.stringify(currentlyAdmitted[i].name)%>)">
+                            <input class="btn btn-primary btn-sm" type="button" value="Lab Request" name="lab_request" data-toggle="modal" data-target="#labRequest" onclick="ShowLabRequest(<%=opdInfo2[i].patient_id%>,<%=JSON.stringify(opdInfo2[i].name)%>,<%=opdInfo2[i].histo_id%>)">
                           </a>
                         <%}%>
                         <!-- PRESCRIPTION -->
@@ -236,18 +237,27 @@
                           for (var j = 0; j < prescribeSQL.length; j++){
                             prescribeArr += prescribeSQL[j].patient_id;
                           }
-                        if(prescribeArr.includes(currentlyAdmitted[i].patient_id)){%>
-                          <input class="btn btn-primary btn-sm" type="button" name="prescribe" style="color:blue" value="Prescription" data-toggle="modal" data-target="prescribe2" onclick="ShowPrescribe2(<%=currentlyAdmitted[i].patient_id%>,<%=JSON.stringify(currentlyAdmitted[i].name)%>)" >
+                        if(prescribeArr.includes(opdInfo2[i].patient_id)){%>
+                          <input class="btn btn-primary btn-sm" type="button" name="prescribe" disabled value="Prescription" data-toggle="modal" data-target="prescribe2" onclick="ShowPrescribe2(<%=opdInfo2[i].patient_id%>,<%=JSON.stringify(opdInfo2[i].name)%>,<%=opdInfo2[i].histo_id%>)">
                         <%} else {%>
-                          <input class="btn btn-primary btn-sm" type="button" name="prescribe" value="Prescription" data-toggle="modal" data-target="#prescribe" onclick="ShowPrescribe(<%=currentlyAdmitted[i].patient_id%>,<%=JSON.stringify(currentlyAdmitted[i].name)%>)">
+                          <input class="btn btn-primary btn-sm" type="button" name="prescribe" value="Prescription" data-toggle="modal" data-target="#prescribe" onclick="ShowPrescribe(<%=opdInfo2[i].patient_id%>,<%=JSON.stringify(opdInfo2[i].name)%>,<%=opdInfo2[i].histo_id%>)">
                         <%}%>
                         <!-- DIAGNOSIS -->
-                        <button class="btn btn-primary btn-sm" class="btn btn-primary btn-sm" name="button" data-toggle="modal" data-target="#diagnosis" onclick="ShowDiagnosis(<%=currentlyAdmitted[i].patient_id%>,<%=JSON.stringify(currentlyAdmitted[i].name)%>)">Diagnosis</button>
+                        <button class="btn btn-primary btn-sm" class="btn btn-primary btn-sm" name="button" data-toggle="modal" data-target="#diagnosis" onclick="ShowDiagnosis(<%=opdInfo2[i].patient_id%>,<%=JSON.stringify(opdInfo2[i].name)%>,<%=opdInfo2[i].histo_id%>,<%=JSON.stringify(opdInfo2[i].diagnosis)%>))">
+                        <%if(opdInfo2[i].diagnosis){%>
+                          Add Diagnosis
+                        <%} else {%>
+                        Diagnosis
+                        <%}%>
+                        </button>
                         <!-- DISCHARGE BUTTON -->
-                      <form action="/doctor/bedManagement?bed=<%= currentlyAdmitted[i].bed_id%>" method="POST" style="display: inline-block;">
-                        <button class="btn btn-danger btn-sm"><i class="fa fa-sign-out"></i> Discharge</button>
-                      </form>
+                        <%if(!opdInfo2[i].bed_id){%>
+                        <input type="button" name="admit" class="btn btn-primary btn-sm" value="admit" onclick="ShowAdmit(<%=opdInfo2[i].patient_id%>,<%=JSON.stringify(opdInfo2[i].name)%>,<%=opdInfo2[i].histo_id%>)">
+                        <%}%>
                       </td>
+                      <form action="/doctor/outpatientManagement?id=<%= opdInfo2[i].histo_id%>" method="post">
+                        <td><button type="submit" name="sub" class="btn btn-default btn-sm" value="confirm">Confirm</button></td>
+                      </form>
                   </tr>
                 <%}%>
               </table>
@@ -441,15 +451,15 @@
     $("#example1").DataTable();
     $('#example2').DataTable();
   });
-  function ShowLabRequest(i,o){
-    document.getElementById('dynamicPatientIdForLab').action = '/doctor/outpatientManagement?patient_id='+i+'&patient_name='+o+'"';
+  function ShowLabRequest(i,o,u){
+    document.getElementById('dynamicPatientIdForLab').action = '/doctor/outpatientManagement?patient_id='+i+'&patient_name='+o+'&histo_id='+u+'';
     document.getElementById('ShowLabRequest').style.display = 'block';
   }
-  function ShowLabRequest2(i,o){
+  function ShowLabRequest2(i,o,u){
     document.getElementById('labAdd').onclick = function() {
       document.getElementById('ShowLabRequest').style.display = 'block';
       document.getElementById('ShowLabRequest2').style.display = 'none';
-      ShowLabRequest(i,o);
+      ShowLabRequest(i,o,u);
     };
     document.getElementById('labViewPressed').onclick = function() {
       document.getElementById('linkForLabView').href = "/doctor/labRequestManagement?labPatientInfo="+i+"";
@@ -458,15 +468,15 @@
     document.getElementById('ShowLabRequest').style.display = 'none';
   }
 
-  function ShowPrescribe(i,o){
-    document.getElementById('dynamicPatientIdForPrescribe').action = '/doctor/outpatientManagement?patient_id='+i+'&patient_name='+o+'';
+  function ShowPrescribe(i,o,u){
+    document.getElementById('dynamicPatientIdForPrescribe').action = '/doctor/outpatientManagement?patient_id='+i+'&patient_name='+o+'&histo_id='+u+'';
     document.getElementById('ShowPrescribe').style.display = 'block';
   }
-  function ShowPrescribe2(i,o){
+  function ShowPrescribe2(i,o,u){
     document.getElementById('prescribeAdd').onclick = function() {
       document.getElementById('ShowPrescribe').style.display = 'block';
       document.getElementById('ShowPrescribe2').style.display = 'none';
-      ShowPrescribe(i,o);
+      ShowPrescribe(i,o,u);
     };
     document.getElementById('prescribeViewPressed').onclick = function() {
       document.getElementById('linkForPrescribeView').href = "/doctor/prescriptionManagement?opdPatient="+i+"";
@@ -474,13 +484,16 @@
     document.getElementById('ShowPrescribe2').style.display = 'block';
     document.getElementById('ShowPrescribe').style.display = 'none';
   }
-  function ShowAdmit(i,o){
-    document.getElementById('dynamicPatientIdForAdmit').action = '/doctor/outpatientManagement?patient_id='+i+'&patient_name='+o+'';
+
+  function ShowAdmit(i,o,u){
+    document.getElementById('dynamicPatientIdForAdmit').action = '/doctor/outpatientManagement?patient_id='+i+'&patient_name='+o+'&histo_id='+u+'';
     document.getElementById('ShowAdmit').style.display = 'block';
   }
-  function ShowDiagnosis(i,o){
+
+  function ShowDiagnosis(i,o,u,a){
     document.getElementById('ShowDiagnosis').style.display = 'block';
-    document.getElementById('linkDiagnosis').action = '/doctor/outpatientManagement?patient_id='+i+'&patient_name='+o+'';
+    document.getElementById('linkDiagnosis').action = '/doctor/outpatientManagement?patient_id='+i+'&patient_name='+o+'&histo_id='+u+'';
+    document.getElementById('prevDiag').innerHTML = a;
   }
 </script>
 </body>
