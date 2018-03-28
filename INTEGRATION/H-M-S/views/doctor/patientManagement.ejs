@@ -5,6 +5,11 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <title>Patient Management</title>
 <% include ../partials/header.ejs %>
+<style type="text/css">
+  .col-sm-3{
+    font-size: 15px;
+  }
+</style>
 </head>
   <body class="hold-transition skin-blue fixed sidebar-mini" onload="myFunction()"> <!------------------------------------ EDIT FOR LOADER ---------------------------------->
     <div id="loader"></div> <!------------------------------------ EDIT FOR LOADER ---------------------------------->
@@ -225,49 +230,82 @@
                         </ul>
                         <div class="tab-content">
                           <div class="active tab-pane" id="settings">
-                            <form class="form-horizontal">
-
-                         <dl class="dl-horizontal">
-                            <dt>Rank or Serial Number</dt>
-                            <dd><%= p2[0].rankORsn %></dd>
-
-                            <dt>Unit</dt>
-                            <dd><%= p2[0].unit %></dd>
-
-                            <dt>Status</dt>
-                            <dd><%= p2[0].status %></dd>
-
-                            <dt>Address</dt>
-                            <dd><%= p2[0].address %></dd>
-
-                            <dt>Religion</dt>
-                            <dd><%= p2[0].religion %></dd>
-
-                            <dt>Allegies</dt>
-                            <dd><%= p2[0].allergies %></dd>
-
-                            <dt>Father</dt>
-                            <dd><%= p2[0].father %></dd>
-
-                            <dt>Mother</dt>
-                            <dd></dd>
-
-                            <dt>Birth History</dt>
-                            <dd><%= p2[0].birth_history %></dd>
-
-                            <dt>Immunization</dt>
-                            <dd><%= p2[0].immunization %></dd>
-
-                            <dt>Family History</dt>
-                            <dd><%= p2[0].family_history %></dd>
-
-                            <dt>Medicine</dt>
-                            <dd><%= medicine%></dd>                 
-                          </dl>
-
+                            <form class="form-horizontal" method="POST" id="setting">
+                              <div class="form-group">
+                                <label for="inputRank" class="col-sm-3 control-label">Rank or Serial Number</label>
+                                <div class="col-xs-5">
+                                  <input class="form-control" type="text" id="name" name="rank" placeholder="" value="<%= p2[0].rankORsn %>" disabled>
+                                </div>
+                              </div>
+                              <div class="form-group">
+                                <label for="inputUnit" class="col-sm-3 control-label">Unit</label>
+                                <div class="col-xs-5">
+                                  <input class="form-control" type="text" id="age" name="unit" placeholder="" value="<%= p2[0].unit %>"><br>
+                                </div>
+                              </div>
+                              <div class="form-group">
+                                <label for="inputStatus" class="col-sm-3 control-label">Status</label>
+                                  <div class="col-xs-5">
+                                    <input class="form-control" type="text" id="address" name="status" placeholder="" value="<%= p2[0].status %>"><br>
+                                  </div>
+                              </div>
+                              <div class="form-group">
+                                <label for="inputAddress" class="col-sm-3 control-label">Address</label>
+                                  <div class="col-xs-5">
+                                    <input class="form-control" type="text" id="phone" name="address" placeholder="" value="<%= p2[0].address %>"><br>
+                                  </div>
+                              </div>
+                              <div class="form-group">
+                                <label for="inputReligion" class="col-sm-3 control-label">Religion</label>
+                                  <div class="col-xs-5">
+                                    <input class="form-control" type="text" id="phone" name="religion" placeholder="" value="<%= p2[0].religion %>"><br>
+                                  </div>
+                              </div>
+                              <div class="form-group">
+                                <label for="inputAllergies" class="col-sm-3 control-label">Allergies</label>
+                                  <div class="col-xs-5">
+                                    <input class="form-control" type="text" id="phone" name="allergies" placeholder="" value="<%= p2[0].allergies %>"><br>
+                                  </div>
+                              </div>
+                              <div class="form-group">
+                                <label for="inputFather" class="col-sm-3 control-label">Father</label>
+                                  <div class="col-xs-5">
+                                    <input class="form-control" type="text" id="phone" name="father" placeholder="" value="<%= p2[0].father %>"><br>
+                                  </div>
+                              </div>
+                              <div class="form-group">
+                                <label for="inputMother" class="col-sm-3 control-label">Mother</label>
+                                  <div class="col-xs-5">
+                                    <input class="form-control" type="text" id="phone" name="mother" placeholder="" value="<%= p2[0].mother %>"><br>
+                                  </div>
+                              </div>
+                              <div class="form-group">
+                                <label for="inputBH" class="col-sm-3 control-label">Birth History</label>
+                                  <div class="col-xs-5">
+                                    <input class="form-control" type="text" id="phone" name="bh" placeholder="" value="<%= p2[0].birth_history %>"><br>
+                                  </div>
+                              </div>
+                              <div class="form-group">
+                                <label for="inputImmu" class="col-sm-3 control-label">Immunization</label>
+                                  <div class="col-xs-5">
+                                    <input class="form-control" type="text" id="phone" name="immu" placeholder="" value="<%= p2[0].immunization %>"><br>
+                                  </div>
+                              </div>
+                              <div class="form-group">
+                                <label for="inputFH" class="col-sm-3 control-label">Family History</label>
+                                  <div class="col-xs-5">
+                                    <input class="form-control" type="text" id="phone" name="fh" placeholder="" value="<%= p2[0].family_history %>"><br>
+                                  </div>
+                              </div>
+                              <div class="form-group">
+                                <label for="inputMed" class="col-sm-3 control-label">Medicine</label>
+                                  <div class="col-xs-5">
+                                    <input class="form-control" type="text" id="phone" name="medicine" placeholder="" value="<%= p2[0].medicine %>"><br>
+                                  </div>
+                              </div>
                               <div class="form-group">
                                 <div class="col-sm-offset-2 col-sm-10">
-                                  <button type="submit" class="btn btn-danger">Save</button>
+                                  <button type="submit" class="btn btn-danger" onclick="check()"><i class="fa fa-save"></i> Save</button>
                                 </div>
                               </div>
                             </form>

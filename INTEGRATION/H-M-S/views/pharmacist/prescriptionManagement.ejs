@@ -117,10 +117,20 @@
                   <td><%=prescriptionDetails[i].name%></td>
                   <td><%=prescriptionDetails[i].age%></td>
                   <td>
-                    <%var v = prescriptionDetails[i].medications.split('\n');
+                  <table class="table table-bordered table-striped">
+                    <tr>
+                    </tr>
+                  <% if(prescriptionDetails[i].medications != null){
+                    var medicine = prescriptionDetails[i].medications.split('\n');
                       for(var l=0; l < 4; l++){ %>
-                      <%=v[l]%><br>
-                    <%}%>
+                        <tr>
+                          <%var parseMed = medicine[l].split(':');%>
+                            <td style="font-weight: bold;"><%= parseMed[0]%></td>
+                            <td><%= parseMed[1]%></td>
+                        </tr>
+                    <%}
+                  }%>
+                  </table>
                   </td>
                   <form action="/pharmacist/prescriptionManagement?prescriptionId=<%=prescriptionDetails[i].prescription_id%>&prescriptionPatientName=<%=prescriptionDetails[i].name%>" method="post">
                   <td align="center">
@@ -165,10 +175,20 @@
                   <td><%=confirmedprescriptionSQL[i].name%></td>
                   <td><%=confirmedprescriptionSQL[i].age%></td>
                   <td>
-                    <%var v = confirmedprescriptionSQL[i].medications.split('\n');
+                  <table class="table table-bordered table-striped">
+                    <tr>
+                    </tr>
+                  <% if(confirmedprescriptionSQL[i].medications != null){
+                    var medicine = confirmedprescriptionSQL[i].medications.split('\n');
                       for(var l=0; l < 4; l++){ %>
-                      <%=v[l]%><br>
-                    <%}%>
+                        <tr>
+                          <%var parseMed = medicine[l].split(':');%>
+                            <td style="font-weight: bold;"><%= parseMed[0]%></td>
+                            <td><%= parseMed[1]%></td>
+                        </tr>
+                    <%}
+                  }%>
+                  </table>
                   </td>
                   <td align="center"><span class="label label-success">Confirmed</span></td>
                 </tr>
