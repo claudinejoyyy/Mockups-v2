@@ -33,22 +33,42 @@ const io = require('socket.io')(server);
 //FOR AGE INCREMENT
 var CronJob = require('cron').CronJob;
 new CronJob('00 00 * * 1-7', function() {
-    var checkBD = 'SELECT patient_id, birth_date from patient';
+    var checkBD = 'SELECT name, patient_id, birth_date, age from patient';
     db.query(checkBD, function(err, rows){
       var resultDB = JSON.parse(JSON.stringify(rows));
       for (var i in resultDB) {
         if (moment(new Date()).format('MM-DD') == moment(resultDB[i].birth_date).format('MM-DD')) {
-          db.query('UPDATE patient SET birth_date="'+ resultDB[i].birth_date+1 +'"where patient_id ='+resultDB[i].patient_id+';', function(err){
+          db.query('UPDATE patient SET age='+resultDB[i].age+1 +'"where patient_id ='+resultDB[i].patient_id+';', function(err){
             if (err) {
               console.log(err);
             } else {
-              console.log('gumagana');
+              console.log('patient: '+resultDB[i].name+' is now '+resultDB[i].age+1+'');
             }
           });
         }
       }
     });
 }, null, true);
+
+//RESET COUNTER EVERY 3 MONTHS
+  new CronJob('00 00 1 mar,jun,sep,dec *', function() {
+     // var checkBD = 'SELECT patient_id, birth_date from patient';
+     // db.query(checkBD, function(err, rows){
+     //   var resultDB = JSON.parse(JSON.stringify(rows));
+     //   for (var i in resultDB) {
+     //     if (moment(new Date()).format('MM-DD') == moment(resultDB[i].birth_date).format('MM-DD')) {
+     //       db.query('UPDATE patient SET birth_date="'+ resultDB[i].birth_date+1 +'"where patient_id ='+resultDB[i].patient_id+';', function(err){
+     //         if (err) {
+     //           console.log(err);
+     //         } else {
+     //           console.log('gumagana');
+     //         }
+     //       });
+     //     }
+     //   }
+     // });
+     console.log("wow magic");
+ }, null, true);
 
 // Express Validator Middleware
 app.use(expressValidator({
@@ -112,10 +132,40 @@ var patientList          = "SELECT * from patient;";
 var doctorList           = "SELECT * FROM user_accounts WHERE account_type = 'doctor';";
 var availableBeds        = "SELECT b.bed_id, p.patient_type, p.name, b.status, b.allotment_timestamp from bed b LEFT JOIN patient p USING(patient_id) where b.status = 'Unoccupied';";
 
-//PATIENTMANAGEMENT
-var patientManagementSQL = 'SELECT patient_id, patient_type, sex, name, age,blood_type, "New Patient" as medicines  from patient where patient_id not in (SELECT patient_id medicines FROM patient left join prescription using(patient_id) where prescription.status="confirmed" and creation_stamp = (SELECT creation_stamp from prescription where prescription.status="confirmed" order by creation_stamp desc limit 1)) '
-                            +'UNION '
-                            +'SELECT patient_id, patient_type, sex, name, age, blood_type,GROUP_CONCAT(medicine) medicines FROM patient left join prescription p using(patient_id) where p.status="confirmed" and creation_stamp = (SELECT creation_stamp from prescription p where p.status="confirmed" order by creation_stamp desc limit 1) order by patient_id desc;';
+
+var patientManagementSQL = "SELECT d.*, a.medicine, "
+                           +"(SELECT time from activity_logs where type='bed' and d.patient_id = activity_logs.patient_id order by time desc limit 1) as allotment, "
+                           +"(SELECT time from activity_logs where type='bedDischarge' and d.patient_id = activity_logs.patient_id order by time desc limit 1) as discharge, "
+                           +"(SELECT DATEDIFF(discharge,allotment)) as difference "
+                           +"FROM patient_history AS a inner join patient as d on d.patient_id = a.patient_id inner join activity_logs on d.patient_id = activity_logs.patient_id "
+                           +"INNER JOIN     "
+                           +"("
+                           +"    SELECT    patient_id, Max(date_stamp) AS DateTime "
+                           +"    FROM      patient_history "
+                           +"    GROUP BY  patient_id "
+                           +") AS b "
+                           +"ON            a.patient_id = b.patient_id "
+                           +"AND           a.date_stamp = b.DateTime "
+                           +"group by patient_id "
+                           +"UNION "
+                           +"SELECT d.*, 'New Patient' as 'medicine', "
+                           +"(SELECT time from activity_logs where type='bed' and d.patient_id = activity_logs.patient_id order by time desc limit 1) as allotment, "
+                           +"(SELECT time from activity_logs where type='bedDischarge' and d.patient_id = activity_logs.patient_id order by time desc limit 1) as discharge, "
+                           +"(SELECT DATEDIFF(discharge,allotment)) as difference "
+                           +"from patient d inner join activity_logs on d.patient_id = activity_logs.patient_id "
+                           +"where d.patient_id not in "
+                           +"(SELECT        a.patient_id "
+                           +"FROM          patient_history AS a inner join patient as d on d.patient_id = a.patient_id "
+                           +"INNER JOIN "
+                           +"("
+                           +"    SELECT    patient_id, Max(date_stamp) AS DateTime "
+                           +"    FROM      patient_history "
+                           +"    GROUP BY  patient_id "
+                           +") AS b "
+                           +"ON            a.patient_id = b.patient_id "
+                           +"AND           a.date_stamp = b.DateTime) "
+                           +"group by d.patient_id;";
+
 
 login (app,db,bcrypt,moment);
 nurse (app,db,name,counts,chart,whoCurrentlyAdmitted,whoOPD,whoWARD,monthlyPatientCount,patientList,availableBeds,doctorList,patientManagementSQL,io,moment);
