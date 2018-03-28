@@ -131,9 +131,15 @@
                     <% if (activityInfo[i].type == 'add'){ %>
                       <i class="fa fa-user-plus bg-green"></i>
                       <div class="timeline-item">
+                    <%} else if (activityInfo[i].type == 'addUser'){ %>
+                      <i class="fa fa-user-plus bg-green"></i>
+                      <div class="timeline-item">
                     <%} else if (activityInfo[i].type == 'appointment'){ %>
                       <i class="fa fa-calendar bg-yellow"></i>
                       <div class="timeline-item">
+                    <%} else if (activityInfo[i].type == 'approvedPrescription'){ %>
+                      <i class="fa fa-share bg-green"></i>
+                      <div class="timeline-item">    
                     <%} else if (activityInfo[i].type == 'bed'){ %>
                       <i class="fa fa-bed bg-primary"></i>
                       <div class="timeline-item">
@@ -141,17 +147,17 @@
                       <i class="fa fa-sign-out bg-navy"></i>
                       <div class="timeline-item">
                     <%} else if (activityInfo[i].type == 'approvedLabRequest'){ %>
-                      <i class="fa fa-share bg-orange"></i>
+                      <i class="fa fa-share bg-green"></i>
                       <div class="timeline-item">
                     <%} else if (activityInfo[i].type == 'cancelLabRequest'){ %>
                       <i class="fa fa-reply bg-orange"></i>
-                      <div class="timeline-item">
-                    <%} else if (activityInfo[i].type == 'approvedPrescription'){ %>
-                      <i class="fa fa-share bg-orange"></i>
-                      <div class="timeline-item">
+                      <div class="timeline-item">   
                     <%} else if (activityInfo[i].type == 'cancelPrescription'){ %>
                       <i class="fa fa-reply bg-orange"></i>
                       <div class="timeline-item">
+                    <%} else if (activityInfo[i].type == 'confirmedLabRequest'){ %>
+                      <i class="fa fa-share bg-green"></i>
+                      <div class="timeline-item">    
                     <%} else if (activityInfo[i].type == 'diagnosis'){ %>
                       <i class="fa fa-user-md bg-yellow"></i>
                       <div class="timeline-item">
@@ -164,6 +170,12 @@
                     <%} else if (activityInfo[i].type == 'log'){ %>
                       <i class="fa fa-check-circle bg-teal"></i>
                       <div class="timeline-item">
+                    <%} else if (activityInfo[i].type == 'prescription'){ %>
+                      <i class="fa fa-share bg-orange"></i>
+                      <div class="timeline-item">
+                    <%} else if (activityInfo[i].type == 'removedUser'){ %>
+                      <i class="fa fa-share bg-red"></i>
+                      <div class="timeline-item">      
                     <%} else if (activityInfo[i].type == 'settingsProfileManagement'){ %>
                       <i class="fa fa-edit bg-blue"></i>
                       <div class="timeline-item">
@@ -174,15 +186,13 @@
                       <i class="fa fa-remove bg-red"></i>
                       <div class="timeline-item">
                     <%} else if (activityInfo[i].type == 'urgentTodo'){ %>
-                      <i class="fa fa-remove bg-orange"></i>
+                      <i class="fa fa-plus bg-orange"></i>
                       <div class="timeline-item">
                     <%} else if (activityInfo[i].type == 'generalTodo'){%>
-                      <i class="fa fa-remove bg-green"></i>
+                      <i class="fa fa-plus bg-green"></i>
                       <div class="timeline-item">
                     <%}%>
-
                       <h3 class="timeline-header"><%= activityInfo[i].remarks%></a></h3>
-
                     </div>
                   </li>
                 </ul>
@@ -191,7 +201,7 @@
 
                 <div id="seeMore" style="display: none;">
                 <br>
-                <%for(var i=5; i < 20; i ++){%>
+                <%for(var i=5; i < 30; i ++){%>
                 <ul class="timeline timeline-inverse">
                   <li class="time-label">
                       <span class="bg-red">
@@ -203,9 +213,15 @@
                     <% if (activityInfo[i].type == 'add'){ %>
                       <i class="fa fa-user-plus bg-green"></i>
                       <div class="timeline-item">
+                    <%} else if (activityInfo[i].type == 'addUser'){ %>
+                      <i class="fa fa-user-plus bg-green"></i>
+                      <div class="timeline-item">
                     <%} else if (activityInfo[i].type == 'appointment'){ %>
                       <i class="fa fa-calendar bg-yellow"></i>
                       <div class="timeline-item">
+                    <%} else if (activityInfo[i].type == 'approvedPrescription'){ %>
+                      <i class="fa fa-share bg-green"></i>
+                      <div class="timeline-item">    
                     <%} else if (activityInfo[i].type == 'bed'){ %>
                       <i class="fa fa-bed bg-primary"></i>
                       <div class="timeline-item">
@@ -213,17 +229,17 @@
                       <i class="fa fa-sign-out bg-navy"></i>
                       <div class="timeline-item">
                     <%} else if (activityInfo[i].type == 'approvedLabRequest'){ %>
-                      <i class="fa fa-share bg-orange"></i>
+                      <i class="fa fa-share bg-green"></i>
                       <div class="timeline-item">
                     <%} else if (activityInfo[i].type == 'cancelLabRequest'){ %>
                       <i class="fa fa-reply bg-orange"></i>
-                      <div class="timeline-item">
-                    <%} else if (activityInfo[i].type == 'approvedPrescription'){ %>
-                      <i class="fa fa-share bg-orange"></i>
-                      <div class="timeline-item">
+                      <div class="timeline-item">   
                     <%} else if (activityInfo[i].type == 'cancelPrescription'){ %>
                       <i class="fa fa-reply bg-orange"></i>
                       <div class="timeline-item">
+                    <%} else if (activityInfo[i].type == 'confirmedLabRequest'){ %>
+                      <i class="fa fa-share bg-green"></i>
+                      <div class="timeline-item">    
                     <%} else if (activityInfo[i].type == 'diagnosis'){ %>
                       <i class="fa fa-user-md bg-yellow"></i>
                       <div class="timeline-item">
@@ -236,6 +252,12 @@
                     <%} else if (activityInfo[i].type == 'log'){ %>
                       <i class="fa fa-check-circle bg-teal"></i>
                       <div class="timeline-item">
+                    <%} else if (activityInfo[i].type == 'prescription'){ %>
+                      <i class="fa fa-share bg-orange"></i>
+                      <div class="timeline-item">
+                    <%} else if (activityInfo[i].type == 'removedUser'){ %>
+                      <i class="fa fa-share bg-red"></i>
+                      <div class="timeline-item">      
                     <%} else if (activityInfo[i].type == 'settingsProfileManagement'){ %>
                       <i class="fa fa-edit bg-blue"></i>
                       <div class="timeline-item">
@@ -246,10 +268,10 @@
                       <i class="fa fa-remove bg-red"></i>
                       <div class="timeline-item">
                     <%} else if (activityInfo[i].type == 'urgentTodo'){ %>
-                      <i class="fa fa-remove bg-orange"></i>
+                      <i class="fa fa-plus bg-orange"></i>
                       <div class="timeline-item">
                     <%} else if (activityInfo[i].type == 'generalTodo'){%>
-                      <i class="fa fa-remove bg-green"></i>
+                      <i class="fa fa-plus bg-green"></i>
                       <div class="timeline-item">
                     <%}%>
                       <h3 class="timeline-header"><%= activityInfo[i].remarks%></a></h3>
