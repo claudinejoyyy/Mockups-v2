@@ -1,4 +1,4 @@
-module.exports = function(app,db,name,counts,chart,whoCurrentlyAdmitted,whoOPD,whoWARD,monthlyPatientCount,patientList,io,moment){
+module.exports = function(app,db,name,counts,chart,whoCurrentlyAdmitted,whoOPD,whoWARD,monthlyPatientCount,patientList,bcrypt,io,moment){
 var user, Aid;
 var prescriptionSQL = 'SELECT CONCAT("medicine:",medicine,"\nquantity:",quantity,"\ndosage:", dosage,"\ntimeframe:", timeframe) AS medications, p.status as STATUS,creation_stamp,patient_type,name,age,prescription_id from prescription p inner join patient using(patient_id) where p.status = "pending";';
 var confirmedprescriptionSQL = 'SELECT CONCAT("medicine:",medicine,"\nquantity:",quantity,"\ndosage:", dosage,"\ntimeframe:", timeframe) AS medications, p.status as STATUS,creation_stamp,patient_type,name,age,prescription_id from prescription p inner join patient using(patient_id) where p.status = "confirmed";';
@@ -153,13 +153,13 @@ res.redirect('../login');
     app.get('/pharmacist/profileManagement', function(req, res){
       if(req.session.email && req.session.sino == 'pharmacist'){
         if (req.session.sino == 'pharmacist') {
-          var profileInfoSQL  = 'SELECT * from user_accounts where account_id = '+req.session.Aid+';';
+          var profileInfoSQL  = 'SELECT name, age, address, phone from user_accounts where account_id = '+req.session.Aid+';';
           var activityLogsSQL = 'SELECT * from activity_logs where account_id = '+req.session.Aid+' ORDER by logs_id desc;';
           db.query(profileInfoSQL + activityLogsSQL, function(err, rows){
             if (err) {
               console.log(err);
             } else {
-              res.render('pharmacist/profileManagement', {pInfo:rows[0], activityInfo: rows[1], username:user});
+              res.render('pharmacist/profileManagement', {pInfo:rows[0], activityInfo: rows[1], username: user});
             }
           });
         } else {
@@ -174,15 +174,31 @@ res.redirect('../login');
       var data = req.body;
       if (req.session.email && req.session.sino == 'pharmacist') {
         if (req.session.sino == 'pharmacist') {
-          var updateProfileSQL = 'UPDATE user_accounts SET name = "'+data.name+'", age = '+data.age+', address = "'+data.address+'", phone = '+data.phone+' WHERE account_id = '+req.session.Aid+';';
-
-          db.query(updateProfileSQL + 'INSERT into activity_logs(account_id, time, type, remarks) VALUES ('+Aid+',"'+moment(new Date()).format('YYYY-MM-DD HH:mm:ss')+'", "settingsProfileManagement", "Edited personal info.");', function(err, rows){
-            if (err) {
-              console.log(err);
+          bcrypt.compare(data.oldPass, req.session.password, function(err, isMatch){
+            if(isMatch) {
+              req.flash('success', 'Successfully changed the password!');
+              bcrypt.genSalt(10, function(err, salt){
+                bcrypt.hash(data.newPass, salt, function(err, hash){
+                  var updateProfileSQL = 'UPDATE user_accounts SET name = "'+data.name+'", age = '+data.age+', address = "'+data.address+'", phone = '+data.phone+', password = IFNULL("'+hash+'",password) WHERE account_id = '+req.session.Aid+';';
+                  db.query(updateProfileSQL + 'INSERT into activity_logs(account_id, time, type, remarks) VALUES ('+Aid+',"'+moment(new Date()).format('YYYY-MM-DD HH:mm:ss')+'", "settingsProfileManagement", "Edited personal info.");', function(err, rows){
+                    if (err) {
+                      console.log(err);
+                    } else {
+                      if (hash) {
+                        res.redirect('../logout');
+                      } else {
+                        res.redirect(req.get('referer'));
+                      }
+                    }
+                  });
+                });
+              });
             } else {
+              req.flash('danger', 'Invalid Current Password!');
               res.redirect(req.get('referer'));
             }
           });
+
         } else {
           res.redirect(req.session.sino+'/dashboard');
         }

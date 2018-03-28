@@ -126,8 +126,14 @@
                     <% if (activityInfo[i].type == 'add'){ %>
                       <i class="fa fa-user-plus bg-green"></i>
                       <div class="timeline-item">
+                    <%} else if (activityInfo[i].type == 'addUser'){ %>
+                      <i class="fa fa-user-plus bg-green"></i>
+                      <div class="timeline-item">
                     <%} else if (activityInfo[i].type == 'appointment'){ %>
                       <i class="fa fa-calendar bg-yellow"></i>
+                      <div class="timeline-item">
+                    <%} else if (activityInfo[i].type == 'approvedPrescription'){ %>
+                      <i class="fa fa-share bg-green"></i>
                       <div class="timeline-item">
                     <%} else if (activityInfo[i].type == 'bed'){ %>
                       <i class="fa fa-bed bg-primary"></i>
@@ -136,16 +142,16 @@
                       <i class="fa fa-sign-out bg-navy"></i>
                       <div class="timeline-item">
                     <%} else if (activityInfo[i].type == 'approvedLabRequest'){ %>
-                      <i class="fa fa-share bg-orange"></i>
+                      <i class="fa fa-share bg-green"></i>
                       <div class="timeline-item">
                     <%} else if (activityInfo[i].type == 'cancelLabRequest'){ %>
                       <i class="fa fa-reply bg-orange"></i>
                       <div class="timeline-item">
-                    <%} else if (activityInfo[i].type == 'approvedPrescription'){ %>
-                      <i class="fa fa-share bg-orange"></i>
-                      <div class="timeline-item">
                     <%} else if (activityInfo[i].type == 'cancelPrescription'){ %>
                       <i class="fa fa-reply bg-orange"></i>
+                      <div class="timeline-item">
+                    <%} else if (activityInfo[i].type == 'confirmedLabRequest'){ %>
+                      <i class="fa fa-share bg-green"></i>
                       <div class="timeline-item">
                     <%} else if (activityInfo[i].type == 'diagnosis'){ %>
                       <i class="fa fa-user-md bg-yellow"></i>
@@ -159,6 +165,12 @@
                     <%} else if (activityInfo[i].type == 'log'){ %>
                       <i class="fa fa-check-circle bg-teal"></i>
                       <div class="timeline-item">
+                    <%} else if (activityInfo[i].type == 'prescription'){ %>
+                      <i class="fa fa-share bg-orange"></i>
+                      <div class="timeline-item">
+                    <%} else if (activityInfo[i].type == 'removedUser'){ %>
+                      <i class="fa fa-share bg-red"></i>
+                      <div class="timeline-item">
                     <%} else if (activityInfo[i].type == 'settingsProfileManagement'){ %>
                       <i class="fa fa-edit bg-blue"></i>
                       <div class="timeline-item">
@@ -169,10 +181,10 @@
                       <i class="fa fa-remove bg-red"></i>
                       <div class="timeline-item">
                     <%} else if (activityInfo[i].type == 'urgentTodo'){ %>
-                      <i class="fa fa-remove bg-orange"></i>
+                      <i class="fa fa-plus bg-orange"></i>
                       <div class="timeline-item">
                     <%} else if (activityInfo[i].type == 'generalTodo'){%>
-                      <i class="fa fa-remove bg-green"></i>
+                      <i class="fa fa-plus bg-green"></i>
                       <div class="timeline-item">
                     <%}%>
                       <h3 class="timeline-header"><%= activityInfo[i].remarks%></a></h3>
@@ -184,7 +196,7 @@
 
                 <div id="seeMore" style="display: none;">
                 <br>
-                <%for(var i=5; i < 20; i ++){%>
+                <%for(var i=5; i < 30; i ++){%>
                 <ul class="timeline timeline-inverse">
                   <li class="time-label">
                       <span class="bg-red">
@@ -196,8 +208,14 @@
                     <% if (activityInfo[i].type == 'add'){ %>
                       <i class="fa fa-user-plus bg-green"></i>
                       <div class="timeline-item">
+                    <%} else if (activityInfo[i].type == 'addUser'){ %>
+                      <i class="fa fa-user-plus bg-green"></i>
+                      <div class="timeline-item">
                     <%} else if (activityInfo[i].type == 'appointment'){ %>
                       <i class="fa fa-calendar bg-yellow"></i>
+                      <div class="timeline-item">
+                    <%} else if (activityInfo[i].type == 'approvedPrescription'){ %>
+                      <i class="fa fa-share bg-green"></i>
                       <div class="timeline-item">
                     <%} else if (activityInfo[i].type == 'bed'){ %>
                       <i class="fa fa-bed bg-primary"></i>
@@ -206,16 +224,16 @@
                       <i class="fa fa-sign-out bg-navy"></i>
                       <div class="timeline-item">
                     <%} else if (activityInfo[i].type == 'approvedLabRequest'){ %>
-                      <i class="fa fa-share bg-orange"></i>
+                      <i class="fa fa-share bg-green"></i>
                       <div class="timeline-item">
                     <%} else if (activityInfo[i].type == 'cancelLabRequest'){ %>
                       <i class="fa fa-reply bg-orange"></i>
                       <div class="timeline-item">
-                    <%} else if (activityInfo[i].type == 'approvedPrescription'){ %>
-                      <i class="fa fa-share bg-orange"></i>
-                      <div class="timeline-item">
                     <%} else if (activityInfo[i].type == 'cancelPrescription'){ %>
                       <i class="fa fa-reply bg-orange"></i>
+                      <div class="timeline-item">
+                    <%} else if (activityInfo[i].type == 'confirmedLabRequest'){ %>
+                      <i class="fa fa-share bg-green"></i>
                       <div class="timeline-item">
                     <%} else if (activityInfo[i].type == 'diagnosis'){ %>
                       <i class="fa fa-user-md bg-yellow"></i>
@@ -229,6 +247,12 @@
                     <%} else if (activityInfo[i].type == 'log'){ %>
                       <i class="fa fa-check-circle bg-teal"></i>
                       <div class="timeline-item">
+                    <%} else if (activityInfo[i].type == 'prescription'){ %>
+                      <i class="fa fa-share bg-orange"></i>
+                      <div class="timeline-item">
+                    <%} else if (activityInfo[i].type == 'removedUser'){ %>
+                      <i class="fa fa-share bg-red"></i>
+                      <div class="timeline-item">
                     <%} else if (activityInfo[i].type == 'settingsProfileManagement'){ %>
                       <i class="fa fa-edit bg-blue"></i>
                       <div class="timeline-item">
@@ -239,10 +263,10 @@
                       <i class="fa fa-remove bg-red"></i>
                       <div class="timeline-item">
                     <%} else if (activityInfo[i].type == 'urgentTodo'){ %>
-                      <i class="fa fa-remove bg-orange"></i>
+                      <i class="fa fa-plus bg-orange"></i>
                       <div class="timeline-item">
                     <%} else if (activityInfo[i].type == 'generalTodo'){%>
-                      <i class="fa fa-remove bg-green"></i>
+                      <i class="fa fa-plus bg-green"></i>
                       <div class="timeline-item">
                     <%}%>
                       <h3 class="timeline-header"><%= activityInfo[i].remarks%></a></h3>
@@ -253,30 +277,57 @@
                 </div>
               </div>
 
+              <style>
+                .parsley-error{
+                  border-color: red;
+                }
+              </style>
+
               <div class="tab-pane" id="settings">
-                <form class="form-horizontal" method="POST" id="setting" style="display:none;">
+                <%- messages('message', locals) %>
+                <form class="form-horizontal" method="POST" id="setting" data-parsley-validate=""  data-parsley-trigger="keyup">
+                <form class="form-horizontal" method="POST" id="setting" style="display:none;" data-parsley-validate=""  data-parsley-trigger="keyup">
                   <div class="form-group">
                     <label for="inputName" class="col-sm-2 control-label">Name</label>
                     <div class="col-xs-5">
-                      <input class="form-control" type="text" id="name" name="name" placeholder="" value="<%= pInfo[0].name%>">
+                      <input class="form-control" type="text" id="name" name="name" placeholder="" value="<%= pInfo[0].name%>" data-parsley-required data-parsley-pattern="/^[A-Za-z\s .]+$/" data-parsley-validation-threshold="1">
                     </div>
                   </div>
                   <div class="form-group">
                     <label for="inputName" class="col-sm-2 control-label">Age</label>
                     <div class="col-xs-5">
-                      <input class="form-control" type="int" id="age" name="age" placeholder="" value="<%= pInfo[0].age%>"><br>
+                      <input class="form-control" type="int" id="age" name="age" placeholder="" value="<%= pInfo[0].age%>" data-parsley-required data-parsley-type="number" data-parsley-validation-threshold="1"><br>
                     </div>
                   </div>
                   <div class="form-group">
                     <label for="inputExperience" class="col-sm-2 control-label">Address</label>
                       <div class="col-xs-5">
-                        <input class="form-control" type="text" id="address" name="address" placeholder="" value="<%= pInfo[0].address%>"><br>
+                        <input class="form-control" type="text" id="address" name="address" placeholder="" value="<%= pInfo[0].address%>" data-parsley-required data-parsley-pattern="/^[0-9A-Za-z\s -/.]+$/" data-parsley-validation-threshold="1"><br>
                       </div>
                   </div>
                   <div class="form-group">
                     <label for="inputExperience" class="col-sm-2 control-label">Phone</label>
                       <div class="col-xs-5">
-                        <input class="form-control" type="text" id="phone" name="phone" placeholder="" value="<%= pInfo[0].phone%>"><br>
+                        <input class="form-control" type="text" id="phone" name="phone" placeholder="" value="<%= pInfo[0].phone%>" data-parsley-required data-parsley-maxlength="11" data-parsley-type="number" data-parsley-validation-threshold="1"><br>
+                      </div>
+                  </div>
+                  <!--Change PASSWORD -->
+                  <div class="form-group">
+                    <label for="inputExperience" class="col-sm-2 control-label">Current Password</label>
+                      <div class="col-xs-5">
+                        <input class="form-control" type="password" name="oldPass" required><br>
+                      </div>
+                  </div>
+                  <div class="form-group">
+                    <label for="inputExperience" class="col-sm-2 control-label">New Password</label>
+                      <div class="col-xs-5">
+                        <input class="form-control" type="password" id="newPass" name="newPass" data-parsley-trigger="keyup" data-parsley-required data-parsley-validation-threshold="1"><br>
+                      </div>
+                  </div>
+                  <div class="form-group">
+                    <label for="inputExperience" class="col-sm-2 control-label">Re-Type Password</label>
+                      <div class="col-xs-5">
+                        <input class="form-control" type="password" id="confirmPass" name="confirmPass" data-parsley-trigger="keyup" data-parsley-required data-parsley-equalto="#newPass" data-parsley-validation-threshold="1"><br>
                       </div>
                   </div>
                   <div class="form-group">
@@ -341,4 +392,11 @@ function seeMore() {
       document.getElementById('phone').value = "<%= pInfo[0].phone%>";
     }
   }
+  function validateUpdate() {
+    $('#setting').parsley().on('field:validated', function() {
+    var ok = $('.parsley-error').length === 0;
+    $('.bs-callout-info').toggleClass('hidden', !ok);
+    $('.bs-callout-warning').toggleClass('hidden', ok);
+   })
+  };
 </script>

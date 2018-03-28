@@ -38,9 +38,10 @@ new CronJob('00 00 * * 1-7', function() {
       var resultDB = JSON.parse(JSON.stringify(rows));
       for (var i in resultDB) {
         if (moment(new Date()).format('MM-DD') == moment(resultDB[i].birth_date).format('MM-DD')) {
-          db.query('UPDATE patient SET age='+resultDB[i].age+1 +'"where patient_id ='+resultDB[i].patient_id+';', function(err){
+          db.query('UPDATE patient SET age='+resultDB[i].age+1+'" where patient_id ='+resultDB[i].patient_id+';', function(err){
             if (err) {
               console.log(err);
+              console.log(resultDB[i].age+1);
             } else {
               console.log('patient: '+resultDB[i].name+' is now '+resultDB[i].age+1+'');
             }
@@ -49,7 +50,7 @@ new CronJob('00 00 * * 1-7', function() {
       }
     });
 }, null, true);
-
+var opdSUB = 0;
 //RESET COUNTER EVERY 3 MONTHS
   new CronJob('00 00 1 mar,jun,sep,dec *', function() {
      // var checkBD = 'SELECT patient_id, birth_date from patient';
@@ -67,7 +68,9 @@ new CronJob('00 00 * * 1-7', function() {
      //     }
      //   }
      // });
-     console.log("wow magic");
+     db.query("SELECT count(patient_id) as opdCount From patient p inner join activity_logs a USING(patient_id) where a.type = 'initialAssessment'",function(err, rows){
+      opdSUB = rows[0].opdCount;
+     });
  }, null, true);
 
 // Express Validator Middleware
@@ -99,7 +102,7 @@ app.use(function (req, res, next) {
 
 //PARA sa DASHBOARD of all MODULES!!!
 var name   = "SELECT name,account_type FROM user_accounts where account_id = ?;";
-var counts = "SELECT (SELECT count(patient_id) From patient p inner join activity_logs a USING(patient_id) where a.type = 'initialAssessment') as OPD, "
+var counts = "SELECT ((SELECT count(patient_id) From patient p inner join activity_logs a USING(patient_id) where a.type = 'initialAssessment') - "+opdSUB+") as OPD, "
             +"(SELECT count(patient_id) From patient p inner join activity_logs a USING(patient_id) where a.type = 'bed') as WARD,"
             +"(SELECT count(name) pCount FROM patient) as totalRegisteredPatients,"
             +"(SELECT count(patient_id) admitted FROM bed) as currentlyAdmitted;";
@@ -168,8 +171,8 @@ var patientManagementSQL = "SELECT d.*, a.medicine, "
 
 
 login (app,db,bcrypt,moment);
-nurse (app,db,name,counts,chart,whoCurrentlyAdmitted,whoOPD,whoWARD,monthlyPatientCount,patientList,availableBeds,doctorList,patientManagementSQL,io,moment);
+nurse (app,db,name,counts,chart,whoCurrentlyAdmitted,whoOPD,whoWARD,monthlyPatientCount,patientList,availableBeds,doctorList,patientManagementSQL,bcrypt,io,moment);
 doctor(app,db,name,counts,chart,whoCurrentlyAdmitted,whoOPD,whoWARD,monthlyPatientCount,patientList,availableBeds,patientManagementSQL,bcrypt,io,moment);
 admin (app,db,name,counts,chart,whoCurrentlyAdmitted,whoOPD,whoWARD,monthlyPatientCount,patientList,availableBeds,patientManagementSQL,bcrypt,io,moment);
-pharmacist(app,db,name,counts,chart,whoCurrentlyAdmitted,whoOPD,whoWARD,monthlyPatientCount,patientList,io,moment);
-laboratorist(app,db,name,counts,chart,whoCurrentlyAdmitted,whoOPD,whoWARD,monthlyPatientCount,patientList,io,moment);
+pharmacist(app,db,name,counts,chart,whoCurrentlyAdmitted,whoOPD,whoWARD,monthlyPatientCount,patientList,bcrypt,io,moment);
+laboratorist(app,db,name,counts,chart,whoCurrentlyAdmitted,whoOPD,whoWARD,monthlyPatientCount,patientList,bcrypt,io,moment);
