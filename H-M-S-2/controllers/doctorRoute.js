@@ -150,7 +150,7 @@ var user, Aid, availableBedss, p;
               }
             });
           } else if (data.sub == 'confirm') {
-            db.query('UPDATE patient_history set status = "confirmed" where histo_id = '+req.query.id+';', function(err){
+            db.query('UPDATE patient_history inner join bed on patient_history.patient_id = bed.patient_id set patient_history.status = "confirmed", bed.status = "Unoccupied", bed.allotment_timestamp = NULL, bed.patient_id = NULL where patient_history.histo_id = '+req.query.id+';', function(err){
               if (err) {
                 console.log(err);
               } else {
