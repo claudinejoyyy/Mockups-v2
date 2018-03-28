@@ -139,8 +139,11 @@ app.get('/admin/patientManagement', function(req, res){
       if(req.session.email && req.session.sino == 'admin'){
         if(req.session.sino == 'admin'){
             var sql  = "SELECT account_id, account_type, name, age, sex, max(time) as last_Login FROM user_accounts left join activity_logs using(account_id) where account_id !="+Aid+" group by account_id;";
-            db.query(sql, function(err, rows){
-              res.render('admin/userAccountsManagement', {p:rows, username:user});
+            var filterPharm = "select * from user_accounts where account_type like'%pharmacist%'";
+            var filterLab = "select * from user_accounts where account_type like'%laboratorist%'";
+            var filterAdmin = "select * from user_accounts where account_type like'%admin%'";
+            db.query(sql + filterPharm + filterLab + filterAdmin, function(err, rows){
+              res.render('admin/userAccountsManagement', {p:rows[0], pharma:rows[1], lab:rows[2], adm:rows[3], username:user});
             });
         } else {
           res.redirect(req.session.sino+'/dashboard');

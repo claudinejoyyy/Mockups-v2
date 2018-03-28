@@ -121,8 +121,8 @@
                       <td style="color:green; font-weight: bold;">New User</td>
                     <%}%>
                     <td>
-                      <form action="/admin/userAccountsManagement?name=<%=p[i].name%>&account=<%=p[i].account_id%>" id="remove">
-                        <button class="btn btn-danger btn-sm confirmRemove" data-title="Are you sure?"><i class="fa fa-fw fa-archive"></i> Remove</button>
+                      <form action="/admin/userAccountsManagement?name=<%=p[i].name%>&account=<%=p[i].account_id%>" method="post">
+                        <button class="btn btn-danger btn-sm" type="submit" name="sub" value="remove"><i class="fa fa-fw fa-archive"></i> Remove</button>
                       </form>
                     </td>
                   </tr>
@@ -149,21 +149,33 @@
                     <div class="col-sm-10">
                       <select class="form-control" name="type" data-parsley-required>
                         <option></option>
-                        <option value="doctor">Doctor</option>
-                        <option value="nurse">Nurse</option>
+                        <%if(pharma){%>
+                          <option value="Pharmacist">Pharmacist</option>
+                        <%} else {%> 
+                        <%}%>
+                        <%if(lab){%>
+                          <option value="Laboratorist">Laboratorist</option>
+                        <%} else {%> 
+                        <%}%>
+                        <%if(adm){%>
+                          <option value="Admin">Admin</option>
+                        <%} else {%> 
+                        <%}%>
+                        <option value="Doctor">Doctor</option>
+                        <option value="Nurse">Nurse</option>
                         </select>
                     </div>
                   </div>
                   <div class="form-group">
-                    <label for="inputName" class="col-sm-2 control-label">Full Name</label>
+                    <label for="inputName" class="col-sm-2 control-label">Name</label>
                     <div class="col-sm-10">
-                      <input type="text" class="form-control" id="inputName" name="name" data-parsley-required data-parsley-pattern="/^[A-Za-z\s .]+$/"  data-parsley-validation-threshold="1">
+                      <input type="text" class="form-control" id="inputName" name="name" data-parsley-required>
                     </div>
                   </div>
                   <div class="form-group">
                     <label for="inputName" class="col-sm-2 control-label">Gender</label>
                     <div class="col-sm-10">
-                      <select class="form-control" name="gender" data-parsley-required>
+                      <select class="form-control" name="gender">
                         <option></option>
                         <option value="M">Male</option>
                         <option value="F">Female</option>
@@ -179,7 +191,7 @@
                   <div class="form-group">
                     <label for="inputName" class="col-sm-2 control-label">Username</label>
                     <div class="col-sm-10">
-                      <input class="form-control" id="inputName" type="username" name="user" data-parsley-required data-parsley-pattern="/^[A-Za-z0-9]+$/" data-parsley-validation-threshold="1">
+                      <input class="form-control" id="inputName" type="username" name="user" data-parsley-required>
                     </div>
                   </div>
                   <div class="form-group">
@@ -192,14 +204,15 @@
                   <div class="form-group">
                     <label for="inputExperience" class="col-sm-2 control-label">Phone Number</label>
                       <div class="col-sm-10">
-                        <input type="text" class="form-control" id="inputName" name="phone" data-parsley-required data-parsley-maxlength="11" data-parsley-type="number" data-parsley-validation-threshold="1">
-                      </div>
+                        <input type="text" class="form-control" id="inputName" name="phone">
+                        </div>
                   </div>
 
                   <div class="form-group">
                     <label for="inputSkills" class="col-sm-2 control-label">Address</label>
+
                     <div class="col-sm-10">
-                      <input type="text" class="form-control" id="inputSkills" name="address" data-parsley-required data-parsley-pattern="/^[0-9A-Za-z\s -/.]+$/" data-parsley-validation-threshold="1">
+                        <textarea type="text" class="form-control" id="inputSkills" name="address" rows="2" cols="80"></textarea>
                     </div>
                   </div>
 
@@ -213,28 +226,6 @@
           </div>
         </div>
         <!------------------------------------------------------------------------------------------ /Modal-->
-        <!-- -------------------------------------------------------------------------------------------- Modal of Adding new user ----------->
-        <!-- <div class="modal fade modal-danger" id="confirm" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-          <div class="modal-dialog modal-sm" role="document">
-            <div class="modal-content">
-            <form class="form-horizontal" method="post" id="showCreateUser" data-parsley-validate=""  data-parsley-trigger="keyup">
-
-              <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                <h4 class="modal-title" id="myModalLabel">Add New User</h4>
-              </div>
-              <div class="modal-body">
-                <p>Are you sure?</p>
-              </div>
-              <div class="modal-footer">
-                <button type="button" class="btn btn-outline pull-left" data-dismiss="modal">Cancel</button>
-                <button type="button" id="btnYes" class="btn btn-outline" >Confirm</button>
-              </div>
-            </form>
-            </div>
-          </div>
-        </div> -->
-        <!------------------------------------------------------------------------------------------ /Modal -->
 
     </section>
   </div>
@@ -261,18 +252,6 @@
     })
   };
 </script>
-<!-- <script>
-$('#btnYes').click(function() {
-    $('#formfield').submit();
-});
-</script> -->
-<script>
-$('.confirmRemove').confirmation({
-  onConfirm: function() {
-  $('#remove').submit();
-}
-  // other options
-});
-</script>
+
 </body>
 </html>
