@@ -103,7 +103,6 @@
                     <th>Gender</th>
                     <th>Vital Signs</th>
                     <th>Initial Assessment</th>
-                    <th>Bed</th>
                     <th>Action</th>
                   </tr>
                 </thead>
@@ -121,16 +120,6 @@
                         <%}%>
                       </td>
                       <td><%=opdInfo[i].assessment%></td>
-                      <%
-                      var bedArr= '';
-                        for (var j = 0; j < whoopdInfo2V2.length; j++){
-                          bedArr += whoopdInfo2V2[j].patient_id;
-                        }
-                      if(bedArr.includes(opdInfo[i].patient_id)){%>
-                        <td><%= whoopdInfo2V2[i].bed_id%><a href="/doctor/bedManagement?bed_id=<%=whoopdInfo2V2[i].bed_id%>" style="font-size:10px;">-details</a></td>
-                      <%} else {%>
-                        <td></td>
-                      <%}%>
                       <td>
                         <!-- VIEW -->
                         <a href="../doctor/patientManagement?patient=<%=opdInfo[i].patient_id%>"><button class="btn btn-primary btn-sm" name="view">View</button></a>
@@ -164,14 +153,7 @@
                         <button class="btn btn-primary btn-sm" class="btn btn-primary btn-sm" name="button" data-toggle="modal" data-target="#diagnosis" onclick="ShowDiagnosis(<%=opdInfo[i].patient_id%>,<%=JSON.stringify(opdInfo[i].name)%>)">Diagnosis</button>
 
                         <!-- ADMIT -->
-                        <% var arr= '';
-                          for (var j = 0; j < whoopdInfo2V2.length; j++){
-                            arr += whoopdInfo2V2[j].patient_id;
-                          } if(!(arr.includes(opdInfo[i].patient_id))){%>
-
-                            <button class="btn btn-primary btn-sm" type="button" name="admit" value="Admit" data-toggle="modal" data-target="#admit" onclick="ShowAdmit(<%=opdInfo[i].patient_id%>,<%=JSON.stringify(opdInfo[i].name)%>)">Admit</button>
-
-                        <%}%>
+                        <input type="button" class="btn btn-primary btn-sm" name="admit" value="Admit" data-toggle="modal" data-target="#admit" onclick="ShowAdmit(<%=opdInfo[i].patient_id%>,<%=JSON.stringify(opdInfo[i].name)%>,<%=opdInfo[i].histo_id%>)">
                         <!-- LAB REQUEST TABLE VIEW -->
                       </td>
                   </tr>

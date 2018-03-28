@@ -25,7 +25,7 @@ app.use(express.static('./public'));
 app.use(session({secret: 'shhhhh', cookie: { maxAge: 3600000 }}));
 
 // Run server to listen on port 3000.
-const server = app.listen(3000, () => {
+const server = app.listen(3002, () => {
   console.log('--listening on port 3000--');
 });
 const io = require('socket.io')(server);
