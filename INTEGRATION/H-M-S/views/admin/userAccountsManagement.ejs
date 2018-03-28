@@ -157,7 +157,7 @@
                   <div class="form-group">
                     <label for="inputName" class="col-sm-2 control-label">Full Name</label>
                     <div class="col-sm-10">
-                      <input type="text" class="form-control" id="inputName" name="name" data-parsley-required data-parsley-pattern="/^[A-Za-z\s .]+$/">
+                      <input type="text" class="form-control" id="inputName" name="name" data-parsley-required data-parsley-pattern="/^[A-Za-z\s .]+$/"  data-parsley-validation-threshold="1">
                     </div>
                   </div>
                   <div class="form-group">
@@ -179,7 +179,7 @@
                   <div class="form-group">
                     <label for="inputName" class="col-sm-2 control-label">Username</label>
                     <div class="col-sm-10">
-                      <input class="form-control" id="inputName" type="username" name="user" data-parsley-required data-parsley-pattern="/^[A-Za-z0-9]+$/">
+                      <input class="form-control" id="inputName" type="username" name="user" data-parsley-required data-parsley-pattern="/^[A-Za-z0-9]+$/" data-parsley-validation-threshold="1">
                     </div>
                   </div>
                   <div class="form-group">
@@ -192,14 +192,14 @@
                   <div class="form-group">
                     <label for="inputExperience" class="col-sm-2 control-label">Phone Number</label>
                       <div class="col-sm-10">
-                        <input type="text" class="form-control" id="inputName" name="phone" data-parsley-required data-parsley-maxlength="11" data-parsley-type="number">
+                        <input type="text" class="form-control" id="inputName" name="phone" data-parsley-required data-parsley-maxlength="11" data-parsley-type="number" data-parsley-validation-threshold="1">
                       </div>
                   </div>
 
                   <div class="form-group">
                     <label for="inputSkills" class="col-sm-2 control-label">Address</label>
                     <div class="col-sm-10">
-                      <input type="text" class="form-control" id="inputSkills" name="address" data-parsley-required data-parsley-pattern="/^[0-9A-Za-z\s -/.]+$/">
+                      <input type="text" class="form-control" id="inputSkills" name="address" data-parsley-required data-parsley-pattern="/^[0-9A-Za-z\s -/.]+$/" data-parsley-validation-threshold="1">
                     </div>
                   </div>
 
