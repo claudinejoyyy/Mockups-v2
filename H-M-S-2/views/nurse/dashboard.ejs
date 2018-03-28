@@ -181,7 +181,7 @@
     <form id="assessment" method="post" style="display:none;">
       <!-- PATIENT !! -->
       <h4 style="display:inline-block;">select a patient</h4>
-      <select name="assessmentPatient" style="display:inline-block;"  >
+      <select name="assessmentPatient" style="display:inline-block;">
         <%for(var i = 0; i < availablePatientOPD.length; i++){%>
           <option  value="<%= availablePatientOPD[i].patient_id%>,<%= availablePatientOPD[i].name%>"><%= availablePatientOPD[i].name%></option>
         <%}%>
@@ -201,9 +201,29 @@
           <option value="<%= doctorList[i].account_id%>"><%= doctorList[i].name%></option>
         <%}%>
       </select>
-      <button type="submit" name="sub" value="assessment" onclick="linkAssessment(<%= availablePatientOPD[i].name%>)">send</button>
+      <button type="submit" name="sub" value="assessment" >send</button>
     </form>
+
     <h1><%= err%></h1>
+    <button type="button" name="sub" value="er">ER patient</button>
+    <form method="post" id="bed">
+        <select name="bed">
+          <%for(var i = 0; i < bed.length; i++){%>
+            <option value="<%= bed[i].bed_id%>"><%= bed[i].bed_id%></option>
+          <%}%>
+        </select>
+        <select name="bedName" style="display:inline-block;">
+          <%for(var i = 0; i < availablePatientOPD.length; i++){%>
+            <option  value="<%= availablePatientOPD[i].patient_id%>,<%= availablePatientOPD[i].name%>"><%= availablePatientOPD[i].name%></option>
+          <%}%>
+        </select>
+        <select name="bedDoc">
+          <%for(var i = 0; i < doctorList.length; i++){%>
+            <option value="<%= doctorList[i].account_id%>"><%= doctorList[i].name%></option>
+          <%}%>
+        </select>
+        <button type="submit" name="sub" value="bed" >send</button>
+    </form>
 
   </body>
 </html>
@@ -241,9 +261,6 @@
   }
   function showTodo() {
     document.getElementById("showTodo").style.display = "block";
-  }
-  function linkAssessment(name) {
-    document.getElementById('assessment').action = '/nurse/dashboard?assessmentPatient='+name+'';
   }
   function OPD() {
     document.getElementById('ShowOpd').style.display = 'block';

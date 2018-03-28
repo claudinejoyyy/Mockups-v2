@@ -120,7 +120,7 @@
           <div class="nav-tabs-custom">
             <ul class="nav nav-tabs">
               <li><a href="#timeline" data-toggle="tab">Activity Timeline</a></li>
-              <li><a href="#settings" data-toggle="tab" value="setting" onclick="show2()">Settings</a></li>
+              <li><a href="#settings" data-toggle="tab">Settings</a></li>
             </ul>
             <div class="tab-content">
               <div class="active tab-pane" id="timeline">
@@ -282,8 +282,14 @@
                 }
               </style>
 
+
               <div class="tab-pane" id="settings">
+<<<<<<< HEAD
+                <%- messages('message', locals) %>
+                <form class="form-horizontal" method="POST" id="setting" data-parsley-validate=""  data-parsley-trigger="keyup">
+=======
                 <form class="form-horizontal" method="POST" id="setting" style="display:none;" data-parsley-validate=""  data-parsley-trigger="keyup">
+>>>>>>> 54f7f94f6a2d0e7df6fde92963522a81c56eafbf
                   <div class="form-group">
                     <label for="inputName" class="col-sm-2 control-label">Name</label>
                     <div class="col-xs-5">
@@ -390,4 +396,12 @@ function seeMore() {
       document.getElementById('phone').value = "<%= pInfo[0].phone%>";
     }
   }
+
+ function validateUpdate() {
+   $('#setting').parsley().on('field:validated', function() {
+   var ok = $('.parsley-error').length === 0;
+   $('.bs-callout-info').toggleClass('hidden', !ok);
+   $('.bs-callout-warning').toggleClass('hidden', ok);
+  })
+ };
 </script>

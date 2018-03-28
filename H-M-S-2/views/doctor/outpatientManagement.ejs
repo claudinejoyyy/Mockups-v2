@@ -53,13 +53,17 @@
             <td><%=opdInfo[i].name%></td>
             <td><%=opdInfo[i].age%></td>
             <td><%=opdInfo[i].sex%></td>
-            <td style="font-size:10px;">
-              <%
-                var vitals = opdInfo[i].vitals.split('\n');
-                for(var l=0; l < 7; l++){ %>
-                  <%=vitals[l]%><br>
-              <%}%>
-            </td>
+            <%if(opdInfo[i].vitals){%>
+              <td style="font-size:10px;">
+                <%
+                  var vitals = opdInfo[i].vitals.split('\n');
+                  for(var l=0; l < 7; l++){ %>
+                    <%=vitals[l]%><br>
+                <%}%>
+              </td>
+            <%} else {%>
+              <td></td>
+            <%}%>
             <td><%=opdInfo[i].initial_assessment%></td>
 
             <td>
@@ -126,13 +130,17 @@
             <td><%=opdInfo2[i].name%></td>
             <td><%=opdInfo2[i].age%></td>
             <td><%=opdInfo2[i].sex%></td>
-            <td style="font-size:10px;">
-              <%
-                var vitals = opdInfo2[i].vitals.split('\n');
-                for(var l=0; l < 7; l++){ %>
-                  <%=vitals[l]%><br>
-              <%}%>
-            </td>
+            <%if(opdInfo2[i].vitals){%>
+              <td style="font-size:10px;">
+                <%
+                  var vitals = opdInfo2[i].vitals.split('\n');
+                  for(var l=0; l < 7; l++){ %>
+                    <%=vitals[l]%><br>
+                <%}%>
+              </td>
+            <%} else {%>
+              <td></td>
+            <%}%>
             <td><%=opdInfo2[i].initial_assessment%></td>
             <td><%= opdInfo2[i].bed_id%><%if(opdInfo2[i].bed_id){%><a href="/doctor/bedManagement?bed_id=<%=opdInfo2[i].bed_id%>" style="font-size:10px;">-details</a><%}%></td>
             <td>
@@ -179,36 +187,6 @@
             </form>
         </tr>
       <%}%>
-    </table>
-
-    <!-- CONFIRMED -->
-    <h1>CONFIRMED</h1>
-    <table>
-      <tr>
-        <th>patient type</th>
-        <th>name</th>
-        <th>age</th>
-        <th>gender</th>
-        <th>Vital Signs</th>
-        <th>initial Assessment</th>
-        <th>status</th>
-      </tr>
-      <%for (var i = 0; i < opdInfo1.length; i++) {%>
-        <tr>
-            <td><%=opdInfo1[i].patient_type%></td>
-            <td><%=opdInfo1[i].name%></td>
-            <td><%=opdInfo1[i].age%></td>
-            <td><%=opdInfo1[i].sex%></td>
-            <td style="font-size:10px;">
-              <%
-                var vitals = opdInfo1[i].vitals.split('\n');
-                for(var l=0; l < 7; l++){ %>
-                  <%=vitals[l]%><br>
-              <%}%>
-            </td>
-            <td><%=opdInfo1[i].initial_assessment%></td>
-            <td>confirmed</td>
-            <%}%>
     </table>
 
 

@@ -9,13 +9,14 @@ var fhSQL       = "SELECT name FROM family_history;";
         Aid = req.session.Aid;
         var todoList    = "SELECT * from todo_list where account_id = "+req.session.Aid+";";
         var availablePatientOPD = "SELECT * from patient where patient_id NOT IN(SELECT patient_id from patient_history where status = 'pending');";
-        db.query(name + counts + chart + whoCurrentlyAdmitted + whoOPD + whoWARD + immuSQL + fhSQL + doctorList + availablePatientOPD + monthlyPatientCount + todoList, Aid, function(err, rows, fields){
+        var bed = "SELECT  * from bed where status = 'unoccupied';";
+        db.query(name + counts + chart + whoCurrentlyAdmitted + whoOPD + whoWARD + immuSQL + fhSQL + doctorList + availablePatientOPD + monthlyPatientCount + todoList + bed, Aid, function(err, rows, fields){
           if (err) {
             console.log(err);
           }
           user = rows[0];
           res.render('nurse/dashboard', {counts:rows[1], chart:rows[2], whoCurrentlyAdmitted:rows[3], whoOPD:rows[4],whoWARD:rows[5], immu:rows[6],
-                                         fh:rows[7], doctorList:rows[8], availablePatientOPD:rows[9], monthlyPatientCount:rows[10], todoList:rows[11], username: user, err:req.query.status});
+                                         fh:rows[7], doctorList:rows[8], availablePatientOPD:rows[9], monthlyPatientCount:rows[10], todoList:rows[11], bed:rows[12], username: user, err:req.query.status});
         });
       } else {
         res.redirect(req.session.sino+'/dashboard');
@@ -41,7 +42,19 @@ var fhSQL       = "SELECT name FROM family_history;";
             io.emit('type', {what:'assess',message:'Received Assessment for '+nameForEmit[1]+', sent by Dr. <strong>'+req.session.name+'</strong>'});
           });
           res.redirect(req.get('referer'));
-        } else if(data.sub == "add") {
+        } else if (data.sub == 'bed') {
+          var nameForBedEmit    = data.bedName.split(',');
+          var bedSQL            = 'UPDATE bed set status = "occupied", allotment_timestamp = "'+moment(new Date()).format('YYYY-MM-DD HH:mm:ss')+'", patient_id = '+data.bedName+' where bed_id = '+data.bed+';';
+          var historySQL        = 'INSERT into patient_history (date_stamp, patient_id, doctor_id, bed, status) VALUES("'+moment(new Date()).format('YYYY-MM-DD HH:mm:ss')+'", '+data.bedName+','+data.bedDoc+',"'+data.bed+', ","pending");';
+
+          db.query(historySQL + bedSQL + 'INSERT into activity_logs(account_id, time, type, remarks, patient_id) VALUES ('+Aid+',"'+moment(new Date()).format('YYYY-MM-DD HH:mm:ss')+'", "er", "ER for '+nameForBedEmit[1]+'", '+data.bedName+');', function(err){
+            if (err) {
+              console.log(err);
+            }
+            io.emit('type', {what:'assess',message:'Received ER patient: '+nameForBedEmit[1]+', sent by Dr. <strong>'+req.session.name+'</strong>'});
+          });
+          res.redirect(req.get('referer'));
+        }else if(data.sub == "add") {
             req.checkBody('name','name is required').notEmpty();
             req.checkBody('address','address is required').notEmpty();
             req.checkBody('gender','gender is required').notEmpty();
