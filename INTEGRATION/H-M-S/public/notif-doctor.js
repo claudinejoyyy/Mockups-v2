@@ -55,7 +55,8 @@ $(document).ready(function(){
             icon: 'glyphicon glyphicon glyphicon-ok'
           },{
             type: 'success',
-            allow_dismiss: false
+            allow_dismiss: false,
+            clickToHide: true
           },{
             template: '<div data-notify="container" class="col-xs-11 col-sm-3 alert alert-{0}" role="alert">' +
               '<button type="button" aria-hidden="true" class="close" data-notify="dismiss">×</button>' +
@@ -77,7 +78,8 @@ $(document).ready(function(){
               icon: 'glyphicon glyphicon-remove'
             },{
               type: 'danger',
-              allow_dismiss: false
+              allow_dismiss: false,
+              clickToHide: true,
             },{
               template: '<div data-notify="container" class="col-xs-11 col-sm-3 alert alert-{0}" role="alert">' +
                 '<button type="button" aria-hidden="true" class="close" data-notify="dismiss">×</button>' +

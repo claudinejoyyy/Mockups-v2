@@ -107,7 +107,7 @@
                           <td><%=pendingLabRequestSQL[i].remarks%></td>
                           <td><%=pendingLabRequestSQL[i].lab_status%></td>
                           <form action="/laboratorist/labRequestManagement?requestId=<%=pendingLabRequestSQL[i].request_id%>&labrequestPatientName=<%=pendingLabRequestSQL[i].name%>" method="post">
-                          <td align="center"><button type="submit" class="btn btn-primary btn-sm">Confirm</button></td>
+                          <td align="center"><button type="submit" name="sub" value="confirm" class="btn btn-primary btn-sm">Confirm</button></td>
                           </form>
                       </tr>
                     <%}%>
