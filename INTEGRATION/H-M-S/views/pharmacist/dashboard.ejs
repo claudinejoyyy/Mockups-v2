@@ -66,7 +66,6 @@
         <li><a href="prescriptionManagement"><i class="fa fa-plus-square"></i> <span> Prescriptions Management </span></a></li>
         <li><a href="patientManagement"><i class="fa fa-users"></i> <span> Patient Management </span></a></li>
         <li><a href="profileManagement"><i class="fa fa-info"></i> <span> Profile Management</span></a></li>
-        <li><a href="reports"><i class="fa fa-link"></i> <span> Reports </span></a></li>
       </ul>
     </section>
   </aside>
@@ -88,19 +87,6 @@
               <i class="ion ion-person"></i>
             </div>
             <a href="prescriptionManagement" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
-          </div>
-        </div>
-
-        <div class="col-lg-3 col-xs-6">
-          <div class="small-box bg-green">
-            <div class="inner">
-              <h3><%= accepted.length%></h3>
-              <p>Accepted Request</p>
-            </div>
-            <div class="icon">
-              <i class="ion ion-stats-bars"></i>
-            </div>
-            <a data-toggle="modal" data-target="#acceptModal" class="btn small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
           </div>
         </div>
 
@@ -231,35 +217,6 @@
         </div>
       </div>
 
-        <div class="modal fade" id="acceptModal" role="dialog" aria-labelledby="myModalLabel2">
-          <div class="modal-dialog" role="document">
-            <div class="modal-content">
-              <div class="modal-header">
-                  <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                  <h4 class="modal-title" id="myModalLabel2">Accepted Request</h4>
-              </div>
-              <div class="modal-body">
-                <div>
-                  <table id="example1" class="table table-striped table-bordered">
-                    <thead>
-                      <tr>
-                        <th>Date</th>
-                        <th>Name</th>
-                      </tr>
-                    </thead>
-                    <%for (var i = 0; i < confirmedprescriptionSQL.length; i++) {%>
-                      <tr>
-                        <td><%=moment(new Date(confirmedprescriptionSQL[i].creation_stamp)).format('MMM-DD-YYYYY HH:mm')%></td>
-                        <td><%=confirmedprescriptionSQL[i].name%></td>
-                      </tr>
-                    <%}%>
-                  </table>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-
         <div class="modal fade" id="pendingModal" role="dialog" aria-labelledby="myModalLabel3">
           <div class="modal-dialog" role="document">
             <div class="modal-content">
@@ -276,10 +233,10 @@
                         <th>Name</th>
                       </tr>
                     </thead>
-                    <%for (var i = 0; i < prescriptionDetails.length; i++) {%>
+                    <%for (var i = 0; i < pending.length; i++) {%>
                       <tr>
-                        <td><%=moment(new Date(prescriptionDetails[i].creation_stamp)).format('MMM-DD-YYYY HH:mm')%></td>
-                        <td><%=prescriptionDetails[i].name%></td>
+                        <td><%=moment(new Date(pending[i].creation_stamp)).format('MMM-DD-YYYY HH:mm')%></td>
+                        <td><%=pending[i].name%></td>
                       </tr>
                     <%}%>
                   </table>
