@@ -89,7 +89,7 @@ var user, Aid, availableBedss, p;
           if (err) {
             console.log(err);
           } else {
-              res.render('doctor/outpatientManagement', {opdInfo:rows[0], admitAvailableBeds:rows[1], labSQL:rows[2], prescribeSQL:rows[3], opdInfo1:rows[4], opdInfo2:rows[5], username: user});
+              res.render('doctor/outpatientManagement', {opdInfo:rows[0], admitAvailableBeds:rows[1], labSQL:rows[2], prescribeSQL:rows[3], opdInfo1:rows[4], opdInfo2:rows[5], username: user, invalid:null});
           }
         });
       } else {
@@ -165,6 +165,24 @@ var user, Aid, availableBedss, p;
               }
             });
           }
+          bcrypt.compare(data.patientPassword, req.session.password, function(err, isMatch){
+            if (err) {
+              console.log(err);
+            } else if(isMatch) {
+              var sql  = "SELECT patient_id,patient_type,name,age,sex,blood_type FROM patient where patient_id = "+req.query.passPatient+";";
+              var sql2  = "SELECT * FROM patient where patient_id = "+req.query.passPatient+";";
+              var med = "select date_stamp, lab, medicine,diagnosis,bed from patient_history where patient_id = "+req.query.passPatient+" order by date_stamp;";
+              db.query(sql + sql2 + med, function(err, successRows){
+                res.render('doctor/patientManagement', {p:successRows[0], p2:successRows[1], med:successRows[2], username:user, invalid:null});
+              });
+            } else {
+              var sql  = "SELECT patient_id,patient_type,name,age,sex,blood_type FROM patient where patient_id = "+req.query.passPatient+";";
+              db.query(sql, function(err, errorRows){
+                res.render('doctor/patientManagement', {p:errorRows, p2:null, med:null, username:user, invalid:'error'});
+              });
+            }
+          });
+
       } else {
         res.redirect(req.session.sino+'/dashboard');
       }

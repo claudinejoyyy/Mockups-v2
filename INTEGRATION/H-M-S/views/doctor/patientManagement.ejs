@@ -330,8 +330,35 @@
                               for(var i=0; i <med.length; i++){
                               %>
                                   <tr>
-                                      <td><%= med[i].diagnosis%></td>
-                                      <td><%= med[i].medicine%></td>
+                                      <td><%= med[i].date_stamp.toString().split('G')[0]%></td>
+                                      <td><% if(med[i].diagnosis != null){
+                                        var diagnosis = med[i].diagnosis.split('\n');
+                                          for(var l=0; l < diagnosis.length-1; l++){ %>
+                                              <%= diagnosis[l]%><br>
+                                        <%}
+                                      }%></td>
+                                      <td>
+                                          <table class="table table-responsive table-bordered table-striped" style="font-size:10px;">
+                                            <tr>
+                                              <th>Medicine</th>
+                                              <th>QTY</th>
+                                              <th>Dosage</th>
+                                              <th>Time Frame</th>
+                                            </tr>
+                                          <% if(med[i].medicine != null){
+                                            var medicine = med[i].medicine.split('\n');
+                                              for(var l=0; l < medicine.length-1; l++){ %>
+                                                  <tr>
+                                                    <%var parseMed = medicine[l].split(',');%>
+                                                    <td><%= parseMed[0]%></td>
+                                                    <td><%= parseMed[1]%></td>
+                                                    <td><%= parseMed[2]%></td>
+                                                    <td><%= parseMed[3]%></td>
+                                                  </tr>
+                                            <%}
+                                          }%>
+                                          </table>
+                                      </td>
                                       <td><%= med[i].lab%></td>
                                       <td><%= med[i].bed%></td>
                                   </tr>
