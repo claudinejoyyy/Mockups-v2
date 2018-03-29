@@ -91,7 +91,7 @@
                   <%} else {%>
                     <td><%= DT%></td>
                   <%}%>
-                  <form action="/doctor/bedManagement?bed=<%= bedDetails[i].bed_id%>" method="POST">
+                  <form action="/doctor/bedManagement?bed=<%= bedDetails[i].bed_id%>&id=<%= bedDetails[i].patient_id%>" method="POST">
                     <td><button class="btn btn-danger" <%if(bedDetails[i].status == 'Unoccupied'){%>
                     disabled
                   <%} else {%>

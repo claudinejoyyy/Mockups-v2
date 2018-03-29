@@ -232,10 +232,14 @@
                         <!-- DIAGNOSIS -->
                         <input class="btn btn-primary btn-sm" type="button" name="diagnosis" value="<%if(opdInfo2[i].diagnosis){%>View Diagnosis<%} else {%>Diagnosis<%}%>" data-toggle="modal" data-target="#diagnosis" onclick="ShowDiagnosis(<%=opdInfo2[i].patient_id%>,<%=JSON.stringify(opdInfo2[i].name)%>,<%=opdInfo2[i].histo_id%>,<%=JSON.stringify(opdInfo2[i].diagnosis)%>)" >
 
-                        <!-- DISCHARGE BUTTON -->
                         <%if(!opdInfo2[i].bed_id){%>
-                        <input type="button" name="admit" class="btn btn-primary btn-sm" value="admit" onclick="ShowAdmit(<%=opdInfo2[i].patient_id%>,<%=JSON.stringify(opdInfo2[i].name)%>,<%=opdInfo2[i].histo_id%>)">
+                          <input type="button" class="btn btn-primary btn-sm" name="admit" value="Admit" data-toggle="modal" data-target="#admit" onclick="ShowAdmit(<%=opdInfo2[i].patient_id%>,<%=JSON.stringify(opdInfo2[i].name)%>,<%=opdInfo2[i].histo_id%>)">
                         <%}%>
+                          <%if(opdInfo2[i].bed_id){%>
+                          <form action="/doctor/bedManagement?bed=<%= opdInfo2[i].bed_id%>&id=<%= opdInfo2[i].patient_id%>" method="POST" style="display:inline-block;">
+                            <button class="btn btn-danger btn-sm"><i class="fa fa-sign-out"></i> Discharge</button>
+                          </form>
+                         <%}%>
                       </td>
                       <form action="/doctor/outpatientManagement?id=<%= opdInfo2[i].histo_id%>" method="post">
                         <td><button type="submit" name="sub" class="btn btn-default btn-sm" value="confirm">Confirm</button></td>
