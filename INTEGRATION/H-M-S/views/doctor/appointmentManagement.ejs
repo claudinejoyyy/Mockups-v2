@@ -136,13 +136,18 @@
       <div class="modal-body">
         <form name="setAppointmentForm" class="horizontal" method="post" onsubmit="successAlert()">
           <div id="showAppointmentForm" style='display:inline-block;'>
-            <select name="appointmentDetails"class="" name="">
+            <label for="appointmentName">Name: </label>
+            <select id="appointmentName" name="appointmentDetails"class="" name="">
               <%for(var i = 0; i < appointmentDetails.length; i++){%>
                 <option value="<%= appointmentDetails[i].patient_id%>"><%= appointmentDetails[i].name%></option>
               <%}%>
             </select>
-            <input type="datetime-local" name="dateNtime" min="2000-10-06T00:00:00" max="9000-11-16T21:25:33" required>
             <br>
+            <br>
+            <label for="date1">Date: </label>
+            <input id="date1" type="datetime-local" name="dateNtime" min="2000-10-06T00:00:00" max="9000-11-16T21:25:33" required>
+            <br>
+            <label id="appointmentText">Appointment Details: </label>
             <textarea name="appointmentRemarks" rows="12" cols="80" required></textarea>
             <div class="modal-footer">
               <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
