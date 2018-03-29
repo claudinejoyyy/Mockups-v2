@@ -191,6 +191,9 @@
                     <%} else if (activityInfo[i].type == 'generalTodo'){%>
                       <i class="fa fa-plus bg-green"></i>
                       <div class="timeline-item">
+                    <%} else if (activityInfo[i].type == 'er'){ %>
+                      <i class="fa fa-plus-square bg-red"></i>
+                      <div class="timeline-item">     
                     <%}%>
                       <h3 class="timeline-header"><%= activityInfo[i].remarks%></a></h3>
                     </div>
@@ -273,6 +276,9 @@
                     <%} else if (activityInfo[i].type == 'generalTodo'){%>
                       <i class="fa fa-plus bg-green"></i>
                       <div class="timeline-item">
+                    <%} else if (activityInfo[i].type == 'er'){ %>
+                      <i class="fa fa-plus-square bg-red"></i>
+                      <div class="timeline-item">    
                     <%}%>
                       <h3 class="timeline-header"><%= activityInfo[i].remarks%></a></h3>
                     </div>
