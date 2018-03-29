@@ -31,11 +31,11 @@ var fhSQL       = "SELECT name FROM family_history;";
     if(req.session.email && req.session.sino == 'nurse'){
       if(req.session.sino == 'nurse'){
         if(data.sub == 'assessment') {
-          var nameForEmit       = data.assessmentPatient.split(',');
-          var vitalSigns        = 'BP: '+data.BP +'\nCR: '+ data.CR +'\nPR: '+ data.PR +'\nRR: '+ data.RR +'\n TEMP: '+ data.temperature +'\nWT: '+ data.Wt;
-          var initialAssessment = 'INSERT into initial_assessment (assessment, date, patient_id, account_id, vital_signs) VALUES("'+data.assessment+'", "'+moment(new Date()).format('YYYY-MM-DD HH:mm:ss')+'",'+nameForEmit[0]+','+data.assessmentDoctor+',"'+vitalSigns+'");';
-          var historySQL        = 'INSERT into patient_history (date_stamp, initial_assessment, vitals, patient_id, doctor_id, status) VALUES("'+moment(new Date()).format('YYYY-MM-DD HH:mm:ss')+'", "'+data.assessment+'","'+vitalSigns+'", '+nameForEmit[0]+','+data.assessmentDoctor+',"pending");';
-          db.query(initialAssessment + historySQL + 'INSERT into activity_logs(account_id, time, type, remarks, patient_id) VALUES ('+Aid+',"'+moment(new Date()).format('YYYY-MM-DD HH:mm:ss')+'", "initialAssessment", "assessment for '+req.query.assessmentPatient+'", '+nameForEmit[0]+');', function(err){
+          var nameForEmit = data.assessmentPatient.split(',');
+          var vitalSigns  = 'BP: '+data.BP +'\nCR: '+ data.CR +'\nPR: '+ data.PR +'\nRR: '+ data.RR +'\n TEMP: '+ data.temperature +'\nWT: '+ data.Wt;
+          var opdCount    = 'INSERT into opd_count (date_stamp, patient_id) values("'+moment(new Date()).format('YYYY-MM-DD HH:mm:ss')+'", '+nameForEmit[0]+');';
+          var historySQL  = 'INSERT into patient_history (date_stamp, initial_assessment, vitals, patient_id, doctor_id, status) VALUES("'+moment(new Date()).format('YYYY-MM-DD HH:mm:ss')+'", "'+data.assessment+'","'+vitalSigns+'", '+nameForEmit[0]+','+data.assessmentDoctor+',"pending");';
+          db.query(historySQL + opdCount +'INSERT into activity_logs(account_id, time, type, remarks, patient_id) VALUES ('+Aid+',"'+moment(new Date()).format('YYYY-MM-DD HH:mm:ss')+'", "initialAssessment", "assessment for '+req.query.assessmentPatient+'", '+nameForEmit[0]+');', function(err){
             if (err) {
               console.log(err);
             }
@@ -44,10 +44,10 @@ var fhSQL       = "SELECT name FROM family_history;";
           res.redirect(req.get('referer'));
         } else if (data.sub == 'bed') {
           var nameForBedEmit    = data.bedName.split(',');
-          var bedSQL            = 'UPDATE bed set status = "occupied", allotment_timestamp = "'+moment(new Date()).format('YYYY-MM-DD HH:mm:ss')+'", patient_id = '+data.bedName+' where bed_id = '+data.bed+';';
-          var historySQL        = 'INSERT into patient_history (date_stamp, patient_id, doctor_id, bed, status) VALUES("'+moment(new Date()).format('YYYY-MM-DD HH:mm:ss')+'", '+data.bedName+','+data.bedDoc+',"'+data.bed+', ","pending");';
-
-          db.query(historySQL + bedSQL + 'INSERT into activity_logs(account_id, time, type, remarks, patient_id) VALUES ('+Aid+',"'+moment(new Date()).format('YYYY-MM-DD HH:mm:ss')+'", "er", "ER for '+nameForBedEmit[1]+'", '+data.bedName+');', function(err){
+          var bedSQL            = 'UPDATE bed set status = "occupied", allotment_timestamp = "'+moment(new Date()).format('YYYY-MM-DD HH:mm:ss')+'", patient_id = '+nameForBedEmit[0]+' where bed_id = '+data.bed+';';
+          var historySQL        = 'INSERT into patient_history (date_stamp, patient_id, doctor_id, bed, status) VALUES("'+moment(new Date()).format('YYYY-MM-DD HH:mm:ss')+'", '+nameForBedEmit[0]+','+data.bedDoc+',"'+data.bed+', ","pending");';
+          var wardCount         = 'INSERT into ward_count (date_stamp, patient_id) values("'+moment(new Date()).format('YYYY-MM-DD HH:mm:ss')+'",'+nameForBedEmit[0]+');';
+          db.query(historySQL + bedSQL + wardCount + 'INSERT into activity_logs(account_id, time, type, remarks, patient_id) VALUES ('+Aid+',"'+moment(new Date()).format('YYYY-MM-DD HH:mm:ss')+'", "er", "ER for '+nameForBedEmit[1]+'", '+nameForBedEmit[0]+');', function(err){
             if (err) {
               console.log(err);
             }

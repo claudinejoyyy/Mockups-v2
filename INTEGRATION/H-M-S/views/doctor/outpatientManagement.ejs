@@ -32,7 +32,6 @@
                 <img src="../dist/img/avatar04.png" class="img-circle" alt="User Image">
                 <p>
                   <%=username[0].name%> - <%= username[0].account_type.charAt(0).toUpperCase() + username[0].account_type.slice(1);%>
-                  <small>Member since April 2014</small>
                 </p>
               </li>
               <li class="user-footer">
@@ -103,8 +102,8 @@
                     <th>Gender</th>
                     <th>Vital Signs</th>
                     <th>Initial Assessment</th>
-                    <th>Bed</th>
                     <th>Action</th>
+                    <th>Status</th>
                   </tr>
                 </thead>
                 <%for (var i = 0; i < opdInfo.length; i++) {%>
@@ -113,6 +112,7 @@
                       <td><%=opdInfo[i].name%></td>
                       <td><%=opdInfo[i].age%></td>
                       <td><%=opdInfo[i].sex%></td>
+                    <%if(opdInfo[i].vitals){%>
                       <td style="font-size:10px;">
                         <%
                           var vitals = opdInfo[i].vitals.split('\n');
@@ -120,17 +120,10 @@
                             <%=vitals[l]%><br>
                         <%}%>
                       </td>
-                      <td><%=opdInfo[i].assessment%></td>
-                      <%
-                      var bedArr= '';
-                        for (var j = 0; j < whoopdInfo2V2.length; j++){
-                          bedArr += whoopdInfo2V2[j].patient_id;
-                        }
-                      if(bedArr.includes(opdInfo[i].patient_id)){%>
-                        <td><%= whoopdInfo2V2[i].bed_id%><a href="/doctor/bedManagement?bed_id=<%=whoopdInfo2V2[i].bed_id%>" style="font-size:10px;">-details</a></td>
-                      <%} else {%>
-                        <td></td>
-                      <%}%>
+                    <%} else {%>
+                      <td></td>
+                    <%}%>
+                      <td><%=opdInfo[i].initial_assessment%></td>
                       <td>
                         <!-- VIEW -->
                         <a href="../doctor/patientManagement?patient=<%=opdInfo[i].patient_id%>"><button class="btn btn-primary btn-sm" name="view">View</button></a>
@@ -142,11 +135,11 @@
                           }
                         if(labArr.includes(opdInfo[i].patient_id)){%>
                           <a data-toggle="modal">
-                            <input class="btn btn-primary btn-sm" type="button" value="Lab Request" name="lab_request" style="color:blue" data-toggle="modal" data-target="#labRequest2" onclick="ShowLabRequest2(<%=opdInfo[i].patient_id%>,<%=JSON.stringify(opdInfo[i].name)%>)">
+                            <input class="btn btn-primary btn-sm" type="button" value="Lab Request" name="lab_request" disabled data-toggle="modal" data-target="#labRequest2" onclick="ShowLabRequest2(<%=opdInfo[i].patient_id%>,<%=JSON.stringify(opdInfo[i].name)%>,<%=opdInfo[i].histo_id%>)">
                           </a>
                         <%} else {%>
                           <a data-toggle="modal">
-                            <input class="btn btn-primary btn-sm" type="button" value="Lab Request" name="lab_request" data-toggle="modal" data-target="#labRequest" onclick="ShowLabRequest(<%=opdInfo[i].patient_id%>,<%=JSON.stringify(opdInfo[i].name)%>)">
+                            <input class="btn btn-primary btn-sm" type="button" value="Lab Request" name="lab_request" data-toggle="modal" data-target="#labRequest" onclick="ShowLabRequest(<%=opdInfo[i].patient_id%>,<%=JSON.stringify(opdInfo[i].name)%>,<%=opdInfo[i].histo_id%>)">
                           </a>
                         <%}%>
                         <!-- PRESCRIPTION -->
@@ -156,24 +149,24 @@
                             prescribeArr += prescribeSQL[j].patient_id;
                           }
                         if(prescribeArr.includes(opdInfo[i].patient_id)){%>
-                          <input class="btn btn-primary btn-sm" type="button" name="prescribe" style="color:blue" value="Prescription" data-toggle="modal" data-target="prescribe2" onclick="ShowPrescribe2(<%=opdInfo[i].patient_id%>,<%=JSON.stringify(opdInfo[i].name)%>)" >
+                          <input class="btn btn-primary btn-sm" type="button" name="prescribe" disabled value="Prescription" data-toggle="modal" data-target="prescribe2" onclick="ShowPrescribe2(<%=opdInfo[i].patient_id%>,<%=JSON.stringify(opdInfo[i].name)%>,<%=opdInfo[i].histo_id%>)" >
                         <%} else {%>
-                          <input class="btn btn-primary btn-sm" type="button" name="prescribe" value="Prescription" data-toggle="modal" data-target="#prescribe" onclick="ShowPrescribe(<%=opdInfo[i].patient_id%>,<%=JSON.stringify(opdInfo[i].name)%>)">
+                          <input class="btn btn-primary btn-sm" type="button" name="prescribe" value="Prescription" data-toggle="modal" data-target="#prescribe" onclick="ShowPrescribe(<%=opdInfo[i].patient_id%>,<%=JSON.stringify(opdInfo[i].name)%>,<%=opdInfo[i].histo_id%>)">
                         <%}%>
                         <!-- DIAGNOSIS -->
-                        <button class="btn btn-primary btn-sm" class="btn btn-primary btn-sm" name="button" data-toggle="modal" data-target="#diagnosis" onclick="ShowDiagnosis(<%=opdInfo[i].patient_id%>,<%=JSON.stringify(opdInfo[i].name)%>)">Diagnosis</button>
-
-                        <!-- ADMIT -->
-                        <% var arr= '';
-                          for (var j = 0; j < whoopdInfo2V2.length; j++){
-                            arr += whoopdInfo2V2[j].patient_id;
-                          } if(!(arr.includes(opdInfo[i].patient_id))){%>
-
-                            <button class="btn btn-primary btn-sm" type="button" name="admit" value="Admit" data-toggle="modal" data-target="#admit" onclick="ShowAdmit(<%=opdInfo[i].patient_id%>,<%=JSON.stringify(opdInfo[i].name)%>)">Admit</button>
-
-                        <%}%>
-                        <!-- LAB REQUEST TABLE VIEW -->
+                        <button class="btn btn-primary btn-sm" name="button" data-toggle="modal" data-target="#diagnosis" onclick="ShowDiagnosis(<%=opdInfo[i].patient_id%>,<%=JSON.stringify(opdInfo[i].name)%>,<%=opdInfo[i].histo_id%>,<%=JSON.stringify(opdInfo[i].diagnosis)%>)">
+                            <%if(opdInfo[i].diagnosis){%>
+                              View Diagnosis
+                            <%} else {%>
+                            Diagnosis
+                            <%}%>        
+                        </button>
+                      <!-- ADMIT -->
+                      <input type="button" class="btn btn-primary btn-sm" name="admit" value="Admit" data-toggle="modal" data-target="#admit" onclick="ShowAdmit(<%=opdInfo[i].patient_id%>,<%=JSON.stringify(opdInfo[i].name)%>,<%=opdInfo[i].histo_id%>)">
                       </td>
+                    <form action="/doctor/outpatientManagement?id=<%= opdInfo[i].histo_id%>" method="post">
+                      <td><button type="submit" class="btn btn-default btn-sm" name="sub" value="confirm">Confirm</button></td>
+                    </form>
                   </tr>
                 <%}%>
               </table>
@@ -206,13 +199,13 @@
                       <td><%=opdInfo2[i].sex%></td>
                       <td style="font-size:10px;">
                       <%
-                        var vitals = opdInfo1[i].vitals.split('\n');
-                        for(var l=0; l < 7; l++){ %>
-                          <%=vitals[l]%><br>
+                          var vitals = opdInfo2[i].vitals.split('\n');
+                          for(var l=0; l < 7; l++){ %>
+                            <%=vitals[l]%><br>
                       <%}%>
                       </td>
-                      <td><%=opdInfo2[i].assessment%></td>
-                        <td><%= opdInfo2[i].bed_id%><a href="/doctor/bedManagement?bed_id=<%=opdInfo2[i].bed_id%>" style="font-size:10px;">-details</a></td>
+                      <td><%=opdInfo2[i].initial_assessment%></td>
+                        <td><%= opdInfo2[i].bed_id%><%if(opdInfo2[i].bed_id){%><a href="/doctor/bedManagement?bed_id=<%=opdInfo2[i].bed_id%>" style="font-size:10px;">-details</a><%}%></td>
                       <td>
                         <!-- VIEW -->
                         <a href="../doctor/patientManagement?patient=<%=opdInfo2[i].patient_id%>"><button class="btn btn-primary btn-sm" name="view">View</button></a>
@@ -224,7 +217,7 @@
                           }
                         if(labArr.includes(opdInfo2[i].patient_id)){%>
                           <a data-toggle="modal">
-                            <input class="btn btn-primary btn-sm" type="button" value="Lab Request" name="lab_request" disabled data-toggle="modal" data-target="#labRequest2" onclick="ShowLabRequest2(<%=opdInfo2[i].patient_id%>,<%=JSON.stringify(opdInfo2[i].name)%>),<%=opdInfo2[i].histo_id%>">
+                            <input class="btn btn-primary btn-sm" type="button" value="Lab Request" name="lab_request" disabled data-toggle="modal" data-target="#labRequest2" onclick="ShowLabRequest2(<%=opdInfo2[i].patient_id%>,<%=JSON.stringify(opdInfo2[i].name)%>,<%=opdInfo2[i].histo_id%>)">
                           </a>
                         <%} else {%>
                           <a data-toggle="modal">
@@ -243,9 +236,9 @@
                           <input class="btn btn-primary btn-sm" type="button" name="prescribe" value="Prescription" data-toggle="modal" data-target="#prescribe" onclick="ShowPrescribe(<%=opdInfo2[i].patient_id%>,<%=JSON.stringify(opdInfo2[i].name)%>,<%=opdInfo2[i].histo_id%>)">
                         <%}%>
                         <!-- DIAGNOSIS -->
-                        <button class="btn btn-primary btn-sm" class="btn btn-primary btn-sm" name="button" data-toggle="modal" data-target="#diagnosis" onclick="ShowDiagnosis(<%=opdInfo2[i].patient_id%>,<%=JSON.stringify(opdInfo2[i].name)%>,<%=opdInfo2[i].histo_id%>,<%=JSON.stringify(opdInfo2[i].diagnosis)%>))">
+                        <button class="btn btn-primary btn-sm" name="button" data-toggle="modal" data-target="#diagnosis" onclick="ShowDiagnosis(<%=opdInfo2[i].patient_id%>,<%=JSON.stringify(opdInfo2[i].name)%>,<%=opdInfo2[i].histo_id%>,<%=JSON.stringify(opdInfo2[i].diagnosis)%>)">
                         <%if(opdInfo2[i].diagnosis){%>
-                          Add Diagnosis
+                          View Diagnosis
                         <%} else {%>
                         Diagnosis
                         <%}%>
@@ -304,7 +297,7 @@
 
       <!-- ADMIT  -->
       <div class="modal fade" id="admit" role="dialog" aria-labelledby="myModalLabel">
-        <div class="modal-dialog" role="document">
+        <div class="modal-dialog modal-sm" role="document">
           <div class="modal-content">
             <div class="modal-header">
               <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
@@ -313,9 +306,9 @@
             <div class="modal-body">
               <form id="dynamicPatientIdForAdmit" class="form-horizontal" method="post" onsubmit="successAlert()">
                 <div class="form-group">
-                  <label for="quantity" class="col-sm-2 control-label">Available Beds:</label>
-                  <div class="col-sm-10">
-                    <select name="bedNumber">
+                  <label for="quantity" class="col-xs-3 control-label">Available Beds:</label>
+                  <div class="col-sm-8">
+                    <select name="bedNumber" class="form-control select2" style="width: 100%;">
                       <%for (var i = 0; i < admitAvailableBeds.length; i++) { %>
                         <option value="<%= admitAvailableBeds[i].bed_id%>"><%= admitAvailableBeds[i].bed_id%></option>
                       <%}%>
@@ -324,7 +317,7 @@
                 </div>
                 <div class="modal-footer">
                   <button type="button" class="btn btn-default" data-dismiss="modal"><i class="fa fa-times"></i> Cancel</button>
-                  <button type="submit" class="btn btn-primary" name="sub" value="admit"> <i class="fa fa-sign-in"></i>Admit</button>
+                  <button type="submit" class="btn btn-primary" name="sub" value="admit"> <i class="fa fa-sign-in"></i> Admit</button>
                 </div>
               </form>
             </div>
@@ -407,7 +400,7 @@
                   <div class="modal-footer">
                     <a id="linkForLabView"><button id="labViewPressed" type="button" class="btn btn-default"><i class="fa fa-eye"></i> View</button><a>
                     <button type="button" class="btn btn-default" data-dismiss="modal"><i class="fa fa-times"></i> Cancel</button>
-                    <button id="labAdd" type="submit" class="btn btn-primary" name="sub" value="labRequest"><i class="fa fa-plus"></i> Add</button>
+                    <button type="submit" class="btn btn-primary" name="sub" value="labRequest"><i class="fa fa-plus"></i> Add</button>
                   </div>
               </form>
             </div>
@@ -428,13 +421,20 @@
               <h4 class="modal-title" id="myModalLabel">Add Diagnosis</h4>
             </div>
             <div class="modal-body">
-              <form id="linkDiagnosis" class="form-group" method="post" onsubmit="successAlert()">
-                <textarea name="diagnosis" class="form-control" rows="8" cols="80"></textarea>
-                <div class="modal-footer">
-                  <button type="button" class="btn btn-default" data-dismiss="modal"><i class="fa fa-times"></i> Cancel</button>
-                  <button type="submit" class="btn btn-primary" name="sub" value="prescribe"><i class="fa fa-plus"></i> Add</button>
+                <div class="form-group">
+                <label>Diagnoses</label>
+                <textarea id="prevDiag" readonly class="form-control"></textarea>
                 </div>
-              </form>
+                <div class="form-group">
+                  <form id="linkDiagnosis" class="form-group" method="post">
+                    <textarea name="diagnosis" class="form-control" rows="8" cols="80"></textarea>
+                    <div class="modal-footer">
+                      <button type="button" class="btn btn-default" data-dismiss="modal"><i class="fa fa-times"></i> Cancel</button>
+                      <button type="submit" class="btn btn-warning" name="sub" value="clear"><i class="fa fa-refresh"></i> Clear</button>
+                      <button type="submit" class="btn btn-primary" name="sub" value="diag"><i class="fa fa-plus"></i> Add</button>
+                    </div>
+                  </form>
+                </div>
             </div>
           </div>
         </div>
@@ -496,5 +496,10 @@
     document.getElementById('prevDiag').innerHTML = a;
   }
 </script>
+<script>
+  $(document).ready(function() {
+      $(".select2").select2();
+  });
+</script>        
 </body>
 </html>
