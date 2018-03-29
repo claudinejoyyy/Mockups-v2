@@ -122,7 +122,7 @@
                     <%}%>
                     <td>
                       <form action="/admin/userAccountsManagement?name=<%=p[i].name%>&account=<%=p[i].account_id%>" method="post">
-                        <button  class="btn btn-default" data-toggle="confirmation" data-popout="true" type="submit" name="sub" value="remove">
+                        <button  class="btn btn-default" data-toggle="confirmation" data-popout="true" data-singleton="true" type="submit" name="sub" value="remove">
                             <i class="fa fa-fw fa-archive"></i> Remove</button>
                       </form>
                     </td>

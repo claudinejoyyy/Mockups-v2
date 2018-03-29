@@ -87,71 +87,10 @@
         <small>List of Registered Patients</small>
       </h1>
     </section>
-
         <!-- Main content -->
     <section class="content animate-bottom"> <!------------------------------------ EDIT FOR LOADER ---------------------------------->
-       <div class="row">
-        <div class="col-xs-12">
-          <div class="box">
-            <div class="box-header">
-          </div>
-          <div class="box-body">
-            <table id="example1" class="table table-bordered table-striped">
-              <thead>
-                <tr>
-                  <th>Patient Type</th>
-                  <th>Name</th>
-                  <th>Age</th>
-                  <th>Gender</th>
-                  <th>Blood Type</th>
-                  <th>Previous Medicine taken</th>
-                  <th>Previous Confinement Period</th>
-                  <th>Action</th>
-                </tr>
-              </thead>
-              <%
-              for(var i=0; i <p.length; i++){
-                  var b = new Date(p[i].birth_date);
-              %>
-              <tr>
-                <td><%= p[i].patient_type %></td>
-                <td><%= p[i].name %></td>
-                <td><%= p[i].age %></td>
-                <td><%= p[i].sex %></td>
-                <td><%= p[i].blood_type %></td>
-                <td style="font-size:10px;">
-                  <table class="table table-bordered table-striped">
-                    <tr>
-                      <th>Medicine</th>
-                      <th>QTY</th>
-                      <th>Dosage</th>
-                      <th>Time Frame</th>
-                    </tr>
-                  <% if(p[i].medicine != null){
-                    var medicine = p[i].medicine.split('\n');
-                      for(var l=0; l < medicine.length-1; l++){ %>
-                          <tr>
-                            <%var parseMed = medicine[l].split(',');%>
-                            <td><%= parseMed[0]%></td>
-                            <td><%= parseMed[1]%></td>
-                            <td><%= parseMed[2]%></td>
-                            <td><%= parseMed[3]%></td>
-                          </tr>
-                    <%}
-                  }%>
-                  </table>
-                </td>
-                <td><%= moment(new Date(p[i].allotment)).format('MMM-DD-YYYY HH:mm')%> - 
-                    <%= moment(new Date(p[i].discharge)).format('MMM-DD-YYYY HH:mm')
-                  %>
-                </td>
-                <td>
-                  <button type="button" class="btn btn-primary btn-sm" name="button" data-toggle="modal" data-target="#showInputPassword" onclick="PasswordInput(<%= p[i].patient_id %>)"><i class="fa fa-eye"></i> View</button>
-                </td>
-              </tr>
-              <%}%>
-            </table>
-              <%if(p2){%>
+      <%if(p2){%>
+        <a href="/doctor/patientManagement" style="color:black"><button type="button" class="btn btn-primary" name="button"><i class="fa fa-mail-reply"></i> Back</button></a><br><br>
                   <div class="row">
                     <div class="col-md-3">
 
@@ -359,7 +298,14 @@
                                           }%>
                                           </table>
                                       </td>
-                                      <td><%= med[i].lab%></td>
+                                      <td>
+                                      <% if(med[i].lab != null){
+                                        var parselab = med[i].lab.split('\n');
+                                          for(var l=0; l < parselab.length-1; l++){ %>
+                                              <%= parselab[l]%><br>
+                                        <%}
+                                      }%>
+                                      </td>
                                       <td><%= med[i].bed%></td>
                                   </tr>
                              <%}%>
@@ -376,10 +322,71 @@
                     </div>
                     <!-- /.col -->
                   </div>
-
-                <a href="/doctor/patientManagement" style="color:black"><button type="button" name="button">Back</button></a>
-
               <%}%>
+        
+       <div class="row">
+        <div class="col-xs-12">
+          <div class="box">
+            <div class="box-header">
+          </div>
+          <div class="box-body">
+            <table id="example1" class="table table-bordered table-striped">
+              <thead>
+                <tr>
+                  <th>Patient Type</th>
+                  <th>Name</th>
+                  <th>Age</th>
+                  <th>Gender</th>
+                  <th>Blood Type</th>
+                  <th>Previous Medicine taken</th>
+                  <th>Previous Confinement Period</th>
+                  <th>Action</th>
+                </tr>
+              </thead>
+              <%
+              for(var i=0; i <p.length; i++){
+                  var b = new Date(p[i].birth_date);
+              %>
+              <tr>
+                <td><%= p[i].patient_type %></td>
+                <td><%= p[i].name %></td>
+                <td><%= p[i].age %></td>
+                <td><%= p[i].sex %></td>
+                <td><%= p[i].blood_type %></td>
+                <td style="font-size:10px;">
+                  <table class="table table-bordered table-striped">
+                    <tr>
+                      <th>Medicine</th>
+                      <th>QTY</th>
+                      <th>Dosage</th>
+                      <th>Time Frame</th>
+                    </tr>
+                  <% if(p[i].medicine != null){
+                    var medicine = p[i].medicine.split('\n');
+                      for(var l=0; l < medicine.length-1; l++){ %>
+                          <tr>
+                            <%var parseMed = medicine[l].split(',');%>
+                            <td><%= parseMed[0]%></td>
+                            <td><%= parseMed[1]%></td>
+                            <td><%= parseMed[2]%></td>
+                            <td><%= parseMed[3]%></td>
+                          </tr>
+                    <%}
+                  }%>
+                  </table>
+                </td>
+                <td><%= moment(new Date(p[i].allotment)).format('MMM-DD-YYYY HH:mm')%> - 
+                    <%= moment(new Date(p[i].discharge)).format('MMM-DD-YYYY HH:mm')
+                  %>
+                </td>
+                <td>
+                  <button type="button" class="btn btn-primary btn-sm" name="button" data-toggle="modal" data-target="#showInputPassword" onclick="PasswordInput(<%= p[i].patient_id %>)"><i class="fa fa-eye"></i> View</button>
+                </td>
+              </tr>
+              <%}%>
+            </table>
+              
+
                 <%- messages('message', locals) %>
             </div>
           </div>
