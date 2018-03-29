@@ -156,6 +156,14 @@ var user, Aid, availableBedss, p;
                 res.redirect(req.get('referer'));
               }
             });
+          } else if (data.sub == 'confirmOPD') {
+            db.query('UPDATE patient_history set status = "confirmed" where histo_id = '+req.query.id+';', function(err){
+              if (err) {
+                console.log(err);
+              } else {
+                res.redirect(req.get('referer'));
+              }
+            });
           } else if (data.sub == 'clear'){
             db.query('UPDATE patient_history set diagnosis = NULL where histo_id = '+req.query.histo_id+';', function(err){
               if (err) {
