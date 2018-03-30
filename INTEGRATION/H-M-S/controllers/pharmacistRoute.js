@@ -212,7 +212,7 @@ res.redirect('../login');
       if(req.session.email && req.session.sino == 'pharmacist'){
         if (req.session.sino == 'pharmacist') {
           //var reportsSQL  = 'SELECT * from prescription inner join patient using(patient_id);';
-          var pharmReport = 'select p.patient_type, p.rankORsn, p.name,  CONCAT(m.dosage, " ", m.medicine) as med, m.quantity, m.creation_stamp from patient as p join prescription as m using (patient_id) where m.status = "confirmed" and date_format(m.creation_stamp, "%M %d %Y") = date_format(now(), "%M %d %Y") order by p.patient_type;';
+          var pharmReport = 'select p.patient_type, CONCAT(p.rankORsn, " ", p.name) as patients,  CONCAT(m.medicine, " ", m.dosage) as med, m.quantity, m.creation_stamp from patient as p join prescription as m using (patient_id) where m.status = "confirmed" and date_format(m.creation_stamp, "%M %d %Y") = date_format(now(), "%M %d %Y") order by p.patient_type;';
           db.query(pharmReport, function(err, rows){
             if (err) {
               console.log(err);
