@@ -293,12 +293,13 @@ var user, Aid, availableBedss, p;
       if(req.session.email && req.session.sino == 'doctor'){
         if(req.session.sino == 'doctor'){
           var appointmentSQL = 'SELECT * from appointment a inner join patient using(patient_id) where doctor_id = '+Aid+';';
+          var selectPatient = 'SELECT * from patient;';
 
-          db.query(appointmentSQL, function(err, rows){
+          db.query(appointmentSQL + selectPatient, function(err, rows){
             if (err) {
               console.log(err);
             } else {
-              res.render('doctor/appointmentManagement', {appointmentDetails:rows, username: user});
+              res.render('doctor/appointmentManagement', {appointmentDetails:rows[0], ap:rows[1], username: user});
             }
           });
         } else {
