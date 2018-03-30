@@ -99,7 +99,7 @@
                                 <th>Patient Type</th>
                                 <th>Name</th>
                                 <th>Date and Time</th>
-                                <th>remarks</th>
+                                <th>Remarks</th>
                                 <th>Action</th>
                               </tr>
                           </thead>
@@ -109,10 +109,10 @@
                               <td><%=i+1%></td>
                               <td><%=appointmentDetails[i].patient_type%></td>
                               <td><%=appointmentDetails[i].name%></td>
-                              <td><%=appointmentDetails[i].appointment_timestamp%></td>
+                              <td><%= moment(appointmentDetails[i].appointment_timestamp).format('MMM DD YYYY HH:mm A')%></td>
                               <td><%=appointmentDetails[i].remarks%></td>
                               <form action="/doctor/appointmentManagement?appointmentId=<%=appointmentDetails[i].appointment_id%>&appointmentPatientName=<%=appointmentDetails[i].name%>" method="post">
-                                <td><button type="submit">cancel</button></td>
+                                <td><button name="sub" class="btn btn-default" value="cancel" type="submit"><i class="fa fa-times"></i> Cancel</button></td>
                               </form>
                             </tr>
                           <%}%>
@@ -136,7 +136,7 @@
       <div class="modal-body">
           <div class="form-group">
             <label for="appointmentName">Patient Name: </label>
-            <select id="appointmentName" name="appointmentDetails" class="select2 form-control" style="width:100%;">
+            <select id="appointmentName" name="appointmentPatientID" class="select2 form-control" style="width:100%;">
               <%for(var i = 0; i < ap.length; i++){%>
                 <option value="<%= ap[i].patient_id%>"><%= ap[i].name%></option>
               <%}%>
@@ -176,9 +176,9 @@ $(function () {
  });
 });
 
-function showAppointmentForm() {
-  document.getElementById("showAppointmentForm").style.display = "block";
-}
+// function showAppointmentForm() {
+//   document.getElementById("showAppointmentForm").style.display = "block";
+// }
 $(document).ready(function() {
   $(".select2").select2();
 });

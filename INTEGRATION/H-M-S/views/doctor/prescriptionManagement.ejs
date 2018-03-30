@@ -123,7 +123,7 @@
                             <%=vitals[l]%><br>
                         <%}%>
                             </td>
-                          <td><%=prescriptionDetails[i].STATUS%></td>
+                          <td><%=prescriptionDetails[i].STATUS.charAt(0).toUpperCase() + prescriptionDetails[i].STATUS.slice(1);%></td>
                           <form action="/doctor/prescriptionManagement?prescriptionId=<%=prescriptionDetails[i].prescription_id%>&prescriptionPatientName=<%=prescriptionDetails[i].name%>" method="post">
                               <td align="left"><button class="btn btn-danger btn-sm" type="submit"><i class="fa fa-remove"></i> Cancel</button></td>
                           </form>

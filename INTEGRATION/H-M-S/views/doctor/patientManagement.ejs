@@ -65,9 +65,9 @@
         </div>
 
         <ul class="sidebar-menu">
-          <li class="active"><a href="../doctor/dashboard" target="_self"><i class="fa fa-dashboard"></i> <span>Dashboard</span></a></li>
+          <li><a href="../doctor/dashboard" target="_self"><i class="fa fa-dashboard"></i> <span>Dashboard</span></a></li>
           <li><a href="../doctor/bedManagement"><i class="fa fa-bed"></i> <span>Bed Management</span></a></li>
-          <li><a href="../doctor/patientManagement"><i class="fa fa-users"></i> <span>Patient Management</span></a></li>
+          <li class="active"><a href="../doctor/patientManagement"><i class="fa fa-users"></i> <span>Patient Management</span></a></li>
           <li><a href="../doctor/outpatientManagement"><i class="fa fa-wheelchair"></i> <span>Outpatient Management</span></a></li>
           <li><a href="../doctor/appointmentManagement"><i class="fa fa-calendar"></i> <span>Appointment Management</span></a></li>
           <li><a href="../doctor/prescriptionManagement"><i class="fa fa-sticky-note"></i> <span>Prescription Management</span></a></li>
@@ -521,12 +521,7 @@
 </script>
 
     <script type="text/javascript">
-<%if(invalid){%>
-  alert('invalid password');
-  $(document).ready(function(){
-    $("#PasswordInput").show();
-  });
-<%}%>
+
   function PasswordInput(id){
     document.getElementById('PasswordInput').style.display = 'block';
     document.getElementById('dynamicActionPassword').action = '/doctor/patientManagement?passPatient='+id+'';
