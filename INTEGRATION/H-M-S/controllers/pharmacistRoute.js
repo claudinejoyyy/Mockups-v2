@@ -221,11 +221,18 @@ res.redirect('../login');
         if (req.session.sino == 'pharmacist') {
           //var reportsSQL  = 'SELECT * from prescription inner join patient using(patient_id);';
           var pharmReport = 'select p.patient_type, CONCAT(p.rankORsn, " ", p.name) as patients,  CONCAT(m.medicine, " ", m.dosage) as med, m.quantity, m.creation_stamp from patient as p join prescription as m using (patient_id) where m.status = "confirmed" and date_format(m.creation_stamp, "%M %d %Y") = date_format(now(), "%M %d %Y") order by p.patient_type;';
-          db.query(pharmReport, function(err, rows){
+          var dated = 'select max(date_format(creation_stamp, "%M %d %Y")) as datenow from prescription';
+          db.query(pharmReport + dated, function(err, rows){
             if (err) {
               console.log(err);
             } else {
-              res.render('pharmacist/reports', {reportsInfo:rows, username:user});
+              // var updateReportPrescription = 'insert into daily_consumption_report(date, patient_type, patient_name, medicine, qty) values("'+pharmReport.datestamp+'", "'+pharmReport.patient_type+'", "'+pharmReport.patients+'", "'+pharmReport.med+'", "'+pharmReport.quantity+'");';
+              // db.query(updateReportPrescription, function(err, rows){
+              //   if (err){
+              //     console.log(err);
+              //   }
+              // });
+              res.render('pharmacist/reports', {reportsInfo:rows[0], ddate:rows[1], username:user});
             }
           });
         } else {

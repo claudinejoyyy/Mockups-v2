@@ -1,10 +1,147 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <meta charset="utf-8">
-    <title>REPORT</title>
-  </head>
-  <body>
-  
-  </body>
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>Daily Consumption Report as of <%= ddate[0].datenow %></title>
+<% include ../partials/header.ejs %>
+
+</head>
+
+<body class="hold-transition skin-blue fixed sidebar-mini" onload="myFunction()"> <!------------------------------------ EDIT FOR LOADER ---------------------------------->
+<div id="loader"></div> <!------------------------------------ EDIT FOR LOADER ---------------------------------->
+<div class="wrapper">
+
+  <header class="main-header">
+    <a href="../pharmacist/dashboard" class="logo">
+      <!-- mini logo for sidebar mini 50x50 pixels -->
+      <span class="logo-mini"><b><%= username[0].account_type.charAt(0).toUpperCase()%></b></span>
+      <!-- logo for regular state and mobile devices -->
+      <span class="logo-lg"><b><%= username[0].account_type.charAt(0).toUpperCase() + username[0].account_type.slice(1);%></b></span>
+    </a>
+    <nav class="navbar navbar-static-top" role="navigation">
+      <a href="#" class="sidebar-toggle" data-toggle="offcanvas" role="button">
+        <span class="sr-only">Toggle navigation</span>
+      </a>
+
+      <div class="navbar-custom-menu">
+        <ul class="nav navbar-nav">
+          <li class="dropdown user user-menu">
+            <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+              <img src="../dist/img/avatar3.png" class="user-image" alt="User Image">
+              <span class="hidden-xs"><%= username[0].name %></span>
+            </a>
+            <ul class="dropdown-menu">
+              <li class="user-header">
+                <img src="../dist/img/avatar3.png" class="img-circle" alt="User Image">
+                <p>
+                  <%= username[0].name %> - <%= username[0].account_type.charAt(0).toUpperCase() + username[0].account_type.slice(1);%>
+                </p>
+              </li>
+              <li class="user-footer">
+                <div class="pull-left">
+                  <a href="../pharmacist/profileManagement" class="btn btn-default btn-flat">Profile</a>
+                </div>
+                <div class="pull-right">
+                  <a href="../logout" class="btn btn-default btn-flat">Sign out</a>
+                </div>
+              </li>
+            </ul>
+          </li>
+        </ul>
+      </div>
+    </nav>
+  </header>
+
+  <aside class="main-sidebar">
+    <section class="sidebar">
+      <div class="user-panel">
+        <div class="pull-left image">
+          <img src="../dist/img/avatar3.png" class="img-circle" alt="User Image">
+        </div>
+        <div class="pull-left info">
+          <p><%= username[0].name %></p>
+          <a href="#"><i class="fa fa-circle text-success"></i> Online</a>
+        </div>
+      </div>
+
+      <ul class="sidebar-menu">
+        <li><a href=../pharmacist/dashboard><i class="fa fa-dashboard"></i> <span> Dashboard </span></a></li>
+        <li><a href="../pharmacist/prescriptionManagement" target="_self"><i class="fa fa-plus-square"></i> <span>Prescriptions Management</span></a></li>
+        <li><a href=../pharmacist/patientManagement><i class="fa fa-users"></i> <span> Patient Management </span></a></li>
+        <li><a href=../pharmacist/profileManagement><i class="fa fa-info"></i> <span> Profile Management</span></a></li>
+        <li class="active"><a href=../pharmacist/reports><i class="fa fa-edit"></i> <span> Reports</span></a></li>
+      </ul>
+    </section>
+  </aside>
+      <!-- Content Wrapper. Contains page content -->
+  <div class="content-wrapper"  id="myDiv1"> <!------------------------------------ EDIT FOR LOADER ---------------------------------->
+<!--
+    <section class="content-header">
+      <h1>
+        Medicine Consumption Report
+        <small>List of Daily Distributed Prescriptions</small>
+      </h1>
+-->
+    </section>
+        <!-- Main content -->
+    <section class="content animate-bottom"> <!------------------------------------ EDIT FOR LOADER ---------------------------------->
+       <div class="row">
+        <div class="col-xs-12">
+          <div class="box">
+            <div class="box-header">
+              <h3 class="box-title">Medicine Consumption Report as of <%= ddate[0].datenow %>
+        <small></small></h3>
+            </div>
+            <!-- /.box-header -->
+            <div class="box-body">
+              <table id="example1" class="table table-bordered table-striped">
+                <thead>
+                  <tr>
+                    <th>Patient Type</th>
+                    <th>Patients</th>
+                    <th>Medicine</th>
+                    <th>Quantity</th>
+                  </tr>
+                </thead>
+                <%for (var i = 0; i < reportsInfo.length; i++) {%>
+                <tr>
+                	<td><%=reportsInfo[i].patient_type.charAt(0).toUpperCase() + reportsInfo[i].patient_type.slice(1)%></td>
+                	<td><%=reportsInfo[i].patients%></td>
+                	<td><%=reportsInfo[i].med%></td>
+                	<td><%=reportsInfo[i].quantity%></td>
+                </tr>
+                <%}%>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </section>
+  </div>
+<% include ../partials/footer.ejs %>
+
+<script src="/notif-pharm.js"></script>
+<script type="text/javascript">
+  $(function () {
+    $("#example1").DataTable({
+        "searching": false,
+        dom: 'Bfrtip',
+        buttons: [
+            'excel', 'pdf', 'print'
+        ]
+    });
+    $("#example2").DataTable();
+//    $('#example2').DataTable({
+//      "paging": true,
+//      "lengthChange": true,
+//      "searching": true,
+//      "ordering": true,
+//      "info": true,
+//      "autoWidth": true
+//    });
+  });
+</script>
+</body>
 </html>
