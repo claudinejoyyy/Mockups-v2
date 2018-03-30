@@ -115,8 +115,8 @@ var user, Aid, availableBedss, p;
               }
             });
           } else if(data.sub == 'prescribe') {
-            var prescribeSQL = 'INSERT into prescription (creation_stamp, medicine, quantity, dosage, timeframe, doctor_id, patient_id, status) VALUES ("'+moment(new Date()).format('YYYY-MM-DD HH:mm:ss')+'","'+data.medicine+'",'+data.quantity+',"'+data.dosage+'","'+data.timeframe+'",'+Aid+','+req.query.patient_id+',"pending");';
-            var medicines    = "Medicine:" + data.medicine + ", Quantity:"+ data.quantity + ", Dosage:" + data.dosage + ", TimeFrame:" + data.timeframe;
+            var prescribeSQL = 'INSERT into prescription (creation_stamp, medicine, quantity, dosage, timeframe, doctor_id, patient_id, status) VALUES ("'+moment(new Date()).format('YYYY-MM-DD HH:mm:ss')+'","'+data.medicine+'","'+data.quantity+'","'+data.dosage+'","'+data.timeframe+'",'+Aid+','+req.query.patient_id+',"pending");';
+            var medicines    = data.medicine + ","+ data.quantity + "," + data.dosage + "," + data.timeframe;
             var historySQL = 'UPDATE patient_history set medicine = CONCAT(IFNULL(medicine, ""),"'+medicines+'\n") where histo_id ='+req.query.histo_id+';';
             db.query(prescribeSQL + historySQL +  'INSERT into activity_logs(account_id, time, type, remarks) VALUES ('+Aid+',"'+moment(new Date()).format('YYYY-MM-DD HH:mm:ss')+'", "prescription", "Prescribed a medicine to : '+req.query.patient_name+'");', function(err){
               if (err) {
@@ -128,7 +128,7 @@ var user, Aid, availableBedss, p;
             });
           } else if (data.sub == 'labRequest') {
             var requestSQL = 'INSERT into lab_request(type,timestamp,remarks,doctor_id,patient_id,lab_status) VALUES("'+data.testRequest+'","'+moment(new Date()).format('YYYY-MM-DD HH:mm:ss')+'","'+data.labRequestremarks+'",'+Aid+','+req.query.patient_id+',"pending");';
-            var lab = "Type:" + data.testRequest + " Remarks:" + data.labRequestremarks;
+            var lab = "Type: " + data.testRequest + "\n Remarks: " + data.labRequestremarks;
             var historySQL = 'UPDATE patient_history set lab = CONCAT(IFNULL(lab, ""),"'+lab+'\n") where histo_id = '+req.query.histo_id+';';
             db.query(requestSQL + historySQL + 'INSERT into activity_logs(account_id, time, type, remarks) VALUES ('+Aid+',"'+moment(new Date()).format('YYYY-MM-DD HH:mm:ss')+'", "labRequest", "Lab request for : '+req.query.patient_name+'");', function(err){
               if (err) {
@@ -445,8 +445,8 @@ var user, Aid, availableBedss, p;
       if(req.session.email && req.session.sino == 'doctor'){
         if(req.session.sino == 'doctor'){
           if (req.query.opdPatient) {
-            var prescriptionSQL = 'SELECT CONCAT("medicine:",medicine,"\nquantity:",quantity,"\ndosage:", dosage,"\ntimeframe:", timeframe) AS medications, p.status as STATUS,creation_stamp,patient_type,name,age,prescription_id from prescription p inner join patient using(patient_id) where doctor_id = '+Aid+' and patient_id = '+req.query.opdPatient+' and p.status ="pending" ORDER BY creation_stamp desc;';
-            var confirmedprescriptionSQL = 'SELECT CONCAT("medicine:",medicine,"\nquantity:",quantity,"\ndosage:", dosage,"\ntimeframe:", timeframe) AS medications, p.status as STATUS,creation_stamp,patient_type,name,age,prescription_id from prescription p inner join patient using(patient_id) where p.status = "confirmed" and doctor_id='+Aid+' ORDER BY creation_stamp desc;';
+            var prescriptionSQL = 'SELECT CONCAT("Medicine: ",medicine,"\nQuantity:",quantity,"\nDosage: ", dosage,"\nTimeframe: ", timeframe) AS medications, p.status as STATUS,creation_stamp,patient_type,name,age,prescription_id from prescription p inner join patient using(patient_id) where doctor_id = '+Aid+' and patient_id = '+req.query.opdPatient+' and p.status ="pending" ORDER BY creation_stamp desc;';
+            var confirmedprescriptionSQL = 'SELECT CONCAT("Medicine: ",medicine,"\nQuantity: ",quantity,"\nDosage: ", dosage,"\nTimeframe: ", timeframe) AS medications, p.status as STATUS,creation_stamp,patient_type,name,age,prescription_id from prescription p inner join patient using(patient_id) where p.status = "confirmed" and doctor_id='+Aid+' ORDER BY creation_stamp desc;';
 
             db.query(prescriptionSQL+confirmedprescriptionSQL, function(err, rows){
               if (err) {
@@ -456,8 +456,8 @@ var user, Aid, availableBedss, p;
               }
             });
           } else {
-            var prescriptionSQL = 'SELECT CONCAT("medicine:",medicine,"\nquantity:",quantity,"\ndosage:", dosage,"\ntimeframe:", timeframe) AS medications, p.status as STATUS,creation_stamp,patient_type,name,age,prescription_id from prescription p inner join patient using(patient_id) where doctor_id = '+Aid+' and p.status ="pending" ORDER BY creation_stamp desc;';
-            var confirmedprescriptionSQL = 'SELECT CONCAT("medicine:",medicine,"\nquantity:",quantity,"\ndosage:", dosage,"\ntimeframe:", timeframe) AS medications, p.status as STATUS,creation_stamp,patient_type,name,age,prescription_id from prescription p inner join patient using(patient_id) where p.status = "confirmed" and doctor_id='+Aid+' ORDER BY creation_stamp desc;';
+            var prescriptionSQL = 'SELECT CONCAT("Medicine: ",medicine,"\nQuantity: ",quantity,"\nDosage: ", dosage,"\nTimeframe: ", timeframe) AS medications, p.status as STATUS,creation_stamp,patient_type,name,age,prescription_id from prescription p inner join patient using(patient_id) where doctor_id = '+Aid+' and p.status ="pending" ORDER BY creation_stamp desc;';
+            var confirmedprescriptionSQL = 'SELECT CONCAT("Medicine: ",medicine,"\nQuantity: ",quantity,"\nDosage: ", dosage,"\nTimeframe: ", timeframe) AS medications, p.status as STATUS,creation_stamp,patient_type,name,age,prescription_id from prescription p inner join patient using(patient_id) where p.status = "confirmed" and doctor_id='+Aid+' ORDER BY creation_stamp desc;';
 
             db.query(prescriptionSQL+confirmedprescriptionSQL, function(err, rows){
               if (err) {

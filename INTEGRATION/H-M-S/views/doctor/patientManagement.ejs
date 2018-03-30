@@ -13,66 +13,70 @@
 </head>
   <body class="hold-transition skin-blue fixed sidebar-mini" onload="myFunction()"> <!------------------------------------ EDIT FOR LOADER ---------------------------------->
     <div id="loader"></div> <!------------------------------------ EDIT FOR LOADER ---------------------------------->
-<div class="wrapper">
-  <header class="main-header">
-    <a href="../doctor/dashboard" class="logo">
-      <span class="logo-mini"><b><%= username[0].account_type.charAt(0).toUpperCase()%></b></span>
-      <span class="logo-lg"><b><%= username[0].account_type.charAt(0).toUpperCase() + username[0].account_type.slice(1);%></b></span>
-    </a>
-    <nav class="navbar navbar-static-top" role="navigation">
-      <a href="#" class="sidebar-toggle" data-toggle="offcanvas" role="button">
+  <div class="wrapper">
+    <header class="main-header">
+      <a href="../doctor/dashboard" class="logo">
+        <span class="logo-mini"><b><%= username[0].account_type.charAt(0).toUpperCase()%></b></span>
+        <span class="logo-lg"><b><%= username[0].account_type.charAt(0).toUpperCase() + username[0].account_type.slice(1);%></b></span>
+      </a>
+      <nav class="navbar navbar-static-top">
+        <a href="#" class="sidebar-toggle" data-toggle="offcanvas" role="button">
         <span class="sr-only">Toggle navigation</span>
       </a>
 
-      <div class="navbar-custom-menu">
-        <ul class="nav navbar-nav">
-          <li class="dropdown user user-menu">
-            <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-              <img src="../dist/img/avatar2.png" class="user-image" alt="User Image">
-              <span class="hidden-xs"><%= username[0].name %></span>
-            </a>
-            <ul class="dropdown-menu">
-              <li class="user-header">
-                <img src="../dist/img/avatar2.png" class="img-circle" alt="User Image">
-                <p>
-                  <%=username[0].name%> - <%= username[0].account_type.charAt(0).toUpperCase() + username[0].account_type.slice(1);%>
-                </p>
-              </li>
-              <li class="user-footer">
-                <div class="pull-left">
-                  <a href="../doctor/profileManagement" class="btn btn-default btn-flat">Profile</a>
-                </div>
-                <div class="pull-right">
-                  <a href='../logout' class="btn btn-default btn-flat">Sign out</a>
-                </div>
-              </li>
-            </ul>
-          </li>
+        <div class="navbar-custom-menu">
+          <ul class="nav navbar-nav">
+            <li class="dropdown user user-menu">
+              <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                <img src="../dist/img/avatar04.png" class="user-image" alt="User Image">
+                <span class="hidden-xs"><%= username[0].name %></span>
+              </a>
+              <ul class="dropdown-menu">
+                <li class="user-header">
+                  <img src="../dist/img/avatar04.png" class="img-circle" alt="User Image">
+                  <p>
+                    <%=username[0].name%> - <%= username[0].account_type.charAt(0).toUpperCase() + username[0].account_type.slice(1);%>
+                  </p>
+                </li>
+                <li class="user-footer">
+                  <div class="pull-left">
+                    <a href="../doctor/profileManagement" class="btn btn-default btn-flat">Profile</a>
+                  </div>
+                  <div class="pull-right">
+                    <a href='../logout' class="btn btn-default btn-flat">Sign out</a>
+                  </div>
+                </li>
+              </ul>
+            </li>
+          </ul>
+        </div>
+      </nav>
+    </header>
+    <aside class="main-sidebar">
+      <section class="sidebar">
+        <div class="user-panel">
+          <div class="pull-left image">
+            <img src="../dist/img/avatar04.png" class="img-circle" alt="User Image">
+          </div>
+          <div class="pull-left info">
+            <p><%= username[0].name %></p>
+            <a href="#"><i class="fa fa-circle text-success"></i> Online</a>
+          </div>
+        </div>
+
+        <ul class="sidebar-menu">
+          <li class="active"><a href="../doctor/dashboard" target="_self"><i class="fa fa-dashboard"></i> <span>Dashboard</span></a></li>
+          <li><a href="../doctor/bedManagement"><i class="fa fa-bed"></i> <span>Bed Management</span></a></li>
+          <li><a href="../doctor/patientManagement"><i class="fa fa-users"></i> <span>Patient Management</span></a></li>
+          <li><a href="../doctor/outpatientManagement"><i class="fa fa-wheelchair"></i> <span>Outpatient Management</span></a></li>
+          <li><a href="../doctor/appointmentManagement"><i class="fa fa-calendar"></i> <span>Appointment Management</span></a></li>
+          <li><a href="../doctor/prescriptionManagement"><i class="fa fa-sticky-note"></i> <span>Prescription Management</span></a></li>
+          <li><a href="../doctor/labRequestManagement"><i class="fa fa-stethoscope"></i> <span>Lab Request Management</span></a></li>
+          <li><a href="../doctor/profileManagement"><i class="fa fa-info"></i> <span>Profile Management</span></a></li>
         </ul>
-      </div>
-    </nav>
-  </header>
+      </section>
+    </aside>
 
-  <aside class="main-sidebar">
-    <section class="sidebar">
-      <div class="user-panel">
-        <div class="pull-left image">
-          <img src="../dist/img/avatar2.png" class="img-circle" alt="User Image">
-        </div>
-        <div class="pull-left info">
-          <p><%= username[0].name %></p>
-          <a href="#"><i class="fa fa-circle text-success"></i> Online</a>
-        </div>
-      </div>
-
-       <ul class="sidebar-menu">
-        <li ><a href="dashboard"><i class="fa fa-dashboard"></i> <span>Dashboard</span></a></li>
-        <li class="active"><a href="patientManagement" target="_self"><i class="fa fa-users"></i> <span>Patient Management</span></a></li>
-        <li><a href="bedManagement"><i class="fa fa-bed"></i> <span>Bed Management</span></a></li>
-        <li><a href="profileManagement"><i class="fa fa-info"></i> <span>Profile Managemdent</span></a></li>
-    </ul>
-    </section>
-  </aside>
 
       <!-- Content Wrapper. Contains page content -->
   <div class="content-wrapper"  id="myDiv1"> <!------------------------------------ EDIT FOR LOADER ---------------------------------->
@@ -85,7 +89,7 @@
         <!-- Main content -->
     <section class="content animate-bottom"> <!------------------------------------ EDIT FOR LOADER ---------------------------------->
       <%if(p2){%>
-        <a href="javascript:history.back()" style="color:black"><button type="button" class="btn btn-primary" name="button"><i class="fa fa-mail-reply"></i> Back</button></a><br><br>
+        <a href="/doctor/patientManagement" style="color:black"><button type="button" class="btn btn-primary" name="button"><i class="fa fa-mail-reply"></i> Back</button></a><br><br>
                   <div class="row">
                     <div class="col-md-3">
 
@@ -140,7 +144,7 @@
                         </div>
                         <!-- /.box-body -->
                       </div>
-                        
+
                       <div class="box box-primary">
                         <div class="box-header with-border">
                           <h3 class="box-title">Previous Confinement Date</h3>
@@ -242,9 +246,9 @@
                                       <select name="status" class="form-control">
                                         <option selected value="<%= p2[i].status %>"><%= p2[i].status %></option>
                                         <%if(p2[i].status != 'Single'){%>
-                                        <option value="Single">single</option>
+                                        <option value="Single">Single</option>
                                         <%}if(p2[i].status != 'Maried'){%>
-                                        <option value="Maried">maried</option>
+                                        <option value="Married">Married</option>
                                         <%}%>
                                       </select>
                                   </div>
@@ -528,6 +532,6 @@
     document.getElementById('dynamicActionPassword').action = '/doctor/patientManagement?passPatient='+id+'';
   }
   function dynaPatientInfo(id){
-  document.getElementById('dynamicEditProfPatientLink').action = '/doctor/patientManagement?patient_id='+id+''; 
+  document.getElementById('dynamicEditProfPatientLink').action = '/doctor/patientManagement?patient_id='+id+'';
   }
 </script>
