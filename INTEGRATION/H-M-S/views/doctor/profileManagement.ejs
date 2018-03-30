@@ -180,6 +180,9 @@
                     <%} else if (activityInfo[i].type == 'log'){ %>
                       <i class="fa fa-check-circle bg-teal"></i>
                       <div class="timeline-item">
+                    <%} else if (activityInfo[i].type == 'patientInfoEdit'){ %>
+                      <i class="fa fa-check-circle bg-blue"></i>
+                      <div class="timeline-item"> 
                     <%} else if (activityInfo[i].type == 'prescription'){ %>
                       <i class="fa fa-share bg-orange"></i>
                       <div class="timeline-item">
@@ -262,6 +265,9 @@
                     <%} else if (activityInfo[i].type == 'log'){ %>
                       <i class="fa fa-check-circle bg-teal"></i>
                       <div class="timeline-item">
+                    <%} else if (activityInfo[i].type == 'patientInfoEdit'){ %>
+                      <i class="fa fa-check-circle bg-blue"></i>
+                      <div class="timeline-item"> 
                     <%} else if (activityInfo[i].type == 'prescription'){ %>
                       <i class="fa fa-share bg-orange"></i>
                       <div class="timeline-item">
@@ -359,6 +365,8 @@
     </section>
   </div>
 <% include ../partials/footer.ejs %>
+</body>
+</html>
 
 <script src="/notif-doctor.js"></script>
 <script>
@@ -373,8 +381,6 @@
       "autoWidth": true
     });
   });
-</script>
-<script>
 function seeMore() {
   var x = document.getElementById("seeMore");
   if (x.style.display === "none") {
@@ -383,11 +389,6 @@ function seeMore() {
       x.style.display = "none";
   }
 }
-</script>
-</body>
-</html>
-
-<script>
   function showModal(){
     document.getElementById('confirmPass').style = 'display:block;';
   }

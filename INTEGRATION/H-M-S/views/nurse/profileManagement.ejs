@@ -170,6 +170,9 @@
                     <%} else if (activityInfo[i].type == 'log'){ %>
                       <i class="fa fa-check-circle bg-teal"></i>
                       <div class="timeline-item">
+                    <%} else if (activityInfo[i].type == 'patientInfoEdit'){ %>
+                      <i class="fa fa-check-circle bg-blue"></i>
+                      <div class="timeline-item">    
                     <%} else if (activityInfo[i].type == 'prescription'){ %>
                       <i class="fa fa-share bg-orange"></i>
                       <div class="timeline-item">
@@ -255,6 +258,9 @@
                     <%} else if (activityInfo[i].type == 'log'){ %>
                       <i class="fa fa-check-circle bg-teal"></i>
                       <div class="timeline-item">
+                    <%} else if (activityInfo[i].type == 'patientInfoEdit'){ %>
+                      <i class="fa fa-check-circle bg-blue"></i>
+                      <div class="timeline-item"> 
                     <%} else if (activityInfo[i].type == 'prescription'){ %>
                       <i class="fa fa-share bg-orange"></i>
                       <div class="timeline-item">
@@ -380,8 +386,6 @@ function seeMore() {
       x.style.display = "none";
   }
 }
-</script>
-<script>
   function show(){
     document.getElementById('logs').style = 'display:block;';
   }

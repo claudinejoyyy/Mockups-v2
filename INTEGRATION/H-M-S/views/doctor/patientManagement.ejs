@@ -303,7 +303,7 @@
                               </div>
                               <div class="form-group">
                                 <div class="col-sm-offset-2 col-sm-10">
-                                   <button type="submit" name="sub" class="btn btn-danger" value="changeInfo" onclick="dynaPatientInfo(<%= p2[i].patient_id%>)">Save</button>
+                                   <button type="submit" name="sub" class="btn btn-danger" value="changeInfo" onclick="dynaPatientInfo(<%= p2[i].patient_id%>,<%= p2[i].name%>)">Save</button>
                                 </div>
                               </div>
                                 <%}%>
@@ -531,7 +531,7 @@
     document.getElementById('PasswordInput').style.display = 'block';
     document.getElementById('dynamicActionPassword').action = '/doctor/patientManagement?passPatient='+id+'';
   }
-  function dynaPatientInfo(id){
-  document.getElementById('dynamicEditProfPatientLink').action = '/doctor/patientManagement?patient_id='+id+'';
+  function dynaPatientInfo(id, name){
+  document.getElementById('dynamicEditProfPatientLink').action = '/doctor/patientManagement?patient_id='+id+'&name='+name+'';
   }
 </script>
