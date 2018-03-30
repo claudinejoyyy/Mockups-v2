@@ -270,12 +270,12 @@
                               %>
                                   <tr>
                                       <td><%= med[i].date_stamp.toString().split('G')[0]%></td>
-                                      <td><% if(med[i].diagnosis != null){
+                                      <td><ul><% if(med[i].diagnosis != null){
                                         var diagnosis = med[i].diagnosis.split('\n');
                                           for(var l=0; l < diagnosis.length-1; l++){ %>
-                                              <%= diagnosis[l]%><br>
+                                              <li><%= diagnosis[l]%></li>
                                         <%}
-                                      }%></td>
+                                      }%></ul></td>
                                       <td>
                                           <table class="table table-responsive table-bordered table-striped" style="font-size:10px;">
                                             <tr>
@@ -298,15 +298,16 @@
                                           }%>
                                           </table>
                                       </td>
-                                      <td>
+                                      <td><ul>
                                       <% if(med[i].lab != null){
                                         var parselab = med[i].lab.split('\n');
                                           for(var l=0; l < parselab.length-1; l++){ %>
-                                              <%= parselab[l]%><br>
+                                                <li><%= parselab[l]%></li>
                                         <%}
                                       }%>
-                                      </td>
-                                      <td><%= med[i].bed%></td>
+                                      </ul></td>
+                                      <td><% if(med[i].lab != null){%>
+                                          <%= med[i].bed%><%} else{%>Outpatient<%}%></td>
                                   </tr>
                              <%}%>
                                 </tbody>

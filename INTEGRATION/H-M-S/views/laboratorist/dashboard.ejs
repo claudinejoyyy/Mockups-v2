@@ -176,13 +176,30 @@
 
       <div class="row">
         <section class="col-lg-12 connectedSortable">
+            
+          <div class="box box-primary">
+            <div class="box-header with-border">
+              <h3 class="box-title">Patient Count</h3>
+              <div class="box-tools pull-right">
+                <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
+                </button>
+                <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
+              </div>
+            </div>
+            <div class="box-body">
+              <div class="chart">
+                <canvas id="areaChart" style="height:250px"></canvas>
+              </div>
+            </div>
+          </div>
+            
           <div class="box box-primary">
             <div class="box-header">
               <i class="ion ion-clipboard"></i>
               <h3 class="box-title">To Do List</h3>
             </div>
 
-            <div class="content">
+            <div class="box-body">
               <table id="example3" class="table table-bordered table-striped">
                 <thead>
                   <tr>
@@ -213,22 +230,6 @@
 
             <div class="box-footer clearfix no-border">
               <button type="button" name="button" onclick="showTodo()" class="btn btn-default pull-right" data-toggle="modal" data-target="#myModal4"><i class="fa fa-plus" data-target="#myModal4"></i> Add item</button>
-            </div>
-          </div>
-
-          <div class="box box-primary">
-            <div class="box-header with-border">
-              <h3 class="box-title">Patient Count</h3>
-              <div class="box-tools pull-right">
-                <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
-                </button>
-                <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
-              </div>
-            </div>
-            <div class="box-body">
-              <div class="chart">
-                <canvas id="areaChart" style="height:250px"></canvas>
-              </div>
             </div>
           </div>
 

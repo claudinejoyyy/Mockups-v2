@@ -5,6 +5,9 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <title>Outpatient Management</title>
 <% include ../partials/header.ejs %>
+    <style>
+    
+    </style>
 
 </head>
   <body class="hold-transition skin-blue fixed sidebar-mini" onload="myFunction()"> <!------------------------------------ EDIT FOR LOADER ---------------------------------->
@@ -198,8 +201,11 @@
                             <%=vitals[l]%><br>
                       <%}}%>
                       </td>
-                      <td><%=opdInfo2[i].initial_assessment%></td>
-                        <td><%= opdInfo2[i].bed_id%><%if(opdInfo2[i].bed_id){%><a href="/doctor/bedManagement?bed_id=<%=opdInfo2[i].bed_id%>" style="font-size:10px;">-details</a><%}%></td>
+                      <td><% if(opdInfo2[i].vitals){%>
+                          <%=opdInfo2[i].initial_assessment%>
+                          <%} else{%>ER<%}%>
+                      </td>
+                      <td><%= opdInfo2[i].bed_id%><%if(opdInfo2[i].bed_id){%><a href="/doctor/bedManagement?bed_id=<%=opdInfo2[i].bed_id%>" style="font-size:10px;">-details</a><%}%></td>
                       <td>
                         <!-- VIEW -->
                       <button type="button" class="btn btn-primary btn-sm" name="button" data-toggle="modal" data-target="#showInputPassword" onclick="PasswordInput(<%= opdInfo2[i].patient_id %>)">Profile</button>
@@ -242,7 +248,10 @@
                          <%}%>
                       </td>
                       <form action="/doctor/outpatientManagement?id=<%= opdInfo2[i].histo_id%>" method="post">
-                        <td><button type="submit" data-toggle="confirmation" data-popout="true" data-singleton="true" name="sub" class="btn btn-default btn-sm" value="confirm"><i class="fa fa-sign-out"></i> Discharge</button></td>
+                        <td><button type="submit" data-toggle="confirmation" data-popout="true" data-singleton="true" name="sub" class="btn btn-default btn-sm" value="confirm" <%if(!opdInfo2[i].bed_id){%>
+                    disabled
+                  <%} else {%>
+                  <%}%>><i class="fa fa-sign-out"></i> Discharge</button></td>
                       </form>
                   </tr>
                 <%}%>
@@ -416,7 +425,7 @@
             <div class="modal-body">
                 <div class="form-group">
                 <label>Diagnoses</label>
-                <textarea id="prevDiag" readonly class="form-control"></textarea>
+                <textarea id="prevDiag" readonly rows="5" class="form-control"></textarea>
                 </div>
                 <div class="form-group">
                   <label>New Diagnosis</label>
@@ -531,6 +540,11 @@
 $('[data-toggle=confirmation]').confirmation({
   rootSelector: '[data-toggle=confirmation]',
   // other options
+});
+
+//tooltip
+$(function() {
+    $('.tooltip-wrapper').tooltip({position: "bottom"});
 });
 </script>        
 </body>
