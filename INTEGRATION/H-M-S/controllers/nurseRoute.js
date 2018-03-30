@@ -130,7 +130,7 @@ var fhSQL       = "SELECT name FROM family_history;";
     }
   });
 
-  //PATIENT MANAGEMENT
+//PATIENT MANAGEMENT
   app.get('/nurse/patientManagement', function(req, res){
       if(req.session.email && req.session.sino == 'nurse'){
         if(req.session.sino == 'nurse'){
@@ -165,8 +165,12 @@ var fhSQL       = "SELECT name FROM family_history;";
               if (err) {
                 console.log(err);
               } else {
+                var updatedSql  = "SELECT patient_id,patient_type,name,age,sex,blood_type FROM patient where patient_id = "+req.query.patient_id+";";
+                var updatedSql2  = "SELECT * FROM patient where patient_id = "+req.query.patient_id+";";
                 req.flash('success', 'Successfully changed profile!');
-                res.render('nurse/patientManagement', {p:successRows[0], p2:successRows[1], med:successRows[2], username:user, invalid:null});
+                db.query(updatedSql + updatedSql2, function(err, successRows2){
+                  res.render('nurse/patientManagement', {p:successRows2[0], p2:successRows2[1], med:successRows[2], username:user, invalid:null});
+                });
               }
             });
           } else {
