@@ -129,7 +129,7 @@
                       <td><%=opdInfo[i].initial_assessment%></td>
                       <td>
                         <!-- VIEW -->
-                      <button type="button" class="btn btn-primary btn-sm" name="button" data-toggle="modal" data-target="#showInputPassword" onclick="PasswordInput(<%= opdInfo[i].patient_id %>)">Profile</button>
+                      <button type="button" class="btn btn-default btn-sm" name="button" data-toggle="modal" data-target="#showInputPassword" onclick="PasswordInput(<%= opdInfo[i].patient_id %>)">Profile</button>
                         <!-- LAB -->
                         <%
                         var labArr= '';
@@ -138,11 +138,11 @@
                           }
                         if(labArr.includes(opdInfo[i].patient_id)){%>
                           <a data-toggle="modal">
-                            <input class="btn btn-primary btn-sm" type="button" value="Lab Request" name="lab_request" disabled data-toggle="modal" data-target="#labRequest2" onclick="ShowLabRequest2(<%=opdInfo[i].patient_id%>,<%=JSON.stringify(opdInfo[i].name)%>,<%=opdInfo[i].histo_id%>)">
+                            <input class="btn btn-primary btn-sm" type="button" value="Lab Request" name="lab_request" data-toggle="modal" data-target="#labRequest" onclick="ShowLabRequest(<%=opdInfo[i].patient_id%>,<%=JSON.stringify(opdInfo[i].name)%>,<%=opdInfo[i].histo_id%>,'laman')">
                           </a>
                         <%} else {%>
                           <a data-toggle="modal">
-                            <input class="btn btn-primary btn-sm" type="button" value="Lab Request" name="lab_request" data-toggle="modal" data-target="#labRequest" onclick="ShowLabRequest(<%=opdInfo[i].patient_id%>,<%=JSON.stringify(opdInfo[i].name)%>,<%=opdInfo[i].histo_id%>)">
+                            <input class="btn btn-default btn-sm" type="button" value="Lab Request" name="lab_request" data-toggle="modal" data-target="#labRequest" onclick="ShowLabRequest(<%=opdInfo[i].patient_id%>,<%=JSON.stringify(opdInfo[i].name)%>,<%=opdInfo[i].histo_id%>,null)">
                           </a>
                         <%}%>
                         <!-- PRESCRIPTION -->
@@ -152,14 +152,14 @@
                             prescribeArr += prescribeSQL[j].patient_id;
                           }
                         if(prescribeArr.includes(opdInfo[i].patient_id)){%>
-                          <input class="btn btn-primary btn-sm" type="button" name="prescribe" disabled value="Prescription" data-toggle="modal" data-target="prescribe2" onclick="ShowPrescribe2(<%=opdInfo[i].patient_id%>,<%=JSON.stringify(opdInfo[i].name)%>,<%=opdInfo[i].histo_id%>)" >
+                          <input class="btn btn-primary btn-sm" type="button" name="prescribe" value="Prescription" data-toggle="modal" data-target="#prescribe" onclick="ShowPrescribe(<%=opdInfo[i].patient_id%>,<%=JSON.stringify(opdInfo[i].name)%>,<%=opdInfo[i].histo_id%>,'laman')" >
                         <%} else {%>
-                          <input class="btn btn-primary btn-sm" type="button" name="prescribe" value="Prescription" data-toggle="modal" data-target="#prescribe" onclick="ShowPrescribe(<%=opdInfo[i].patient_id%>,<%=JSON.stringify(opdInfo[i].name)%>,<%=opdInfo[i].histo_id%>)">
+                          <input class="btn btn-default btn-sm" type="button" name="prescribe" value="Prescription" data-toggle="modal" data-target="#prescribe" onclick="ShowPrescribe(<%=opdInfo[i].patient_id%>,<%=JSON.stringify(opdInfo[i].name)%>,<%=opdInfo[i].histo_id%>,null)">
                         <%}%>
                         <!-- DIAGNOSIS -->
-                        <input class="btn btn-primary btn-sm" type="button" name="diagnosis" value="<%if(opdInfo[i].diagnosis){%>View Diagnosis<%} else {%>Diagnosis<%}%>" data-toggle="modal" data-target="#diagnosis" onclick="ShowDiagnosis(<%=opdInfo[i].patient_id%>,<%=JSON.stringify(opdInfo[i].name)%>,<%=opdInfo[i].histo_id%>,<%=JSON.stringify(opdInfo[i].diagnosis)%>)" >
+                        <input class="btn btn-default btn-sm" type="button" name="diagnosis" value="<%if(opdInfo[i].diagnosis){%>View Diagnosis<%} else {%>Diagnosis<%}%>" data-toggle="modal" data-target="#diagnosis" onclick="ShowDiagnosis(<%=opdInfo[i].patient_id%>,<%=JSON.stringify(opdInfo[i].name)%>,<%=opdInfo[i].histo_id%>,<%=JSON.stringify(opdInfo[i].diagnosis)%>)" >
                       <!-- ADMIT -->
-                      <input type="button" class="btn btn-primary btn-sm" name="admit" value="Admit" data-toggle="modal" data-target="#admit" onclick="ShowAdmit(<%=opdInfo[i].patient_id%>,<%=JSON.stringify(opdInfo[i].name)%>,<%=opdInfo[i].histo_id%>)">
+                      <input type="button" class="btn btn-default btn-sm" name="admit" value="Admit" data-toggle="modal" data-target="#admit" onclick="ShowAdmit(<%=opdInfo[i].patient_id%>,<%=JSON.stringify(opdInfo[i].name)%>,<%=opdInfo[i].histo_id%>)">
                       </td>
                     <form action="/doctor/outpatientManagement?id=<%= opdInfo[i].histo_id%>" method="post">
                       <td><button type="submit" data-toggle="confirmation" data-popout="true" data-singleton="true" class="btn btn-default btn-sm" name="sub" value="confirmOPD"><i class="fa fa-mail-forward"></i> Confirm</button></td>
@@ -208,7 +208,7 @@
                       <td><%= opdInfo2[i].bed_id%><%if(opdInfo2[i].bed_id){%><a href="/doctor/bedManagement?bed_id=<%=opdInfo2[i].bed_id%>" style="font-size:10px;">-details</a><%}%></td>
                       <td>
                         <!-- VIEW -->
-                      <button type="button" class="btn btn-primary btn-sm" name="button" data-toggle="modal" data-target="#showInputPassword" onclick="PasswordInput(<%= opdInfo2[i].patient_id %>)">Profile</button>
+                      <button type="button" class="btn btn-default btn-sm" name="button" data-toggle="modal" data-target="#showInputPassword" onclick="PasswordInput(<%= opdInfo2[i].patient_id %>)">Profile</button>
                         <!-- LAB -->
                         <%
                         var labArr= '';
@@ -217,11 +217,11 @@
                           }
                         if(labArr.includes(opdInfo2[i].patient_id)){%>
                           <a data-toggle="modal">
-                            <input class="btn btn-primary btn-sm" type="button" value="Lab Request" name="lab_request" disabled data-toggle="modal" data-target="#labRequest2" onclick="ShowLabRequest2(<%=opdInfo2[i].patient_id%>,<%=JSON.stringify(opdInfo2[i].name)%>,<%=opdInfo2[i].histo_id%>)">
+                            <input class="btn btn-primary btn-sm" type="button" value="Lab Request" name="lab_request" data-toggle="modal" data-target="#labRequest" onclick="ShowLabRequest(<%=opdInfo2[i].patient_id%>,<%=JSON.stringify(opdInfo2[i].name)%>,<%=opdInfo2[i].histo_id%>,'laman')">
                           </a>
                         <%} else {%>
                           <a data-toggle="modal">
-                            <input class="btn btn-primary btn-sm" type="button" value="Lab Request" name="lab_request" data-toggle="modal" data-target="#labRequest" onclick="ShowLabRequest(<%=opdInfo2[i].patient_id%>,<%=JSON.stringify(opdInfo2[i].name)%>,<%=opdInfo2[i].histo_id%>)">
+                            <input class="btn btn-default btn-sm" type="button" value="Lab Request" name="lab_request" data-toggle="modal" data-target="#labRequest" onclick="ShowLabRequest(<%=opdInfo2[i].patient_id%>,<%=JSON.stringify(opdInfo2[i].name)%>,<%=opdInfo2[i].histo_id%>,null)">
                           </a>
                         <%}%>
                         <!-- PRESCRIPTION -->
@@ -231,12 +231,12 @@
                             prescribeArr += prescribeSQL[j].patient_id;
                           }
                         if(prescribeArr.includes(opdInfo2[i].patient_id)){%>
-                          <input class="btn btn-primary btn-sm" type="button" name="prescribe" disabled value="Prescription" data-toggle="modal" data-target="prescribe2" onclick="ShowPrescribe2(<%=opdInfo2[i].patient_id%>,<%=JSON.stringify(opdInfo2[i].name)%>,<%=opdInfo2[i].histo_id%>)">
+                          <input class="btn btn-primary btn-sm" type="button" name="prescribe" value="Prescription" data-toggle="modal" data-target="#prescribe" onclick="ShowPrescribe(<%=opdInfo2[i].patient_id%>,<%=JSON.stringify(opdInfo2[i].name)%>,<%=opdInfo2[i].histo_id%>,'laman')">
                         <%} else {%>
-                          <input class="btn btn-primary btn-sm" type="button" name="prescribe" value="Prescription" data-toggle="modal" data-target="#prescribe" onclick="ShowPrescribe(<%=opdInfo2[i].patient_id%>,<%=JSON.stringify(opdInfo2[i].name)%>,<%=opdInfo2[i].histo_id%>)">
+                          <input class="btn btn-default btn-sm" type="button" name="prescribe" value="Prescription" data-toggle="modal" data-target="#prescribe" onclick="ShowPrescribe(<%=opdInfo2[i].patient_id%>,<%=JSON.stringify(opdInfo2[i].name)%>,<%=opdInfo2[i].histo_id%>,null)">
                         <%}%>
                         <!-- DIAGNOSIS -->
-                        <input class="btn btn-primary btn-sm" type="button" name="diagnosis" value="<%if(opdInfo2[i].diagnosis){%>View Diagnosis<%} else {%>Diagnosis<%}%>" data-toggle="modal" data-target="#diagnosis" onclick="ShowDiagnosis(<%=opdInfo2[i].patient_id%>,<%=JSON.stringify(opdInfo2[i].name)%>,<%=opdInfo2[i].histo_id%>,<%=JSON.stringify(opdInfo2[i].diagnosis)%>)" >
+                        <input class="btn btn-default btn-sm" type="button" name="diagnosis" value="<%if(opdInfo2[i].diagnosis){%>View Diagnosis<%} else {%>Diagnosis<%}%>" data-toggle="modal" data-target="#diagnosis" onclick="ShowDiagnosis(<%=opdInfo2[i].patient_id%>,<%=JSON.stringify(opdInfo2[i].name)%>,<%=opdInfo2[i].histo_id%>,<%=JSON.stringify(opdInfo2[i].diagnosis)%>)" >
 
                         <%if(!opdInfo2[i].bed_id){%>
                           <input type="button" class="btn btn-primary btn-sm" name="admit" value="Allot Bed" data-toggle="modal" data-target="#admit" onclick="ShowAdmit(<%=opdInfo2[i].patient_id%>,<%=JSON.stringify(opdInfo2[i].name)%>,<%=opdInfo2[i].histo_id%>)">
@@ -249,7 +249,7 @@
                       </td>
                       <form action="/doctor/outpatientManagement?id=<%= opdInfo2[i].histo_id%>" method="post">
                         <td><button type="submit" data-toggle="confirmation" data-popout="true" data-singleton="true" name="sub" class="btn btn-default btn-sm" value="confirm" <%if(!opdInfo2[i].bed_id){%>
-                    disabled
+                    
                   <%} else {%>
                   <%}%>><i class="fa fa-sign-out"></i> Discharge</button></td>
                       </form>
@@ -286,7 +286,7 @@
                   <br>
                   <br>
                   <textarea name="labRequestremarks" class="form-control" rows="8" cols="80"></textarea>
-                  <div class="modal-footer">
+                  <div class="modal-footer" id="ShowLabRequestView">
                     <button type="button" class="btn btn-default" data-dismiss="modal"><i class="fa fa-times"></i> Cancel</button>
                     <button type="submit" class="btn btn-primary" name="sub" value="labRequest"><i class="fa fa-sign-in"></i> Send</button>
                   </div>
@@ -296,6 +296,41 @@
           </div>
         </div>
       </div>
+
+<!--       <div class="modal fade" id="labRequest" role="dialog" aria-labelledby="myModalLabel">
+        <div class="modal-dialog" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+              <h4 class="modal-title" id="myModalLabel">Lab Request</h4>
+            </div>
+            <div class="modal-body">
+              <form id="labViewPressed" class="form-horizontal" method="post" onsubmit="successAlert()">
+                <label for="testRequest" class="col-sm-2 control-label">Test Type:</label>
+                <div class="col-sm-10">
+                  <select class="form-control" name="testRequest">
+                    <option value="Blood Chemistry">Blood Chemistry</option>
+                    <option value="Hematology">Hematology</option>
+                    <option value="Microscopy">Microscopy</option>
+                    <option value="Parasitology">Parasitology</option>
+                    <option value="Serotology">Serotology</option>
+                    <option value="Microbiology">Microbiology</option>
+                    <option value="X-Ray">X-Ray</option>
+                  </select>
+                </div>
+                <br>
+                <br>
+                  <textarea name="labRequestremarks" class="form-control" rows="8" cols="80"></textarea>
+                  <div class="modal-footer">
+                    <a id="linkForLabView"><button id="labViewPressed" type="button" class="btn btn-default"><i class="fa fa-eye"></i> View</button><a>
+                    <button type="button" class="btn btn-default" data-dismiss="modal"><i class="fa fa-times"></i> Cancel</button>
+                    <button id="labAdd" type="submit" class="btn btn-primary" name="sub" value="labRequest"><i class="fa fa-plus"></i> Add</button>
+                  </div>
+              </form>
+            </div>p
+          </div>
+        </div>
+      </div> -->
 
       <!-- ADMIT  -->
       <div class="modal fade" id="admit" role="dialog" aria-labelledby="myModalLabel">
@@ -336,7 +371,7 @@
               <h4 class="modal-title" id="myModalLabel">Add Prescription</h4>
             </div>
             <div class="modal-body">
-              <form id="dynamicPatientIdForPrescribe" class="form-horizontal" method="post" onsubmit="successAlert()">
+              <form id="dynamicPatientIdForPrescribe" class="form-horizontal" method="post">
                 <div class="form-group">
                   <label for="medicine" class="col-sm-2 control-label">Medicine</label>
                   <div class="col-sm-10">
@@ -347,7 +382,55 @@
                 <div class="form-group">
                   <label for="quantity" class="col-sm-2 control-label">Quantity</label>
                   <div class="col-sm-10">
-                    <input type="text" class="form-control" id="quantity" name="quantity">
+                    <input type="number" min="0" class="form-control" id="quantity" name="quantity">
+                  </div>
+                </div>
+
+                <div class="form-group">
+                  <label for="dosage" class="col-sm-2 control-label">Dosage</label>
+                  <div class="col-sm-10">
+                    <input type="text" class="form-control" id="dosage" name="dosage">
+                  </div>
+                </div>
+
+                <div class="form-group">
+                  <label for="timeframe" class="col-sm-2 control-label">Timeframe</label>
+                  <div class="col-sm-10">
+                    <input type="text" class="form-control" id="timeframe" name="timeframe">
+                  </div>
+                </div>
+
+                <div class="modal-footer" id="showPrescribeView">
+                  <button type="button" class="btn btn-default" data-dismiss="modal"><i class="fa fa-times"></i> Cancel</button>
+                  <button type="submit" class="btn btn-primary" name="sub" value="prescribe"><i class="fa fa-plus"></i> Add</button>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- PRESCRIBE 2-->
+<!--       <div class="modal fade" id="prescribe" role="dialog" aria-labelledby="myModalLabel">
+        <div class="modal-dialog" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+              <h4 class="modal-title" id="myModalLabel">Add Prescription</h4>
+            </div>
+            <div class="modal-body">
+              <form id="ShowPrescribe2" class="form-horizontal" method="post">
+                <div class="form-group">
+                  <label for="medicine" class="col-sm-2 control-label">Medicine</label>
+                  <div class="col-sm-10">
+                    <input type="text" class="form-control" id="medicine" name="medicine">
+                  </div>
+                </div>
+
+                <div class="form-group">
+                  <label for="quantity" class="col-sm-2 control-label">Quantity</label>
+                  <div class="col-sm-10">
+                    <input type="number" min="0" class="form-control" id="quantity" name="quantity">
                   </div>
                 </div>
 
@@ -366,54 +449,15 @@
                 </div>
 
                 <div class="modal-footer">
-                  <button type="button" class="btn btn-default" data-dismiss="modal"><i class="fa fa-times"></i> Cancel</button>
-                  <button type="submit" class="btn btn-primary" name="sub" value="prescribe"><i class="fa fa-plus"></i> Add</button>
+                  <a id="linkForPrescribeView"><button id="prescribeViewPressed">view</button></a>
+                  <button type="submit" class="btn btn-primary" name="sub" value="prescribeAdd"><i class="fa fa-plus"></i> Add</button>
                 </div>
               </form>
             </div>
           </div>
         </div>
-      </div>
+      </div> -->
 
-      <div class="modal fade" id="labRequest2" role="dialog" aria-labelledby="myModalLabel">
-        <div class="modal-dialog" role="document">
-          <div class="modal-content">
-            <div class="modal-header">
-              <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-              <h4 class="modal-title" id="myModalLabel">Lab Request</h4>
-            </div>
-            <div class="modal-body">
-              <form id="labViewPressed" class="form-horizontal" method="post" onsubmit="successAlert()">
-                <label for="testRequest" class="col-sm-2 control-label">Test Type:</label>
-                <div class="col-sm-10">
-                  <select class="form-control" name="testRequest">
-                    <option value="Blood Chemistry">Blood Chemistry</option>
-                    <option value="Hematology">Hematology</option>
-                    <option value="Microscopy">Microscopy</option>
-                    <option value="Parasitology">Parasitology</option>
-                    <option value="Serotology">Serotology</option>
-                    <option value="Microbiology">Microbiology</option>
-                    <option value="X-Ray">X-Ray</option>
-                  </select>
-                </div>
-                <br>
-                <br>
-                  <textarea name="labRequestremarks" class="form-control" rows="8" cols="80"></textarea>
-                  <div class="modal-footer">
-                    <a id="linkForLabView"><button id="labViewPressed" type="button" class="btn btn-default"><i class="fa fa-eye"></i> View</button><a>
-                    <button type="button" class="btn btn-default" data-dismiss="modal"><i class="fa fa-times"></i> Cancel</button>
-                    <button id="labAdd" type="submit" class="btn btn-primary" name="sub" value="labRequest"><i class="fa fa-plus"></i> Add</button>
-                  </div>
-              </form>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <div id="prescribe2" style="display:none;">
-          <a id="linkForPrescribeView"><button id="prescribeViewPressed">view</button></a>
-          <button id="prescribeAdd">add</button>
-      </div>
 
       <div class="modal fade" id="diagnosis" role="dialog" aria-labelledby="myModalLabel">
         <div class="modal-dialog" role="document">
@@ -488,43 +532,34 @@
     document.getElementById('dynamicActionPassword').action = '/doctor/patientManagement?passPatient='+id+'';
   }
     
-  function ShowLabRequest(i,o,u){
+  function ShowLabRequest(i,o,u,a){
     document.getElementById('dynamicPatientIdForLab').action = '/doctor/outpatientManagement?patient_id='+i+'&patient_name='+o+'&histo_id='+u+'';
-    document.getElementById('ShowLabRequest').style.display = 'block';
-  }
-  function ShowLabRequest2(i,o,u){
-    document.getElementById('labAdd').onclick = function() {
-      document.getElementById('ShowLabRequest').style.display = 'block';
-      document.getElementById('ShowLabRequest2').style.display = 'none';
-      ShowLabRequest(i,o,u);
-    };
-    document.getElementById('labViewPressed').onclick = function() {
-      document.getElementById('linkForLabView').href = "/doctor/labRequestManagement?labPatientInfo="+i+"";
-    };
-    document.getElementById('ShowLabRequest2').style.display = 'block';
-    document.getElementById('ShowLabRequest').style.display = 'none';
+    //document.getElementById('ShowLabRequest').style.display = 'block';
+    if (a == 'laman' && !document.getElementById("minsanLang")) {
+      var button = document.createElement('button');
+      button.setAttribute("class", "btn btn-default btn-sm pull-left");
+      button.setAttribute("id", "minsanLang");
+      button.innerHTML = '<i class="fa fa-eye"></i><a style="color:black;" href="/doctor/labRequestManagement?patient_id='+i+'"> View Pending Requests</a>';
+      document.getElementById('ShowLabRequestView').appendChild(button);      
+    }
   }
 
-  function ShowPrescribe(i,o,u){
+  function ShowPrescribe(i,o,u,a){
     document.getElementById('dynamicPatientIdForPrescribe').action = '/doctor/outpatientManagement?patient_id='+i+'&patient_name='+o+'&histo_id='+u+'';
-    document.getElementById('ShowPrescribe').style.display = 'block';
+    //document.getElementById('ShowPrescribe').style.display = 'block';
+    if (a == 'laman' && !document.getElementById("oneTimeOnly")) {
+      var button = document.createElement('button');
+      button.setAttribute("class", "btn btn-default btn-sm pull-left");
+      button.setAttribute("id", "oneTimeOnly");
+      button.innerHTML = '<i class="fa fa-eye"></i><a style="color:black;" href="/doctor/prescriptionManagement?patient_id='+i+'"> View Pending Requests</a>';
+      document.getElementById('showPrescribeView').appendChild(button);
+    }
   }
-  function ShowPrescribe2(i,o,u){
-    document.getElementById('prescribeAdd').onclick = function() {
-      document.getElementById('ShowPrescribe').style.display = 'block';
-      document.getElementById('ShowPrescribe2').style.display = 'none';
-      ShowPrescribe(i,o,u);
-    };
-    document.getElementById('prescribeViewPressed').onclick = function() {
-      document.getElementById('linkForPrescribeView').href = "/doctor/prescriptionManagement?opdPatient="+i+"";
-    };
-    document.getElementById('ShowPrescribe2').style.display = 'block';
-    document.getElementById('ShowPrescribe').style.display = 'none';
-  }
+
 
   function ShowAdmit(i,o,u){
     document.getElementById('dynamicPatientIdForAdmit').action = '/doctor/outpatientManagement?patient_id='+i+'&patient_name='+o+'&histo_id='+u+'';
-    document.getElementById('ShowAdmit').style.display = 'block';
+      document.getElementById('ShowAdmit').style.display = 'block';
   }
 
   function ShowDiagnosis(i,o,u,a){
