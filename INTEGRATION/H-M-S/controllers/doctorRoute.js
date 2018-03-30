@@ -350,7 +350,7 @@ var user, Aid, availableBedss, p;
               if (err) {
                 console.log(err);
               } else {
-                res.render('doctor/prescriptionManagement', {prescriptionDetails:rows[0], confirmedprescriptionSQL:rows[1], opdPatientInfo:null});
+                res.render('doctor/prescriptionManagement', {prescriptionDetails:rows[0], confirmedprescriptionSQL:rows[1], opdPatientInfo:null, username: user});
               }
             });
           }
