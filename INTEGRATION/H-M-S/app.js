@@ -31,6 +31,7 @@ const server = app.listen(3000, () => {
 const io = require('socket.io')(server);
 
 //FOR AGE INCREMENT
+var pharmDailyReport;
 var CronJob = require('cron').CronJob;
 new CronJob('00 00 * * 1-7', function() {
     var checkBD = 'SELECT name, patient_id, birth_date, age from patient';
@@ -47,7 +48,7 @@ new CronJob('00 00 * * 1-7', function() {
           });
         }
       }
-    });
+      });    
 }, null, true);
 
 //RESET COUNTER EVERY 3 MONTHS
@@ -156,7 +157,7 @@ var patientManagementSQL = "SELECT d.*, a.medicine, "
                            +"ON            a.patient_id = b.patient_id "
                            +"AND           a.date_stamp = b.DateTime) "
                            +"group by d.patient_id;";
-
+console.log('pharmaDailyReportsana ' + pharmDailyReport);
 
 login (app,db,bcrypt,moment);
 nurse (app,db,name,counts,chart,whoCurrentlyAdmitted,whoOPD,whoWARD,monthlyPatientCount,patientList,availableBeds,doctorList,patientManagementSQL,bcrypt,io,moment);

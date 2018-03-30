@@ -1,4 +1,4 @@
-module.exports = function(app,db,name,counts,chart,whoCurrentlyAdmitted,whoOPD,whoWARD,monthlyPatientCount,patientList,bcrypt,io,moment){
+module.exports = function(app,db,name,counts,chart,whoCurrentlyAdmitted,whoOPD,whoWARD,monthlyPatientCount,patientList,bcrypt,io,moment,pharmDailyReport){
 var user, Aid;
 var prescriptionSQL = 'SELECT CONCAT("medicine:",medicine,"\nquantity:",quantity,"\ndosage:", dosage,"\ntimeframe:", timeframe) AS medications, p.status as STATUS,creation_stamp,patient_type,name,age,prescription_id from prescription p inner join patient using(patient_id) where p.status = "pending";';
 var confirmedprescriptionSQL = 'SELECT CONCAT("medicine:",medicine,"\nquantity:",quantity,"\ndosage:", dosage,"\ntimeframe:", timeframe) AS medications, p.status as STATUS,creation_stamp,patient_type,name,age,prescription_id from prescription p inner join patient using(patient_id) where p.status = "confirmed";';
@@ -211,8 +211,8 @@ res.redirect('../login');
     app.get('/pharmacist/reports', function(req, res){
       if(req.session.email && req.session.sino == 'pharmacist'){
         if (req.session.sino == 'pharmacist') {
-          var reportsSQL  = 'SELECT * from prescription inner join patient using(patient_id);';
-          db.query(reportsSQL, function(err, rows){
+          //var reportsSQL  = 'SELECT * from prescription inner join patient using(patient_id);';
+          db.query(pharmDailyReport, function(err, rows){
             if (err) {
               console.log(err);
             } else {

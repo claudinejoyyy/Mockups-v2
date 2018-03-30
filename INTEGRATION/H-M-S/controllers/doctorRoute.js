@@ -116,8 +116,8 @@ var user, Aid, availableBedss, p;
               }
             });
           } else if(data.sub == 'prescribe') {
-            var prescribeSQL = 'INSERT into prescription (creation_stamp, medicine, quantity, dosage, timeframe, doctor_id, patient_id, status) VALUES ("'+moment(new Date()).format('YYYY-MM-DD HH:mm:ss')+'","'+data.medicine+'",'+data.quantity+',"'+data.dosage+'","'+data.timeframe+'",'+Aid+','+req.query.patient_id+',"pending");';
-            var medicines    = "Medicine:" + data.medicine + ", Quantity:"+ data.quantity + ", Dosage:" + data.dosage + ", TimeFrame:" + data.timeframe;
+            var prescribeSQL = 'INSERT into prescription (creation_stamp, medicine, quantity, dosage, timeframe, doctor_id, patient_id, status) VALUES ("'+moment(new Date()).format('YYYY-MM-DD HH:mm:ss')+'","'+data.medicine+'","'+data.quantity+'","'+data.dosage+'","'+data.timeframe+'",'+Aid+','+req.query.patient_id+',"pending");';
+            var medicines    = "" + data.medicine + ","+ data.quantity + "," + data.dosage + "," + data.timeframe;
             var historySQL = 'UPDATE patient_history set medicine = CONCAT(IFNULL(medicine, ""),"'+medicines+'\n") where histo_id ='+req.query.histo_id+';';
             db.query(prescribeSQL + historySQL +  'INSERT into activity_logs(account_id, time, type, remarks) VALUES ('+Aid+',"'+moment(new Date()).format('YYYY-MM-DD HH:mm:ss')+'", "prescription", "Prescribed a medicine to : '+req.query.patient_name+'");', function(err){
               if (err) {
