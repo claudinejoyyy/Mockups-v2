@@ -455,7 +455,7 @@ var user, Aid, availableBedss, p;
         if (req.session.sino == 'doctor') {
           bcrypt.compare(data.oldPass, req.session.password, function(err, isMatch){
             if(isMatch) {
-              req.flash('success', 'Successfully changed the password!');
+              req.flash('success', 'Successfully changed profile!');
               bcrypt.genSalt(10, function(err, salt){
                 bcrypt.hash(data.newPass, salt, function(err, hash){
                   if (data.newPass) {

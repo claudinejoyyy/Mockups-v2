@@ -217,61 +217,69 @@ var fhSQL       = "SELECT name FROM family_history;";
     }
   });
 
-  app.get('/nurse/profileManagement', function(req, res){
-    if(req.session.email && req.session.sino == 'nurse'){
-      if (req.session.sino == 'nurse') {
-        var profileInfoSQL  = 'SELECT name, age, address, phone from user_accounts where account_id = '+req.session.Aid+';';
-        var activityLogsSQL = 'SELECT * from activity_logs where account_id = '+req.session.Aid+' ORDER by logs_id desc;';
-        db.query(profileInfoSQL + activityLogsSQL, function(err, rows){
-          if (err) {
-            console.log(err);
-          } else {
-            res.render('nurse/profileManagement', {pInfo:rows[0], activityInfo: rows[1], username: user});
-          }
-        });
+  // PROFILE MANAGEMENT
+    app.get('/nurse/profileManagement', function(req, res){
+      if(req.session.email && req.session.sino == 'nurse'){
+        if (req.session.sino == 'nurse') {
+          var profileInfoSQL  = 'SELECT name, age, address, phone from user_accounts where account_id = '+req.session.Aid+';';
+          var activityLogsSQL = 'SELECT * from activity_logs where account_id = '+req.session.Aid+' ORDER by logs_id desc;';
+          db.query(profileInfoSQL + activityLogsSQL, function(err, rows){
+            if (err) {
+              console.log(err);
+            } else {
+              res.render('nurse/profileManagement', {pInfo:rows[0], activityInfo: rows[1], username: user});
+            }
+          });
+        } else {
+          res.redirect(req.session.sino+'/dashboard');
+        }
       } else {
-        res.redirect(req.session.sino+'/dashboard');
+        res.redirect('../login')
       }
-    } else {
-      res.redirect('../login')
-    }
-  });
+    });
 
-  app.post('/nurse/profileManagement', function(req, res){
-    var data = req.body;
-    if (req.session.email && req.session.sino == 'nurse') {
-      if (req.session.sino == 'nurse') {
-        bcrypt.compare(data.oldPass, req.session.password, function(err, isMatch){
-          if(isMatch) {
-            req.flash('success', 'Successfully changed the password!');
-            bcrypt.genSalt(10, function(err, salt){
-              bcrypt.hash(data.newPass, salt, function(err, hash){
-                var updateProfileSQL = 'UPDATE user_accounts SET name = "'+data.name+'", age = '+data.age+', address = "'+data.address+'", phone = '+data.phone+', password = IFNULL("'+hash+'",password) WHERE account_id = '+req.session.Aid+';';
-                db.query(updateProfileSQL + 'INSERT into activity_logs(account_id, time, type, remarks) VALUES ('+Aid+',"'+moment(new Date()).format('YYYY-MM-DD HH:mm:ss')+'", "settingsProfileManagement", "Edited personal info.");', function(err, rows){
-                  if (err) {
-                    console.log(err);
+    app.post('/nurse/profileManagement', function(req, res){
+      var data = req.body;
+      if (req.session.email && req.session.sino == 'nurse') {
+        if (req.session.sino == 'nurse') {
+          bcrypt.compare(data.oldPass, req.session.password, function(err, isMatch){
+            if(isMatch) {
+              req.flash('success', 'Successfully changed profile!');
+              bcrypt.genSalt(10, function(err, salt){
+                bcrypt.hash(data.newPass, salt, function(err, hash){
+                  if (data.newPass) {
+                    var updateProfileSQL = 'UPDATE user_accounts SET name = "'+data.name+'", age = '+data.age+', address = "'+data.address+'", phone = '+data.phone+', password = "'+hash+'" WHERE account_id = '+req.session.Aid+';';
+                    db.query(updateProfileSQL + 'INSERT into activity_logs(account_id, time, type, remarks) VALUES ('+Aid+',"'+moment(new Date()).format('YYYY-MM-DD HH:mm:ss')+'", "settingsProfileManagement", "Edited personal info.");', function(err, rows){
+                      if (err) {
+                        console.log(err);
+                      } else {
+                          res.redirect('../logout');
+                      }
+                    });                    
                   } else {
-                    if (hash) {
-                      res.redirect('../logout');
-                    } else {
-                      res.redirect(req.get('referer'));
-                    }
+                    var updateProfileSQL = 'UPDATE user_accounts SET name = "'+data.name+'", age = '+data.age+', address = "'+data.address+'", phone = '+data.phone+' WHERE account_id = '+req.session.Aid+';';
+                    db.query(updateProfileSQL + 'INSERT into activity_logs(account_id, time, type, remarks) VALUES ('+Aid+',"'+moment(new Date()).format('YYYY-MM-DD HH:mm:ss')+'", "settingsProfileManagement", "Edited personal info.");', function(err, rows){
+                      if (err) {
+                        console.log(err);
+                      } else {
+                          res.redirect(req.get('referer'));
+                      }
+                    });                    
                   }
                 });
               });
-            });
-          } else {
-            req.flash('danger', 'Invalid Current Password!');
-            res.redirect(req.get('referer'));
-          }
-        });
+            } else {
+              req.flash('danger', 'Invalid Current Password!');
+              res.redirect(req.get('referer'));
+            }
+          });
 
+        } else {
+          res.redirect(req.session.sino+'/dashboard');
+        }
       } else {
-        res.redirect(req.session.sino+'/dashboard');
+        res.redirect('../login');
       }
-    } else {
-      res.redirect('../login');
-    }
-  });
+    });
 
 }
