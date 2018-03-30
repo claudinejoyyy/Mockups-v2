@@ -92,7 +92,8 @@
                     <th>Age</th>
                     <th>Gender</th>
                     <th>Blood Type</th>
-                    <th>Latest Medicine Taken</th>
+                    <th>Previous Medicine Prescribed</th>
+                    <th>Previous Confinement Period</th>
                   </tr>
                 </thead>
                 <%
@@ -105,7 +106,40 @@
                   <td><%= p[i].age %></td>
                   <td><%= p[i].sex %></td>
                   <td><%= p[i].blood_type %></td>
-                  <td><%= p[i].medicines%></td>
+                <td style="font-size:10px;">
+                  <table class="table table-bordered table-striped">
+                    <tr>
+                      <th>Medicine</th>
+                      <th>QTY</th>
+                      <th>Dosage</th>
+                      <th>Time Frame</th>
+                    </tr>
+                  <% if(p[i].medicine != null){
+                    var medicine = p[i].medicine.split('\n');
+                      for(var l=0; l < medicine.length-1; l++){ %>
+                          <tr>
+                            <%var parseMed = medicine[l].split(',');%>
+                            <td><%= parseMed[0]%></td>
+                            <td><%= parseMed[1]%></td>
+                            <td><%= parseMed[2]%></td>
+                            <td><%= parseMed[3]%></td>
+                          </tr>
+                    <%}
+                  }%>
+                  </table>
+                </td>
+                <td>
+                    <%  var d1 = moment(new Date(p[i].allotment)).format('MMM-DD-YYYY HH:mm').toString();
+                        var d2 = moment(new Date(p[i].discharge)).format('MMM-DD-YYYY HH:mm').toString();
+                        if(d1 == "Jan-01-1970 08:00"){
+                            d1 = " ";
+                        }
+                        if(d2 == "Jan-01-1970 08:00"){
+                            d2 = " "
+                        }
+                    %>
+                    <%= d1%> - <%= d2%>
+                </td>
                 </tr>
                 <%}%>
               </table>
