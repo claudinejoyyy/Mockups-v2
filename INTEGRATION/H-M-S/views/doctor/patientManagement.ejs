@@ -191,8 +191,8 @@
                             <form class="form-horizontal" method="POST" id="dynamicEditProfPatientLink">
                                 <%
                                 for(var i=0; i <p2.length; i++){
-                    var b = new Date(p2[i].birth_date);
-                    %>
+                                var b = new Date(p2[i].birth_date);
+                                %>
                               <div class="form-group">
                                 <label for="inputRank" class="col-sm-3 control-label">Rank or Serial Number</label>
                                 <div class="col-xs-5">
@@ -288,19 +288,13 @@
                               <div class="form-group">
                                 <label for="inputImmu" class="col-sm-3 control-label">Immunization</label>
                                   <div class="col-xs-5">
-                                    <input class="form-control" type="text" name="immunization" value="<%= p2[i].immunization %>"><br>
+<textarea class="form-control" type="text" name="immunization" rows="8" cols="80" placeholder="sample immu : date&#10;Measles : MMM-DD-YYYY"><%= p2[i].immunization%></textarea>
                                   </div>
                               </div>
                               <div class="form-group">
                                 <label for="inputFH" class="col-sm-3 control-label">Family History</label>
                                   <div class="col-xs-5">
-                                    <input class="form-control" type="text" name="familyHistory" value="<%= p2[i].family_history %>"><br>
-                                  </div>
-                              </div>
-                              <div class="form-group">
-                                <label for="inputMed" class="col-sm-3 control-label">Medicine</label>
-                                  <div class="col-xs-5">
-                                    <input class="form-control" type="text" id="phone" name="medicine" placeholder="" value="<%= p2[0].medicine %>"><br>
+                                    <textarea class="form-control" type="text" name="familyHistory" rows="8" cols="80" placeholder="sample desease 1&#10;sample desease 2"><%if(p2[i].family_history) {%><%= p2[i].family_history%><%}%></textarea>
                                   </div>
                               </div>
                               <div class="form-group">
