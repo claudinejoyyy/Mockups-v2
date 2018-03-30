@@ -32,7 +32,6 @@
                   <img src="../dist/img/avatar04.png" class="img-circle" alt="User Image">
                   <p>
                     <%=username[0].name%> - <%= username[0].account_type.charAt(0).toUpperCase() + username[0].account_type.slice(1);%>
-                    <small>Member since April 2014</small>
                   </p>
                 </li>
                 <li class="user-footer">
@@ -133,29 +132,30 @@
         <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
         <h4 class="modal-title" id="myModalLabel">New Appointment</h4>
       </div>
+    <form name="setAppointmentForm" class="horizontal" method="post" onsubmit="successAlert()">
       <div class="modal-body">
-        <form name="setAppointmentForm" class="horizontal" method="post" onsubmit="successAlert()">
-          <div id="showAppointmentForm" style='display:inline-block;'>
-            <label for="appointmentName">Name: </label>
-            <select id="appointmentName" name="appointmentDetails"class="" name="">
-              <%for(var i = 0; i < appointmentDetails.length; i++){%>
-                <option value="<%= appointmentDetails[i].patient_id%>"><%= appointmentDetails[i].name%></option>
+          <div class="form-group">
+            <label for="appointmentName">Patient Name: </label>
+            <select id="appointmentName" name="appointmentDetails" class="select2 form-control" style="width:100%;">
+              <%for(var i = 0; i < ap.length; i++){%>
+                <option value="<%= ap[i].patient_id%>"><%= ap[i].name%></option>
               <%}%>
             </select>
-            <br>
-            <br>
-            <label for="date1">Date: </label>
-            <input id="date1" type="datetime-local" name="dateNtime" min="2000-10-06T00:00:00" max="9000-11-16T21:25:33" required>
-            <br>
-            <label id="appointmentText">Appointment Details: </label>
-            <textarea name="appointmentRemarks" rows="12" cols="80" required></textarea>
-            <div class="modal-footer">
-              <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
-              <button type="submit" name="sub" value="appointment" class="btn btn-primary">Confirm</button>
-            </div>
           </div>
-        </form>
+          <div class="form-group">
+            <label for="date1">Date: </label>
+            <input id="date1" type="datetime-local" name="dateNtime" min="2000-10-06T00:00:00" max="9000-11-16T21:25:33" class="form-control" required>            
+          </div>
+          <div class="form-group">
+            <label id="appointmentText">Appointment Details: </label>
+            <textarea name="appointmentRemarks" rows="12" cols="80" required class="form-control"></textarea>
+          </div>
       </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal"><i class="fa fa-times"></i> Cancel</button>
+          <button type="submit" name="sub" value="appointment" class="btn btn-primary"><i class="fa fa-check"></i> Confirm</button>
+        </div>
+    </form>
     </div>
   </div>
 </div>
@@ -179,7 +179,9 @@ $(function () {
 function showAppointmentForm() {
   document.getElementById("showAppointmentForm").style.display = "block";
 }
-
+$(document).ready(function() {
+  $(".select2").select2();
+});
 </script>
 
   </body>

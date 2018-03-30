@@ -178,10 +178,35 @@
                                   <input class="form-control" type="text" name="rank" value="<%= p2[i].rankORsn %>"><br>
                                 </div>
                               </div>
+                                <div class="form-group">
+                                <label for="inputStatus" class="col-sm-3 control-label">Patient Type</label>
+                                  <div class="col-xs-5">
+                                      <select name="patientType" class="form-control">
+                                        <option selected value="<%= p2[i].patient_type %>"><%= p2[i].patient_type %></option>
+                                        <%if(p2[i].patient_type != 'civilian'){%>
+                                        <option value="civilian" >civilian</option>
+                                        <%} if(p2[i].patient_type != 'military officer'){%>
+                                        <option value="military officer">military officer</option>
+                                        <%} if(p2[i].patient_type != 'military dependent'){%>
+                                        <option value="military dependent">military dependent</option>
+                                        <%} if(p2[i].patient_type != 'cadet'){%>
+                                        <option value="cadet">cadet</option>
+                                        <%} if(JSON.stringify(p2[i].patient_type) != 'authorized civilian'){%>
+                                        <option value="authorized civilian">authorized civilian</option>
+                                        <%}%>
+                                      </select>
+                                  </div>
+                                </div><br>
                               <div class="form-group">
                                 <label for="inputUnit" class="col-sm-3 control-label">Unit</label>
                                 <div class="col-xs-5">
                                   <input class="form-control" type="text" name="unit" value="<%= p2[i].unit %>"><br>
+                                </div>
+                              </div>
+                                <div class="form-group">
+                                <label for="inputUnit" class="col-sm-3 control-label">Blood Type</label>
+                                <div class="col-xs-5">
+                                  <input class="form-control" type="text" name="bloodType" value="<%= p2[i].blood_type %>" maxlength="2"><br>
                                 </div>
                               </div>
                               <div class="form-group">
@@ -191,12 +216,12 @@
                                         <option selected value="<%= p2[i].status %>"><%= p2[i].status %></option>
                                         <%if(p2[i].status != 'Single'){%>
                                         <option value="Single">single</option>
-                                        <%}if(p2[i].status != 'Married'){%>
-                                        <option value="Married">married</option>
+                                        <%}if(p2[i].status != 'Maried'){%>
+                                        <option value="Maried">maried</option>
                                         <%}%>
                                       </select>
                                   </div>
-                              </div>
+                              </div><br>
                               <div class="form-group">
                                 <label for="inputAddress" class="col-sm-3 control-label">Address</label>
                                   <div class="col-xs-5">
@@ -218,13 +243,13 @@
                               <div class="form-group">
                                 <label for="inputFather" class="col-sm-3 control-label">Father</label>
                                   <div class="col-xs-5">
-                                    <input class="form-control" type="text" name="father" value="<%= p2[i].father %>"><br>
+                                    <input class="form-control" type="text" name="father" value="<%= p2[i].father %>" placeholder="Full Name : Occupation"><br>
                                   </div>
                               </div>
                               <div class="form-group">
                                 <label for="inputMother" class="col-sm-3 control-label">Mother</label>
                                   <div class="col-xs-5">
-                                    <input class="form-control" type="text" name="mother" value="<%= p2[i].mother %>"><br>
+                                    <input class="form-control" type="text" name="mother" value="<%= p2[i].mother %>" placeholder="Full Name : Occupation"><br>
                                   </div>
                               </div>
                               <div class="form-group">
