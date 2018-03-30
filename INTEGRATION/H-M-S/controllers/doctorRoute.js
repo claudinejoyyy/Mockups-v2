@@ -239,17 +239,17 @@ var user, Aid, availableBedss, p;
     }
   });
   //PATIENT MANAGEMENT
-  app.get('/nurse/patientManagement', function(req, res){
-      if(req.session.email && req.session.sino == 'nurse'){
-        if(req.session.sino == 'nurse'){
+  app.get('/doctor/patientManagement', function(req, res){
+      if(req.session.email && req.session.sino == 'doctor'){
+        if(req.session.sino == 'doctor'){
           if(req.query.patient){
             var sql  = "SELECT patient_id,patient_type,name,age,sex,blood_type FROM patient where patient_id = "+req.query.patient+";";
             db.query(sql, function(err, rows){
-              res.render('nurse/patientManagement', {p:rows, p2:null, med:null, username:user, invalid:null});
+              res.render('doctor/patientManagement', {p:rows, p2:null, med:null, username:user, invalid:null});
             });
           } else {
               db.query(patientManagementSQL, function(err, rows){
-                res.render('nurse/patientManagement', {p:rows, p2:null, med:null, username:user, invalid:null});
+                res.render('doctor/patientManagement', {p:rows, p2:null, med:null, username:user, invalid:null});
               });
           }
         } else {
@@ -260,10 +260,10 @@ var user, Aid, availableBedss, p;
       }
     });
 
-    app.post('/nurse/patientManagement', function(req, res){
+    app.post('/doctor/patientManagement', function(req, res){
       var data = req.body;
-      if(req.session.email && req.session.sino == 'nurse'){
-        if(req.session.sino == 'nurse') {
+      if(req.session.email && req.session.sino == 'doctor'){
+        if(req.session.sino == 'doctor') {
           if (data.sub == 'changeInfo') {
           var patientManSQL = "SELECT d.*, a.medicine," 
                          +" (SELECT time from activity_logs where type='bed' and d.patient_id = activity_logs.patient_id order by time desc limit 1) as allotment, "
@@ -339,7 +339,7 @@ var user, Aid, availableBedss, p;
                 var updatedSql2  = "SELECT * FROM patient where patient_id = "+req.query.patient_id+";";
                 req.flash('success', 'Successfully changed profile!');
                 db.query(patientManSQL + updatedSql2, function(err, successRows2){
-                  res.render('nurse/patientManagement', {p:successRows2[0], p2:successRows2[1], med:successRows[2], username:user, invalid:null});
+                  res.render('doctor/patientManagement', {p:successRows2[0], p2:successRows2[1], med:successRows[2], username:user, invalid:null});
                 });
               }
             });
@@ -383,12 +383,12 @@ var user, Aid, availableBedss, p;
                 var sql2  = "SELECT * FROM patient where patient_id = "+req.query.passPatient+";";
                 var med = "select date_stamp, lab, medicine,diagnosis,bed from patient_history where patient_id = "+req.query.passPatient+" order by date_stamp;";
                 db.query(patientManSQL + sql2 + med, function(err, successRows){
-                  res.render('nurse/patientManagement', {p:successRows[0], p2:successRows[1], med:successRows[2], username:user, invalid:null});
+                  res.render('doctor/patientManagement', {p:successRows[0], p2:successRows[1], med:successRows[2], username:user, invalid:null});
                 });
               } else {
                 var sql  = "SELECT patient_id,patient_type,name,age,sex,blood_type FROM patient where patient_id = "+req.query.passPatient+";";
                 db.query(sql, function(err, errorRows){
-                  res.render('nurse/patientManagement', {p:errorRows, p2:null, med:null, username:user, invalid:'error'});
+                  res.render('doctor/patientManagement', {p:errorRows, p2:null, med:null, username:user, invalid:'error'});
                 });
               }
             });  

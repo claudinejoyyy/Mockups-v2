@@ -28,12 +28,12 @@
         <ul class="nav navbar-nav">
           <li class="dropdown user user-menu">
             <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-              <img src="../dist/img/avatar04.png" class="user-image" alt="User Image">
+              <img src="../dist/img/avatar2.png" class="user-image" alt="User Image">
               <span class="hidden-xs"><%= username[0].name %></span>
             </a>
             <ul class="dropdown-menu">
               <li class="user-header">
-                <img src="../dist/img/avatar04.png" class="img-circle" alt="User Image">
+                <img src="../dist/img/avatar2.png" class="img-circle" alt="User Image">
                 <p>
                   <%=username[0].name%> - <%= username[0].account_type.charAt(0).toUpperCase() + username[0].account_type.slice(1);%>
                 </p>
@@ -57,7 +57,7 @@
     <section class="sidebar">
       <div class="user-panel">
         <div class="pull-left image">
-          <img src="../dist/img/avatar04.png" class="img-circle" alt="User Image">
+          <img src="../dist/img/avatar2.png" class="img-circle" alt="User Image">
         </div>
         <div class="pull-left info">
           <p><%= username[0].name %></p>
@@ -65,16 +65,12 @@
         </div>
       </div>
 
-      <ul class="sidebar-menu">
-          <li><a href="../doctor/dashboard"><i class="fa fa-dashboard"></i> <span>Dashboard</span></a></li>
-          <li><a href="../doctor/bedManagement"><i class="fa fa-bed"></i> <span>Bed Management</span></a></li>
-          <li class="active"><a href="../doctor/patientManagement" target="_self"><i class="fa fa-users"></i> <span>Patient Management</span></a></li>
-          <li><a href="../doctor/outpatientManagement"><i class="fa fa-wheelchair"></i> <span>Outpatient Management</span></a></li>
-          <li><a href="../doctor/appointmentManagement"><i class="fa fa-calendar"></i> <span>Appointment Management</span></a></li>
-          <li><a href="../doctor/prescriptionManagement"><i class="fa fa-sticky-note"></i> <span>Prescription Management</span></a></li>
-          <li><a href="../doctor/labRequestManagement"><i class="fa fa-stethoscope"></i> <span>Lab Request Management</span></a></li>
-          <li><a href="../doctor/profileManagement"><i class="fa fa-info"></i> <span>Profile Management</span></a></li>
-      </ul>
+       <ul class="sidebar-menu">
+        <li ><a href="dashboard"><i class="fa fa-dashboard"></i> <span>Dashboard</span></a></li>
+        <li class="active"><a href="patientManagement" target="_self"><i class="fa fa-users"></i> <span>Patient Management</span></a></li>
+        <li><a href="bedManagement"><i class="fa fa-bed"></i> <span>Bed Management</span></a></li>
+        <li><a href="profileManagement"><i class="fa fa-info"></i> <span>Profile Managemdent</span></a></li>
+    </ul>
     </section>
   </aside>
 
@@ -144,7 +140,32 @@
                         </div>
                         <!-- /.box-body -->
                       </div>
-
+                        
+                      <div class="box box-primary">
+                        <div class="box-header with-border">
+                          <h3 class="box-title">Previous Confinement Date</h3>
+                        </div>
+                        <!-- /.box-header -->
+                        <div class="box-body">
+                        <strong><i class="fa fa-calendar"></i> Date</strong>
+                          <%
+                          for(var i=0; i <p.length; i++){
+                          %>
+                          <h5 class="text-muted">
+                                <%  var d1 = moment(new Date(p[i].allotment)).format('MMM-DD-YYYY HH:mm').toString();
+                                var d2 = moment(new Date(p[i].discharge)).format('MMM-DD-YYYY HH:mm').toString();
+                                if(d1 == "Jan-01-1970 08:00"){
+                                d1 = " ";
+                                }
+                                if(d2 == "Jan-01-1970 08:00"){
+                                d2 = " "
+                                }
+                                %>
+                    <%= d1%> - <%= d2%> </h5>
+                            <%}%>
+                        </div>
+                        <!-- /.box-body -->
+                      </div>
                       <div class="box box-primary">
                         <div class="box-header with-border">
                           <h3 class="box-title">Appointments</h3>
@@ -152,10 +173,7 @@
                         <!-- /.box-header -->
                         <div class="box-body">
                         <strong><i class="fa fa-calendar"></i> Date</strong>
-
                           <h5 class="text-muted"> None</h5>
-
-                          <hr>
                         </div>
                         <!-- /.box-body -->
                       </div>
@@ -170,71 +188,113 @@
                         </ul>
                         <div class="tab-content">
                           <div class="active tab-pane" id="settings">
-                            <form class="form-horizontal" method="POST" id="setting">
+                            <form class="form-horizontal" method="POST" id="dynamicEditProfPatientLink">
+                                <%
+                                for(var i=0; i <p2.length; i++){
+                    var b = new Date(p2[i].birth_date);
+                    %>
                               <div class="form-group">
                                 <label for="inputRank" class="col-sm-3 control-label">Rank or Serial Number</label>
                                 <div class="col-xs-5">
-                                  <input class="form-control" type="text" id="name" name="rank" placeholder="" value="<%= p2[0].rankORsn %>" disabled>
+                                  <input class="form-control" type="text" name="rank" value="<%= p2[i].rankORsn %>"><br>
                                 </div>
                               </div>
+                                <div class="form-group">
+                                <label for="name" class="col-sm-3 control-label">Full Name</label>
+                                <div class="col-xs-5">
+                                  <input class="form-control" input type="text" name="name" value="<%= p2[i].name %>"><br>
+                                </div>
+                              </div>
+                                <div class="form-group">
+                                <label for="inputStatus" class="col-sm-3 control-label">Patient Type</label>
+                                  <div class="col-xs-5">
+                                      <select name="patientType" class="form-control">
+                                        <option selected value="<%= p2[i].patient_type %>"><%= p2[i].patient_type %></option>
+                                        <%if(p2[i].patient_type != 'civilian'){%>
+                                        <option value="civilian" >civilian</option>
+                                        <%} if(p2[i].patient_type != 'military officer'){%>
+                                        <option value="military officer">military officer</option>
+                                        <%} if(p2[i].patient_type != 'military dependent'){%>
+                                        <option value="military dependent">military dependent</option>
+                                        <%} if(p2[i].patient_type != 'cadet'){%>
+                                        <option value="cadet">cadet</option>
+                                        <%} if(JSON.stringify(p2[i].patient_type) != 'authorized civilian'){%>
+                                        <option value="authorized civilian">authorized civilian</option>
+                                        <%}%>
+                                      </select>
+                                  </div>
+                                </div><br>
                               <div class="form-group">
                                 <label for="inputUnit" class="col-sm-3 control-label">Unit</label>
                                 <div class="col-xs-5">
-                                  <input class="form-control" type="text" id="age" name="unit" placeholder="" value="<%= p2[0].unit %>"><br>
+                                  <input class="form-control" type="text" name="unit" value="<%= p2[i].unit %>"><br>
+                                </div>
+                              </div>
+                                <div class="form-group">
+                                <label for="inputUnit" class="col-sm-3 control-label">Blood Type</label>
+                                <div class="col-xs-5">
+                                  <input class="form-control" type="text" name="bloodType" value="<%= p2[i].blood_type %>" maxlength="2"><br>
                                 </div>
                               </div>
                               <div class="form-group">
                                 <label for="inputStatus" class="col-sm-3 control-label">Status</label>
                                   <div class="col-xs-5">
-                                    <input class="form-control" type="text" id="address" name="status" placeholder="" value="<%= p2[0].status %>"><br>
+                                      <select name="status" class="form-control">
+                                        <option selected value="<%= p2[i].status %>"><%= p2[i].status %></option>
+                                        <%if(p2[i].status != 'Single'){%>
+                                        <option value="Single">single</option>
+                                        <%}if(p2[i].status != 'Maried'){%>
+                                        <option value="Maried">maried</option>
+                                        <%}%>
+                                      </select>
                                   </div>
-                              </div>
+                              </div><br>
                               <div class="form-group">
                                 <label for="inputAddress" class="col-sm-3 control-label">Address</label>
                                   <div class="col-xs-5">
-                                    <input class="form-control" type="text" id="phone" name="address" placeholder="" value="<%= p2[0].address %>"><br>
+                                    <input class="form-control" type="text" name="address" value="<%= p2[i].address %>"><br>
                                   </div>
                               </div>
                               <div class="form-group">
                                 <label for="inputReligion" class="col-sm-3 control-label">Religion</label>
                                   <div class="col-xs-5">
-                                    <input class="form-control" type="text" id="phone" name="religion" placeholder="" value="<%= p2[0].religion %>"><br>
+                                    <input class="form-control" type="text" name="religion" value="<%= p2[i].religion %>"><br>
                                   </div>
                               </div>
                               <div class="form-group">
                                 <label for="inputAllergies" class="col-sm-3 control-label">Allergies</label>
                                   <div class="col-xs-5">
-                                    <input class="form-control" type="text" id="phone" name="allergies" placeholder="" value="<%= p2[0].allergies %>"><br>
+                                    <input class="form-control" type="text" name="allergies" value="<%= p2[i].allergies %>"><br>
                                   </div>
                               </div>
                               <div class="form-group">
                                 <label for="inputFather" class="col-sm-3 control-label">Father</label>
                                   <div class="col-xs-5">
-                                    <input class="form-control" type="text" id="phone" name="father" placeholder="" value="<%= p2[0].father %>"><br>
+                                    <input class="form-control" type="text" name="father" value="<%if(p2[i].father != ':') {%><%= p2[i].father%><%}%>"  placeholder="Full Name : Occupation"><br>
                                   </div>
                               </div>
                               <div class="form-group">
                                 <label for="inputMother" class="col-sm-3 control-label">Mother</label>
                                   <div class="col-xs-5">
-                                    <input class="form-control" type="text" id="phone" name="mother" placeholder="" value="<%= p2[0].mother %>"><br>
+                                    <input class="form-control" type="text" name="mother" value="<%if(p2[i].mother != ':') {%><%= p2[i].mother%><%}%>" placeholder="Full Name : Occupation"><br>
                                   </div>
                               </div>
                               <div class="form-group">
                                 <label for="inputBH" class="col-sm-3 control-label">Birth History</label>
                                   <div class="col-xs-5">
-                                    <input class="form-control" type="text" id="phone" name="bh" placeholder="" value="<%= p2[0].birth_history %>"><br>
+                                    <input class="form-control" type="text" name="birthHistory" value="<%= p2[i].birth_history %>"><br>
                                   </div>
                               </div>
                               <div class="form-group">
                                 <label for="inputImmu" class="col-sm-3 control-label">Immunization</label>
                                   <div class="col-xs-5">
-                                    <input class="form-control" type="text" id="phone" name="immu" placeholder="" value="<%= p2[0].immunization %>"><br>
+                                    <input class="form-control" type="text" name="immunization" value="<%= p2[i].immunization %>"><br>
                                   </div>
                               </div>
                               <div class="form-group">
                                 <label for="inputFH" class="col-sm-3 control-label">Family History</label>
                                   <div class="col-xs-5">
-                                    <input class="form-control" type="text" id="phone" name="fh" placeholder="" value="<%= p2[0].family_history %>"><br>
+                                    <input class="form-control" type="text" name="familyHistory" value="<%= p2[i].family_history %>"><br>
                                   </div>
                               </div>
                               <div class="form-group">
@@ -245,9 +305,10 @@
                               </div>
                               <div class="form-group">
                                 <div class="col-sm-offset-2 col-sm-10">
-                                  <button type="submit" class="btn btn-danger" onclick="check()"><i class="fa fa-save"></i> Save</button>
+                                   <button type="submit" name="sub" class="btn btn-danger" value="changeInfo" onclick="dynaPatientInfo(<%= p2[i].patient_id%>)">Save</button>
                                 </div>
                               </div>
+                                <%}%>
                             </form>
                           </div>
 
@@ -323,7 +384,7 @@
                     <!-- /.col -->
                   </div>
               <%}%>
-        
+        <%if(!p2){%>
        <div class="row">
         <div class="col-xs-12">
           <div class="box">
@@ -393,13 +454,11 @@
               </tr>
               <%}%>
             </table>
-              
-
-                <%- messages('message', locals) %>
             </div>
           </div>
         </div>
-      </div> <!--- div row --->
+      </div>
+      <%}%>
       </section>
       </div>
 
@@ -460,5 +519,21 @@
   function PasswordInput(id){
     document.getElementById('PasswordInput').style.display = 'block';
     document.getElementById('dynamicActionPassword').action = '/doctor/patientManagement?passPatient='+id+'';
+  }
+</script>
+
+    <script type="text/javascript">
+<%if(invalid){%>
+  alert('invalid password');
+  $(document).ready(function(){
+    $("#PasswordInput").show();
+  });
+<%}%>
+  function PasswordInput(id){
+    document.getElementById('PasswordInput').style.display = 'block';
+    document.getElementById('dynamicActionPassword').action = '/doctor/patientManagement?passPatient='+id+'';
+  }
+  function dynaPatientInfo(id){
+  document.getElementById('dynamicEditProfPatientLink').action = '/doctor/patientManagement?patient_id='+id+''; 
   }
 </script>
