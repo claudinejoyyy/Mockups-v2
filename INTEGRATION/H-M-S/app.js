@@ -31,7 +31,6 @@ const server = app.listen(3000, () => {
 const io = require('socket.io')(server);
 
 //FOR AGE INCREMENT
-var pharmDailyReport;
 var CronJob = require('cron').CronJob;
 new CronJob('00 00 * * 1-7', function() {
     var checkBD = 'SELECT name, patient_id, birth_date, age from patient';
@@ -129,8 +128,8 @@ var patientManagementSQL = "SELECT d.*, a.medicine, "
                            +"(SELECT time from activity_logs where type='bed' and d.patient_id = activity_logs.patient_id order by time desc limit 1) as allotment, "
                            +"(SELECT time from activity_logs where type='bedDischarge' and d.patient_id = activity_logs.patient_id order by time desc limit 1) as discharge, "
                            +"(SELECT DATEDIFF(discharge,allotment)) as difference "
-                           +"FROM patient_history AS a inner join patient as d on d.patient_id = a.patient_id inner join activity_logs on d.patient_id = activity_logs.patient_id "
-                           +"INNER JOIN     "
+                           +"FROM patient_history AS a left join patient as d on d.patient_id = a.patient_id left join activity_logs on d.patient_id = activity_logs.patient_id "
+                           +"LEFT JOIN     "
                            +"("
                            +"    SELECT    patient_id, Max(date_stamp) AS DateTime "
                            +"    FROM      patient_history "
@@ -144,11 +143,11 @@ var patientManagementSQL = "SELECT d.*, a.medicine, "
                            +"(SELECT time from activity_logs where type='bed' and d.patient_id = activity_logs.patient_id order by time desc limit 1) as allotment, "
                            +"(SELECT time from activity_logs where type='bedDischarge' and d.patient_id = activity_logs.patient_id order by time desc limit 1) as discharge, "
                            +"(SELECT DATEDIFF(discharge,allotment)) as difference "
-                           +"from patient d inner join activity_logs on d.patient_id = activity_logs.patient_id "
+                           +"from patient d left join activity_logs on d.patient_id = activity_logs.patient_id "
                            +"where d.patient_id not in "
                            +"(SELECT        a.patient_id "
-                           +"FROM          patient_history AS a inner join patient as d on d.patient_id = a.patient_id "
-                           +"INNER JOIN "
+                           +"FROM          patient_history AS a left join patient as d on d.patient_id = a.patient_id "
+                           +"LEFT JOIN "
                            +"("
                            +"    SELECT    patient_id, Max(date_stamp) AS DateTime "
                            +"    FROM      patient_history "
@@ -157,8 +156,6 @@ var patientManagementSQL = "SELECT d.*, a.medicine, "
                            +"ON            a.patient_id = b.patient_id "
                            +"AND           a.date_stamp = b.DateTime) "
                            +"group by d.patient_id;";
-console.log('pharmaDailyReportsana ' + pharmDailyReport);
-
 login (app,db,bcrypt,moment);
 nurse (app,db,name,counts,chart,whoCurrentlyAdmitted,whoOPD,whoWARD,monthlyPatientCount,patientList,availableBeds,doctorList,patientManagementSQL,bcrypt,io,moment);
 doctor(app,db,name,counts,chart,whoCurrentlyAdmitted,whoOPD,whoWARD,monthlyPatientCount,patientList,availableBeds,patientManagementSQL,bcrypt,io,moment);
