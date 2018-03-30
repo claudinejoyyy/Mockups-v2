@@ -423,16 +423,34 @@ var user, Aid, availableBedss, p;
       }
     });
     app.post('/doctor/appointmentManagement', function(req, res){
+      var data = req.body;
       if(req.session.email && req.session.sino == 'doctor'){
         if(req.session.sino == 'doctor') {
+
+          if(data.sub == 'cancel') {
           var cancelAppointmentSQL = 'DELETE from appointment where appointment_id = '+req.query.appointmentId+';';
           db.query(cancelAppointmentSQL + 'INSERT into activity_logs(account_id, time, type, remarks) VALUES ('+Aid+',"'+moment(new Date()).format('YYYY-MM-DD HH:mm:ss')+'", "cancelAppointment", "Canceled appointment with: '+req.query.appointmentPatientName+'");', function(err){
             if(err){
               console.log(err);
-            } else {
-              res.redirect(req.get('referer'));
             }
           });
+          res.redirect(req.get('referer'));
+        } else if(data.sub == 'appointment') {
+                var splitDateNTime = data.dateNtime.split('T');
+                var parseDate      = splitDateNTime[0];
+                var parseTime      = splitDateNTime[1] + ':00';
+                var parseDateNTime = parseDate+' '+parseTime;
+                var addAppointment = 'INSERT into appointment (doctor_id, patient_id, appointment_timestamp, remarks) VALUES ('+Aid+', '+data.appointmentPatientID+', "'+parseDateNTime+'", "'+data.appointmentRemarks+'");';
+                console.log('di pa nakapasok');
+                db.query(addAppointment + 'INSERT into activity_logs(account_id, time, type, remarks) VALUES ('+Aid+',"'+moment(new Date()).format('YYYY-MM-DD HH:mm:ss')+'", "appointment", "Set Appointment with '+req.query.appointmentPatientName+' on '+parseDateNTime+'");', function(err){
+                  console.log('naquery siya');
+                  if (err) {
+                    console.log(err);
+                  }
+                });
+                res.redirect(req.get('referer'));
+          }
+
         } else {
           res.redirect(req.session.sino+'/dashboard');
         }
