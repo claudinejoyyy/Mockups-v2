@@ -288,13 +288,13 @@
                               <div class="form-group">
                                 <label for="inputImmu" class="col-sm-3 control-label">Immunization</label>
                                   <div class="col-xs-5">
-                                    <input class="form-control" type="text" name="immunization" value="<%= p2[i].immunization %>"><br>
+<textarea class="form-control" type="text" name="immunization" rows="8" cols="80" placeholder="Sample Immunization : date&#10;Measles : MMM-DD-YYYY"><%= p2[i].immunization%></textarea>
                                   </div>
                               </div>
                               <div class="form-group">
                                 <label for="inputFH" class="col-sm-3 control-label">Family History</label>
                                   <div class="col-xs-5">
-                                    <input class="form-control" type="text" name="familyHistory" value="<%= p2[i].family_history %>"><br>
+                                    <textarea class="form-control" type="text" name="familyHistory" rows="8" cols="80" placeholder="Sample Disease 1&#10;Sample Disease 2"><%if(p2[i].family_history) {%><%= p2[i].family_history%><%}%></textarea>
                                   </div>
                               </div>
                               <div class="form-group">
