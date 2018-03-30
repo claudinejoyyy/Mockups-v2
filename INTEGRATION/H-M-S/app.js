@@ -14,8 +14,11 @@ var bcrypt = require('bcryptjs');
 var expressValidator = require('express-validator');
 var flash = require('connect-flash');
 var app = express();
+var favicon = require('serve-favicon');
+
 
 //MIDDLEWARES
+app.use(favicon(__dirname + '/public/img/favicon.ico'));
 app.locals.moment = require('moment');
 app.set('view engine', 'ejs');
 app.use(helmet.noCache());
