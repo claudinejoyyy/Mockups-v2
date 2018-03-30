@@ -228,7 +228,7 @@
                       <i class="fa fa-share bg-green"></i>
                       <div class="timeline-item">
                     <%} else if (activityInfo[i].type == 'bed'){ %>
-                      <i class="fa fa-bed bg-primary"></i>
+                      <i class="fa fa-bed bg-purple"></i>
                       <div class="timeline-item">
                     <%} else if (activityInfo[i].type == 'bedDischarge'){ %>
                       <i class="fa fa-sign-out bg-navy"></i>
@@ -296,7 +296,7 @@
               <div class="tab-pane" id="settings">
                 <%- messages('message', locals) %>
                 <form class="form-horizontal" method="POST" id="setting" data-parsley-validate=""  data-parsley-trigger="keyup">
-                <form class="form-horizontal" method="POST" id="setting" style="display:none;" data-parsley-validate=""  data-parsley-trigger="keyup">
+                
                   <div class="form-group">
                     <label for="inputName" class="col-sm-2 control-label">Name</label>
                     <div class="col-xs-5">
@@ -331,13 +331,13 @@
                   <div class="form-group">
                     <label for="inputExperience" class="col-sm-2 control-label">New Password</label>
                       <div class="col-xs-5">
-                        <input class="form-control" type="password" id="newPass" name="newPass" data-parsley-trigger="keyup" data-parsley-required data-parsley-validation-threshold="1"><br>
+                        <input class="form-control" type="password" id="newPass" name="newPass" data-parsley-trigger="keyup" data-parsley-validation-threshold="1"><br>
                       </div>
                   </div>
                   <div class="form-group">
                     <label for="inputExperience" class="col-sm-2 control-label">Re-Type Password</label>
                       <div class="col-xs-5">
-                        <input class="form-control" type="password" id="confirmPass" name="confirmPass" data-parsley-trigger="keyup" data-parsley-required data-parsley-equalto="#newPass" data-parsley-validation-threshold="1"><br>
+                        <input class="form-control" type="password" id="confirmPass" name="confirmPass" data-parsley-trigger="keyup" data-parsley-equalto="#newPass" data-parsley-validation-threshold="1"><br>
                       </div>
                   </div>
                   <div class="form-group">
@@ -383,6 +383,9 @@ function seeMore() {
 </html>
 
 <script>
+  function showModal(){
+    document.getElementById('confirmPass').style = 'display:block;';
+  }
   function show(){
     document.getElementById('logs').style = 'display:block;';
   }
@@ -390,6 +393,19 @@ function seeMore() {
     document.getElementById('setting').style = 'display:block;';
   }
   function check() {
+    if (!document.getElementById('name').value) {
+      document.getElementById('name').value = "<%= pInfo[0].name%>";
+    }
+    if (!document.getElementById('age').value) {
+      document.getElementById('age').value = "<%= pInfo[0].age%>";
+    }
+    if (!document.getElementById('address').value) {
+      document.getElementById('address').value = "<%= pInfo[0].address%>";
+    }
+    if (!document.getElementById('phone').value) {
+      document.getElementById('phone').value = "<%= pInfo[0].phone%>";
+    }
+  }function check() {
     if (!document.getElementById('name').value) {
       document.getElementById('name').value = "<%= pInfo[0].name%>";
     }

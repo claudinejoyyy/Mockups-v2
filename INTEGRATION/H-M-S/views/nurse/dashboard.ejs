@@ -250,9 +250,9 @@
               <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
               <h4 class="modal-title" id="myModalLabel">Add New Patient</h4>
             </div>
-            <div class="modal-body">
               <form method='POST' id='modal2'  style="display:none;" onsubmit="showSuccess()" class="form-group" data-parsley-validate=""  data-parsley-trigger="keyup">
-
+            <div class="modal-body">
+                
                 <div class="form group">
                   <label for="type" class="col-sm-2 control-label" disabled>Patient Type</label>
                     <div class="col-sm-10">
@@ -295,7 +295,7 @@
                   <div class="form-group">
                     <label for="inputBirthdate" class="col-sm-2 control-label">Birthdate</label>
                     <div class="col-sm-4">
-                    	<input class="form-control" id="date" name="date" placeholder="MM/DD/YYYY" type="text" data-parsley-required/>
+                    	<input type="date"  class="form-control datepicker" name="birth" id="birth" data-parsley-required/>
                     </div> 
                     <label for="gender" class="col-sm-2 control-label" disabled>Gender</label>
                     <div class="col-sm-4">
@@ -342,7 +342,7 @@
                     </div>
                     <label for="fatherO" class="col-sm-2 control-label">Occupation</label>
                     <div class="col-sm-4">
-                      <input type="text" class="form-control" id="fatherO" name="fatherO" data-parsley-required data-parsley-pattern="/^[0-9A-Za-z -/,]+$/" data-parsley-validation-threshold="1">
+                      <input type="text" class="form-control" id="fatherO" name="fatherO" data-parsley-pattern="/^[0-9A-Za-z -/,]+$/" data-parsley-validation-threshold="1">
                     </div>
                   </div>
                   <br>
@@ -355,7 +355,7 @@
                     </div>
                     <label for="motherO" class="col-sm-2 control-label">Occupation</label>
                     <div class="col-sm-4">
-                      <input type="text" class="form-control" id="motherO" name="motherO" data-parsley-required data-parsley-pattern="/^[0-9A-Za-z -/,]+$/" data-parsley-validation-threshold="1">
+                      <input type="text" class="form-control" id="motherO" name="motherO" data-parsley-pattern="/^[0-9A-Za-z -/,]+$/" data-parsley-validation-threshold="1">
                     </div>
                   </div>
                   <br>
@@ -837,9 +837,9 @@
     document.getElementById("immuDate").style.display = "inline-block";
     document.getElementById("addMore").style.display = "inline-block";
   }
- function showSuccess() {
-    alert("Success !!");
- }
+ // function showSuccess() {
+ //    alert("Success !!");
+ // }
   function immuResult() {
     var e = document.getElementById("immuName");
     var immu = e.options[e.selectedIndex].value;
@@ -898,23 +898,4 @@
         $('.bs-callout-warning').toggleClass('hidden', ok);
       })
     };
-</script>
-<!-- Include Date Range Picker -->
-<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.4.1/js/bootstrap-datepicker.min.js"></script>
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.4.1/css/bootstrap-datepicker3.css"/>
-
-<script>
-	$(document).ready(function(){
-		var date=new Date();
-		var date_input=$('input[name="date"]'); //our date input has the name "date"
-		var container=$('.bootstrap-iso form').length>0 ? $('.bootstrap-iso form').parent() : "body";
-		date_input.datepicker({
-			format: 'mm/dd/yyyy',
-			container: container,
-			todayHighlight: true,
-			autoclose: true,
-			startDate: '01/01/1930',
-			endDate: 'date'
-		})
-	})
 </script>
