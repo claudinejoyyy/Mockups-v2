@@ -134,9 +134,16 @@ var fhSQL       = "SELECT name FROM family_history;";
   app.get('/nurse/patientManagement', function(req, res){
       if(req.session.email && req.session.sino == 'nurse'){
         if(req.session.sino == 'nurse'){
-          db.query(patientManagementSQL + immuSQL + fhSQL, function(err, rows){
-            res.render('nurse/patientManagement', {p:rows[0], immu:rows[1], fh:rows[2], p2:null, username:user, invalid:null});
-          });
+          if(req.query.patient){
+            var sql  = "SELECT patient_id,patient_type,name,age,sex,blood_type FROM patient where patient_id = "+req.query.patient+";";
+            db.query(sql, function(err, rows){
+              res.render('nurse/patientManagement', {p:rows, p2:null, med:null, username:user, invalid:null});
+            });
+          } else {
+              db.query(patientManagementSQL, function(err, rows){
+                res.render('nurse/patientManagement', {p:rows, p2:null, med:null, username:user, invalid:null});
+              });
+          }
         } else {
           res.redirect(req.session.sino+'/dashboard');
         }
@@ -144,72 +151,28 @@ var fhSQL       = "SELECT name FROM family_history;";
           res.redirect('../login');
       }
     });
+
     app.post('/nurse/patientManagement', function(req, res){
       var data = req.body;
       if(req.session.email && req.session.sino == 'nurse'){
         if(req.session.sino == 'nurse') {
-          if (data.sub == 'add') {
-            req.checkBody('name','name is required').notEmpty();
-            req.checkBody('address','address is required').notEmpty();
-            req.checkBody('gender','gender is required').notEmpty();
-            req.checkBody('type','type is required').notEmpty();
-            req.checkBody('status','status is required').notEmpty();
-            req.checkBody('birth','birth is required').notEmpty();
-            errors = req.validationErrors();
-            if (errors) {
-              res.redirect(req.get('referer'));
+          bcrypt.compare(data.patientPassword, req.session.password, function(err, isMatch){
+            if (err) {
+              console.log(err);
+            } else if(isMatch) {
+              var sql  = "SELECT patient_id,patient_type,name,age,sex,blood_type FROM patient where patient_id = "+req.query.passPatient+";";
+              var sql2  = "SELECT * FROM patient where patient_id = "+req.query.passPatient+";";
+              var med = "select date_stamp, lab, medicine,diagnosis,bed from patient_history where patient_id = "+req.query.passPatient+" order by date_stamp;";
+              db.query(sql + sql2 + med, function(err, successRows){
+                res.render('nurse/patientManagement', {p:successRows[0], p2:successRows[1], med:successRows[2], username:user, invalid:null});
+              });
             } else {
-              var bdParse       = data.birth.split('-');
-              var birthDate     = bdParse[0] + bdParse[1] + bdParse[2];
-              var cur           = new Date();
-              var bd            = new Date(data.birth);
-              var dif           = cur - bd;
-              var age           = Math.floor(dif/31557600000);
-              var fhParse       = data.family_history.split(',');
-              var immuParse     = data.immunization.split(',');
-              var father        = data.father + '\n:' + data.fatherO;
-              var mother        = data.mother + '\n:' + data.motherO;
-              var family_history = ""; for (var i = 0; i < fhParse.length; i++) {family_history += fhParse[i] + '\n';};
-              var immunization   = ""; for (var i = 0; i < immuParse.length; i++) {immunization += immuParse[i] + '\n';};
-              var addSQL = "INSERT INTO patient (name, unit, address, age, religion, father, mother, allergies, birth_history,birth_date, sex, patient_type, status, blood_type, rankORsn, immunization, family_history)"
-                         +" VALUES ("+JSON.stringify(data.name)+", "+JSON.stringify(data.unit)+","+JSON.stringify(data.address)+","
-                         +" "+age+", "+JSON.stringify(data.religion)+", "+JSON.stringify(father)+","+JSON.stringify(mother)+","
-                         +" "+JSON.stringify(data.allergies)+", "+JSON.stringify(data.bh)+", "+birthDate+", "+JSON.stringify(data.gender)+","
-                         +" "+JSON.stringify(data.type)+", "+JSON.stringify(data.status)+", "+JSON.stringify(data.blood)+","
-                         +" "+JSON.stringify(data.rankSN)+", "+JSON.stringify(immunization)+", "+JSON.stringify(family_history)+");";
-
-              db.query(addSQL, function(err, rows){
-                if(err){
-                  console.log(err);
-                } else {
-                  db.query('INSERT into activity_logs(account_id, time, type, remarks) VALUES ('+req.session.Aid+',"'+moment(new Date()).format('YYYY-MM-DD HH:mm:ss')+'", "add", "Added: '+data.type+' - '+data.name+'");', function(err){
-                    if (err) {
-                      console.log(err);
-                    }
-                    });
-                    res.redirect(req.get('referer'));
-                }
+              var sql  = "SELECT patient_id,patient_type,name,age,sex,blood_type FROM patient where patient_id = "+req.query.passPatient+";";
+              db.query(sql, function(err, errorRows){
+                res.render('nurse/patientManagement', {p:errorRows, p2:null, med:null, username:user, invalid:'error'});
               });
             }
-          } else {
-            var checkPassword = 'Select * from user_accounts where account_id='+Aid+' and password="'+data.patientPassword+'";';
-            db.query(checkPassword, function(err, rows){
-              if(err){
-                console.log(err);
-              } else if(rows == ''){
-                var sql  = "SELECT patient_id,patient_type,name,age,sex,blood_type FROM patient where patient_id = "+req.query.passPatient+";";
-                db.query(sql, function(err, errorRows){
-                  res.render('nurse/patientManagement', {p:errorRows, p2:null, username:user, invalid:'error'});
-                });
-              } else {
-                var sql  = "SELECT patient_id,patient_type,name,age,sex,blood_type FROM patient where patient_id = "+req.query.passPatient+";";
-                var sql2  = "SELECT * FROM patient where patient_id = "+req.query.passPatient+";";
-                db.query(sql + sql2, function(err, successRows){
-                  res.render('nurse/patientManagement', {p:successRows[0], p2:successRows[1], username:user, invalid:null});
-                });
-              }
-            });
-          }
+          });
         } else {
           res.redirect(req.session.sino+'/dashboard');
         }

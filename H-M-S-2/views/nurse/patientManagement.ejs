@@ -1,7 +1,11 @@
+doctor
 <!DOCTYPE html>
 <html>
   <head>
     <meta charset="utf-8">
+    <%include ../partials/header.ejs%>
+    <script src="/notif-nurse.js"></script>
+
     <title>Patient Management</title>
     <style>
         table {
@@ -22,74 +26,7 @@
     <a href="../nurse/bedManagement">bedManagement</a><br>
     <a href="../nurse/patientManagement">patientManagement</a><br>
     <a href="../nurse/profileManagement">profile</a>
-    <h1>Welcome to Patient Management Dr. <%= username[0].name %> !! <button><a href='../logout'>logout</a></button></h1>
-    <button onclick="showAdd()">add patient</button>
-    <form method='POST' id='modal2'  style="display:none;" onsubmit="showSuccess()">
-      <input type="text" name="name" placeholder="eg:Juan M. Dela Cruz"  >enter name<br>
-      <input type="text" name="rankSN">rank/serial number<br>
-      <input type="text" name="unit" >unit<br>
-      <input type="text" name="address"  >address<br>
-      <input type="text" name="religion">religion<br>
-      <input type="text" name="father">name of father
-      <input type="text" name="fatherO">occupation <br>
-      <input type="text" name="mother">name of mother
-      <input type="text" name="motherO">occupation <br>
-      <textarea name="allergies" rows="4" cols="40" placeholder="Allergies"></textarea> <br>
-      <textarea name="bh" rows="4" cols="40" placeholder="Birth History"></textarea> <br>
-      <select name="gender"  >
-        <option disabled selected value>Gender</option>
-        <option value="M">Male</option>
-        <option value="F">Female</option>
-      </select><br>
-      <select name="type"  >
-        <option disabled selected value>Patient Type</option>
-        <option value="cadet">Cadet</option>
-        <option value="military officer">Miltary Officer</option>
-        <option value="military dependent">Miltary Dependent</option>
-        <option value="civilian">Civilian</option>
-        <option value="authorized civilian">Authorized Civilian</option>
-      </select><br>
-      <select name="status"  >
-        <option selected value>Status</option>
-        <option value="Maried">Maried</option>
-        <option value="Single">Single</option>
-      </select><br>
-      <select name="blood">
-        <option selected value="">blood type</option>
-        <option value="A">A</option>
-        <option value="B">B</option>
-        <option value="AB">AB</option>
-        <option value="O">O</option>
-      </select><br>
-      <input type="date" name="birth"  >birth date<br>
-      <h3>Family History</h3>
-      <select id="fhName">
-        <option value="" selected></option>
-        <%for(var i=1; i <fh.length; i++){%>
-          <option value="<%= fh[i].name%>"><%= fh[i].name%></option>
-        <%}%>
-      </select>
-      <button type="button"  onclick="fhResult()">add</button>
-      <h5 style="opacity:0.7;" id="fhRes" name="family_history"></h5>
-      <!-- To fetch the data from the list of Family Histo -->
-      <input type="text" id="family_history" name="family_history" style="display:none;">
-      <br>
-      <h3>Immunization</h3>
-      <select id="immuName" onchange="showDate()">
-        <option value="" selected></option>
-        <%for(var i=1; i <immu.length; i++){%>
-          <option value="<%= immu[i].name%>"><%= immu[i].name%></option>
-        <%}%>
-      </select>
-      <input type="month" id="immuDate" style="display:none;">
-      <button type="button" id="addMore" style="display:none;" onclick="immuResult()">add</button>
-      <h5 style="opacity:0.7;" id="immuRes"></h5>
-      <!-- To fetch the data from the list of Immunization -->
-      <input type="text" id="immunization" name="immunization" style="display:none;">
-      <br>
-      <button type="submit" name="sub" value="add">save</button>
-      <button type="button" onclick="resetForm()">reset</button>
-    </form>
+    <h1>Welcome to Patient Management Nurse. <%= username[0].name %> !! <button><a href='../logout'>logout</a></button></h1>
     <table>
       <tr>
           <th>Patient Type</th>
@@ -97,7 +34,8 @@
           <th>Age</th>
           <th>Gender</th>
           <th>Blood Type</th>
-          <th>Latest Medicine Taken</th>
+          <th>Previous Medicine taken</th>
+          <th>Previous Confinement Period</th>
           <th>action</th>
       </tr>
       <%
@@ -110,7 +48,30 @@
         <td><%= p[i].age %></td>
         <td><%= p[i].sex %></td>
         <td><%= p[i].blood_type %></td>
-        <td><%= p[i].medicines%></td>
+        <td style="font-size:10px;">
+          <table>
+            <tr>
+              <th>med</th>
+              <th>Quantity</th>
+              <th>Dosage</th>
+              <th>Time Frame</th>
+            </tr>
+          <% if(p[i].medicine != null){
+            var medicine = p[i].medicine.split('\n');
+              for(var l=0; l < medicine.length-1; l++){ %>
+                  <tr>
+                    <%var parseMed = medicine[l].split(',');%>
+                    <td><%= parseMed[0]%></td>
+                    <td><%= parseMed[1]%></td>
+                    <td><%= parseMed[2]%></td>
+                    <td><%= parseMed[3]%></td>
+                  </tr>
+            <%}
+          }%>
+          </table>
+        </td>
+        <td><%= p[i].allotment%> - <%= p[i].discharge%></td>
+
         <td><button type="button" name="button" onclick="PasswordInput(<%= p[i].patient_id %>)">view</button></td>
       </tr>
       <%}%>
@@ -121,53 +82,60 @@
       <h2>Ito dapat modal lang din, lagyan nyu nalang ng exit na button</h2>
       <a href="/nurse/patientManagement"><button type="button" name="button">exit</button></a>
       <br>
-      <table>
-        <tr>
-            <th>Patient Type</th>
-            <th>Name</th>
-            <th>Age</th>
-            <th>Unit </th>
-            <th>Gender</th>
-            <th>Status</th>
-            <th>Birth Date</th>
-            <th>Address</th>
-            <th>Religion</th>
-            <th>Blood Type</th>
-            <th>Allergies</th>
-            <th>Father</th>
-            <th>Mother</th>
-            <th>Birth History</th>
-            <th>Rank</th>
-            <th>Immunization</th>
-            <th>Family History</th>
-        </tr>
         <%
         for(var i=0; i <p2.length; i++){
             var b = new Date(p2[i].birth_date);
         %>
-        <tr>
-          <td><%= p2[i].patient_type %></td>
-          <td><%= p2[i].name %></td>
-          <td><%= p2[i].age %></td>
-          <td><%= p2[i].unit %></td>
-          <td><%= p2[i].sex %></td>
-          <td><%= p2[i].status %></td>
-          <td><%= b.toLocaleDateString() %></td>
-          <td><%= p2[i].address %></td>
-          <td><%= p2[i].religion %></td>
-          <td><%= p2[i].blood_type %></td>
-          <td><%= p2[i].allergies %></td>
-          <td><%= p2[i].father %></td>
-          <td><%= p2[i].mother %></td>
-          <td><%= p2[i].birth_history %></td>
-          <td><%= p2[i].rankORsn %></td>
-          <td><%= p2[i].immunization %></td>
-          <td><%= p2[i].family_history %></td>
-        </tr>
+          type<input type="text" name="patientType" value="<%= p2[i].patient_type %>"></input>
+          name<input type="text" name="name" value="<%= p2[i].name %>"></input>
+          unit<input type="text" name="unit" value="<%= p2[i].unit %>"></input>
+
+          status<input type="text" name="status" value="<%= p2[i].status %>"></input>
+
+                address<input type="text" name="address" value="<%= p2[i].address %>"></input>
+
+                    religion<input type="text" name="religion" value="<%= p2[i].religion %>"></input>
+
+                    blood type<input type="text" name="bloodType" value="<%= p2[i].blood_type %>"></input>
+
+                    allergies<input type="text" name="allergies" value="<%= p2[i].allergies %>"></input>
+
+                    father<input type="text" name="father" value="<%= p2[i].father %>"></input>
+
+                    mother<input type="text" name="mother" value="<%= p2[i].mother %>"></input>
+
+                    birth histo<input type="text" name="birthHistory" value="<%= p2[i].birth_history %>"></input>
+
+                    rank or SN<input type="text" name="rank" value="<%= p2[i].rankORsn %>"></input>
+
+                    immu<input type="text" name="immunization" value="<%= p2[i].immunization %>"></input>
+                    family hsto<input type="text" name="familyHistory" value="<%= p2[i].family_history %>"></input>
         <%}%>
+      <%
+      for(var i=0; i <med.length; i++){
+      %>
+      <br><%= med[i].date_stamp%>
+      <table>
+        <tr>
+          <!-- <th></th> -->
+          <th>diagnosis</th>
+          <th>medicine</th>
+          <th>lab</th>
+          <th>bed</th>
+        </tr>
+        <tr>
+          <td><%= med[i].diagnosis%></td>
+          <td><%= med[i].medicine%></td>
+          <td><%= med[i].lab%></td>
+          <td><%= med[i].bed%></td>
+        </tr>
       </table>
+      <%}%>
     <%}%>
+
+
     <!-- PASSWORD -->
+    <%- messages('message', locals) %>
     <div id="PasswordInput" style="display:none">
       <form id="dynamicActionPassword" method="post">
         Password: <input type="password" name="patientPassword">
@@ -183,36 +151,11 @@
     $("#PasswordInput").show();
   });
 <%}%>
-function showAdd() {
-  document.getElementById("modal2").style.display = "block";
-}
-function showDate() {
-  document.getElementById("immuDate").style.display = "inline-block";
-  document.getElementById("addMore").style.display = "inline-block";
-}
-function showSuccess() {
-  alert('success');
-}
-function immuResult() {
-  var e = document.getElementById("immuName");
-  var immu = e.options[e.selectedIndex].value;
-  var immuDate = document.getElementById("immuDate").value;
-  document.getElementById("immuRes").innerHTML += immu + immuDate + "<br>";
-  document.getElementById("immunization").value += immu +":"+ immuDate + ",";
-}
-function fhResult() {
-  var e = document.getElementById("fhName");
-  var fh = e.options[e.selectedIndex].value;
-  document.getElementById("fhRes").innerHTML += fh + "<br>";
-  document.getElementById("family_history").value += fh + ",";
-}
-function resetForm() {
-  document.getElementById("modal2").reset();
-  document.getElementById("assessment").reset();
-  document.getElementById("immuRes").innerHTML = "";
-}
-function PasswordInput(id){
-  document.getElementById('PasswordInput').style.display = 'block';
-  document.getElementById('dynamicActionPassword').action = '/nurse/patientManagement?passPatient='+id+'';
-}
+  function PasswordInput(id){
+    document.getElementById('PasswordInput').style.display = 'block';
+    document.getElementById('dynamicActionPassword').action = '/nurse/patientManagement?passPatient='+id+'';
+  }
+
+
+
 </script>
