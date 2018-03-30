@@ -130,7 +130,8 @@ var user, Aid, availableBedss, p;
             var requestSQL = 'INSERT into lab_request(type,timestamp,remarks,doctor_id,patient_id,lab_status) VALUES("'+data.testRequest+'","'+moment(new Date()).format('YYYY-MM-DD HH:mm:ss')+'","'+data.labRequestremarks+'",'+Aid+','+req.query.patient_id+',"pending");';
             var lab = "Type:" + data.testRequest + " Remarks:" + data.labRequestremarks;
             var historySQL = 'UPDATE patient_history set lab = CONCAT(IFNULL(lab, ""),"'+lab+'\n") where histo_id = '+req.query.histo_id+';';
-            db.query(requestSQL + historySQL + 'INSERT into activity_logs(account_id, time, type, remarks) VALUES ('+Aid+',"'+moment(new Date()).format('YYYY-MM-DD HH:mm:ss')+'", "labRequest", "Lab request for : '+req.query.patient_name+'");', function(err){
+            var labRequestCounter    = 'INSERT into lab_counter(timestamp, patient_id, type, name) values("'+moment(new Date()).format('YYYY-MM-DD HH:mm:ss')+'",'+req.query.patient_id+',"'+data.testRequest+'","'+req.query.patient_name+'");';
+            db.query(requestSQL + historySQL + labRequestCounter + 'INSERT into activity_logs(account_id, time, type, remarks) VALUES ('+Aid+',"'+moment(new Date()).format('YYYY-MM-DD HH:mm:ss')+'", "labRequest", "Lab request for : '+req.query.patient_name+'");', function(err){
               if (err) {
                 console.log(err);
               } else {

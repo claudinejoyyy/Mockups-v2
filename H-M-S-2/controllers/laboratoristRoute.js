@@ -6,13 +6,13 @@ var user, Aid;
       if(req.session.sino == 'laboratorist'){
         Aid = req.session.Aid;
         var diagnosisSQL      = 'SELECT * from lab_request where lab_status="pending";';
-        var bloodChemistrySQL = 'SELECT * from lab_request l inner join patient using(patient_id) where l.type = "bloodChemistry";';
-        var hermatology       = 'SELECT * from lab_request l inner join patient using(patient_id) where l.type = "hermatology";';
-        var microscopy        = 'SELECT * from lab_request l inner join patient using(patient_id) where l.type = "microscopy";';
-        var parasitology      = 'SELECT * from lab_request l inner join patient using(patient_id) where l.type = "parasitology";';
-        var serology          = 'SELECT * from lab_request l inner join patient using(patient_id) where l.type = "serotology";';
-        var microbiology      = 'SELECT * from lab_request l inner join patient using(patient_id) where l.type = "microbiology";';
-        var xRay              = 'SELECT * from lab_request l inner join patient using(patient_id) where l.type = "xRay";';
+        var bloodChemistrySQL = 'SELECT * from lab_counter l inner join patient using(patient_id) where l.type = "bloodChemistry";';
+        var hermatology       = 'SELECT * from lab_counter l inner join patient using(patient_id) where l.type = "hermatology";';
+        var microscopy        = 'SELECT * from lab_counter l inner join patient using(patient_id) where l.type = "microscopy";';
+        var parasitology      = 'SELECT * from lab_counter l inner join patient using(patient_id) where l.type = "parasitology";';
+        var serology          = 'SELECT * from lab_counter l inner join patient using(patient_id) where l.type = "serotology";';
+        var microbiology      = 'SELECT * from lab_counter l inner join patient using(patient_id) where l.type = "microbiology";';
+        var xRay              = 'SELECT * from lab_counter l inner join patient using(patient_id) where l.type = "xRay";';
         var todoList          = "SELECT * from todo_list where account_id = "+Aid+";";
         db.query(todoList + diagnosisSQL + bloodChemistrySQL + hermatology + microscopy + parasitology + serology + microbiology + xRay + monthlyPatientCount + name, Aid, function(err, rows){
           if (err) {
