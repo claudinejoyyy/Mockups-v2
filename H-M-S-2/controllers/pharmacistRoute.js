@@ -1,4 +1,4 @@
-module.exports = function(app,db,name,counts,chart,whoCurrentlyAdmitted,whoOPD,whoWARD,monthlyPatientCount,patientList,bcrypt,io,moment,pharmDailyReport){
+module.exports = function(app,db,name,counts,chart,whoCurrentlyAdmitted,whoOPD,whoWARD,monthlyPatientCount,patientList,bcrypt,io,moment){
 var user, Aid;
 var prescriptionSQL = 'SELECT CONCAT("medicine:",medicine,"\nquantity:",quantity,"\ndosage:", dosage,"\ntimeframe:", timeframe) AS medications, p.status as STATUS,creation_stamp,patient_type,name,age,prescription_id from prescription p inner join patient using(patient_id) where p.status = "pending";';
 var confirmedprescriptionSQL = 'SELECT CONCAT("medicine:",medicine,"\nquantity:",quantity,"\ndosage:", dosage,"\ntimeframe:", timeframe) AS medications, p.status as STATUS,creation_stamp,patient_type,name,age,prescription_id from prescription p inner join patient using(patient_id) where p.status = "confirmed";';
@@ -212,7 +212,8 @@ res.redirect('../login');
       if(req.session.email && req.session.sino == 'pharmacist'){
         if (req.session.sino == 'pharmacist') {
           //var reportsSQL  = 'SELECT * from prescription inner join patient using(patient_id);';
-          db.query(pharmDailyReport, function(err, rows){
+          var pharmReport = 'select p.patient_type, CONCAT(p.rankORsn, " ", p.name) as patients,  CONCAT(m.medicine, " ", m.dosage) as med, m.quantity, m.creation_stamp from patient as p join prescription as m using (patient_id) where m.status = "confirmed" and date_format(m.creation_stamp, "%M %d %Y") = date_format(now(), "%M %d %Y") order by p.patient_type;';
+          db.query(pharmReport, function(err, rows){
             if (err) {
               console.log(err);
             } else {

@@ -111,7 +111,7 @@ res.redirect('../login');
     var data = req.body;
     if(req.session.email && req.session.sino == 'laboratorist'){
       if(req.session.sino == 'laboratorist') {
-        if (data.sub == 'confirm') {
+        if (data == 'confirm') {
           var confirmLabRequestSQL = 'UPDATE lab_request SET lab_status="confirmed" where request_id = '+req.query.requestId+' ORDER BY timestamp desc;';
           db.query(confirmLabRequestSQL + 'INSERT into activity_logs(account_id, time, type, remarks) VALUES ('+Aid+',"'+moment(new Date()).format('YYYY-MM-DD HH:mm:ss')+'", "confirmedLabRequest", "Confirmed lab request for: '+req.query.labrequestPatientName+'");', function(err){
             if(err){
@@ -127,7 +127,7 @@ res.redirect('../login');
             if(err){
               console.log(err);
             } else {
-              io.emit('type', {what:'cancelLabRequest',message:'Canceled Lab Request for <strong>'+req.query.labrequestPatientName+'</strong>'});
+              io.emit('type', {what:'cancelLabRequest',message:'Cancelled Lab Request for <strong>'+req.query.labrequestPatientName+'</strong>'});
               res.redirect(req.get('referer'));
             }
           });

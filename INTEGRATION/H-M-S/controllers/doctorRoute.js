@@ -34,10 +34,8 @@ var user, Aid, availableBedss, p;
             var parseDateNTime = parseDate+' '+parseTime;
             var todoLog = '';
             if (data.todoStatus == 'urgent') {
-              console.log('Added to urgent!!!!');
               todoLog = 'INSERT into activity_logs(account_id, time, type, remarks) VALUES ('+req.session.Aid+',"'+moment(new Date()).format('YYYY-MM-DD HH:mm:ss')+'", "urgentTodo", "Added to do urgent: '+data.description+'");';
             } else if(data.todoStatus == 'general') {
-              console.log('Added to general!!!!');
               todoLog = 'INSERT into activity_logs(account_id, time, type, remarks) VALUES ('+req.session.Aid+',"'+moment(new Date()).format('YYYY-MM-DD HH:mm:ss')+'", "generalTodo", "Added to do general: '+data.description+'");';
             }
             var addTodo  = 'INSERT into todo_list (description, status,date, account_id) VALUES("'+data.description+'","'+data.todoStatus+'","'+parseDateNTime+'",'+req.session.Aid+');';
@@ -106,9 +104,10 @@ var user, Aid, availableBedss, p;
     if(req.session.email && req.session.sino == 'doctor'){
       if (req.session.sino == 'doctor') {
           if (data.sub == 'admit') {
-            var bedSQL = 'UPDATE bed set allotment_timestamp = "'+moment(new Date()).format('YYYY-MM-DD HH:mm:ss')+'", patient_id = '+req.query.patient_id+',status = "occupied" where bed_id = '+data.bedNumber+';';
+            var bedSQL     = 'UPDATE bed set allotment_timestamp = "'+moment(new Date()).format('YYYY-MM-DD HH:mm:ss')+'", patient_id = '+req.query.patient_id+',status = "occupied" where bed_id = '+data.bedNumber+';';
             var historySQL = 'UPDATE patient_history set bed = CONCAT(IFNULL(bed, ""),"'+data.bedNumber+', ") where histo_id ='+req.query.histo_id+';';
-            db.query(bedSQL + historySQL + 'INSERT into activity_logs(account_id, time, type, remarks, patient_id) VALUES ('+Aid+',"'+moment(new Date()).format('YYYY-MM-DD HH:mm:ss')+'", "bed", "Alloted bed number: '+data.bedNumber+' to patient:'+req.query.patient_name+'",'+req.query.patient_id+');', function(err){
+            var wardCount  = 'INSERT into ward_count (date_stamp, patient_id) values("'+moment(new Date()).format('YYYY-MM-DD HH:mm:ss')+'",'+req.query.patient_id+');';
+            db.query(bedSQL + historySQL + wardCount + 'INSERT into activity_logs(account_id, time, type, remarks, patient_id) VALUES ('+Aid+',"'+moment(new Date()).format('YYYY-MM-DD HH:mm:ss')+'", "bed", "Alloted bed number: '+data.bedNumber+' to patient:'+req.query.patient_name+'",'+req.query.patient_id+');', function(err){
               if (err) {
                 console.log(err);
               } else {
@@ -116,8 +115,8 @@ var user, Aid, availableBedss, p;
               }
             });
           } else if(data.sub == 'prescribe') {
-            var prescribeSQL = 'INSERT into prescription (creation_stamp, medicine, quantity, dosage, timeframe, doctor_id, patient_id, status) VALUES ("'+moment(new Date()).format('YYYY-MM-DD HH:mm:ss')+'","'+data.medicine+'","'+data.quantity+'","'+data.dosage+'","'+data.timeframe+'",'+Aid+','+req.query.patient_id+',"pending");';
-            var medicines    = "" + data.medicine + ","+ data.quantity + "," + data.dosage + "," + data.timeframe;
+            var prescribeSQL = 'INSERT into prescription (creation_stamp, medicine, quantity, dosage, timeframe, doctor_id, patient_id, status) VALUES ("'+moment(new Date()).format('YYYY-MM-DD HH:mm:ss')+'","'+data.medicine+'",'+data.quantity+',"'+data.dosage+'","'+data.timeframe+'",'+Aid+','+req.query.patient_id+',"pending");';
+            var medicines    = "Medicine:" + data.medicine + ", Quantity:"+ data.quantity + ", Dosage:" + data.dosage + ", TimeFrame:" + data.timeframe;
             var historySQL = 'UPDATE patient_history set medicine = CONCAT(IFNULL(medicine, ""),"'+medicines+'\n") where histo_id ='+req.query.histo_id+';';
             db.query(prescribeSQL + historySQL +  'INSERT into activity_logs(account_id, time, type, remarks) VALUES ('+Aid+',"'+moment(new Date()).format('YYYY-MM-DD HH:mm:ss')+'", "prescription", "Prescribed a medicine to : '+req.query.patient_name+'");', function(err){
               if (err) {
@@ -145,10 +144,6 @@ var user, Aid, availableBedss, p;
             db.query(diagnosisSQL + historySQL + 'INSERT into activity_logs(account_id, time, type, remarks) VALUES ('+Aid+',"'+moment(new Date()).format('YYYY-MM-DD HH:mm:ss')+'", "diagnosis", "diagnosis for : '+req.query.patient_name+'");', function(err){
               if (err) {
                 console.log(err);
-                console.log('diagnosis: ' + data.diagnosis);
-                console.log(req.query.histo_id);
-                console.log(req.query.patient_id);
-                console.log(req.query.patient_name);
               } else {
                 res.redirect(req.get('referer'));
               }
@@ -275,7 +270,7 @@ var user, Aid, availableBedss, p;
             } else if(isMatch) {
               var sql  = "SELECT patient_id,patient_type,name,age,sex,blood_type FROM patient where patient_id = "+req.query.passPatient+";";
               var sql2  = "SELECT * FROM patient where patient_id = "+req.query.passPatient+";";
-              var med = "select date_stamp, lab, medicine,diagnosis,bed from patient_history where patient_id = "+req.query.passPatient+" order by date_stamp desc;";
+              var med = "select date_stamp, lab, medicine,diagnosis,bed from patient_history where patient_id = "+req.query.passPatient+" order by date_stamp;";
               db.query(sql + sql2 + med, function(err, successRows){
                 res.render('doctor/patientManagement', {p:successRows[0], p2:successRows[1], med:successRows[2], username:user, invalid:null});
               });
@@ -463,18 +458,25 @@ var user, Aid, availableBedss, p;
               req.flash('success', 'Successfully changed the password!');
               bcrypt.genSalt(10, function(err, salt){
                 bcrypt.hash(data.newPass, salt, function(err, hash){
-                  var updateProfileSQL = 'UPDATE user_accounts SET name = "'+data.name+'", age = '+data.age+', address = "'+data.address+'", phone = '+data.phone+', password = IFNULL("'+hash+'",password) WHERE account_id = '+req.session.Aid+';';
-                  db.query(updateProfileSQL + 'INSERT into activity_logs(account_id, time, type, remarks) VALUES ('+Aid+',"'+moment(new Date()).format('YYYY-MM-DD HH:mm:ss')+'", "settingsProfileManagement", "Edited personal info.");', function(err, rows){
-                    if (err) {
-                      console.log(err);
-                    } else {
-                      if (hash) {
-                        res.redirect('../logout');
+                  if (data.newPass) {
+                    var updateProfileSQL = 'UPDATE user_accounts SET name = "'+data.name+'", age = '+data.age+', address = "'+data.address+'", phone = '+data.phone+', password = "'+hash+'" WHERE account_id = '+req.session.Aid+';';
+                    db.query(updateProfileSQL + 'INSERT into activity_logs(account_id, time, type, remarks) VALUES ('+Aid+',"'+moment(new Date()).format('YYYY-MM-DD HH:mm:ss')+'", "settingsProfileManagement", "Edited personal info.");', function(err, rows){
+                      if (err) {
+                        console.log(err);
                       } else {
-                        res.redirect(req.get('referer'));
+                          res.redirect('../logout');
                       }
-                    }
-                  });
+                    });                    
+                  } else {
+                    var updateProfileSQL = 'UPDATE user_accounts SET name = "'+data.name+'", age = '+data.age+', address = "'+data.address+'", phone = '+data.phone+' WHERE account_id = '+req.session.Aid+';';
+                    db.query(updateProfileSQL + 'INSERT into activity_logs(account_id, time, type, remarks) VALUES ('+Aid+',"'+moment(new Date()).format('YYYY-MM-DD HH:mm:ss')+'", "settingsProfileManagement", "Edited personal info.");', function(err, rows){
+                      if (err) {
+                        console.log(err);
+                      } else {
+                          res.redirect(req.get('referer'));
+                      }
+                    });                    
+                  }
                 });
               });
             } else {
