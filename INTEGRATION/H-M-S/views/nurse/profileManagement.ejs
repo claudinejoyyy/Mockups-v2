@@ -141,7 +141,7 @@
                       <i class="fa fa-share bg-green"></i>
                       <div class="timeline-item">
                     <%} else if (activityInfo[i].type == 'bed'){ %>
-                      <i class="fa fa-bed bg-primary"></i>
+                      <i class="fa fa-bed bg-purple"></i>
                       <div class="timeline-item">
                     <%} else if (activityInfo[i].type == 'bedDischarge'){ %>
                       <i class="fa fa-sign-out bg-navy"></i>
@@ -193,7 +193,7 @@
                       <div class="timeline-item">
                     <%} else if (activityInfo[i].type == 'er'){ %>
                       <i class="fa fa-plus-square bg-red"></i>
-                      <div class="timeline-item">     
+                      <div class="timeline-item">
                     <%}%>
                       <h3 class="timeline-header"><%= activityInfo[i].remarks%></a></h3>
                     </div>
@@ -278,7 +278,7 @@
                       <div class="timeline-item">
                     <%} else if (activityInfo[i].type == 'er'){ %>
                       <i class="fa fa-plus-square bg-red"></i>
-                      <div class="timeline-item">    
+                      <div class="timeline-item">
                     <%}%>
                       <h3 class="timeline-header"><%= activityInfo[i].remarks%></a></h3>
                     </div>
@@ -332,13 +332,13 @@
                   <div class="form-group">
                     <label for="inputExperience" class="col-sm-2 control-label">New Password</label>
                       <div class="col-xs-5">
-                        <input class="form-control" type="password" id="newPass" name="newPass" data-parsley-trigger="keyup" data-parsley-required data-parsley-validation-threshold="1"><br>
+                        <input class="form-control" type="password" id="newPass" name="newPass" data-parsley-trigger="keyup" data-parsley-validation-threshold="1"><br>
                       </div>
                   </div>
                   <div class="form-group">
                     <label for="inputExperience" class="col-sm-2 control-label">Re-Type Password</label>
                       <div class="col-xs-5">
-                        <input class="form-control" type="password" id="confirmPass" name="confirmPass" data-parsley-trigger="keyup" data-parsley-required data-parsley-equalto="#newPass" data-parsley-validation-threshold="1"><br>
+                        <input class="form-control" type="password" id="confirmPass" name="confirmPass" data-parsley-trigger="keyup" data-parsley-equalto="#newPass" data-parsley-validation-threshold="1"><br>
                       </div>
                   </div>
                   <div class="form-group">
