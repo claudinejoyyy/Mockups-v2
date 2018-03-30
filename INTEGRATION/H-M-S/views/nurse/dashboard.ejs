@@ -249,12 +249,13 @@
             <div class="modal-header">
               <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
               <h4 class="modal-title" id="myModalLabel">Add New Patient</h4>
+              <small>Fields with asterisks (*) are required.</small>
             </div>
               <form method='POST' id='modal2'  style="display:none;" onsubmit="showSuccess()" class="form-group" data-parsley-validate=""  data-parsley-trigger="keyup">
             <div class="modal-body">
                 
                 <div class="form group">
-                  <label for="type" class="col-sm-2 control-label" disabled>Patient Type</label>
+                  <label for="type" class="col-sm-2 control-label" disabled>Patient Type *</label>
                     <div class="col-sm-10">
                       <select class="form-control" name="type" required>
                         <option value=""></option>
@@ -282,7 +283,7 @@
                   <div class="form-group">
                     <label for="rankSN" class="col-sm-2 control-label">Rank/Serial Number</label>
                     <div class="col-sm-4">
-                      <input type="text" class="form-control" id="rankSN" name="rankSN" data-parsley-pattern="/^[O0-9\s -]+$/" data-parsley-validation-threshold="1">
+                      <input type="text" class="form-control" id="rankSN" name="rankSN" data-parsley-pattern="/^[A-Za-z0-9 ]+$/" data-parsley-validation-threshold="1">
                     </div>
                     <label for="unit" class="col-sm-2 control-label">Unit</label>
                     <div class="col-sm-4">
