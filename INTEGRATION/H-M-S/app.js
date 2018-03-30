@@ -31,6 +31,7 @@ const server = app.listen(3000, () => {
 const io = require('socket.io')(server);
 
 //FOR AGE INCREMENT
+var pharmDailyReport;
 var CronJob = require('cron').CronJob;
 new CronJob('00 00 * * 1-7', function() {
     var checkBD = 'SELECT name, patient_id, birth_date, age from patient';
@@ -47,7 +48,12 @@ new CronJob('00 00 * * 1-7', function() {
           });
         }
       }
-      });    
+
+      var pharmReport = 'select p.patient_type, p.rankORsn, p.name, CONCAT(m.dosage, " ", m.medicine) as med, m.quantity, m.creation_stamp from patient as p join prescription as m using (patient_id) where m.status = "confirmed" and date_format(m.creation_stamp, "%M %d %Y") = date_format(now(), "%M %d %Y") order by p.patient_type';
+      db.query(pharmReport, function(rows){
+        var pharmDailyReport = rows;
+      }); 
+    });
 }, null, true);
 
 //RESET COUNTER EVERY 3 MONTHS
@@ -156,9 +162,11 @@ var patientManagementSQL = "SELECT d.*, a.medicine, "
                            +"ON            a.patient_id = b.patient_id "
                            +"AND           a.date_stamp = b.DateTime) "
                            +"group by d.patient_id;";
+
+
 login (app,db,bcrypt,moment);
 nurse (app,db,name,counts,chart,whoCurrentlyAdmitted,whoOPD,whoWARD,monthlyPatientCount,patientList,availableBeds,doctorList,patientManagementSQL,bcrypt,io,moment);
 doctor(app,db,name,counts,chart,whoCurrentlyAdmitted,whoOPD,whoWARD,monthlyPatientCount,patientList,availableBeds,patientManagementSQL,bcrypt,io,moment);
 admin (app,db,name,counts,chart,whoCurrentlyAdmitted,whoOPD,whoWARD,monthlyPatientCount,patientList,availableBeds,patientManagementSQL,bcrypt,io,moment);
-pharmacist(app,db,name,counts,chart,whoCurrentlyAdmitted,whoOPD,whoWARD,monthlyPatientCount,patientList,bcrypt,io,moment);
+pharmacist(app,db,name,counts,chart,whoCurrentlyAdmitted,whoOPD,whoWARD,monthlyPatientCount,patientList,bcrypt,io,moment,pharmDailyReport);
 laboratorist(app,db,name,counts,chart,whoCurrentlyAdmitted,whoOPD,whoWARD,monthlyPatientCount,patientList,bcrypt,io,moment);
