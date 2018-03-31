@@ -39,7 +39,7 @@ var fhSQL       = "SELECT name FROM family_history;";
             if (err) {
               console.log(err);
             }
-            io.emit('type', {what:'assess',message:'Received Assessment for '+nameForEmit[1]+', sent by Dr. <strong>'+req.session.name+'</strong>'});
+            io.emit('type', {what:'assess',message:'Received Assessment for '+nameForEmit[1]+', sent by <strong>'+req.session.name+'</strong>'});
           });
           res.redirect(req.get('referer'));
         } else if (data.sub == 'bed') {
@@ -51,7 +51,7 @@ var fhSQL       = "SELECT name FROM family_history;";
             if (err) {
               console.log(err);
             }
-            io.emit('type', {what:'assess',message:'Received ER patient: '+nameForBedEmit[1]+', sent by Dr. <strong>'+req.session.name+'</strong>'});
+            io.emit('type', {what:'assess',message:'Received ER patient: '+nameForBedEmit[1]+', sent by <strong>'+req.session.name+'</strong>'});
           });
           res.redirect(req.get('referer'));
         }else if(data.sub == "add") {
@@ -333,7 +333,7 @@ var fhSQL       = "SELECT name FROM family_history;";
       if(req.session.email && req.session.sino == 'nurse'){
         if (req.session.sino == 'nurse') {
           var profileInfoSQL  = 'SELECT name, age, address, phone from user_accounts where account_id = '+req.session.Aid+';';
-          var activityLogsSQL = 'SELECT * from activity_logs where account_id = '+req.session.Aid+' ORDER by logs_id desc;';
+          var activityLogsSQL = 'SELECT * from activity_logs where account_id = '+req.session.Aid+' ORDER by logs_id desc LIMIT 10;';
           db.query(profileInfoSQL + activityLogsSQL, function(err, rows){
             if (err) {
               console.log(err);
