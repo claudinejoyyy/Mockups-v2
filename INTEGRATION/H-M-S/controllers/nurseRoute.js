@@ -229,7 +229,6 @@ var fhSQL       = "SELECT name FROM family_history;";
                                    +" AND           a.date_stamp = b.DateTime)" 
                                    +" and d.patient_id = "+req.query.patient_id+";";
                 var updatedSql2  = "SELECT * FROM patient where patient_id = "+req.query.patient_id+";";
-                req.flash('success', 'Successfully changed profile!');
                 db.query(patientManSQL + updatedSql2, function(err, successRows2){
                   res.render('nurse/patientManagement', {p:successRows2[0], p2:successRows2[1], med:successRows[2], username:user, invalid:null});
                 });

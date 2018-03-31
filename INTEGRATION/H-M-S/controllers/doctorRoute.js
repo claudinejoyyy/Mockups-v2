@@ -238,6 +238,7 @@ var user, Aid, availableBedss, p;
       res.redirect('../login');
     }
   });
+
   //PATIENT MANAGEMENT
   app.get('/doctor/patientManagement', function(req, res){
       if(req.session.email && req.session.sino == 'doctor'){
@@ -337,7 +338,6 @@ var user, Aid, availableBedss, p;
                                    +" AND           a.date_stamp = b.DateTime)" 
                                    +" and d.patient_id = "+req.query.patient_id+";";
                 var updatedSql2  = "SELECT * FROM patient where patient_id = "+req.query.patient_id+";";
-                req.flash('success', 'Successfully changed profile!');
                 db.query(patientManSQL + updatedSql2, function(err, successRows2){
                   res.render('doctor/patientManagement', {p:successRows2[0], p2:successRows2[1], med:successRows[2], username:user, invalid:null});
                 });
