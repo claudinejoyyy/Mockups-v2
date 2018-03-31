@@ -364,8 +364,14 @@
                                         <%}
                                       }%>
                                       </ul></td>
-                                      <td><% if(med[i].lab != null){%>
-                                          <%= med[i].bed%><%} else{%>Outpatient<%}%></td>
+                                      <td><% if(med[i].bed != null){%>
+                                            <%= med[i].bed%>
+                                          <%} else if(med[i].lab == null && med[i].initial_assessment == null){%>
+                                            ER <%= med[i].bed%>
+                                          <%}else{%> 
+                                            Outpatient 
+                                          <%}%>
+                                      </td>
                                   </tr>
                              <%}%>
                                 </tbody>
