@@ -299,12 +299,12 @@
                   <div class="form-group">
                     <label for="inputBirthdate" class="col-sm-2 control-label">Birthdate*</label>
                     <div class="col-sm-4">
-                    	<input type="date"  class="form-control datepicker" name="birth" id="birth" data-parsley-required/>
+                      <input type="date"  class="form-control datepicker" name="birth" id="birth" data-parsley-required/>
                     </div> 
-                    <label for="gender" class="col-sm-2 control-label" disabled >Gender*</label>
+                    <label for="gender" class="col-sm-2 control-label" disabled>Gender*</label>
                     <div class="col-sm-4">
                       <select class="form-control" name="gender" required>
-                        <option value="" selected disabled hidden>Choose...</option>
+                        <option value=""> </option>
                         <option value="M">Male</option>
                         <option value="F">Female</option>
                       </select>
@@ -319,7 +319,7 @@
                       <select class="form-control" name="status" required>
                         <option value="" selected disabled hidden>Choose...</option>
                         <option value="Single">Single</option>
-                        <option value="Maried">Maried</option>
+                        <option value="Married">Married</option>
                       </select>
                     </div>
                     <label for="religion" class="col-sm-2 control-label">Religion</label>
@@ -363,19 +363,19 @@
                     </div>
                   </div>
                   <br>
+                  <br>
 
                   <div class="form-group">
                     <label for="blood" class="col-sm-2 control-label">Blood Type</label>
                     <div class="col-sm-4">
                       <select class="form-control" name="blood">
-                        <option value=""></option>
+                        <option value=" "> </option>
                         <option value="A">A</option>
                         <option value="B">B</option>
                         <option value="AB">AB</option>
                         <option value="O">O</option>
                       </select>
                     </div>
-                  <div class="form-group">
                     <label for="bh" class="col-sm-2 control-label">Birth History</label>
                     <div class="col-sm-4">
                       <input type="text" class="form-control" id="bh" name="bh" data-parsley-pattern="/^[A-Za-z ]+$/" data-parsley-validation-threshold="1">
@@ -430,7 +430,7 @@
                   <br>
                   <div class="modal-footer">
                     <button type="button" class="btn btn-default" onclick="resetForm()"><i class="fa fa-refresh"></i> Reset</button>
-                    <button type="submit" class="btn btn-primary" name="sub" onclick="validateRegistration()" value="add"><i class="fa fa-save"></i> Save</button>
+                    <button type="submit" class="btn btn-primary" name="sub" onclick="validateRegistration()" value="add" value="validate"><i class="fa fa-save"></i> Save</button>
                   </div>
                 </form>
               </div>
@@ -440,7 +440,6 @@
       <!------------------------------------------------------------------------------------------ /Modal-->
 
       <!---------------------------------------------------------------------------------------------- Modal of out patient ----------->
-
         <div class="modal fade" id="myModal1" role="dialog" aria-labelledby="myModalLabel1" style="overflow:hidden;">
           <div class="modal-dialog" role="document">
             <div class="modal-content">
@@ -457,7 +456,7 @@
                       <div class="col-sm-10">
                         <select name="assessmentPatient" class="form-control select2" style="width: 100%;">
                           <%for(var i = 0; i < availablePatientOPD.length; i++){%>
-                            <option  value="<%= availablePatientOPD[i].patient_id%>,<%= availablePatientOPD[i].name%>"><%= availablePatientOPD[i].name%></option>
+                            <option  value="<%= availablePatientOPD[i].patient_id%>"><%= availablePatientOPD[i].name%></option>
                           <%}%>
                         </select>
                       </div>
@@ -516,17 +515,18 @@
 
                   <div class="modal-footer">
                     <button type="button" class="btn btn-default" data-dismiss="modal"><i class="fa fa-times"></i> Cancel</button>
-                    <button type="submit" class="btn btn-primary" name="sub" value="assessment" onclick="validateOPD()"><i class="fa fa-check"></i> Confirm</button>
+                    <button type="submit" class="btn btn-primary" name="sub" value="assessment" onclick="linkAssessment(<%= availablePatientOPD[i].name%>)" onclick="validateOPD()"><i class="fa fa-check"></i> Confirm</button>
                   </div>
+
                 </form>
               </div>
+
             </div>
           </div>
         </div>
         <!------------------------------------------------------------------------------------------ /Modal-->
 
         <!---------------------------------------------------------------------------------------------- Modal of Allocating Bed ----------->
-
               <div class="modal fade" id="bedmodal" role="dialog" aria-labelledby="myModalLabel">
                 <div class="modal-dialog" role="document">
                   <div class="modal-content">
@@ -547,16 +547,18 @@
                           </select>
                         </div>
                       </div>
+
                       <div class="form-group">
                         <label for="inputPatientType" class="col-sm-2 control-label">Select Patient</label>
                           <div class="col-sm-10">
                             <select name="bedName" class="form-control select1" style="width: 100%;">
                               <%for(var i = 0; i < availablePatientOPD.length; i++){%>
-                                <option  value="<%= availablePatientOPD[i].patient_id%>,<%= availablePatientOPD[i].name%>"><%= availablePatientOPD[i].name%></option>
+                                <option  value="<%= availablePatientOPD[i].patient_id%>"><%= availablePatientOPD[i].name%></option>
                               <%}%>
                             </select>
                           </div>
                       </div>
+
                       <div class="form-group">
                         <label for="inputPatientType" class="col-sm-2 control-label">Doctor</label>
                           <div class="col-sm-10">
@@ -585,7 +587,7 @@
             <div class="modal-content">
                   <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                    <h4 class="modal-title" id="myModalLabel">OPD Information</h4>
+                    <h4 class="modal-title" id="myModalLabel">OPD Logs (Jan - Mar)</h4>
                   </div>
                   <div class="modal-body" id="ShowOpd" style="display:none;max-height: calc(100vh - 200px);overflow-y: auto;">
                 <section class="content">
@@ -596,6 +598,7 @@
                       <th>Patient Name</th>
                     </tr>
                   </thead>
+
                     <%for (var i = 0; i < whoOPD.length; i++) { %>
                       <tr>
                         <td><%= moment(new Date(whoOPD[i].time)).format('MMM-DD-YYYY HH:mm')%></td>
@@ -605,10 +608,11 @@
                   </table>
                 </section>
               </div>
+
             </div>
           </div>
         </div>
-      <!------------------------------------------------------------------------------------------ /Modal-->
+        <!------------------------------------------------------------------------------------------ /Modal-->
 
         <!---------------------------------------------------------------------------------------------- Modal of WARD ----------->
         <div class="modal fade" id="myModal3" tabindex="-1" role="dialog" aria-labelledby="myModalLabel1" style="overflow:hidden;">
@@ -616,7 +620,7 @@
             <div class="modal-content">
               <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                <h4 class="modal-title" id="myModalLabel">Ward Information</h4>
+                <h4 class="modal-title" id="myModalLabel">Ward Logs</h4>
               </div>
                 <div class="modal-body" id="ShowWard" style="display:none;max-height: calc(100vh - 200px);overflow-y: auto;">
                 <section class="content">
@@ -649,6 +653,7 @@
               <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
               <h4 class="modal-title" id="myModalLabel1">To Do List</h4>
             </div>
+
             <div class="modal-body">
               <form method="POST" onsubmit="parseDateNTime()" class="form-horizontal" id="showTodo" data-parsley-validate=""  data-parsley-trigger="keyup">
                   <div class="form-group">
@@ -657,6 +662,7 @@
                       <input type="text" class="form-control" id="description" name="description" data-parsley-required>
                     </div>
                   </div>
+
                   <div class="form-group">
                     <label for="todoStatus" class="col-sm-2 control-label">Status</label>
                     <div class="col-sm-3">
@@ -666,21 +672,25 @@
                       </select>
                     </div>
                   </div>
+
                   <div class="form-group">
                     <label for="dateNtime" class="col-sm-2 control-label">Date and Time</label>
                     <div class="col-sm-5">
                       <input type="datetime-local" name="dateNtime" class="form-control">
                     </div>
                   </div>
+
                   <div class="modal-footer">
                     <button type="submit" class="btn btn-primary" name="sub" value="addTodo"><i class="fa fa-plus"></i> Add</button>
                   </div>
+
               </form>
             </div>
             </div>
           </div>
         </div>
-<!------------------------------------------------------------------------------------------ /Modal-->
+      <!------------------------------------------------------------------------------------------ /Modal-->
+
     </section>
   </div>
 <% include ../partials/footer.ejs %>

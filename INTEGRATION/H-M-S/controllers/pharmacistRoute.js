@@ -31,33 +31,31 @@ var confirmedprescriptionSQL = 'SELECT CONCAT("medicine:",medicine,"\nquantity:"
     if (req.session.email && req.session.sino == 'pharmacist') {
       if (req.session.sino == 'pharmacist') {
         if(data.sub == 'addTodo') {
-          var splitDateNTime = data.dateNtime.split('T');
-          var parseDate      = splitDateNTime[0];
-          var parseTime      = splitDateNTime[1] + ':00';
-          var parseDateNTime = parseDate+' '+parseTime;
-          var todoLog = '';
-          if (data.todoStatus == 'urgent') {
-            console.log('Added to urgent!!!!');
-            todoLog = 'INSERT into activity_logs(account_id, time, type, remarks) VALUES ('+req.session.Aid+',"'+moment(new Date()).format('YYYY-MM-DD HH:mm:ss')+'", "urgentTodo", "Added to do urgent: '+data.description+'");';
-          } else if(data.todoStatus == 'general') {
-            console.log('Added to general!!!!');
-            todoLog = 'INSERT into activity_logs(account_id, time, type, remarks) VALUES ('+req.session.Aid+',"'+moment(new Date()).format('YYYY-MM-DD HH:mm:ss')+'", "generalTodo", "Added to do general: '+data.description+'");';
-          }
-          var addTodo  = 'INSERT into todo_list (description, status,date, account_id) VALUES("'+data.description+'","'+data.todoStatus+'","'+parseDateNTime+'",'+req.session.Aid+');';
-          db.query(addTodo + todoLog, function(err){
-            if (err) {
-              console.log(err);
+            var splitDateNTime = data.dateNtime.split('T');
+            var parseDate      = splitDateNTime[0];
+            var parseTime      = splitDateNTime[1] + ':00';
+            var parseDateNTime = parseDate+' '+parseTime;
+            var todoLog = '';
+            if (data.todoStatus == 'urgent') {
+              todoLog = 'INSERT into activity_logs(account_id, time, type, remarks) VALUES ('+req.session.Aid+',"'+moment(new Date()).format('YYYY-MM-DD HH:mm:ss')+'", "urgentTodo", "Added to do urgent: '+data.description+'");';
+            } else if(data.todoStatus == 'general') {
+              todoLog = 'INSERT into activity_logs(account_id, time, type, remarks) VALUES ('+req.session.Aid+',"'+moment(new Date()).format('YYYY-MM-DD HH:mm:ss')+'", "generalTodo", "Added to do general: '+data.description+'");';
             }
-          });
-          res.redirect(req.get('referer'));
-        } else if (data.sub == 'delToDo') {
-          var delTodo = 'DELETE FROM todo_list where todo_id = '+req.query.tId+';';
-          db.query(delTodo + 'INSERT into activity_logs(account_id, time, type, remarks) VALUES ('+req.session.Aid+',"'+moment(new Date()).format('YYYY-MM-DD HH:mm:ss')+'", "delTodo", "Deleted data from todo List");', function(err){
-            if (err) {
-              console.log(err);
-            }
-          });
-          res.redirect(req.get('referer'));
+            var addTodo  = 'INSERT into todo_list (description, status,date, account_id) VALUES("'+data.description+'","'+data.todoStatus+'","'+parseDateNTime+'",'+req.session.Aid+');';
+            db.query(addTodo + todoLog, function(err){
+              if (err) {
+                console.log(err);
+              }
+            });
+            res.redirect(req.get('referer'));
+          } else if (data.sub == 'delToDo') {
+            var delTodo = 'DELETE FROM todo_list where todo_id = '+req.query.tId+';';
+            db.query(delTodo + 'INSERT into activity_logs(account_id, time, type, remarks) VALUES ('+req.session.Aid+',"'+moment(new Date()).format('YYYY-MM-DD HH:mm:ss')+'", "delTodo", "Deleted data from todo List");', function(err){
+              if (err) {
+                console.log(err);
+              }
+            });
+            res.redirect(req.get('referer'));
 
         } else if(data.sub == 'appointment') {
               var splitDateNTime = data.dateNtime.split('T');
