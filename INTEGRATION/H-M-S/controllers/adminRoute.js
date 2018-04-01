@@ -197,7 +197,7 @@ app.get('/admin/patientManagement', function(req, res){
                   if (err) {
                     console.log(err);
                   } else {
-                    req.flash('success', 'Reset password for '+req.query.name+'!');
+                    req.flash('success', 'Reset password for '+req.query.name+' with password "123"!');
                     res.redirect(req.get('referer'));
                   }
                 });
