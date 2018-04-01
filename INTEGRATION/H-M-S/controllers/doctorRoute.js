@@ -266,38 +266,12 @@ var user, Aid, availableBedss, p;
       if(req.session.email && req.session.sino == 'doctor'){
         if(req.session.sino == 'doctor') {
           if (data.sub == 'changeInfo') {
-          var patientManSQL = "SELECT d.*, a.medicine,"
-                         +" (SELECT time from activity_logs where type='bed' and d.patient_id = activity_logs.patient_id order by time desc limit 1) as allotment, "
-                         +" (SELECT time from activity_logs where type='bedDischarge' and d.patient_id = activity_logs.patient_id order by time desc limit 1) as discharge, "
-                         +" (SELECT DATEDIFF(discharge,allotment)) as difference "
-                         +" FROM patient_history AS a inner join patient as d on d.patient_id = a.patient_id inner join activity_logs on d.patient_id = activity_logs.patient_id "
-                         +" inner JOIN     "
-                         +" ("
-                         +"    SELECT    patient_id, Max(date_stamp) AS DateTime "
-                         +"    FROM      patient_history "
-                         +"    GROUP BY  patient_id "
-                         +" ) AS b "
-                         +" ON            a.patient_id = b.patient_id "
-                         +" AND           a.date_stamp = b.DateTime "
-                         +" and d.patient_id = "+req.query.patient_id+""
-                         +" UNION "
-                         +" SELECT d.*, 'New Patient' as 'medicine', "
-                         +" (SELECT time from activity_logs where type='bed' and d.patient_id = activity_logs.patient_id order by time desc limit 1) as allotment, "
-                         +" (SELECT time from activity_logs where type='bedDischarge' and d.patient_id = activity_logs.patient_id order by time desc limit 1) as discharge, "
-                         +" (SELECT DATEDIFF(discharge,allotment)) as difference "
-                         +" from patient d inner join activity_logs on d.patient_id = activity_logs.patient_id "
-                         +" where d.patient_id not in "
-                         +" (SELECT        a.patient_id "
-                         +" FROM          patient_history AS a inner join patient as d on d.patient_id = a.patient_id "
-                         +" inner JOIN "
-                         +" ("
-                         +"    SELECT    patient_id, Max(date_stamp) AS DateTime "
-                         +"    FROM      patient_history "
-                         +"    GROUP BY  patient_id "
-                         +" ) AS b "
-                         +" ON            a.patient_id = b.patient_id"
-                         +" AND           a.date_stamp = b.DateTime)"
-                         +" and d.patient_id = "+req.query.patient_id+";";
+            var patientManSQL = "SELECT *,"
+                               +" (SELECT time from activity_logs where type='bed' and patient.patient_id = activity_logs.patient_id order by time desc limit 1) as allotment, "
+                               +" (SELECT time from activity_logs where type='bedDischarge' and patient.patient_id = activity_logs.patient_id order by time desc limit 1) as discharge, "
+                               +" (SELECT DATEDIFF(discharge,allotment)) as difference "
+                               +" FROM patient where d.patient_id = "+req.query.patient_id+" inner join activity_logs USING(patient_id) group by patient_id;";
+
             var sql2  = "SELECT * FROM patient where patient_id = "+req.query.patient_id+";";
             var med = "select date_stamp, lab, medicine,diagnosis,bed from patient_history where patient_id = "+req.query.patient_id+" order by date_stamp desc;";
             var patientInfoUpdate = 'UPDATE patient SET patient_type = IFNULL("'+data.patientType+'", patient_type), name = IFNULL("'+data.name+'", name), unit = IFNULL("'+data.unit+'", unit), status = IFNULL("'+data.status+'", status), address = IFNULL("'+data.address+'", address), religion = IFNULL("'+data.religion+'", religion),blood_type = IFNULL("'+data.bloodType+'", blood_type),allergies = IFNULL("'+data.allergies+'", allergies),father = IFNULL("'+data.father+'",father),mother = IFNULL("'+data.mother+'", mother),birth_history = IFNULL("'+data.birthHistory+'",birth_history),rankORsn = IFNULL("'+data.rank+'", rankORsn),immunization = IFNULL("'+data.immunization+'", immunization),family_history = IFNULL("'+data.familyHistory+'",family_history) where patient_id = '+req.query.patient_id+'; ';
@@ -305,39 +279,13 @@ var user, Aid, availableBedss, p;
               if (err) {
                 console.log(err);
               } else {
-                var patientManSQL = "SELECT d.*, a.medicine, "
-                                   +" (SELECT time from activity_logs where type='bed' and d.patient_id = activity_logs.patient_id order by time desc limit 1) as allotment, "
-                                   +" (SELECT time from activity_logs where type='bedDischarge' and d.patient_id = activity_logs.patient_id order by time desc limit 1) as discharge, "
+                var patientManSQL = "SELECT *,"
+                                   +" (SELECT time from activity_logs where type='bed' and patient.patient_id = activity_logs.patient_id order by time desc limit 1) as allotment, "
+                                   +" (SELECT time from activity_logs where type='bedDischarge' and patient.patient_id = activity_logs.patient_id order by time desc limit 1) as discharge, "
                                    +" (SELECT DATEDIFF(discharge,allotment)) as difference "
-                                   +" FROM patient_history AS a inner join patient as d on d.patient_id = a.patient_id inner join activity_logs on d.patient_id = activity_logs.patient_id "
-                                   +" inner JOIN     "
-                                   +" ("
-                                   +"     SELECT    patient_id, Max(date_stamp) AS DateTime "
-                                   +"    FROM      patient_history "
-                                   +"    GROUP BY  patient_id "
-                                   +" ) AS b "
-                                   +" ON            a.patient_id = b.patient_id "
-                                   +" AND           a.date_stamp = b.DateTime "
-                                   +" and d.patient_id = "+req.query.patient_id+""
-                                   +" UNION "
-                                   +" SELECT d.*, 'New Patient' as 'medicine', "
-                                   +" (SELECT time from activity_logs where type='bed' and d.patient_id = activity_logs.patient_id order by time desc limit 1) as allotment, "
-                                   +" (SELECT time from activity_logs where type='bedDischarge' and d.patient_id = activity_logs.patient_id order by time desc limit 1) as discharge, "
-                                   +" (SELECT DATEDIFF(discharge,allotment)) as difference "
-                                   +" from patient d inner join activity_logs on d.patient_id = activity_logs.patient_id "
-                                   +" where d.patient_id not in "
-                                   +" (SELECT        a.patient_id "
-                                   +" FROM          patient_history AS a inner join patient as d on d.patient_id = a.patient_id "
-                                   +" inner JOIN "
-                                   +" ("
-                                   +"    SELECT    patient_id, Max(date_stamp) AS DateTime "
-                                   +"    FROM      patient_history "
-                                   +"    GROUP BY  patient_id "
-                                   +" ) AS b "
-                                   +" ON            a.patient_id = b.patient_id"
-                                   +" AND           a.date_stamp = b.DateTime)"
-                                   +" and d.patient_id = "+req.query.patient_id+";";
+                                   +" FROM patient where d.patient_id = "+req.query.patient_id+" inner join activity_logs USING(patient_id) group by patient_id;";
                 var updatedSql2  = "SELECT * FROM patient where patient_id = "+req.query.patient_id+";";
+
                 db.query(patientManSQL + updatedSql2, function(err, successRows2){
                   res.render('doctor/patientManagement', {p:successRows2[0], p2:successRows2[1], med:successRows[2], username:user, invalid:null});
                 });
@@ -348,38 +296,12 @@ var user, Aid, availableBedss, p;
               if (err) {
                 console.log(err);
               } else if(isMatch) {
-                var patientManSQL = "SELECT d.*, a.medicine, "
-                                   +" (SELECT time from activity_logs where type='bed' and d.patient_id = activity_logs.patient_id order by time desc limit 1) as allotment, "
-                                   +" (SELECT time from activity_logs where type='bedDischarge' and d.patient_id = activity_logs.patient_id order by time desc limit 1) as discharge, "
+                var patientManSQL = "SELECT *,"
+                                   +" (SELECT time from activity_logs where type='bed' and patient.patient_id = activity_logs.patient_id order by time desc limit 1) as allotment, "
+                                   +" (SELECT time from activity_logs where type='bedDischarge' and patient.patient_id = activity_logs.patient_id order by time desc limit 1) as discharge, "
                                    +" (SELECT DATEDIFF(discharge,allotment)) as difference "
-                                   +" FROM patient_history AS a inner join patient as d on d.patient_id = a.patient_id inner join activity_logs on d.patient_id = activity_logs.patient_id "
-                                   +" inner JOIN     "
-                                   +" ("
-                                   +"    SELECT    patient_id, Max(date_stamp) AS DateTime "
-                                   +"    FROM      patient_history "
-                                   +"    GROUP BY  patient_id "
-                                   +" ) AS b "
-                                   +" ON            a.patient_id = b.patient_id "
-                                   +" AND           a.date_stamp = b.DateTime "
-                                   +" and d.patient_id = "+req.query.passPatient+""
-                                   +" UNION "
-                                   +" SELECT d.*, 'New Patient' as 'medicine', "
-                                   +" (SELECT time from activity_logs where type='bed' and d.patient_id = activity_logs.patient_id order by time desc limit 1) as allotment, "
-                                   +" (SELECT time from activity_logs where type='bedDischarge' and d.patient_id = activity_logs.patient_id order by time desc limit 1) as discharge, "
-                                   +" (SELECT DATEDIFF(discharge,allotment)) as difference "
-                                   +" from patient d inner join activity_logs on d.patient_id = activity_logs.patient_id "
-                                   +" where d.patient_id not in "
-                                   +" (SELECT        a.patient_id "
-                                   +" FROM          patient_history AS a inner join patient as d on d.patient_id = a.patient_id "
-                                   +" inner JOIN "
-                                   +"( "
-                                   +"    SELECT    patient_id, Max(date_stamp) AS DateTime "
-                                   +"    FROM      patient_history "
-                                   +"    GROUP BY  patient_id "
-                                   +" ) AS b "
-                                   +" ON            a.patient_id = b.patient_id "
-                                   +" AND           a.date_stamp = b.DateTime) "
-                                   +" and d.patient_id = "+req.query.passPatient+";";
+                                   +" FROM patient where d.patient_id = "+req.query.patient_id+" inner join activity_logs USING(patient_id) group by patient_id;";
+
                 var sql2  = "SELECT * FROM patient where patient_id = "+req.query.passPatient+";";
                 var med = "select date_stamp, lab, medicine,diagnosis,bed from patient_history where patient_id = "+req.query.passPatient+" order by date_stamp desc;";
                 db.query(patientManSQL + sql2 + med, function(err, successRows){
