@@ -266,7 +266,7 @@ var user, Aid, availableBedss, p;
       if(req.session.email && req.session.sino == 'doctor'){
         if(req.session.sino == 'doctor') {
           if (data.sub == 'changeInfo') {
-          var patientManSQL = "SELECT d.*, a.medicine," 
+          var patientManSQL = "SELECT d.*, a.medicine,"
                          +" (SELECT time from activity_logs where type='bed' and d.patient_id = activity_logs.patient_id order by time desc limit 1) as allotment, "
                          +" (SELECT time from activity_logs where type='bedDischarge' and d.patient_id = activity_logs.patient_id order by time desc limit 1) as discharge, "
                          +" (SELECT DATEDIFF(discharge,allotment)) as difference "
@@ -295,8 +295,8 @@ var user, Aid, availableBedss, p;
                          +"    FROM      patient_history "
                          +"    GROUP BY  patient_id "
                          +" ) AS b "
-                         +" ON            a.patient_id = b.patient_id" 
-                         +" AND           a.date_stamp = b.DateTime)" 
+                         +" ON            a.patient_id = b.patient_id"
+                         +" AND           a.date_stamp = b.DateTime)"
                          +" and d.patient_id = "+req.query.patient_id+";";
             var sql2  = "SELECT * FROM patient where patient_id = "+req.query.patient_id+";";
             var med = "select date_stamp, lab, medicine,diagnosis,bed from patient_history where patient_id = "+req.query.patient_id+" order by date_stamp desc;";
@@ -305,7 +305,7 @@ var user, Aid, availableBedss, p;
               if (err) {
                 console.log(err);
               } else {
-                var patientManSQL = "SELECT d.*, a.medicine, " 
+                var patientManSQL = "SELECT d.*, a.medicine, "
                                    +" (SELECT time from activity_logs where type='bed' and d.patient_id = activity_logs.patient_id order by time desc limit 1) as allotment, "
                                    +" (SELECT time from activity_logs where type='bedDischarge' and d.patient_id = activity_logs.patient_id order by time desc limit 1) as discharge, "
                                    +" (SELECT DATEDIFF(discharge,allotment)) as difference "
@@ -334,8 +334,8 @@ var user, Aid, availableBedss, p;
                                    +"    FROM      patient_history "
                                    +"    GROUP BY  patient_id "
                                    +" ) AS b "
-                                   +" ON            a.patient_id = b.patient_id" 
-                                   +" AND           a.date_stamp = b.DateTime)" 
+                                   +" ON            a.patient_id = b.patient_id"
+                                   +" AND           a.date_stamp = b.DateTime)"
                                    +" and d.patient_id = "+req.query.patient_id+";";
                 var updatedSql2  = "SELECT * FROM patient where patient_id = "+req.query.patient_id+";";
                 db.query(patientManSQL + updatedSql2, function(err, successRows2){
@@ -348,7 +348,7 @@ var user, Aid, availableBedss, p;
               if (err) {
                 console.log(err);
               } else if(isMatch) {
-                var patientManSQL = "SELECT d.*, a.medicine, " 
+                var patientManSQL = "SELECT d.*, a.medicine, "
                                    +" (SELECT time from activity_logs where type='bed' and d.patient_id = activity_logs.patient_id order by time desc limit 1) as allotment, "
                                    +" (SELECT time from activity_logs where type='bedDischarge' and d.patient_id = activity_logs.patient_id order by time desc limit 1) as discharge, "
                                    +" (SELECT DATEDIFF(discharge,allotment)) as difference "
@@ -377,8 +377,8 @@ var user, Aid, availableBedss, p;
                                    +"    FROM      patient_history "
                                    +"    GROUP BY  patient_id "
                                    +" ) AS b "
-                                   +" ON            a.patient_id = b.patient_id " 
-                                   +" AND           a.date_stamp = b.DateTime) " 
+                                   +" ON            a.patient_id = b.patient_id "
+                                   +" AND           a.date_stamp = b.DateTime) "
                                    +" and d.patient_id = "+req.query.passPatient+";";
                 var sql2  = "SELECT * FROM patient where patient_id = "+req.query.passPatient+";";
                 var med = "select date_stamp, lab, medicine,diagnosis,bed from patient_history where patient_id = "+req.query.passPatient+" order by date_stamp desc;";
@@ -391,7 +391,7 @@ var user, Aid, availableBedss, p;
                   res.render('doctor/patientManagement', {p:errorRows, p2:null, med:null, username:user, invalid:'error'});
                 });
               }
-            });  
+            });
           }
         } else {
           res.redirect(req.session.sino+'/dashboard');
@@ -564,7 +564,7 @@ var user, Aid, availableBedss, p;
     app.get('/doctor/profileManagement', function(req, res){
       if(req.session.email && req.session.sino == 'doctor'){
         if (req.session.sino == 'doctor') {
-          var profileInfoSQL  = 'SELECT name, age, address, phone from user_accounts where account_id = '+req.session.Aid+';';
+          var profileInfoSQL  = 'SELECT name, age, address, sex, account_id, phone from user_accounts where account_id = '+req.session.Aid+';';
           var activityLogsSQL = 'SELECT * from activity_logs where account_id = '+req.session.Aid+' ORDER by logs_id desc LIMIT 10;';
           db.query(profileInfoSQL + activityLogsSQL, function(err, rows){
             if (err) {
@@ -591,14 +591,14 @@ var user, Aid, availableBedss, p;
               bcrypt.genSalt(10, function(err, salt){
                 bcrypt.hash(data.newPass, salt, function(err, hash){
                   if (data.newPass) {
-                    var updateProfileSQL = 'UPDATE user_accounts SET name = "'+data.name+'", age = '+data.age+', address = "'+data.address+'", phone = '+data.phone+', password = "'+hash+'" WHERE account_id = '+req.session.Aid+';';
+                    var updateProfileSQL = 'UPDATE user_accounts SET name = "'+data.name+'", address = "'+data.address+'", phone = '+data.phone+', password = "'+hash+'" WHERE account_id = '+req.session.Aid+';';
                     db.query(updateProfileSQL + 'INSERT into activity_logs(account_id, time, type, remarks) VALUES ('+Aid+',"'+moment(new Date()).format('YYYY-MM-DD HH:mm:ss')+'", "settingsProfileManagement", "Edited personal info.");', function(err, rows){
                       if (err) {
                         console.log(err);
                       } else {
                           res.redirect('../logout');
                       }
-                    });                    
+                    });
                   } else {
                     var updateProfileSQL = 'UPDATE user_accounts SET name = "'+data.name+'", age = '+data.age+', address = "'+data.address+'", phone = '+data.phone+' WHERE account_id = '+req.session.Aid+';';
                     db.query(updateProfileSQL + 'INSERT into activity_logs(account_id, time, type, remarks) VALUES ('+Aid+',"'+moment(new Date()).format('YYYY-MM-DD HH:mm:ss')+'", "settingsProfileManagement", "Edited personal info.");', function(err, rows){
@@ -607,7 +607,7 @@ var user, Aid, availableBedss, p;
                       } else {
                           res.redirect(req.get('referer'));
                       }
-                    });                    
+                    });
                   }
                 });
               });

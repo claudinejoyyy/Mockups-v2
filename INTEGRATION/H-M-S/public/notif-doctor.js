@@ -13,7 +13,7 @@ $(document).ready(function(){
           type: 'success',
           allow_dismiss: false
         },{
-          template: '<div data-notify="container" class="col-xs-11 col-sm-3 alert alert-{0}" role="alert">' +
+          template: '<div data-notify="container" class="col-xs-11 col-sm-3 alert alert-{0}" role="alert" onclick=($this.hide())>' +
             '<button type="button" aria-hidden="true" class="close" data-notify="dismiss">×</button>' +
             '<span data-notify="icon" class></span> ' +
             '<span data-notify="title">{1}</span> ' +
