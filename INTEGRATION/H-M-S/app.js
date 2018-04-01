@@ -134,7 +134,7 @@ var patientManagementSQL = "SELECT *,"
                            +" (SELECT time from activity_logs where type='bed' and patient.patient_id = activity_logs.patient_id order by time desc limit 1) as allotment, "
                            +" (SELECT time from activity_logs where type='bedDischarge' and patient.patient_id = activity_logs.patient_id order by time desc limit 1) as discharge, "
                            +" (SELECT DATEDIFF(discharge,allotment)) as difference "
-                           +" FROM patient inner join activity_logs USING(patient_id) group by patient_id;";
+                           +" FROM patient left join activity_logs USING(patient_id) group by patient_id;";
 
 login (app,db,bcrypt,moment);
 nurse (app,db,name,counts,chart,whoCurrentlyAdmitted,whoOPD,whoWARD,monthlyPatientCount,patientList,availableBeds,doctorList,patientManagementSQL,bcrypt,io,moment);
