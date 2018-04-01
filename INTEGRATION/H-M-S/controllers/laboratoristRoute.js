@@ -1,4 +1,4 @@
-module.exports = function(app,db,name,counts,chart,whoCurrentlyAdmitted,whoOPD,whoWARD,monthlyPatientCount,patientList,bcrypt,io,moment){
+module.exports = function(app,db,name,counts,chart,whoCurrentlyAdmitted,whoOPD,whoWARD,monthlyPatientCount,patientList,patientManagementSQL,bcrypt,io,moment){
 var user, Aid;
 
   app.get('/laboratorist/dashboard', function(req, res){
@@ -139,6 +139,23 @@ res.redirect('../login');
       res.redirect('../login');
     }
   });
+
+  //PATIENT MANAGEMENT
+app.get('/laboratorist/patientManagement', function(req, res){
+    if(req.session.email && req.session.sino == 'laboratorist'){
+      if(req.session.sino == 'laboratorist'){
+        var sql  = "SELECT patient_id,patient_type,name,age,sex,blood_type FROM patient";
+        db.query(sql, function(err, rows){
+          res.render('laboratorist/patientManagement', {p:rows, username:user});
+        });
+      } else {
+        res.redirect(req.session.sino+'/dashboard');
+      }
+    } else {
+        res.redirect('../login');
+    }
+  });
+
   // PROFILE MANAGEMENT
     app.get('/laboratorist/profileManagement', function(req, res){
       if(req.session.email && req.session.sino == 'laboratorist'){
