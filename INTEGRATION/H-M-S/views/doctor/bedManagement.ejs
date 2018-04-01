@@ -84,7 +84,6 @@
                   <td><%= bedDetails[i].name%></td>
                   <%
                   var DT = moment(bedDetails[i].allotment_timestamp).format('YYYY-MM-DD HH:mm:ss');
-                  console.log(DT);
                   if(DT == 'Invalid date'){%>
                     <td></td>
                   <%} else {%>

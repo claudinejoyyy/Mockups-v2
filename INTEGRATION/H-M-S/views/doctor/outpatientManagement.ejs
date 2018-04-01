@@ -539,7 +539,7 @@
       var button = document.createElement('button');
       button.setAttribute("class", "btn btn-default btn-sm pull-left");
       button.setAttribute("id", "minsanLang");
-      button.innerHTML = '<i class="fa fa-eye"></i><a style="color:black;" href="/doctor/labRequestManagement?patient_id='+i+'"> View Pending Requests</a>';
+      button.innerHTML = '<i class="fa fa-eye"></i><a style="color:black;" href="/doctor/labRequestManagement?labPatientInfo='+i+'"> View Pending Requests</a>';
       document.getElementById('ShowLabRequestView').appendChild(button);
     }
   }
@@ -551,7 +551,7 @@
       var button = document.createElement('button');
       button.setAttribute("class", "btn btn-default btn-sm pull-left");
       button.setAttribute("id", "oneTimeOnly");
-      button.innerHTML = '<i class="fa fa-eye"></i><a style="color:black;" href="/doctor/prescriptionManagement?patient_id='+i+'"> View Pending Requests</a>';
+      button.innerHTML = '<i class="fa fa-eye"></i><a style="color:black;" href="/doctor/prescriptionManagement?opdPatient='+i+'"> View Pending Requests</a>';
       document.getElementById('showPrescribeView').appendChild(button);
     }
   }
