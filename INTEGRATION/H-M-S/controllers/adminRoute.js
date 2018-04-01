@@ -131,7 +131,7 @@ app.get('/admin/patientManagement', function(req, res){
                       } else {
                           res.redirect('../logout');
                       }
-                    });                    
+                    });
                   } else {
                     var updateProfileSQL = 'UPDATE user_accounts SET name = "'+data.name+'", address = "'+data.address+'", phone = '+data.phone+' WHERE account_id = '+req.session.Aid+';';
                     db.query(updateProfileSQL + 'INSERT into activity_logs(account_id, time, type, remarks) VALUES ('+Aid+',"'+moment(new Date()).format('YYYY-MM-DD HH:mm:ss')+'", "settingsProfileManagement", "Edited personal info.");', function(err, rows){
@@ -140,7 +140,7 @@ app.get('/admin/patientManagement', function(req, res){
                       } else {
                           res.redirect(req.get('referer'));
                       }
-                    });                    
+                    });
                   }
                 });
               });
@@ -189,6 +189,19 @@ app.get('/admin/patientManagement', function(req, res){
               } else {
                 res.redirect(req.get('referer'));
               }
+            });
+          } else if(data.sub == 'reset'){
+            bcrypt.genSalt(10, function(err, salt){
+              bcrypt.hash('123', salt, function(err, hash){
+                db.query('UPDATE user_accounts set password = "'+hash+'" where account_id = '+req.query.account+';',function(err){
+                  if (err) {
+                    console.log(err);
+                  } else {
+                    req.flash('success', 'Reset password for '+req.query.name+'!');
+                    res.redirect(req.get('referer'));
+                  }
+                });
+              });
             });
           } else if (data.sub == 'add') {
             req.checkBody('type','type is required.').notEmpty();
