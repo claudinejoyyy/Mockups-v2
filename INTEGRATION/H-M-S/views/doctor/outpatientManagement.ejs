@@ -205,7 +205,7 @@
                           <%=opdInfo2[i].initial_assessment%>
                           <%} else{%>ER<%}%>
                       </td>
-                      <td><%= opdInfo2[i].bed_id%><%if(opdInfo2[i].bed_id){%><a href="/doctor/bedManagement?bed_id=<%=opdInfo2[i].bed_id%>" style="font-size:10px;">-details</a><%}%></td>
+                      <td><%= opdInfo2[i].bed_id%><%if(opdInfo2[i].bed_id){%><a href="/doctor/bedManagement?bed_id=<%=opdInfo2[i].bed_id%>" style="font-size:10px;"></a><%}%></td>
                       <td>
                         <!-- VIEW -->
                       <button type="button" class="btn btn-default btn-sm" name="button" data-toggle="modal" data-target="#showInputPassword" onclick="PasswordInput(<%= opdInfo2[i].patient_id %>)">Profile</button>

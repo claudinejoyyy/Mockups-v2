@@ -456,7 +456,7 @@
                       <div class="col-sm-10">
                         <select name="assessmentPatient" class="form-control select2" style="width: 100%;">
                           <%for(var i = 0; i < availablePatientOPD.length; i++){%>
-                            <option  value="<%= availablePatientOPD[i].patient_id%>"><%= availablePatientOPD[i].name%></option>
+                            <option  value="<%= availablePatientOPD[i].patient_id%>,<%= availablePatientOPD[i].name%>"><%= availablePatientOPD[i].name%></option>
                           <%}%>
                         </select>
                       </div>
@@ -553,7 +553,7 @@
                           <div class="col-sm-10">
                             <select name="bedName" class="form-control select1" style="width: 100%;">
                               <%for(var i = 0; i < availablePatientOPD.length; i++){%>
-                                <option  value="<%= availablePatientOPD[i].patient_id%>"><%= availablePatientOPD[i].name%></option>
+                                <option  value="<%= availablePatientOPD[i].patient_id%>,<%= availablePatientOPD[i].name%>"><%= availablePatientOPD[i].name%></option>
                               <%}%>
                             </select>
                           </div>
