@@ -368,8 +368,8 @@
                                             <%= med[i].bed%>
                                           <%} else if(med[i].lab == null && med[i].initial_assessment == null){%>
                                             ER <%= med[i].bed%>
-                                          <%}else{%> 
-                                            Outpatient 
+                                          <%}else{%>
+                                            Outpatient
                                           <%}%>
                                       </td>
                                   </tr>
@@ -450,16 +450,18 @@
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                 <h4 class="modal-title" id="labRequestlabel"><%= username[0].name %>, please input your password.</h4>
             </div>
+
+            <div id="PasswordInput" style="display:none;">
               <form id="dynamicActionPassword" method="post">
-            <div class="modal-body">
-              <div id="PasswordInput" style="display:none">
-                  <input class="form-control" type="password" name="patientPassword" placeholder="Password">
-              </div>
-              </div>
-              <div class="modal-footer">
-                <button type="submit" name="sub" class="btn btn-outline" value="pass"><i class="fa fa-sign-in"></i> Enter</button>
-              </div>
+                <div class="modal-body">
+                      <input class="form-control" type="password" name="patientPassword" placeholder="Password">
+                  </div>
+                  <div class="modal-footer">
+                    <button type="submit" name="sub" class="btn btn-outline" value="pass"><i class="fa fa-sign-in"></i> Enter</button>
+                  </div>
                 </form>
+              </div>
+
             </div>
           </div>
       <div class="control-sidebar-bg"></div>
@@ -491,16 +493,14 @@
       "autoWidth": true
     });
   });
-  <%if(invalid){%>
+
+<%if(invalid){%>
   alert('invalid password');
   $(document).ready(function(){
     $("#PasswordInput").show();
   });
 <%}%>
-  function PasswordInput(id){
-    document.getElementById('PasswordInput').style.display = 'block';
-    document.getElementById('dynamicActionPassword').action = '/doctor/patientManagement?passPatient='+id+'';
-  }
+
   function PasswordInput(id){
     document.getElementById('PasswordInput').style.display = 'block';
     document.getElementById('dynamicActionPassword').action = '/doctor/patientManagement?passPatient='+id+'';

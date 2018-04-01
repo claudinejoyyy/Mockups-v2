@@ -173,24 +173,25 @@ var user, Aid, availableBedss, p;
                 res.redirect(req.get('referer'));
               }
             });
-          }
-          bcrypt.compare(data.patientPassword, req.session.password, function(err, isMatch){
-            if (err) {
-              console.log(err);
-            } else if(isMatch) {
-              var sql  = "SELECT patient_id,patient_type,name,age,sex,blood_type FROM patient where patient_id = "+req.query.passPatient+";";
-              var sql2  = "SELECT * FROM patient where patient_id = "+req.query.passPatient+";";
-              var med = "select date_stamp, lab, medicine,diagnosis,bed from patient_history where patient_id = "+req.query.passPatient+" order by date_stamp;";
-              db.query(sql + sql2 + med, function(err, successRows){
-                res.render('doctor/patientManagement', {p:successRows[0], p2:successRows[1], med:successRows[2], username:user, invalid:null});
-              });
-            } else {
-              var sql  = "SELECT patient_id,patient_type,name,age,sex,blood_type FROM patient where patient_id = "+req.query.passPatient+";";
-              db.query(sql, function(err, errorRows){
-                res.render('doctor/patientManagement', {p:errorRows, p2:null, med:null, username:user, invalid:'error'});
-              });
-            }
-          });
+          } else {
+            bcrypt.compare(data.patientPassword, req.session.password, function(err, isMatch){
+              if (err) {
+                console.log(err);
+              } else if(isMatch) {
+                var sql  = "SELECT patient_id,patient_type,name,age,sex,blood_type FROM patient where patient_id = "+req.query.passPatient+";";
+                var sql2  = "SELECT * FROM patient where patient_id = "+req.query.passPatient+";";
+                var med = "select date_stamp, lab, medicine,diagnosis,bed from patient_history where patient_id = "+req.query.passPatient+" order by date_stamp;";
+                db.query(sql + sql2 + med, function(err, successRows){
+                  res.render('doctor/patientManagement', {p:successRows[0], p2:successRows[1], med:successRows[2], username:user, invalid:null});
+                });
+              } else {
+                var sql  = "SELECT patient_id,patient_type,name,age,sex,blood_type FROM patient where patient_id = "+req.query.passPatient+";";
+                db.query(sql, function(err, errorRows){
+                  res.render('doctor/patientManagement', {p:errorRows, p2:null, med:null, username:user, invalid:'error'});
+                });
+              }
+            });
+        }
 
       } else {
         res.redirect(req.session.sino+'/dashboard');
@@ -271,7 +272,7 @@ var user, Aid, availableBedss, p;
                                +" (SELECT time from activity_logs where type='bed' and patient.patient_id = activity_logs.patient_id order by time desc limit 1) as allotment, "
                                +" (SELECT time from activity_logs where type='bedDischarge' and patient.patient_id = activity_logs.patient_id order by time desc limit 1) as discharge, "
                                +" (SELECT DATEDIFF(discharge,allotment)) as difference "
-                               +" FROM patient where d.patient_id = "+req.query.patient_id+" inner join activity_logs USING(patient_id) group by patient_id;";
+                               +" FROM patient inner join activity_logs USING(patient_id) where patient_id = "+req.query.patient_id+" group by patient_id;";
 
             var sql2  = "SELECT * FROM patient where patient_id = "+req.query.patient_id+";";
             var med = "select date_stamp, lab, medicine,diagnosis,bed from patient_history where patient_id = "+req.query.patient_id+" order by date_stamp desc;";
@@ -284,7 +285,7 @@ var user, Aid, availableBedss, p;
                                    +" (SELECT time from activity_logs where type='bed' and patient.patient_id = activity_logs.patient_id order by time desc limit 1) as allotment, "
                                    +" (SELECT time from activity_logs where type='bedDischarge' and patient.patient_id = activity_logs.patient_id order by time desc limit 1) as discharge, "
                                    +" (SELECT DATEDIFF(discharge,allotment)) as difference "
-                                   +" FROM patient where d.patient_id = "+req.query.patient_id+" inner join activity_logs USING(patient_id) group by patient_id;";
+                                   +" FROM patient inner join activity_logs USING(patient_id) where patient_id = "+req.query.patient_id+" group by patient_id;";
                 var updatedSql2  = "SELECT * FROM patient where patient_id = "+req.query.patient_id+";";
 
                 db.query(patientManSQL + updatedSql2, function(err, successRows2){
@@ -301,7 +302,7 @@ var user, Aid, availableBedss, p;
                                    +" (SELECT time from activity_logs where type='bed' and patient.patient_id = activity_logs.patient_id order by time desc limit 1) as allotment, "
                                    +" (SELECT time from activity_logs where type='bedDischarge' and patient.patient_id = activity_logs.patient_id order by time desc limit 1) as discharge, "
                                    +" (SELECT DATEDIFF(discharge,allotment)) as difference "
-                                   +" FROM patient where d.patient_id = "+req.query.patient_id+" inner join activity_logs USING(patient_id) group by patient_id;";
+                                   +" FROM patient inner join activity_logs USING(patient_id) where patient_id = "+req.query.passPatient+" group by patient_id;";
 
                 var sql2  = "SELECT * FROM patient where patient_id = "+req.query.passPatient+";";
                 var med = "select date_stamp, lab, medicine,diagnosis,bed from patient_history where patient_id = "+req.query.passPatient+" order by date_stamp desc;";
