@@ -386,7 +386,7 @@ var user, Aid, availableBedss, p;
         if(req.session.sino == 'doctor'){
           if (req.query.opdPatient) {
             var prescriptionSQL = 'SELECT CONCAT("Medicine: ",medicine,"\nQuantity:",quantity,"\nDosage: ", dosage,"\nTimeframe: ", timeframe) AS medications, p.status as STATUS,creation_stamp,patient_type,name,age,prescription_id from prescription p inner join patient using(patient_id) where doctor_id = '+Aid+' and patient_id = '+req.query.opdPatient+' and p.status ="pending" ORDER BY creation_stamp desc;';
-            var confirmedprescriptionSQL = 'SELECT CONCAT("Medicine: ",medicine,"\nQuantity: ",quantity,"\nDosage: ", dosage,"\nTimeframe: ", timeframe) AS medications, p.status as STATUS,creation_stamp,patient_type,name,age,prescription_id from prescription p inner join patient using(patient_id) where p.status = "confirmed" and doctor_id='+Aid+' ORDER BY creation_stamp desc;';
+            var confirmedprescriptionSQL = 'SELECT CONCAT("Medicine: ",medicine,"\nQuantity: ",quantity,"\nDosage: ", dosage,"\nTimeframe: ", timeframe) AS medications, p.status as STATUS,creation_stamp,patient_type,name,age,prescription_id from prescription p inner join patient using(patient_id) where p.status = "confirmed" and doctor_id='+Aid+' ORDER BY creation_stamp desc LIMIT 50;';
 
             db.query(prescriptionSQL+confirmedprescriptionSQL, function(err, rows){
               if (err) {
@@ -397,7 +397,7 @@ var user, Aid, availableBedss, p;
             });
           } else {
             var prescriptionSQL = 'SELECT CONCAT("Medicine: ",medicine,"\nQuantity: ",quantity,"\nDosage: ", dosage,"\nTimeframe: ", timeframe) AS medications, p.status as STATUS,creation_stamp,patient_type,name,age,prescription_id from prescription p inner join patient using(patient_id) where doctor_id = '+Aid+' and p.status ="pending" ORDER BY creation_stamp desc;';
-            var confirmedprescriptionSQL = 'SELECT CONCAT("Medicine: ",medicine,"\nQuantity: ",quantity,"\nDosage: ", dosage,"\nTimeframe: ", timeframe) AS medications, p.status as STATUS,creation_stamp,patient_type,name,age,prescription_id from prescription p inner join patient using(patient_id) where p.status = "confirmed" and doctor_id='+Aid+' ORDER BY creation_stamp desc;';
+            var confirmedprescriptionSQL = 'SELECT CONCAT("Medicine: ",medicine,"\nQuantity: ",quantity,"\nDosage: ", dosage,"\nTimeframe: ", timeframe) AS medications, p.status as STATUS,creation_stamp,patient_type,name,age,prescription_id from prescription p inner join patient using(patient_id) where p.status = "confirmed" and doctor_id='+Aid+' ORDER BY creation_stamp desc LIMIT 50;';
 
             db.query(prescriptionSQL+confirmedprescriptionSQL, function(err, rows){
               if (err) {
@@ -439,14 +439,14 @@ var user, Aid, availableBedss, p;
 
           if(req.query.labPatientInfo){
             var labRequestSQL = 'SELECT * from lab_request l inner join patient using(patient_id) where lab_status = "pending" and (doctor_id = '+Aid+' and patient_id = '+req.query.labPatientInfo+') ORDER BY timestamp desc;';
-            var confirmedLabRequestSQL = 'SELECT * from lab_request l inner join patient using(patient_id) where lab_status = "confirmed" and patient_id = '+req.query.labPatientInfo+' ORDER BY timestamp desc;';
+            var confirmedLabRequestSQL = 'SELECT * from lab_request l inner join patient using(patient_id) where lab_status = "confirmed" and patient_id = '+req.query.labPatientInfo+' ORDER BY timestamp desc LIMIT 50;';
 
             db.query(labRequestSQL + confirmedLabRequestSQL, function(err, rows){
               res.render('doctor/labRequestManagement', {labrequestDetails:rows[0], confirmedLabRequestSQL:rows[1], username: user});
             });
           } else {
             var labRequestSQL = 'SELECT * from lab_request l inner join patient using(patient_id) where lab_status = "pending" ORDER BY timestamp desc;';
-            var confirmedLabRequestSQL = 'SELECT * from lab_request l inner join patient using(patient_id) where lab_status = "confirmed" ORDER BY timestamp desc;';
+            var confirmedLabRequestSQL = 'SELECT * from lab_request l inner join patient using(patient_id) where lab_status = "confirmed" ORDER BY timestamp desc LIMIT 50;';
 
             db.query(labRequestSQL + confirmedLabRequestSQL, function(err, rows){
               if (err) {
