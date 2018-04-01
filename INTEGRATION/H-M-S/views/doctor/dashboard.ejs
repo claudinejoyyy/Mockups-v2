@@ -318,7 +318,7 @@
                   <div class="col-xs-5">
                     <select name="appointmentPatientID" class="select2 form-control" style="width: 100%;" name="">
                       <%for(var i = 0; i < patientList.length; i++){%>
-                        <option value="<%= patientList[i].patient_id%>"><%= patientList[i].name%></option>
+                        <option value="<%= patientList[i].patient_id%>"><%= patientList[i].name%><input type="hidden" name="appointmentPatientName" value="<%= patientList[i].name%>"></option>
                       <%}%>
                     </select>
                   </div>
@@ -393,9 +393,6 @@
 
 <script src="/notif-doctor.js"></script>
   <script>
-    function successAlert(){
-      alert("Adding appointment success!");
-    }
 
     $(function () {
       /*

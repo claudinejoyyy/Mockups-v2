@@ -35,7 +35,7 @@ var fhSQL       = "SELECT name FROM family_history;";
           var vitalSigns  = 'BP: '+data.BP +'\nCR: '+ data.CR +'\nPR: '+ data.PR +'\nRR: '+ data.RR +'\n TEMP: '+ data.temperature +'\nWT: '+ data.Wt;
           var opdCount    = 'INSERT into opd_count (date_stamp, patient_id) values("'+moment(new Date()).format('YYYY-MM-DD HH:mm:ss')+'", '+nameForEmit[0]+');';
           var historySQL  = 'INSERT into patient_history (date_stamp, initial_assessment, vitals, patient_id, doctor_id, status) VALUES("'+moment(new Date()).format('YYYY-MM-DD HH:mm:ss')+'", "'+data.assessment+'","'+vitalSigns+'", '+nameForEmit[0]+','+data.assessmentDoctor+',"pending");';
-          db.query(historySQL + opdCount +'INSERT into activity_logs(account_id, time, type, remarks, patient_id) VALUES ('+Aid+',"'+moment(new Date()).format('YYYY-MM-DD HH:mm:ss')+'", "initialAssessment", "assessment for '+req.query.assessmentPatient+'", '+nameForEmit[0]+');', function(err){
+          db.query(historySQL + opdCount +'INSERT into activity_logs(account_id, time, type, remarks, patient_id) VALUES ('+Aid+',"'+moment(new Date()).format('YYYY-MM-DD HH:mm:ss')+'", "initialAssessment", "Outpatient Assessment for '+nameForEmit[1]+'", '+nameForEmit[0]+');', function(err){
             if (err) {
               console.log(err);
             }
@@ -333,7 +333,7 @@ var fhSQL       = "SELECT name FROM family_history;";
     app.get('/nurse/profileManagement', function(req, res){
       if(req.session.email && req.session.sino == 'nurse'){
         if (req.session.sino == 'nurse') {
-          var profileInfoSQL  = 'SELECT name, age, address, phone from user_accounts where account_id = '+req.session.Aid+';';
+          var profileInfoSQL  = 'SELECT name, age, account_id, sex, address, phone from user_accounts where account_id = '+req.session.Aid+';';
           var activityLogsSQL = 'SELECT * from activity_logs where account_id = '+req.session.Aid+' ORDER by logs_id desc LIMIT 10;';
           db.query(profileInfoSQL + activityLogsSQL, function(err, rows){
             if (err) {
@@ -360,7 +360,7 @@ var fhSQL       = "SELECT name FROM family_history;";
               bcrypt.genSalt(10, function(err, salt){
                 bcrypt.hash(data.newPass, salt, function(err, hash){
                   if (data.newPass) {
-                    var updateProfileSQL = 'UPDATE user_accounts SET name = "'+data.name+'", age = '+data.age+', address = "'+data.address+'", phone = '+data.phone+', password = "'+hash+'" WHERE account_id = '+req.session.Aid+';';
+                    var updateProfileSQL = 'UPDATE user_accounts SET name = "'+data.name+'", address = "'+data.address+'", phone = '+data.phone+', password = "'+hash+'" WHERE account_id = '+req.session.Aid+';';
                     db.query(updateProfileSQL + 'INSERT into activity_logs(account_id, time, type, remarks) VALUES ('+Aid+',"'+moment(new Date()).format('YYYY-MM-DD HH:mm:ss')+'", "settingsProfileManagement", "Edited personal info.");', function(err, rows){
                       if (err) {
                         console.log(err);
@@ -369,7 +369,7 @@ var fhSQL       = "SELECT name FROM family_history;";
                       }
                     });
                   } else {
-                    var updateProfileSQL = 'UPDATE user_accounts SET name = "'+data.name+'", age = '+data.age+', address = "'+data.address+'", phone = '+data.phone+' WHERE account_id = '+req.session.Aid+';';
+                    var updateProfileSQL = 'UPDATE user_accounts SET name = "'+data.name+'", address = "'+data.address+'", phone = '+data.phone+' WHERE account_id = '+req.session.Aid+';';
                     db.query(updateProfileSQL + 'INSERT into activity_logs(account_id, time, type, remarks) VALUES ('+Aid+',"'+moment(new Date()).format('YYYY-MM-DD HH:mm:ss')+'", "settingsProfileManagement", "Edited personal info.");', function(err, rows){
                       if (err) {
                         console.log(err);

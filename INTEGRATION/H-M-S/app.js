@@ -14,11 +14,8 @@ var bcrypt = require('bcryptjs');
 var expressValidator = require('express-validator');
 var flash = require('connect-flash');
 var app = express();
-var favicon = require('serve-favicon');
-
 
 //MIDDLEWARES
-app.use(favicon(__dirname + '/public/img/favicon.ico'));
 app.locals.moment = require('moment');
 app.set('view engine', 'ejs');
 app.use(helmet.noCache());
@@ -55,13 +52,13 @@ new CronJob('00 00 * * 1-7', function() {
       var pharmReport = 'select p.patient_type, p.rankORsn, p.name, CONCAT(m.dosage, " ", m.medicine) as med, m.quantity, m.creation_stamp from patient as p join prescription as m using (patient_id) where m.status = "confirmed" and date_format(m.creation_stamp, "%M %d %Y") = date_format(now(), "%M %d %Y") order by p.patient_type';
       db.query(pharmReport, function(rows){
         var pharmDailyReport = rows;
-      });
+      }); 
     });
 }, null, true);
 
 //RESET COUNTER EVERY 3 MONTHS
   new CronJob('00 00 1 mar,jun,sep,dec *', function() {
-     db.query("DELETE from opd_count;" + "DELETE from ward_count;",function(err){
+     db.query("DELETE from opd_count;" + "DELETE from ward_count;" + "DELETE from lab_counter;",function(err){
        if (err) {
          console.log(err);
        } else {
@@ -110,7 +107,7 @@ var chart  = "SELECT  (SELECT count(patient_id) from patient where patient_type 
             +"(SELECT count(patient_id) from patient where patient_type = 'authorized civilian') as authorized_civilian;";
 //COUNT
 var whoOPD               = "SELECT p.name, a.time From patient p inner join activity_logs a USING(patient_id) where a.type = 'initialAssessment';";
-var whoWARD              = "SELECT p.name, a.time From patient p inner join activity_logs a USING(patient_id) where a.type = 'bed';";
+var whoWARD              = "SELECT p.name, a.time From patient p inner join activity_logs a USING(patient_id) where a.type = 'bed' or a.type = 'er';";
 var whoCurrentlyAdmitted = "SELECT p.name, a.patient_id, a.bed_id FROM bed a INNER JOIN patient p USING(patient_id);";
 // GRAPH
 var currentYear = moment(new Date()).format('YYYY');
@@ -133,15 +130,43 @@ var doctorList           = "SELECT * FROM user_accounts WHERE account_type = 'do
 var availableBeds        = "SELECT b.bed_id, p.patient_type, p.name, b.status, b.allotment_timestamp from bed b LEFT JOIN patient p USING(patient_id) where b.status = 'Unoccupied';";
 
 
-var patientManagementSQL = "SELECT *,"
-                          +" (SELECT time from activity_logs where type='bed' and patient.patient_id = activity_logs.patient_id order by time desc limit 1) as allotment, "
-                          +" (SELECT time from activity_logs where type='bedDischarge' and patient.patient_id = activity_logs.patient_id order by time desc limit 1) as discharge, "
-                          +" (SELECT DATEDIFF(discharge,allotment)) as difference "
-                          +" FROM patient inner join activity_logs USING(patient_id) group by patient_id;";
+var patientManagementSQL = "SELECT d.*, a.medicine, "
+                           +"(SELECT time from activity_logs where type='bed' and d.patient_id = activity_logs.patient_id order by time desc limit 1) as allotment, "
+                           +"(SELECT time from activity_logs where type='bedDischarge' and d.patient_id = activity_logs.patient_id order by time desc limit 1) as discharge, "
+                           +"(SELECT DATEDIFF(discharge,allotment)) as difference "
+                           +"FROM patient_history AS a left join patient as d on d.patient_id = a.patient_id left join activity_logs on d.patient_id = activity_logs.patient_id "
+                           +"LEFT JOIN     "
+                           +"("
+                           +"    SELECT    patient_id, Max(date_stamp) AS DateTime "
+                           +"    FROM      patient_history "
+                           +"    GROUP BY  patient_id "
+                           +") AS b "
+                           +"ON            a.patient_id = b.patient_id "
+                           +"AND           a.date_stamp = b.DateTime "
+                           +"group by patient_id "
+                           +"UNION "
+                           +"SELECT d.*, 'New Patient' as 'medicine', "
+                           +"(SELECT time from activity_logs where type='bed' and d.patient_id = activity_logs.patient_id order by time desc limit 1) as allotment, "
+                           +"(SELECT time from activity_logs where type='bedDischarge' and d.patient_id = activity_logs.patient_id order by time desc limit 1) as discharge, "
+                           +"(SELECT DATEDIFF(discharge,allotment)) as difference "
+                           +"from patient d left join activity_logs on d.patient_id = activity_logs.patient_id "
+                           +"where d.patient_id not in "
+                           +"(SELECT        a.patient_id "
+                           +"FROM          patient_history AS a left join patient as d on d.patient_id = a.patient_id "
+                           +"LEFT JOIN "
+                           +"("
+                           +"    SELECT    patient_id, Max(date_stamp) AS DateTime "
+                           +"    FROM      patient_history "
+                           +"    GROUP BY  patient_id "
+                           +") AS b "
+                           +"ON            a.patient_id = b.patient_id "
+                           +"AND           a.date_stamp = b.DateTime) "
+                           +"group by d.patient_id;";
+
 
 login (app,db,bcrypt,moment);
 nurse (app,db,name,counts,chart,whoCurrentlyAdmitted,whoOPD,whoWARD,monthlyPatientCount,patientList,availableBeds,doctorList,patientManagementSQL,bcrypt,io,moment);
 doctor(app,db,name,counts,chart,whoCurrentlyAdmitted,whoOPD,whoWARD,monthlyPatientCount,patientList,availableBeds,patientManagementSQL,bcrypt,io,moment);
 admin (app,db,name,counts,chart,whoCurrentlyAdmitted,whoOPD,whoWARD,monthlyPatientCount,patientList,availableBeds,patientManagementSQL,bcrypt,io,moment);
-pharmacist(app,db,name,counts,chart,whoCurrentlyAdmitted,whoOPD,whoWARD,monthlyPatientCount,patientList,patientManagementSQL,bcrypt,io,moment,pharmDailyReport);
-laboratorist(app,db,name,counts,chart,whoCurrentlyAdmitted,whoOPD,whoWARD,monthlyPatientCount,patientList,patientManagementSQL,bcrypt,io,moment);
+pharmacist(app,db,name,counts,chart,whoCurrentlyAdmitted,whoOPD,whoWARD,monthlyPatientCount,patientList,bcrypt,io,moment,pharmDailyReport);
+laboratorist(app,db,name,counts,chart,whoCurrentlyAdmitted,whoOPD,whoWARD,monthlyPatientCount,patientList,bcrypt,io,moment);
