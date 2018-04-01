@@ -97,7 +97,7 @@ app.get('/admin/patientManagement', function(req, res){
     app.get('/admin/profileManagement', function(req, res){
       if(req.session.email && req.session.sino == 'admin'){
         if (req.session.sino == 'admin') {
-          var profileInfoSQL  = 'SELECT name, age, address, phone from user_accounts where account_id = '+req.session.Aid+';';
+          var profileInfoSQL  = 'SELECT name, age, account_id, sex, address, phone from user_accounts where account_id = '+req.session.Aid+';';
           var activityLogsSQL = 'SELECT * from activity_logs where account_id = '+req.session.Aid+' ORDER by logs_id desc LIMIT 10;';
           db.query(profileInfoSQL + activityLogsSQL, function(err, rows){
             if (err) {
