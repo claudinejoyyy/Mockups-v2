@@ -27,19 +27,19 @@
         <ul class="nav navbar-nav">
           <li class="dropdown user user-menu">
             <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-              <img src="../dist/img/avatar3.png" class="user-image" alt="User Image">
+              <img src="../dist/img/sample prof pic.jpg" class="user-image" alt="User Image">
               <span class="hidden-xs"><%= username[0].name %></span>
             </a>
             <ul class="dropdown-menu">
               <li class="user-header">
-                <img src="../dist/img/avatar3.png" class="img-circle" alt="User Image">
+                <img src="../dist/img/sample prof pic.jpg" class="img-circle" alt="User Image">
                 <p>
                   <%= username[0].name %> - <%= username[0].account_type.charAt(0).toUpperCase() + username[0].account_type.slice(1);%>
                 </p>
               </li>
               <li class="user-footer">
                 <div class="pull-left">
-                  <a href="../pharmacist/profileManagement" class="btn btn-default btn-flat">Profile</a>
+                  <a href="profileManagement" class="btn btn-default btn-flat">Profile</a>
                 </div>
                 <div class="pull-right">
                   <a href="../logout" class="btn btn-default btn-flat">Sign out</a>
@@ -56,7 +56,7 @@
     <section class="sidebar">
       <div class="user-panel">
         <div class="pull-left image">
-          <img src="../dist/img/avatar3.png" class="img-circle" alt="User Image">
+          <img src="../dist/img/sample prof pic.jpg" class="img-circle" alt="User Image">
         </div>
         <div class="pull-left info">
           <p><%= username[0].name %></p>
@@ -65,11 +65,10 @@
       </div>
 
     <ul class="sidebar-menu">
-        <li><a href=../pharmacist/dashboard><i class="fa fa-dashboard"></i> <span> Dashboard </span></a></li>
-        <li><a href=../pharmacist/prescriptionManagement><i class="fa fa-plus-square"></i> <span> Prescriptions Management</span></a></li>
-        <li class="active"><a href="../pharmacist/patientManagement" target="_self"><i class="fa fa-users"></i> <span>Patient Management</span></a></li>
-        <li><a href=../pharmacist/profileManagement><i class="fa fa-info"></i> <span> Profile Management </span></a></li>
-        <li><a href=../pharmacist/reports><i class="fa fa-edit"></i> <span> Reports</span></a></li>
+        <li><a href="dashboard"><i class="fa fa-dashboard"></i> <span>Dashboard</span></a></li>
+        <li><a href="labRequestManagement"><i class="fa fa-stethoscope"></i> <span>Diagnosis Request Management</span></a></li>
+        <li class="active"><a href="patientManagement" target="_self"><i class="fa fa-users"></i> <span>Patient Management</span></a></li>
+        <li><a href="profileManagement"><i class="fa fa-info"></i> <span>Profile Management</span></a></li>
       </ul>
     </section>
   </aside>
