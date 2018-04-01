@@ -55,7 +55,7 @@ new CronJob('00 00 * * 1-7', function() {
       var pharmReport = 'select p.patient_type, p.rankORsn, p.name, CONCAT(m.dosage, " ", m.medicine) as med, m.quantity, m.creation_stamp from patient as p join prescription as m using (patient_id) where m.status = "confirmed" and date_format(m.creation_stamp, "%M %d %Y") = date_format(now(), "%M %d %Y") order by p.patient_type';
       db.query(pharmReport, function(rows){
         var pharmDailyReport = rows;
-      }); 
+      });
     });
 }, null, true);
 
@@ -133,38 +133,11 @@ var doctorList           = "SELECT * FROM user_accounts WHERE account_type = 'do
 var availableBeds        = "SELECT b.bed_id, p.patient_type, p.name, b.status, b.allotment_timestamp from bed b LEFT JOIN patient p USING(patient_id) where b.status = 'Unoccupied';";
 
 
-var patientManagementSQL = "SELECT d.*, a.medicine, "
-                           +" (SELECT time from activity_logs where type='bed' and d.patient_id = activity_logs.patient_id order by time desc limit 1) as allotment, "
-                           +" (SELECT time from activity_logs where type='bedDischarge' and d.patient_id = activity_logs.patient_id order by time desc limit 1) as discharge, "
-                           +" (SELECT DATEDIFF(discharge,allotment)) as difference "
-                           +" FROM patient_history AS a left join patient as d on d.patient_id = a.patient_id left join activity_logs on d.patient_id = activity_logs.patient_id "
-                           +" LEFT JOIN     "
-                           +" ("
-                           +"    SELECT    patient_id, Max(date_stamp) AS DateTime "
-                           +"    FROM      patient_history "
-                           +"    GROUP BY  patient_id "
-                           +" ) AS b "
-                           +" ON            a.patient_id = b.patient_id "
-                           +" AND           a.date_stamp = b.DateTime "
-                           +" group by patient_id "
-                           +" UNION "
-                           +" SELECT d.*, 'New Patient' as 'medicine', "
-                           +" (SELECT time from activity_logs where type='bed' and d.patient_id = activity_logs.patient_id order by time desc limit 1) as allotment, "
-                           +" (SELECT time from activity_logs where type='bedDischarge' and d.patient_id = activity_logs.patient_id order by time desc limit 1) as discharge, "
-                           +" (SELECT DATEDIFF(discharge,allotment)) as difference "
-                           +" from patient d left join activity_logs on d.patient_id = activity_logs.patient_id "
-                           +" where d.patient_id not in "
-                           +" (SELECT        a.patient_id "
-                           +" FROM          patient_history AS a left join patient as d on d.patient_id = a.patient_id "
-                           +" LEFT JOIN "
-                           +" ("
-                           +"    SELECT    patient_id, Max(date_stamp) AS DateTime "
-                           +"    FROM      patient_history "
-                           +"    GROUP BY  patient_id "
-                           +" ) AS b "
-                           +" ON            a.patient_id = b.patient_id "
-                           +" AND           a.date_stamp = b.DateTime) "
-                           +" group by d.patient_id order by patient_id desc;";
+var patientManagementSQL = "SELECT *,"
+                          +" (SELECT time from activity_logs where type='bed' and patient.patient_id = activity_logs.patient_id order by time desc limit 1) as allotment, "
+                          +" (SELECT time from activity_logs where type='bedDischarge' and patient.patient_id = activity_logs.patient_id order by time desc limit 1) as discharge, "
+                          +" (SELECT DATEDIFF(discharge,allotment)) as difference "
+                          +" FROM patient inner join activity_logs USING(patient_id) group by patient_id;";
 
 login (app,db,bcrypt,moment);
 nurse (app,db,name,counts,chart,whoCurrentlyAdmitted,whoOPD,whoWARD,monthlyPatientCount,patientList,availableBeds,doctorList,patientManagementSQL,bcrypt,io,moment);

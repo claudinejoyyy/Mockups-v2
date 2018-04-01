@@ -3,7 +3,6 @@
 <head>
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <script src="moment.js"></script>
   <title>Dashboard</title>
   <% include ../partials/header.ejs %>
 </head>
@@ -167,7 +166,7 @@
               </div>
             </div>
           </div>
-            
+
           <div class="box box-primary">
             <div class="box-header">
               <i class="ion ion-clipboard"></i>
@@ -256,7 +255,7 @@
             </div>
               <form method='POST' id='modal2'  style="display:none;" onsubmit="showSuccess()" class="form-group" data-parsley-validate=""  data-parsley-trigger="keyup">
             <div class="modal-body">
-                
+
                 <div class="form group">
                   <label for="type" class="col-sm-2 control-label" disabled>Patient Type *</label>
                     <div class="col-sm-10">
@@ -300,7 +299,7 @@
                     <label for="inputBirthdate" class="col-sm-2 control-label">Birthdate*</label>
                     <div class="col-sm-4">
                       <input type="date"  class="form-control datepicker" name="birth" id="birth" data-parsley-required/>
-                    </div> 
+                    </div>
                     <label for="gender" class="col-sm-2 control-label" disabled>Gender*</label>
                     <div class="col-sm-4">
                       <select class="form-control" name="gender" required>
@@ -562,14 +561,14 @@
                       <div class="form-group">
                         <label for="inputPatientType" class="col-sm-2 control-label">Doctor</label>
                           <div class="col-sm-10">
-                            <select name="bedDoc" class="form-control select1" style="width: 100%;"> 
+                            <select name="bedDoc" class="form-control select1" style="width: 100%;">
                               <%for(var i = 0; i < doctorList.length; i++){%>
                                 <option value="<%= doctorList[i].account_id%>"><%= doctorList[i].name%></option>
                               <%}%>
                             </select>
                           </div>
                       </div>
-                      
+
                     </div>
                     <div class="modal-footer">
                       <button type="button" class="btn btn-default" data-dismiss="modal"><i class="fa fa-times"></i> Cancel</button>

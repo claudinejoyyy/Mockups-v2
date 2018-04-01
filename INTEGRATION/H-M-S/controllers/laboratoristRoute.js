@@ -111,7 +111,7 @@ res.redirect('../login');
     var data = req.body;
     if(req.session.email && req.session.sino == 'laboratorist'){
       if(req.session.sino == 'laboratorist') {
-        if (data == 'confirm') {
+        if (data.sub == 'confirm') {
           var confirmLabRequestSQL = 'UPDATE lab_request SET lab_status="confirmed" where request_id = '+req.query.requestId+' ORDER BY timestamp desc;';
           db.query(confirmLabRequestSQL + 'INSERT into activity_logs(account_id, time, type, remarks) VALUES ('+Aid+',"'+moment(new Date()).format('YYYY-MM-DD HH:mm:ss')+'", "confirmedLabRequest", "Confirmed lab request for: '+req.query.labrequestPatientName+'");', function(err){
             if(err){
@@ -177,7 +177,7 @@ res.redirect('../login');
                       } else {
                           res.redirect('../logout');
                       }
-                    });                    
+                    });
                   } else {
                     var updateProfileSQL = 'UPDATE user_accounts SET name = "'+data.name+'", age = '+data.age+', address = "'+data.address+'", phone = '+data.phone+' WHERE account_id = '+req.session.Aid+';';
                     db.query(updateProfileSQL + 'INSERT into activity_logs(account_id, time, type, remarks) VALUES ('+Aid+',"'+moment(new Date()).format('YYYY-MM-DD HH:mm:ss')+'", "settingsProfileManagement", "Edited personal info.");', function(err, rows){
@@ -186,7 +186,7 @@ res.redirect('../login');
                       } else {
                           res.redirect(req.get('referer'));
                       }
-                    });                    
+                    });
                   }
                 });
               });

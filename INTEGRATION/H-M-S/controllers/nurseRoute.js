@@ -43,18 +43,19 @@ var fhSQL       = "SELECT name FROM family_history;";
           });
           res.redirect(req.get('referer'));
         } else if (data.sub == 'bed') {
-          var nameForBedEmit    = data.bedName.split(',');
-          var bedSQL            = 'UPDATE bed set status = "occupied", allotment_timestamp = "'+moment(new Date()).format('YYYY-MM-DD HH:mm:ss')+'", patient_id = '+nameForBedEmit[0]+' where bed_id = '+data.bed+';';
-          var historySQL        = 'INSERT into patient_history (date_stamp, patient_id, doctor_id, bed, status) VALUES("'+moment(new Date()).format('YYYY-MM-DD HH:mm:ss')+'", '+nameForBedEmit[0]+','+data.bedDoc+',"'+data.bed+', ","pending");';
-          var wardCount         = 'INSERT into ward_count (date_stamp, patient_id) values("'+moment(new Date()).format('YYYY-MM-DD HH:mm:ss')+'",'+nameForBedEmit[0]+');';
-          db.query(historySQL + bedSQL + wardCount + 'INSERT into activity_logs(account_id, time, type, remarks, patient_id) VALUES ('+Aid+',"'+moment(new Date()).format('YYYY-MM-DD HH:mm:ss')+'", "er", "ER for '+nameForBedEmit[1]+'", '+nameForBedEmit[0]+');', function(err){
-            if (err) {
-              console.log(err);
-            }
-            io.emit('type', {what:'assess',message:'Received ER patient: '+nameForBedEmit[1]+', sent by <strong>'+req.session.name+'</strong>'});
-          });
-          res.redirect(req.get('referer'));
-        }else if(data.sub == "add") {
+           var nameForBedEmit    = data.bedName.split(',');
+           var bedSQL            = 'UPDATE bed set status = "occupied", allotment_timestamp = "'+moment(new Date()).format('YYYY-MM-DD HH:mm:ss')+'", patient_id = '+nameForBedEmit[0]+' where bed_id = '+data.bed+';';
+           var historySQL        = 'INSERT into patient_history (date_stamp, patient_id, doctor_id, bed, status) VALUES("'+moment(new Date()).format('YYYY-MM-DD HH:mm:ss')+'", '+nameForBedEmit[0]+','+data.bedDoc+',"'+data.bed+', ","pending");';
+           var wardCount         = 'INSERT into ward_count (date_stamp, patient_id) values("'+moment(new Date()).format('YYYY-MM-DD HH:mm:ss')+'",'+nameForBedEmit[0]+');';
+           var bedLogs           = 'INSERT into activity_logs(account_id, time, type, remarks, patient_id) VALUES ('+Aid+',"'+moment(new Date()).format('YYYY-MM-DD HH:mm:ss')+'", "bed", "allotted bed number '+data.bed+' for ER patient '+nameForBedEmit[1]+'", '+nameForBedEmit[0]+');'
+           db.query(historySQL + bedSQL + wardCount + bedLogs + 'INSERT into activity_logs(account_id, time, type, remarks, patient_id) VALUES ('+Aid+',"'+moment(new Date()).format('YYYY-MM-DD HH:mm:ss')+'", "er", "Added ER patient '+nameForBedEmit[1]+'", '+nameForBedEmit[0]+');', function(err){
+             if (err) {
+               console.log(err);
+             }
+             io.emit('type', {what:'assess',message:'Received ER patient: '+nameForBedEmit[1]+', sent by <strong>'+req.session.name+'</strong>'});
+           });
+           res.redirect(req.get('referer'));
+         }else if(data.sub == "add") {
             req.checkBody('name','name is required').notEmpty();
             req.checkBody('address','address is required').notEmpty();
             req.checkBody('gender','gender is required').notEmpty();
@@ -157,7 +158,7 @@ var fhSQL       = "SELECT name FROM family_history;";
       if(req.session.email && req.session.sino == 'nurse'){
         if(req.session.sino == 'nurse') {
           if (data.sub == 'changeInfo') {
-          var patientManSQL = "SELECT d.*, a.medicine," 
+          var patientManSQL = "SELECT d.*, a.medicine,"
                          +" (SELECT time from activity_logs where type='bed' and d.patient_id = activity_logs.patient_id order by time desc limit 1) as allotment, "
                          +" (SELECT time from activity_logs where type='bedDischarge' and d.patient_id = activity_logs.patient_id order by time desc limit 1) as discharge, "
                          +" (SELECT DATEDIFF(discharge,allotment)) as difference "
@@ -186,8 +187,8 @@ var fhSQL       = "SELECT name FROM family_history;";
                          +"    FROM      patient_history "
                          +"    GROUP BY  patient_id "
                          +" ) AS b "
-                         +" ON            a.patient_id = b.patient_id" 
-                         +" AND           a.date_stamp = b.DateTime)" 
+                         +" ON            a.patient_id = b.patient_id"
+                         +" AND           a.date_stamp = b.DateTime)"
                          +" and d.patient_id = "+req.query.patient_id+";";
             var sql2  = "SELECT * FROM patient where patient_id = "+req.query.patient_id+";";
             var med = "select date_stamp, lab, medicine,diagnosis,bed from patient_history where patient_id = "+req.query.patient_id+" order by date_stamp;";
@@ -196,7 +197,7 @@ var fhSQL       = "SELECT name FROM family_history;";
               if (err) {
                 console.log(err);
               } else {
-                var patientManSQL = "SELECT d.*, a.medicine, " 
+                var patientManSQL = "SELECT d.*, a.medicine, "
                                    +" (SELECT time from activity_logs where type='bed' and d.patient_id = activity_logs.patient_id order by time desc limit 1) as allotment, "
                                    +" (SELECT time from activity_logs where type='bedDischarge' and d.patient_id = activity_logs.patient_id order by time desc limit 1) as discharge, "
                                    +" (SELECT DATEDIFF(discharge,allotment)) as difference "
@@ -225,8 +226,8 @@ var fhSQL       = "SELECT name FROM family_history;";
                                    +"    FROM      patient_history "
                                    +"    GROUP BY  patient_id "
                                    +" ) AS b "
-                                   +" ON            a.patient_id = b.patient_id" 
-                                   +" AND           a.date_stamp = b.DateTime)" 
+                                   +" ON            a.patient_id = b.patient_id"
+                                   +" AND           a.date_stamp = b.DateTime)"
                                    +" and d.patient_id = "+req.query.patient_id+";";
                 var updatedSql2  = "SELECT * FROM patient where patient_id = "+req.query.patient_id+";";
                 db.query(patientManSQL + updatedSql2, function(err, successRows2){
@@ -239,7 +240,7 @@ var fhSQL       = "SELECT name FROM family_history;";
               if (err) {
                 console.log(err);
               } else if(isMatch) {
-                var patientManSQL = "SELECT d.*, a.medicine, " 
+                var patientManSQL = "SELECT d.*, a.medicine, "
                                    +" (SELECT time from activity_logs where type='bed' and d.patient_id = activity_logs.patient_id order by time desc limit 1) as allotment, "
                                    +" (SELECT time from activity_logs where type='bedDischarge' and d.patient_id = activity_logs.patient_id order by time desc limit 1) as discharge, "
                                    +" (SELECT DATEDIFF(discharge,allotment)) as difference "
@@ -268,8 +269,8 @@ var fhSQL       = "SELECT name FROM family_history;";
                                    +"    FROM      patient_history "
                                    +"    GROUP BY  patient_id "
                                    +" ) AS b "
-                                   +" ON            a.patient_id = b.patient_id " 
-                                   +" AND           a.date_stamp = b.DateTime) " 
+                                   +" ON            a.patient_id = b.patient_id "
+                                   +" AND           a.date_stamp = b.DateTime) "
                                    +" and d.patient_id = "+req.query.passPatient+";";
                 var sql2  = "SELECT * FROM patient where patient_id = "+req.query.passPatient+";";
                 var med = "select date_stamp, lab, medicine,diagnosis,bed from patient_history where patient_id = "+req.query.passPatient+" order by date_stamp;";
@@ -282,7 +283,7 @@ var fhSQL       = "SELECT name FROM family_history;";
                   res.render('nurse/patientManagement', {p:errorRows, p2:null, med:null, username:user, invalid:'error'});
                 });
               }
-            });  
+            });
           }
         } else {
           res.redirect(req.session.sino+'/dashboard');
@@ -366,7 +367,7 @@ var fhSQL       = "SELECT name FROM family_history;";
                       } else {
                           res.redirect('../logout');
                       }
-                    });                    
+                    });
                   } else {
                     var updateProfileSQL = 'UPDATE user_accounts SET name = "'+data.name+'", age = '+data.age+', address = "'+data.address+'", phone = '+data.phone+' WHERE account_id = '+req.session.Aid+';';
                     db.query(updateProfileSQL + 'INSERT into activity_logs(account_id, time, type, remarks) VALUES ('+Aid+',"'+moment(new Date()).format('YYYY-MM-DD HH:mm:ss')+'", "settingsProfileManagement", "Edited personal info.");', function(err, rows){
@@ -375,7 +376,7 @@ var fhSQL       = "SELECT name FROM family_history;";
                       } else {
                           res.redirect(req.get('referer'));
                       }
-                    });                    
+                    });
                   }
                 });
               });
