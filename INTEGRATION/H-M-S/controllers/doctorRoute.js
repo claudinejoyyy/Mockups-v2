@@ -79,9 +79,9 @@ var user, Aid, availableBedss, p;
   app.get('/doctor/outpatientManagement', function(req, res){
     if(req.session.email && req.session.sino == 'doctor'){
       if (req.session.sino == 'doctor') {
-          var outpatientDepartmentSQL = 'SELECT * from patient_history inner join patient using(patient_id) where patient_history.status = "pending" and bed is null;';
-          var outpatientDepartmentSQL2 = 'SELECT * from patient_history inner join patient using(patient_id) where patient_history.status = "confirmed";';
-          var outpatientDepartmentSQL3 = 'SELECT * from patient_history inner join patient using(patient_id) left join bed using(patient_id) where patient_history.status = "pending" and bed is not null group by patient_id;';
+          var outpatientDepartmentSQL = 'SELECT * from patient_history inner join patient using(patient_id) where patient_history.status = "pending" and doctor_id = '+Aid+' and bed is null;';
+          var outpatientDepartmentSQL2 = 'SELECT * from patient_history inner join patient using(patient_id) where patient_history.status = "confirmed" and doctor_id = '+Aid+';';
+          var outpatientDepartmentSQL3 = 'SELECT * from patient_history inner join patient using(patient_id) left join bed using(patient_id) where patient_history.status = "pending" and bed is not null and doctor_id = '+Aid+' group by patient_id;';
           var labSQL                  = 'SELECT * from lab_request left join patient_history using(patient_id)  where lab_status = "pending" group by patient_id;';
           var prescribeSQL            = 'SELECT * from prescription p inner join patient using(patient_id) where p.status = "pending" group by patient_id;';
 

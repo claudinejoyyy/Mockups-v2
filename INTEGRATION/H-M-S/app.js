@@ -52,7 +52,7 @@ new CronJob('00 00 * * 1-7', function() {
       var pharmReport = 'select p.patient_type, p.rankORsn, p.name, CONCAT(m.dosage, " ", m.medicine) as med, m.quantity, m.creation_stamp from patient as p join prescription as m using (patient_id) where m.status = "confirmed" and date_format(m.creation_stamp, "%M %d %Y") = date_format(now(), "%M %d %Y") order by p.patient_type';
       db.query(pharmReport, function(rows){
         var pharmDailyReport = rows;
-      }); 
+      });
     });
 }, null, true);
 
