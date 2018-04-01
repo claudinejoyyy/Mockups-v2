@@ -59,8 +59,9 @@ var user, Aid, availableBedss, p;
                 var parseDate      = splitDateNTime[0];
                 var parseTime      = splitDateNTime[1] + ':00';
                 var parseDateNTime = parseDate+' '+parseTime;
-                var addAppointment = 'INSERT into appointment (doctor_id, patient_id, appointment_timestamp, remarks) VALUES ('+Aid+', '+data.appointmentPatientID+', "'+parseDateNTime+'", "'+data.appointmentRemarks+'");';
-                db.query(addAppointment + 'INSERT into activity_logs(account_id, time, type, remarks) VALUES ('+Aid+',"'+moment(new Date()).format('YYYY-MM-DD HH:mm:ss')+'", "appointment", "Set Appointment with '+data.appointmentPatientName+' on '+parseDateNTime+'");', function(err){
+                var pName          = data.appointmentPatientID.split(',');
+                var addAppointment = 'INSERT into appointment (doctor_id, patient_id, appointment_timestamp, remarks) VALUES ('+Aid+', '+pName[0]+', "'+parseDateNTime+'", "'+data.appointmentRemarks+'");';
+                db.query(addAppointment + 'INSERT into activity_logs(account_id, time, type, remarks) VALUES ('+Aid+',"'+moment(new Date()).format('YYYY-MM-DD HH:mm:ss')+'", "appointment", "Set Appointment with '+pName[1]+' on '+parseDateNTime+'");', function(err){
                   if (err) {
                     console.log(err);
                   }
@@ -362,10 +363,10 @@ var user, Aid, availableBedss, p;
                 var parseDate      = splitDateNTime[0];
                 var parseTime      = splitDateNTime[1] + ':00';
                 var parseDateNTime = parseDate+' '+parseTime;
-                var addAppointment = 'INSERT into appointment (doctor_id, patient_id, appointment_timestamp, remarks) VALUES ('+Aid+', '+data.appointmentPatientID+', "'+parseDateNTime+'", "'+data.appointmentRemarks+'");';
+                var nName          = data.appointmentPatientID.split(',');
+                var addAppointment = 'INSERT into appointment (doctor_id, patient_id, appointment_timestamp, remarks) VALUES ('+Aid+', '+nName[0]+', "'+parseDateNTime+'", "'+data.appointmentRemarks+'");';
                 console.log('di pa nakapasok');
-                db.query(addAppointment + 'INSERT into activity_logs(account_id, time, type, remarks) VALUES ('+Aid+',"'+moment(new Date()).format('YYYY-MM-DD HH:mm:ss')+'", "appointment", "Set Appointment with '+req.query.appointmentPatientName+' on '+parseDateNTime+'");', function(err){
-                  console.log('naquery siya');
+                db.query(addAppointment + 'INSERT into activity_logs(account_id, time, type, remarks) VALUES ('+Aid+',"'+moment(new Date()).format('YYYY-MM-DD HH:mm:ss')+'", "appointment", "Set Appointment with '+nName[1]+' on '+parseDateNTime+'");', function(err){
                   if (err) {
                     console.log(err);
                   }

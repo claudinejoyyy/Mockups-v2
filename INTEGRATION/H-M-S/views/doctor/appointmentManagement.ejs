@@ -138,7 +138,7 @@
             <label for="appointmentName">Patient Name: </label>
             <select id="appointmentName" name="appointmentPatientID" class="select2 form-control" style="width:100%;">
               <%for(var i = 0; i < ap.length; i++){%>
-                <option value="<%= ap[i].patient_id%>"><%= ap[i].name%></option>
+                <option value="<%= ap[i].patient_id%>,<%= ap[i].name%>"><%= ap[i].name%></option>
               <%}%>
             </select>
           </div>
