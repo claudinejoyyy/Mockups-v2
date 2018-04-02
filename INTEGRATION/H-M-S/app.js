@@ -107,7 +107,7 @@ var chart  = "SELECT  (SELECT count(patient_id) from patient where patient_type 
             +"(SELECT count(patient_id) from patient where patient_type = 'authorized civilian') as authorized_civilian;";
 //COUNT
 var whoOPD               = "SELECT p.name, a.time From patient p inner join activity_logs a USING(patient_id) where a.type = 'initialAssessment';";
-var whoWARD              = "SELECT p.name, a.time From patient p inner join activity_logs a USING(patient_id) where a.type = 'bed' or a.type = 'er';";
+var whoWARD              = "SELECT p.name, a.time From patient p inner join activity_logs a USING(patient_id) where a.type = 'bed';";
 var whoCurrentlyAdmitted = "SELECT p.name, a.patient_id, a.bed_id FROM bed a INNER JOIN patient p USING(patient_id);";
 // GRAPH
 var currentYear = moment(new Date()).format('YYYY');

@@ -45,7 +45,7 @@ var fhSQL       = "SELECT name FROM family_history;";
            var historySQL        = 'INSERT into patient_history (date_stamp, patient_id, doctor_id, bed, status) VALUES("'+moment(new Date()).format('YYYY-MM-DD HH:mm:ss')+'", '+nameForBedEmit[0]+','+data.bedDoc+',"'+data.bed+', ","pending");';
            var wardCount         = 'INSERT into ward_count (date_stamp, patient_id) values("'+moment(new Date()).format('YYYY-MM-DD HH:mm:ss')+'",'+nameForBedEmit[0]+');';
            var bedLogs           = 'INSERT into activity_logs(account_id, time, type, remarks, patient_id) VALUES ('+Aid+',"'+moment(new Date()).format('YYYY-MM-DD HH:mm:ss')+'", "bed", "allotted bed number '+data.bed+' for ER patient '+nameForBedEmit[1]+'", '+nameForBedEmit[0]+');'
-           db.query(historySQL + bedSQL + wardCount + bedLogs + 'INSERT into activity_logs(account_id, time, type, remarks, patient_id) VALUES ('+Aid+',"'+moment(new Date()).format('YYYY-MM-DD HH:mm:ss')+'", "er", "Added ER patient '+nameForBedEmit[1]+'", '+nameForBedEmit[0]+');', function(err){
+           db.query(historySQL + bedSQL + wardCount + bedLogs + 'INSERT into activity_logs(account_id, time, type, remarks, patient_id) VALUES ('+Aid+',"'+moment(new Date()).format('YYYY-MM-DD HH:mm:ss')+'", "bed", "Added ER patient '+nameForBedEmit[1]+'", '+nameForBedEmit[0]+');', function(err){
              if (err) {
                console.log(err);
              }
@@ -227,7 +227,7 @@ var fhSQL       = "SELECT name FROM family_history;";
                                    +" AND           a.date_stamp = b.DateTime)"
                                    +" and d.patient_id = "+req.query.patient_id+";";
                 var updatedSql2  = "SELECT * FROM patient where patient_id = "+req.query.patient_id+";";
-                db.query(patientManSQL + updatedSql2 + med + name,req.session.Aid, function(err, successRows2){
+                db.query(patientManSQL + updatedSql2 + med + name, req.session.Aid, function(err, successRows2){
                   res.render('nurse/patientManagement', {p:successRows2[0], p2:successRows2[1], med:successRows[2], username:successRows[3], invalid:null});
                 });
               }
@@ -271,12 +271,12 @@ var fhSQL       = "SELECT name FROM family_history;";
                                    +" and d.patient_id = "+req.query.passPatient+";";
                 var sql2  = "SELECT * FROM patient where patient_id = "+req.query.passPatient+";";
                 var med = "select date_stamp, lab, medicine,diagnosis,bed from patient_history where patient_id = "+req.query.passPatient+" order by date_stamp;";
-                db.query(patientManSQL + sql2 + med + name, function(err, successRows){
+                db.query(patientManSQL + sql2 + med + name, req.session.Aid, function(err, successRows){
                   res.render('nurse/patientManagement', {p:successRows[0], p2:successRows[1], med:successRows[2], username:successRows[3], invalid:null});
                 });
               } else {
                 var sql  = "SELECT patient_id,patient_type,name,age,sex,blood_type FROM patient where patient_id = "+req.query.passPatient+";";
-                db.query(sql + name,req.session.Aid, function(err, errorRows){
+                db.query(sql + name, req.session.Aid, function(err, errorRows){
                   res.render('nurse/patientManagement', {p:errorRows[0], p2:null, med:null, username:errorRows[1], invalid:'error'});
                 });
               }

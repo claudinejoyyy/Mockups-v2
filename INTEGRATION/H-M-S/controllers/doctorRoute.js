@@ -151,7 +151,7 @@ var availableBedss, p;
             });
           } else if (data.sub == 'confirm') {
             db.query('UPDATE patient_history inner join bed on patient_history.patient_id = bed.patient_id set patient_history.status = "confirmed", bed.status = "Unoccupied", bed.allotment_timestamp = NULL, bed.patient_id = NULL where patient_history.histo_id = '+req.query.id+';'
-              + 'INSERT into activity_logs(account_id, time, type, remarks, patient_id) VALUES ('+Aid+',"'+moment(new Date()).format('YYYY-MM-DD HH:mm:ss')+'", "confirmER", "Confirmed patient on OPD named: '+req.query.name+' !", '+req.query.id+');', function(err){
+              + 'INSERT into activity_logs(account_id, time, type, remarks, patient_id) VALUES ('+Aid+',"'+moment(new Date()).format('YYYY-MM-DD HH:mm:ss')+'", "confirmER", "Confirmed patient on WARD/ER, named: '+req.query.name+' !", '+req.query.id+');', function(err){
               if (err) {
                 console.log(err);
               } else {
@@ -160,7 +160,7 @@ var availableBedss, p;
             });
           } else if (data.sub == 'confirmOPD') {
             db.query('UPDATE patient_history set status = "confirmed" where histo_id = '+req.query.id+';'
-              + 'INSERT into activity_logs(account_id, time, type, remarks, patient_id) VALUES ('+Aid+',"'+moment(new Date()).format('YYYY-MM-DD HH:mm:ss')+'", "confirmER", "Confirmed patient on OPD named: '+req.query.name+' !", '+req.query.id+');', function(err){
+              + 'INSERT into activity_logs(account_id, time, type, remarks, patient_id) VALUES ('+Aid+',"'+moment(new Date()).format('YYYY-MM-DD HH:mm:ss')+'", "confirmOPD", "Confirmed patient on OPD, named: '+req.query.name+' !", '+req.query.id+');', function(err){
               if (err) {
                 console.log(err);
               } else {
@@ -301,9 +301,7 @@ var availableBedss, p;
             });
           } else {
             bcrypt.compare(data.patientPassword, req.session.password, function(err, isMatch){
-              if (err) {
-                console.log(err);
-              } else if(isMatch) {
+              if(isMatch) {
                 var patientManSQL = "SELECT *,"
                                    +" (SELECT time from activity_logs where type='bed' and patient.patient_id = activity_logs.patient_id order by time desc limit 1) as allotment, "
                                    +" (SELECT time from activity_logs where type='bedDischarge' and patient.patient_id = activity_logs.patient_id order by time desc limit 1) as discharge, "
@@ -312,12 +310,12 @@ var availableBedss, p;
 
                 var sql2  = "SELECT * FROM patient where patient_id = "+req.query.passPatient+";";
                 var med = "select date_stamp, lab, medicine,diagnosis,bed from patient_history where patient_id = "+req.query.passPatient+" order by date_stamp desc;";
-                db.query(patientManSQL + sql2 + med + name,req.session.Aid, function(err, successRows){
+                db.query(patientManSQL + sql2 + med + name, req.session.Aid, function(err, successRows){
                   res.render('doctor/patientManagement', {p:successRows[0], p2:successRows[1], med:successRows[2], username:successRows[3], invalid:null});
                 });
               } else {
                 var sql  = "SELECT patient_id,patient_type,name,age,sex,blood_type FROM patient where patient_id = "+req.query.passPatient+";";
-                db.query(sql + name, function(err, errorRows){
+                db.query(sql + name, req.session.Aid,function(err, errorRows){
                   res.render('doctor/patientManagement', {p:errorRows[0], p2:null, med:null, username:errorRows[1], invalid:'error'});
                 });
               }
@@ -338,7 +336,7 @@ var availableBedss, p;
           var appointmentSQL = 'SELECT * from appointment a inner join patient using(patient_id) where doctor_id = '+Aid+';';
           var selectPatient = 'SELECT * from patient;';
 
-          db.query(appointmentSQL + selectPatient + name,req.session.Aid, function(err, rows){
+          db.query(appointmentSQL + selectPatient + name ,req.session.Aid, function(err, rows){
             if (err) {
               console.log(err);
             } else {
