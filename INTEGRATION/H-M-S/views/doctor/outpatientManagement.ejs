@@ -494,16 +494,17 @@
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                 <h4 class="modal-title" id="labRequestlabel"><%= username[0].name %>, please input your password.</h4>
             </div>
-              <form id="dynamicActionPassword" method="post">
-            <div class="modal-body">
-              <div id="PasswordInput" style="display:none">
-                  <input class="form-control" type="password" name="patientPassword" placeholder="Password">
-              </div>
-              </div>
-              <div class="modal-footer">
-                <button type="submit" name="sub" class="btn btn-outline" value="pass"><i class="fa fa-sign-in"></i> Enter</button>
-              </div>
+
+            <div id="PasswordInput" style="display:none;">
+              <form id="dynamicActionPassword" method="post" target="_blank">
+                <div class="modal-body">
+                      <input class="form-control" type="password" name="patientPassword" placeholder="Password">
+                  </div>
+                  <div class="modal-footer">
+                    <button type="submit" name="sub" class="btn btn-outline" value="pass"><i class="fa fa-sign-in"></i> Enter</button>
+                  </div>
                 </form>
+              </div>
             </div>
           </div>
       <div class="control-sidebar-bg"></div>
@@ -521,9 +522,14 @@
   });
 
   <%if(invalid){%>
-  alert('invalid password');
+  swal({
+   title: "Invalid Password!",
+   text: "You clicked the button!",
+   icon: "warning",
+   button: "okay!",
+  });
   $(document).ready(function(){
-    $("#PasswordInput").show();
+    $("#dynamicActionPassword").show();
   });
 <%}%>
 
@@ -539,7 +545,7 @@
       var button = document.createElement('button');
       button.setAttribute("class", "btn btn-default btn-sm pull-left");
       button.setAttribute("id", "minsanLang");
-      button.innerHTML = '<i class="fa fa-eye"></i><a style="color:black;" href="/doctor/labRequestManagement?labPatientInfo='+i+'"> View Pending Requests</a>';
+      button.innerHTML = '<i class="fa fa-eye"></i><a style="color:black;" href="/doctor/labRequestManagement?labPatientInfo='+i+'" target="_blank"> View Pending Requests</a>';
       document.getElementById('ShowLabRequestView').appendChild(button);
     }
   }
@@ -551,7 +557,7 @@
       var button = document.createElement('button');
       button.setAttribute("class", "btn btn-default btn-sm pull-left");
       button.setAttribute("id", "oneTimeOnly");
-      button.innerHTML = '<i class="fa fa-eye"></i><a style="color:black;" href="/doctor/prescriptionManagement?opdPatient='+i+'"> View Pending Requests</a>';
+      button.innerHTML = '<i class="fa fa-eye"></i><a style="color:black;" href="/doctor/prescriptionManagement?opdPatient='+i+'" target="_blank"> View Pending Requests</a>';
       document.getElementById('showPrescribeView').appendChild(button);
     }
   }

@@ -21,6 +21,7 @@
     "helmet": "^3.11.0",
     "moment": "^2.20.1",
     "mysql": "^2.15.0",
-    "socket.io": "^2.0.4"
+    "socket.io": "^2.0.4",
+    "sweetalert": "^2.1.0"
   }
 }

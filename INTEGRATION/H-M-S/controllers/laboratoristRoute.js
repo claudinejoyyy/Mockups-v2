@@ -1,4 +1,4 @@
-module.exports = function(app,db,name,counts,chart,whoCurrentlyAdmitted,whoOPD,whoWARD,monthlyPatientCount,patientList,patientManagementSQL,bcrypt,io,moment){
+module.exports = function(app,db,name,counts,chart,whoCurrentlyAdmitted,whoOPD,whoWARD,monthlyPatientCount,patientList,bcrypt,io,moment){
 var user, Aid;
 
   app.get('/laboratorist/dashboard', function(req, res){
@@ -6,13 +6,13 @@ var user, Aid;
       if(req.session.sino == 'laboratorist'){
         Aid = req.session.Aid;
         var diagnosisSQL      = 'SELECT * from lab_request where lab_status="pending";';
-        var bloodChemistrySQL = 'SELECT * from lab_request l inner join patient using(patient_id) where l.type = "bloodChemistry";';
-        var hermatology       = 'SELECT * from lab_request l inner join patient using(patient_id) where l.type = "hermatology";';
-        var microscopy        = 'SELECT * from lab_request l inner join patient using(patient_id) where l.type = "microscopy";';
-        var parasitology      = 'SELECT * from lab_request l inner join patient using(patient_id) where l.type = "parasitology";';
-        var serology          = 'SELECT * from lab_request l inner join patient using(patient_id) where l.type = "serotology";';
-        var microbiology      = 'SELECT * from lab_request l inner join patient using(patient_id) where l.type = "microbiology";';
-        var xRay              = 'SELECT * from lab_request l inner join patient using(patient_id) where l.type = "xRay";';
+        var bloodChemistrySQL = 'SELECT * from lab_counter l inner join patient using(patient_id) where l.type = "Blood Chemistry";';
+        var hermatology       = 'SELECT * from lab_counter l inner join patient using(patient_id) where l.type = "Hematology";';
+        var microscopy        = 'SELECT * from lab_counter l inner join patient using(patient_id) where l.type = "Microscopy";';
+        var parasitology      = 'SELECT * from lab_counter l inner join patient using(patient_id) where l.type = "Parasitology";';
+        var serology          = 'SELECT * from lab_counter l inner join patient using(patient_id) where l.type = "Serotology";';
+        var microbiology      = 'SELECT * from lab_counter l inner join patient using(patient_id) where l.type = "Microbiology";';
+        var xRay              = 'SELECT * from lab_counter l inner join patient using(patient_id) where l.type = "X-Ray";';
         var todoList          = "SELECT * from todo_list where account_id = "+Aid+";";
         db.query(todoList + diagnosisSQL + bloodChemistrySQL + hermatology + microscopy + parasitology + serology + microbiology + xRay + monthlyPatientCount + name, Aid, function(err, rows){
           if (err) {
@@ -112,7 +112,7 @@ res.redirect('../login');
     if(req.session.email && req.session.sino == 'laboratorist'){
       if(req.session.sino == 'laboratorist') {
         if (data.sub == 'confirm') {
-          var confirmLabRequestSQL = 'UPDATE lab_request SET lab_status="confirmed" where request_id = '+req.query.requestId+' ORDER BY timestamp desc;';
+          var confirmLabRequestSQL = 'UPDATE lab_request SET lab_status="confirmed" where request_id = '+req.query.requestId+';';
           db.query(confirmLabRequestSQL + 'INSERT into activity_logs(account_id, time, type, remarks) VALUES ('+Aid+',"'+moment(new Date()).format('YYYY-MM-DD HH:mm:ss')+'", "confirmedLabRequest", "Confirmed lab request for: '+req.query.labrequestPatientName+'");', function(err){
             if(err){
               console.log(err);

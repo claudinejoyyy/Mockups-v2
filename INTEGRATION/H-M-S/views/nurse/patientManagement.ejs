@@ -410,10 +410,10 @@
                 <td>
                     <%  var d1 = moment(new Date(p[i].allotment)).format('MMM-DD-YYYY HH:mm').toString();
                         var d2 = moment(new Date(p[i].discharge)).format('MMM-DD-YYYY HH:mm').toString();
-                        if(d1 == "Jan-01-1970 08:00"){
+                        if(d1 == "Jan-01-1970 08:00" || d1 == "Invalid date"){
                             d1 = " ";
                         }
-                        if(d2 == "Jan-01-1970 08:00"){
+                        if(d2 == "Jan-01-1970 08:00" || d2 == "Invalid date"){
                             d2 = " "
                         }
                     %>
@@ -440,7 +440,7 @@
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                 <h4 class="modal-title" id="labRequestlabel"><%= username[0].name %>, please input your password.</h4>
             </div>
-              <form id="dynamicActionPassword" method="post">
+              <form id="dynamicActionPassword" target="_blank" method="post">
             <div class="modal-body">
               <div id="PasswordInput" style="display:none">
                   <input class="form-control" type="password" name="patientPassword" placeholder="Password">
@@ -466,7 +466,7 @@
   }
 
 </style>
-
+<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 <script src="/notif-nurse.js"></script>
 <script type="text/javascript">
   $(function () {
@@ -481,25 +481,40 @@
       "autoWidth": true
     });
   });
-  <%if(invalid){%>
-  alert('invalid password');
-  $(document).ready(function(){
-    $("#PasswordInput").show();
-  });
-<%}%>
+//   <%if(invalid){%>
+//   alert('invalid password');
+//   $(document).ready(function(){
+//     $("#PasswordInput").show();
+//   });
+// <%}%>
   function PasswordInput(id){
     document.getElementById('PasswordInput').style.display = 'block';
     document.getElementById('dynamicActionPassword').action = '/nurse/patientManagement?passPatient='+id+'';
   }
 </script>
 
-    <script type="text/javascript">
+<script type="text/javascript">
+// <%if(invalid){%>
+//   alert('invalid password');
+//   $(document).ready(function(){
+//     $("#PasswordInput").show();
+//   });
+// <%}%>
+
 <%if(invalid){%>
-  alert('invalid password');
+  swal({
+  title: "Invalid Password!",
+  text: "Please re-enter authorized password! ",
+  icon: "warning",
+  button: "Okay!",
+  });
+
+  $("#invalidPass").show();
   $(document).ready(function(){
     $("#PasswordInput").show();
   });
 <%}%>
+
   function PasswordInput(id){
     document.getElementById('PasswordInput').style.display = 'block';
     document.getElementById('dynamicActionPassword').action = '/nurse/patientManagement?passPatient='+id+'';
