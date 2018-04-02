@@ -1,23 +1,19 @@
 module.exports = function(app,db,name,counts,chart,whoCurrentlyAdmitted,whoOPD,whoWARD,monthlyPatientCount,patientList,availableBeds,doctorList,patientManagementSQL,bcrypt,io,moment){
-var user, Aid;
 var immuSQL     = "SELECT name FROM immunization;";
 var fhSQL       = "SELECT name FROM family_history;";
 
   app.get('/nurse/dashboard', function(req, res){
     if(req.session.email && req.session.sino == 'nurse'){
       if(req.session.sino == 'nurse'){
-        Aid = req.session.Aid;
-        var name1   = "SELECT name,account_type FROM user_accounts where account_id = "+Aid+";";
         var todoList    = "SELECT * from todo_list where account_id = "+req.session.Aid+";";
         var availablePatientOPD = "SELECT * from patient where patient_id NOT IN(SELECT patient_id from patient_history where status = 'pending');";
         var bed = "SELECT  * from bed where status = 'unoccupied';";
-        db.query(name1 + counts + chart + whoCurrentlyAdmitted + whoOPD + whoWARD + immuSQL + fhSQL + doctorList + availablePatientOPD + monthlyPatientCount + todoList + bed, Aid, function(err, rows, fields){
+        db.query(name + counts + chart + whoCurrentlyAdmitted + whoOPD + whoWARD + immuSQL + fhSQL + doctorList + availablePatientOPD + monthlyPatientCount + todoList + bed, req.session.Aid, function(err, rows, fields){
           if (err) {
             console.log(err);
           }
-          user = rows[0];
           res.render('nurse/dashboard', {counts:rows[1], chart:rows[2], whoCurrentlyAdmitted:rows[3], whoOPD:rows[4],whoWARD:rows[5], immu:rows[6],
-                                         fh:rows[7], doctorList:rows[8], availablePatientOPD:rows[9], monthlyPatientCount:rows[10], todoList:rows[11], bed:rows[12], username: user, err:req.query.status});
+                                         fh:rows[7], doctorList:rows[8], availablePatientOPD:rows[9], monthlyPatientCount:rows[10], todoList:rows[11], bed:rows[12], username: rows[0], err:req.query.status});
         });
       } else {
         res.redirect(req.session.sino+'/dashboard');
@@ -138,12 +134,12 @@ var fhSQL       = "SELECT name FROM family_history;";
         if(req.session.sino == 'nurse'){
           if(req.query.patient){
             var sql  = "SELECT patient_id,patient_type,name,age,sex,blood_type FROM patient where patient_id = "+req.query.patient+";";
-            db.query(sql, function(err, rows){
-              res.render('nurse/patientManagement', {p:rows, p2:null, med:null, username:user, invalid:null});
+            db.query(sql + name, req.session.Aid, function(err, rows){
+              res.render('nurse/patientManagement', {p:rows[0], p2:null, med:null, username:rows[1], invalid:null});
             });
           } else {
-              db.query(patientManagementSQL, function(err, rows){
-                res.render('nurse/patientManagement', {p:rows, p2:null, med:null, username:user, invalid:null});
+              db.query(patientManagementSQL + name , req.session.Aid, function(err, rows){
+                res.render('nurse/patientManagement', {p:rows[0], p2:null, med:null, username:rows[1], invalid:null});
               });
           }
         } else {
@@ -231,8 +227,8 @@ var fhSQL       = "SELECT name FROM family_history;";
                                    +" AND           a.date_stamp = b.DateTime)"
                                    +" and d.patient_id = "+req.query.patient_id+";";
                 var updatedSql2  = "SELECT * FROM patient where patient_id = "+req.query.patient_id+";";
-                db.query(patientManSQL + updatedSql2, function(err, successRows2){
-                  res.render('nurse/patientManagement', {p:successRows2[0], p2:successRows2[1], med:successRows[2], username:user, invalid:null});
+                db.query(patientManSQL + updatedSql2 + med + name,req.session.Aid, function(err, successRows2){
+                  res.render('nurse/patientManagement', {p:successRows2[0], p2:successRows2[1], med:successRows[2], username:successRows[3], invalid:null});
                 });
               }
             });
@@ -275,13 +271,13 @@ var fhSQL       = "SELECT name FROM family_history;";
                                    +" and d.patient_id = "+req.query.passPatient+";";
                 var sql2  = "SELECT * FROM patient where patient_id = "+req.query.passPatient+";";
                 var med = "select date_stamp, lab, medicine,diagnosis,bed from patient_history where patient_id = "+req.query.passPatient+" order by date_stamp;";
-                db.query(patientManSQL + sql2 + med, function(err, successRows){
-                  res.render('nurse/patientManagement', {p:successRows[0], p2:successRows[1], med:successRows[2], username:user, invalid:null});
+                db.query(patientManSQL + sql2 + med + name, function(err, successRows){
+                  res.render('nurse/patientManagement', {p:successRows[0], p2:successRows[1], med:successRows[2], username:successRows[3], invalid:null});
                 });
               } else {
                 var sql  = "SELECT patient_id,patient_type,name,age,sex,blood_type FROM patient where patient_id = "+req.query.passPatient+";";
-                db.query(sql, function(err, errorRows){
-                  res.render('nurse/patientManagement', {p:errorRows, p2:null, med:null, username:user, invalid:'error'});
+                db.query(sql + name,req.session.Aid, function(err, errorRows){
+                  res.render('nurse/patientManagement', {p:errorRows[0], p2:null, med:null, username:errorRows[1], invalid:'error'});
                 });
               }
             });
@@ -300,8 +296,8 @@ var fhSQL       = "SELECT name FROM family_history;";
     if (req.session.email && req.session.sino == 'nurse') {
       if (req.session.sino == 'nurse') {
         var bedSQL = "SELECT b.bed_id, p.patient_type, p.name, b.status, b.allotment_timestamp from bed b LEFT JOIN patient p USING(patient_id); ";
-        db.query(bedSQL, function(err, rows, fields){
-          res.render('nurse/bedManagement', {bedDetails:rows, username:user});
+        db.query(bedSQL + name, req.session.Aid, function(err, rows, fields){
+          res.render('nurse/bedManagement', {bedDetails:rows[0], username:rows[1]});
         });
       } else {
         res.redirect(req.session.sino+'/dashboard');
@@ -336,11 +332,11 @@ var fhSQL       = "SELECT name FROM family_history;";
         if (req.session.sino == 'nurse') {
           var profileInfoSQL  = 'SELECT name, age, account_id, sex, address, phone from user_accounts where account_id = '+req.session.Aid+';';
           var activityLogsSQL = 'SELECT * from activity_logs where account_id = '+req.session.Aid+' ORDER by logs_id desc LIMIT 10;';
-          db.query(profileInfoSQL + activityLogsSQL, function(err, rows){
+          db.query(profileInfoSQL + activityLogsSQL + name,req.session.Aid, function(err, rows){
             if (err) {
               console.log(err);
             } else {
-              res.render('nurse/profileManagement', {pInfo:rows[0], activityInfo: rows[1], username: user});
+              res.render('nurse/profileManagement', {pInfo:rows[0], activityInfo: rows[1], username: rows[2]});
             }
           });
         } else {

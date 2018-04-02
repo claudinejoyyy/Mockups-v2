@@ -112,7 +112,7 @@ res.redirect('../login');
     if(req.session.email && req.session.sino == 'laboratorist'){
       if(req.session.sino == 'laboratorist') {
         if (data == 'confirm') {
-          var confirmLabRequestSQL = 'UPDATE lab_request SET lab_status="confirmed" where request_id = '+req.query.requestId+' ORDER BY timestamp desc;';
+          var confirmLabRequestSQL = 'UPDATE lab_request SET lab_status="confirmed" where request_id = '+req.query.requestId+';';
           db.query(confirmLabRequestSQL + 'INSERT into activity_logs(account_id, time, type, remarks) VALUES ('+Aid+',"'+moment(new Date()).format('YYYY-MM-DD HH:mm:ss')+'", "confirmedLabRequest", "Confirmed lab request for: '+req.query.labrequestPatientName+'");', function(err){
             if(err){
               console.log(err);
