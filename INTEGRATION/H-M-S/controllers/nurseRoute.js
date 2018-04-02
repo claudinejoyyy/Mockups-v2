@@ -7,10 +7,11 @@ var fhSQL       = "SELECT name FROM family_history;";
     if(req.session.email && req.session.sino == 'nurse'){
       if(req.session.sino == 'nurse'){
         Aid = req.session.Aid;
+        var name1   = "SELECT name,account_type FROM user_accounts where account_id = "+Aid+";";
         var todoList    = "SELECT * from todo_list where account_id = "+req.session.Aid+";";
         var availablePatientOPD = "SELECT * from patient where patient_id NOT IN(SELECT patient_id from patient_history where status = 'pending');";
         var bed = "SELECT  * from bed where status = 'unoccupied';";
-        db.query(name + counts + chart + whoCurrentlyAdmitted + whoOPD + whoWARD + immuSQL + fhSQL + doctorList + availablePatientOPD + monthlyPatientCount + todoList + bed, Aid, function(err, rows, fields){
+        db.query(name1 + counts + chart + whoCurrentlyAdmitted + whoOPD + whoWARD + immuSQL + fhSQL + doctorList + availablePatientOPD + monthlyPatientCount + todoList + bed, Aid, function(err, rows, fields){
           if (err) {
             console.log(err);
           }

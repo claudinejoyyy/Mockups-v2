@@ -123,11 +123,11 @@ res.redirect('../login');
           });
         } else {
           var cancelLabRequestSQL = 'DELETE FROM lab_request where request_id = '+req.query.requestId+';';
-          db.query(cancelLabRequestSQL + 'INSERT into activity_logs(account_id, time, type, remarks) VALUES ('+Aid+',"'+moment(new Date()).format('YYYY-MM-DD HH:mm:ss')+'", "cancelLabRequest", "Cancelled lab request for: '+req.query.labrequestPatientName+'");', function(err){
+          db.query(cancelLabRequestSQL + 'INSERT into activity_logs(account_id, time, type, remarks) VALUES ('+Aid+',"'+moment(new Date()).format('YYYY-MM-DD HH:mm:ss')+'", "cancelLabRequest", "Canceled lab request for: '+req.query.labrequestPatientName+'");', function(err){
             if(err){
               console.log(err);
             } else {
-              io.emit('type', {what:'cancelLabRequest',message:'Cancelled Lab Request for <strong>'+req.query.labrequestPatientName+'</strong>'});
+              io.emit('type', {what:'cancelLabRequest',message:'Canceled Lab Request for <strong>'+req.query.labrequestPatientName+'</strong>'});
               res.redirect(req.get('referer'));
             }
           });

@@ -130,7 +130,7 @@ res.redirect('../login');
             });
           } else {
             var cancelPrescriptionSQL = 'DELETE FROM prescription where prescription_id = '+req.query.prescriptionId+';';
-            db.query(cancelPrescriptionSQL + 'INSERT into activity_logs(account_id, time, type, remarks) VALUES ('+Aid+',"'+moment(new Date()).format('YYYY-MM-DD HH:mm:ss')+'", "cancelPrescription", "Cancelled prescription for: '+req.query.prescriptionPatientName+'");', function(err){
+            db.query(cancelPrescriptionSQL + 'INSERT into activity_logs(account_id, time, type, remarks) VALUES ('+Aid+',"'+moment(new Date()).format('YYYY-MM-DD HH:mm:ss')+'", "cancelPrescription", "Canceled prescription for: '+req.query.prescriptionPatientName+'");', function(err){
               if(err){
                 console.log(err);
               } else {

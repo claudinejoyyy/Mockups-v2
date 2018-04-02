@@ -161,7 +161,7 @@
                       <!-- ADMIT -->
                       <input type="button" class="btn btn-default btn-sm" name="admit" value="Admit" data-toggle="modal" data-target="#admit" onclick="ShowAdmit(<%=opdInfo[i].patient_id%>,<%=JSON.stringify(opdInfo[i].name)%>,<%=opdInfo[i].histo_id%>)">
                       </td>
-                    <form action="/doctor/outpatientManagement?id=<%= opdInfo[i].histo_id%>" method="post">
+                    <form action="/doctor/outpatientManagement?id=<%= opdInfo[i].histo_id%>&name=<%= opdInfo[i].name%>" method="post">
                       <td><button type="submit" data-toggle="confirmation" data-popout="true" data-singleton="true" class="btn btn-default btn-sm" name="sub" value="confirmOPD"><i class="fa fa-mail-forward"></i> Confirm</button></td>
                     </form>
                   </tr>
@@ -247,7 +247,7 @@
                           </form>
                          <%}%>
                       </td>
-                      <form action="/doctor/outpatientManagement?id=<%= opdInfo2[i].histo_id%>" method="post">
+                      <form action="/doctor/outpatientManagement?id=<%= opdInfo2[i].histo_id%>&name=opdInfo2[i].name%>" method="post">
                         <td><button type="submit" data-toggle="confirmation" data-popout="true" data-singleton="true" name="sub" class="btn btn-default btn-sm" value="confirm" <%if(!opdInfo2[i].bed_id){%>
 
                   <%} else {%>

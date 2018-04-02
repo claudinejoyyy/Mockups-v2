@@ -151,7 +151,8 @@ var user, Aid, availableBedss, p;
               }
             });
           } else if (data.sub == 'confirm') {
-            db.query('UPDATE patient_history inner join bed on patient_history.patient_id = bed.patient_id set patient_history.status = "confirmed", bed.status = "Unoccupied", bed.allotment_timestamp = NULL, bed.patient_id = NULL where patient_history.histo_id = '+req.query.id+';', function(err){
+            db.query('UPDATE patient_history inner join bed on patient_history.patient_id = bed.patient_id set patient_history.status = "confirmed", bed.status = "Unoccupied", bed.allotment_timestamp = NULL, bed.patient_id = NULL where patient_history.histo_id = '+req.query.id+';'
+              + 'INSERT into activity_logs(account_id, time, type, remarks, patient_id) VALUES ('+Aid+',"'+moment(new Date()).format('YYYY-MM-DD HH:mm:ss')+'", "confirmER", "Confirmed patient on OPD named: '+req.query.name+' !", '+req.query.id+');', function(err){
               if (err) {
                 console.log(err);
               } else {
@@ -159,7 +160,8 @@ var user, Aid, availableBedss, p;
               }
             });
           } else if (data.sub == 'confirmOPD') {
-            db.query('UPDATE patient_history set status = "confirmed" where histo_id = '+req.query.id+';', function(err){
+            db.query('UPDATE patient_history set status = "confirmed" where histo_id = '+req.query.id+';'
+              + 'INSERT into activity_logs(account_id, time, type, remarks, patient_id) VALUES ('+Aid+',"'+moment(new Date()).format('YYYY-MM-DD HH:mm:ss')+'", "confirmER", "Confirmed patient on OPD named: '+req.query.name+' !", '+req.query.id+');', function(err){
               if (err) {
                 console.log(err);
               } else {
@@ -247,7 +249,11 @@ var user, Aid, availableBedss, p;
       if(req.session.email && req.session.sino == 'doctor'){
         if(req.session.sino == 'doctor'){
           if(req.query.patient){
-            var sql  = "SELECT patient_id,patient_type,name,age,sex,blood_type FROM patient where patient_id = "+req.query.patient+";";
+            var sql="SELECT *,"
+                    +" (SELECT time from activity_logs where type='bed' and patient.patient_id = activity_logs.patient_id order by time desc limit 1) as allotment, "
+                    +" (SELECT time from activity_logs where type='bedDischarge' and patient.patient_id = activity_logs.patient_id order by time desc limit 1) as discharge, "
+                    +" (SELECT DATEDIFF(discharge,allotment)) as difference "
+                    +" FROM patient inner join activity_logs USING(patient_id) where patient_id = "+req.query.patient+" group by patient_id;";
             db.query(sql, function(err, rows){
               res.render('doctor/patientManagement', {p:rows, p2:null, med:null, username:user, invalid:null});
             });
